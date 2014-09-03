@@ -1,0 +1,16 @@
+<div class="list-group">
+	<a href="javascript:void(0)" class="list-group-item" ng-repeat="item in agendaDatesList" ng-click="agendaDatesGetTimes($index)">
+		<table style="height:54px;">
+			<tbody>
+				<tr>
+					<td>
+						{{item.date}}
+					</td>
+					<td width="25px">
+						<span class="pull-right halflings chevron-right"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</a>
+</div>

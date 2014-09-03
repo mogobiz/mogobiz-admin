@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>  
+    <title>{Title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="{Favicon}" type="image/x-icon" />
+    
+	<!-- include CSS -->
+    <link rel="stylesheet" type="text/css" href="http://www.codechic.org:9999/iper2010/css/event/event.styles.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.codechic.org:9999/iper2010/css/event/theme.css" />
+	<!-- include JS -->
+	<script type="text/javascript" src="http://www.codechic.org:9999/iper2010/js/jquery/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="http://www.codechic.org:9999/iper2010/js/event/site.js"></script>
+	<script type="text/javascript">
+	var homePage = "http://www.codechic.org:9999/iper2010/event/getEvents";
+	var displayLogoUrl = "http://www.codechic.org:9999/iper2010/event/displayLogo";
+	</script>
+</head>
+<body>
+	<!-- START Header -->
+	<div id="header">
+		<div class="page">
+			<a href="http://www.codechic.org:9999/iper2010/event/getEvents" class="logo"></a>
+			<ul>
+				<li id="homePage"><a href="javascript:void(0)">Home</a></li>
+				<li id="blogPage" class="active"><a href="javascript:void(0)">{Title}</a></li>
+				<li id="aboutPage"><a href="http://www.codechic.org:9999/iper2010/event/about">About Us</a></li>
+				<li id="contactPage"><a href="http://www.codechic.org:9999/iper2010/event/contact">Contact Us</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- END Header -->
+	
+	<!-- START Page -->
+	<div id="page">
+		<div class="top"></div>
+		<!-- START Content -->
+		<div class="content">
+			<div class="header page">
+				<h1>{Title}</h1>
+			</div>
+			
+			<!-- START tumblr Blog -->
+			<div id="tumblrBlog" class="padding">
+				<div class="left">
+					{block:Description}{Description}{/block:Description}
+	    			<div id="posts">
+	                    {block:Posts}
+	                        <div class="section_title">
+	        				    <h3>Posted {block:Date}{TimeAgo}{/block:Date}</h3>
+	    				    </div>
+							
+	                        {block:Text}
+								<!-- Text Post -->
+								<div class="post text">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+		                    			{block:Title}
+		                    				<h1><a href="{Permalink}">{Title}</a></h1>
+		                    			{/block:Title}
+		                    			{Body}
+		                    			
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Text}
+							
+	                    	{block:Photo}
+								<!-- Photo Post -->
+								<div class="post photo">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+										<a href="{LinkURL}"><img src="{PhotoURL-500}" alt="{PhotoAlt}"/></a>
+										
+										{block:Caption}
+		                    				<div class="caption">{Caption}</div>
+		                    			{/block:Caption}
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Photo}
+							
+	                    	{block:Photoset}
+								<!-- Photoset Post -->
+								<div class="post photoset">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+										{Photoset-500}
+										
+										{block:Caption}
+		                    				<div class="caption">{Caption}</div>
+		                    			{/block:Caption}
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Photoset}
+							
+	                    	{block:Quote}
+								<!-- Quote Post -->
+								<div class="post quote">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+		                    			<h1><a href="{Permalink}">"{Quote}"</a></h1>
+		                    			
+										{block:Source}
+		                    				<div class="source">{Source}</div>
+		                    			{/block:Source}
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Quote}
+							
+	                    	{block:Link}
+								<!-- Link Post -->
+								<div class="post link">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+		                    			<h1><a href="{URL}" class="link" {Target}>{Name}</a></h1>
+		                    			
+										{block:Description}
+		                    				<div class="description">{Description}</div>
+		                    			{/block:Description}
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Link}
+							
+	                    	{block:Chat}
+								<!-- Chat Post -->
+								<div class="post chat">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+		                    			{block:Title}
+		                    				<h1><a href="{Permalink}">{Title}</a></h1>
+		                    			{/block:Title}
+		                    
+		                    			<ul class="chat">
+		                    				{block:Lines}
+		                    					<div class="{Alt} user_{UserNumber}">
+		                    						{block:Label}
+		                    							<span class="label">{Label}</span>
+		                    						{/block:Label}
+													{Line}
+		                    					</div>
+		                    				{/block:Lines}
+		                    			</ul>
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Chat}
+							
+	                    	{block:Video}
+								<!-- Video Post -->
+								<div class="post video">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+										{Video-500}
+										
+										{block:Caption}
+		                    				<div class="caption">{Caption}</div>
+		                    			{/block:Caption}
+										
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Video}
+							
+	                    	{block:Audio}
+								<!-- Audio Post -->
+								<div class="post audio">
+									<div class="post-date">
+										<span class="month">{block:Date}{ShortMonth}{/block:Date}</span>
+										<span class="white-shadow day">{block:Date}{DayOfMonthWithZero}{/block:Date}</span>
+									</div>
+									<div class="post-icon"></div>
+		                    		<div class="post-content">
+										{AudioPlayerBlack}
+										
+										{block:Caption}
+		                    				<div class="caption">{Caption}</div>
+		                    			{/block:Caption}
+		                    			
+										<div class="tags">{block:Tags}<a href="{TagURL}" class="tag"><span class="pound">#</span>{Tag}</a>&nbsp;{/block:Tags}</div>
+		                    		</div>
+		                    	</div>
+	                    	{/block:Audio}						
+	                    {/block:Posts}					
+					</div>
+				</div>
+				<div class="right">
+					<div class="search_box">
+						<form action="/search" method="get">
+						    <input type="text" name="q" value="{SearchQuery}" id="search-input"/>
+						    <input type="submit" value="Search" id="search-submit"/>
+						</form>
+					</div>
+					<div class="sidebar_box">
+						<a href="/archive" class="archive">Browse the Archive</a>
+					</div>
+					<div class="sidebar_box">
+						<a href="" class="rss">Subscribe to our RSS Feed</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<br style="clear: both;"></br>
+				<!-- Navigation -->
+				<div id="postNavigation">
+					{block:Pagination}
+			            {block:PreviousPage}
+			                <a href="{PreviousPage}">&#171;&nbsp;{lang:Previous}</a>
+			            {/block:PreviousPage}
+			
+			            {block:JumpPagination length="10"}
+			                {block:CurrentPage}
+			                    <span class="current_page">&nbsp;{PageNumber}&nbsp;</span>
+			                {/block:CurrentPage}
+			
+			                {block:JumpPage}
+			                    <a class="jump_page" href="{URL}">&nbsp;{PageNumber}&nbsp;</a>
+			                {/block:JumpPage}
+			            {/block:JumpPagination}
+			
+			            {block:NextPage}
+			                <a href="{NextPage}" class="next">{lang:Next}&nbsp;&#187;</a>
+			            {/block:NextPage}
+			        {/block:Pagination}
+			  		{block:PermalinkPagination}
+			  			{block:NextPost}
+			  			<a href="{NextPost}">&#171;&nbsp;{lang:Back}</a>
+			  			{/block:NextPost}
+			  			&nbsp;&nbsp; &bull; &nbsp;&nbsp;
+			  			{block:PreviousPost} 
+			  			<a href="{PreviousPost}">{lang:Next}&nbsp;&#187;</a>
+			  			{/block:PreviousPost}
+			  		{/block:PermalinkPagination}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- END tumblr Blog -->
+		</div>
+		<!-- END Content -->
+		<div class="bottom"></div>
+	</div>
+	<!-- END Page -->
+	
+	<!-- START Footer -->
+	<div id="footer" class="page">
+		<p>&copy; ebiznext.</p>
+		<ul>
+			<li id="footer_homePage"><a href="javascript:void(0)">Home</a></li>
+			<li id="footer_blogPage"><a href="javascript:void(0)">{Title}</a></li>
+			<li id="footer_aboutPage"><a href="http://www.codechic.org:9999/iper2010/event/about">About Us</a></li>
+			<li id="footer_contactPage"><a href="http://www.codechic.org:9999/iper2010/event/contact">Contact Us</a></li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<!-- END Footer -->
+</body>
+</html>

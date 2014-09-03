@@ -1,0 +1,27 @@
+<div class="center" style="padding-top: 50px;" ng-hide="bookmarks.length > 0">
+	{{resourceBundle.label_emptyBookmarks}}
+</div>
+<div class="list-group" ng-hide="bookmarks.length == 0">
+	<a href="javascript:void(0)" class="list-group-item" ng-repeat="conference in bookmarks" ng-click="bookmarksGetConferenceDetails(conference.id)">
+		<table>
+			<tbody>
+				<tr>
+					<td class="fancyDateCol">
+						<div class="fancy-date">
+							<span class="month">{{conference.weekDay}} {{conference.monthDay}}</span>
+							<span class="white-shadow day">{{conference.realStartTime}}<br/>{{conference.realEndTime}}</span>
+						</div>
+					</td>
+					<td>
+						{{conference.name}}<br/>
+						{{conference.category.name}} {{resourceBundle.label_by}} {{conference.brand.name}}<br/>
+                        <span ng-hide="!conference.room || conference.room == ''">{{resourceBundle.label_room}} {{conference.room}}</span>
+					</td>
+					<td width="25px">
+						<span class="pull-right halflings chevron-right"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</a>
+</div>

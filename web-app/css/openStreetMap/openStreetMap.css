@@ -1,0 +1,18 @@
+/*div.olControlAttribution, div.olControlScaleLine {display: none;}*/)
+
+div.olControlPanel {
+    top: 0px;
+    left: 50px;
+    position: absolute;
+}
+.olControlPanel div {
+    display: block;
+    width:  22px;
+    height: 22px;
+    border: thin solid black;
+    margin-top: 10px;
+    background-color: transparent;
+}
+.helpButtonItemInactive {
+    background-image: url("help.png");
+}

@@ -1,0 +1,106 @@
+
+/* everything is constructed with a single background image */
+
+/* root element for tabs */
+#flowtabs {
+	/* dimensions */
+	width:760px;
+	height:30px;
+	margin:0 !important; 
+	padding:0;
+	border-bottom:1px solid #666;
+}
+
+/* single tab */
+#flowtabs li { 
+	float:left; 
+	margin:0; 
+	padding:0; 
+	text-indent:0; 
+	list-style-type:none;
+}
+
+/* a- tag inside single tab */
+#flowtabs li a {
+	float:left;
+	font-size:13px;
+	display:block;
+	padding:5px 30px;	
+	text-decoration:none;
+	border:1px solid #666;	
+	border-bottom:0px;
+	height:18px;
+	background-color:#efefef;
+	color:#777;
+	margin-right:2px;
+	position:relative;
+	top:1px;
+	outline:0;
+	border-radius:2px 2px 0 0;
+	-moz-border-radius:2px 2px 0 0;
+	-webkit-border-radius:2px 2px 0 0;
+}
+
+/* adjust the background image position on each tab */
+#flowtabs #t1 { }
+#flowtabs #t2 { }
+#flowtabs #t3 { }
+ 
+/* mouseover state */
+#flowtabs a:hover {
+	background-color:#F7F7F7;
+	color:#333;
+}
+#flowtabs #t1:hover { }
+#flowtabs #t2:hover { }
+#flowtabs #t3:hover { }
+
+/* currently selected tabs */
+#flowtabs a.current	{
+	background-color:#ddd;
+	border-bottom:1px solid #ddd;	
+	color:#000;	
+	cursor:default;
+}
+#flowtabs #t1.current { }
+#flowtabs #t2.current { }
+#flowtabs #t3.current { }
+
+/* panes */
+#flowpanes {
+	width:760px;
+	min-height:150px;
+	position:relative;
+	clear:both;
+}
+
+/* single pane */
+#flowpanes div {
+	margin:0;
+	float:left;
+	display:block;
+	width:700px;
+	font-size:14px;
+}
+
+#flowpanes .items {
+	width:20000em;
+	position:absolute;
+	clear:both;
+	margin:0;
+	padding:0;
+}
+
+#flowpanes .items div{
+	padding:20px 29px;
+	border:1px solid #666;
+	border-width:0 1px 1px 1px;
+	min-height:150px;
+	background-color:#ddd;
+	color:#000;
+}
+
+#flowpanes .less, #flowpanes .less a {
+	color:#999 !important;
+	font-size:11px;
+}

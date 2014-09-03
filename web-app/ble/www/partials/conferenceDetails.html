@@ -1,0 +1,112 @@
+<div id="conferenceDetailsHeader" class="detailsHeaderCotainer">
+	<h4 class="detailsTitle">
+		<table>
+			<tbody>
+				<tr>
+					<td class="fancyDateCol">
+						<div class="fancy-date">
+							<span class="month">{{conferenceDetails.weekDay}} {{conferenceDetails.monthDay}}</span>
+							<span class="white-shadow day">{{conferenceDetails.realStartTime}}<br/>{{conferenceDetails.realEndTime}}</span>
+						</div>
+					</td>
+					<td>
+						{{conferenceDetails.name}}
+					</td>
+					<td class="conferenceBookmarkCol">
+						<img ng-hide="conferenceDetails.isBookmarked" src="images/star.png" ng-click="conferenceDetailsAddToBookmark()"/>
+						<img ng-show="conferenceDetails.isBookmarked" src="images/star1.png" ng-click="conferenceDetailsRemoveFromBookmark(conferenceDetails.id)"/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</h4>
+	<p>
+		{{conferenceDetails.category.name}} {{resourceBundle.label_by}}
+		<a href="javascript:void(0)" class="clickable" ng-click="conferenceDetailsShowSpeakerDetails(conferenceDetails.brand.id)">{{conferenceDetails.brand.name}}</a><br/>
+		<span ng-hide="!conferenceDetails.room || conferenceDetails.room == ''">{{resourceBundle.label_room}} {{conferenceDetails.room}}</span>
+	</p>
+</div>
+<div id="conferenceDetailsContent" class="container">
+	<div id="conferenceDetailsTracks" class="p tracks" ng-show="conferenceDetails.tags && conferenceDetails.tags.length > 0">
+		<div ng-repeat="tag in conferenceDetails.tags">{{tag.name}}</div>
+	</div>
+	<p ng-show="conferenceDetails.descriptionAsText != null && conferenceDetails.descriptionAsText != ''">{{conferenceDetails.descriptionAsText}}</p>
+	<hr ng-show="conferenceDetails.descriptionAsText != null && conferenceDetails.descriptionAsText != ''"/>
+	<div class="p"><a href="javascript:void(0);" class="clickable" ng-click="conferenceDetailsShareTwitter()">
+		<table><tbody><tr><td width="47px"><span class="big social twitter"/></td><td>{{resourceBundle.label_share}}</td></tr></tbody></table>
+	</a></div>
+	<hr/>
+	<table class="notice">
+		<tbody>
+			<tr>
+				<td class="rating">
+					<img ng-src="{{rateImages[0]}}" ng-click="conferenceDetailsRate(1)"/>
+					<img ng-src="{{rateImages[1]}}" ng-click="conferenceDetailsRate(2)"/>
+					<img ng-src="{{rateImages[2]}}" ng-click="conferenceDetailsRate(3)"/>
+					<img ng-src="{{rateImages[3]}}" ng-click="conferenceDetailsRate(4)"/>
+					<img ng-src="{{rateImages[4]}}" ng-click="conferenceDetailsRate(5)"/>
+				</td>
+				<td>
+					<button type="button" class="btn btn-default pull-right" ng-click="conferenceDetailsSubmitRate()">
+						{{resourceBundle.buttonRate}}
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr/>
+	<table class="listNotice">
+		<tbody>
+			<tr>
+				<td class="rating">
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+				</td>
+				<td>
+					({{conferenceDetailsListRate[4]}})
+				</td>
+			</tr>
+			<tr>
+				<td class="rating">
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+				</td>
+				<td>
+					({{conferenceDetailsListRate[3]}})
+				</td>
+			</tr>
+			<tr>
+				<td class="rating">
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+				</td>
+				<td>
+					({{conferenceDetailsListRate[2]}})
+				</td>
+			</tr>
+			<tr>
+				<td class="rating">
+					<img src="images/star1.png"/>
+					<img src="images/star1.png"/>
+				</td>
+				<td>
+					({{conferenceDetailsListRate[1]}})
+				</td>
+			</tr>
+			<tr>
+				<td class="rating">
+					<img src="images/star1.png"/>
+				</td>
+				<td>
+					({{conferenceDetailsListRate[0]}})
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

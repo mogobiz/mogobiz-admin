@@ -1,0 +1,19 @@
+<div class="list-group" style="margin: 0px;">
+	<a href="javascript:void(0)" class="list-group-item" ng-repeat="speaker in speakers" ng-click="speakersGetSpeakerDetails(speaker)">
+		<table style="min-height:54px;">
+			<tbody>
+				<tr>
+					<td width="60px" class="center">
+						<img class="speakerLogo" src="{{speaker.logo}}"/>
+					</td>
+					<td style="padding:10px 0px;">
+						{{speaker.name}}
+					</td>
+					<td width="25px">
+						<span class="pull-right halflings chevron-right"></span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</a>
+</div>

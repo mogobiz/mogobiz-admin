@@ -1,0 +1,31 @@
+<img ng-src="{{mapImage.url}}" id="aroundMeMapImage" style="max-width:100%;"/>
+<div id="aroundMeLocation"><span class="halflings map-marker red"></span></div>
+<div id="aroundMeNextConferences" class="aroundMeNextConferences" ng-hide="nextConferences.length == 0">
+	<div class="arrow" ng-click="aroundMeShowHideNextConferences()">
+		<span class="halflings chevron-up"></span>
+	</div>
+	<div class="list-group">
+		<a href="javascript:void(0)" class="list-group-item" ng-repeat="conference in nextConferences" ng-click="aroundMeGetConferenceDetails(conference.id)">
+			<table>
+				<tbody>
+					<tr>
+						<td class="fancyDateCol">
+							<div class="fancy-date">
+								<span class="month">{{conference.weekDay}} {{conference.monthDay}}</span>
+								<span class="white-shadow day">{{conference.realStartTime}}<br/>{{conference.realEndTime}}</span>
+							</div>
+						</td>
+						<td>
+							{{conference.name}}<br/>
+                            {{conference.category.name}} {{resourceBundle.label_by}} {{conference.brand.name}}<br/>
+                            <span ng-hide="!conference.room || conference.room == ''">{{resourceBundle.label_room}} {{conference.room}}</span>
+						</td>
+						<td width="25px">
+							<span class="pull-right halflings chevron-right"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</a>
+	</div>
+</div>

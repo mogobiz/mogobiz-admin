@@ -1,0 +1,1 @@
+Please check your email ${login} to reset your password and go to ${targetUri}

@@ -1,0 +1,282 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+body{
+	font-size: 150%;
+}
+
+table{
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#mainContainer{
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-top: 52px;
+	background: #FFFFFF;
+}
+
+.bottomTtooltip{
+	display: none;
+	width: 90%;
+	position: absolute;
+	left: 5%;
+	top: 100%;
+	z-index: 10;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-bottom-width: 0px;
+	border-radius: 6px 6px 0px 0px;
+	padding: 5px;
+	text-align: center;
+	background: #FFFFFF;
+}
+
+#modalConfirm .modal-body{
+	padding: 5px !important;
+}
+
+#modalConfirm .modal-footer{
+	padding: 5px !important;
+}
+
+.container{
+	margin-bottom: 20px;
+}
+
+a, a:hover, a:visited{
+	text-decoration: none;
+	color: inherit;
+}
+
+a.clickable, a.clickable:hover, a.clickable:visited{
+	color: #2A6496;
+}
+
+a.backBtn{
+	width: 44px;
+	height: 34px;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+div.p{
+	margin: 0px 0px 10px 0px;
+}
+
+.center{
+	text-align: center;
+}
+
+.hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+.listTitle{
+	background-color: #F5F5F5;
+	padding: 5px;
+}
+
+.detailsHeaderCotainer{
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.detailsTitle{
+	line-height: inherit;
+	padding: 5px 0px;
+}
+
+span.big {
+	font-size: 2.1em;
+	margin-right: 15px;
+}
+
+span.red{
+	color: #A11B26;
+}
+
+.inline{
+	display: inline-block;
+}
+
+.inline.libelle{
+	width: 100px;
+}
+
+.inline.value{
+	padding-left: 5px;
+}
+
+.fancyDateCol{
+	width: 55px;
+	vertical-align: top;
+}
+
+.modal-backdrop.in {
+	filter: alpha(opacity=20);
+	opacity: 0.2;
+}
+
+/* toolbar */
+#toolbar{
+	margin: 0px;
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	z-index: 1001;
+}
+
+#toolbar button, #toolbar .backBtn{
+	display: none;
+}
+
+#toolbar span.ubuntu{
+	font-family: Ubuntu;
+	font-size: 20px;
+	font-weight: 200;
+	color: #FFFFFF;
+}
+
+#navigationbar{
+	margin: 0px;
+	min-height: 100%;
+	padding-top: 52px;
+}
+
+/* agendaTimes */
+.timePeriod{
+	color: #888888;
+	font-size: 80%;
+}
+
+/* conferenceDetails */
+.tracks{
+	font-style: italic;
+}
+
+.conferenceBookmarkCol{
+	width: 40px;
+	vertical-align: top;
+}
+
+.conferenceBookmarkCol img{
+	max-width: 40px;
+	float: right;
+}
+
+.notice .rating{
+	text-align: right;
+	padding-right: 10px;
+	width: 100%;
+}
+
+.notice .rating img{
+	max-width: 30px;
+}
+
+.listNotice{
+	width: auto;
+}
+
+.listNotice .rating{
+	text-align: right;
+	padding-right: 10px;
+}
+
+.listNotice .rating img{
+	max-width: 10px;
+}
+
+/* speakers */
+.speakerLogo{
+	max-width: 50px;
+	max-height: 50px;
+}
+
+/* sponsors */
+.sponsorLogo{
+	max-width: 35%;
+	max-height: 80px;
+	margin: 10px 0px;
+}
+
+.sponsorLogo.platinum{
+	max-width: 70%;
+	max-height: 100px;
+}
+
+/* info */
+.infoTickets{
+	margin-top: 20px;
+	font-size: 130%;
+}
+
+/* time line */
+.twitterLink{
+	display: block;
+	margin-top: 100px;
+}
+
+/* around me */
+.aroundMeNextConferences{
+	width: 90%;
+	position: absolute;
+	left: 5%;
+}
+
+.aroundMeNextConferences .arrow{
+	padding: 5px;
+	width: 100px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	text-align: center;
+	position: relative;
+	z-index: 10;
+	background: #FFF;
+}
+
+.aroundMeNextConferences .arrow.opened{
+	top: 1px;
+	border-bottom-width: 0px;
+	border-radius: 6px 6px 0px 0px;
+}
+
+.aroundMeNextConferences .list-group{
+	margin: 0px;
+	display: none;
+}
+
+/* overrides */
+.list-group-item{
+	padding: 10px 5px;
+}
+
+.navbar-toggle{
+	margin-left: 8px !important;
+	margin-right: 0px !important;
+}
+
+.navbar-nav {
+	margin: 0px !important;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+	background-color: inherit !important;
+}
+
+.btn:hover,
+.btn:focus {
+	background-color: inherit !important;
+}
