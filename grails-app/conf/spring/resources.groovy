@@ -386,9 +386,6 @@ beans = {
         uuidDataService = ref('uuidDataService')
         grailsApplication = ref('grailsApplication')
     }
-    cfpService (bootstrap.CfpService) {
-        commonService = ref('commonService')
-    }
     embeddedElasticSearchService (bootstrap.EmbeddedElasticSearchService)
 
 

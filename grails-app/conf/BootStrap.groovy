@@ -1,7 +1,6 @@
 import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
 import bootstrap.JahiaCommerceService
-import bootstrap.CfpService
 
 class BootStrap {
     def dataSource
@@ -10,14 +9,12 @@ class BootStrap {
     CommonService commonService
     JahiaCommerceService jahiaCommerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
-    CfpService cfpService
 
     def init = { servletContext ->
         embeddedElasticSearchService.init()
         if (grailsApplication.config.dataSource.dbCreate in  ['create', 'create-drop', 'drop-create']) {
             commonService.init()
             jahiaCommerceService.init()
-            cfpService.init()
         }
     }
 
@@ -25,6 +22,5 @@ class BootStrap {
         jahiaCommerceService.destroy()
         commonService.destroy()
         embeddedElasticSearchService.destroy()
-        cfpService.destroy()
     }
 }

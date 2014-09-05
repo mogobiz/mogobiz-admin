@@ -121,6 +121,8 @@ grails.project.dependency.resolution = {
         compile ":rest:0.8"
         compile ":joda-time:1.4"
         test ':spock:0.7'
+
+        compile ":standalone:1.2.3"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
