@@ -328,6 +328,12 @@ beans = {
     productPropertyCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ProductProperty){
         excludes = ['class']
     }
+    shippingRuleRenderer(JsonRenderer, com.mogobiz.store.domain.ShippingRule){
+        excludes = ['class']
+    }
+    shippingRuleCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ShippingRule){
+        excludes = ['class']
+    }
 
     loadBeans("classpath:*defaultResources.groovy")
 /*
@@ -502,6 +508,8 @@ beans = {
     companyPropertyRender (com.mogobiz.store.domain.CompanyPropertyRender)
     productPropertyValidation (com.mogobiz.store.domain.ProductPropertyValidation)
     productPropertyRender (com.mogobiz.store.domain.ProductPropertyRender)
+    shippingRuleValidation (com.mogobiz.store.domain.ShippingRuleValidation)
+    shippingRuleRender (com.mogobiz.store.domain.ShippingRuleRender)
 
 
 }
