@@ -18,14 +18,33 @@
                 <input type="text" id="companyIBeaconName"/>
             </div>
         </div>
-        <div class="spacer"></div><div class="newline">
-        <div class="companyIBeaconDialog-large">
-            <label for="companyIBeaconStartDate"><g:message code="company.iBeacon.startDate.label"></g:message></label><br />
+        <div class="spacer"></div>
+        <div class="newline">
+            <div class="companyIBeaconDialog-large">
+                <label for="companyIBeaconMinor"><g:message code="company.iBeacon.minor.label"></g:message>&nbsp;<sup>*</sup></label><br />
+            </div>
+            <div class="companyIBeaconDialog-large">
+                <label for="companyIBeaconMajor"><g:message code="company.iBeacon.major.label"></g:message>&nbsp;<sup>*</sup></label><br />
+            </div>
         </div>
-        <div class="companyIBeaconDialog-large">
-            <label for="companyIBeaconEndDate"><g:message code="company.iBeacon.endDate.label"></g:message></label><br />
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="companyIBeaconDialog-large">
+                <input type="text" id="companyIBeaconMinor" />
+            </div>
+            <div class="companyIBeaconDialog-large">
+                <input type="text" id="companyIBeaconMajor"/>
+            </div>
         </div>
-    </div>
+        <div class="spacer"></div>
+        <div class="newline">
+            <div class="companyIBeaconDialog-large">
+                <label for="companyIBeaconStartDate"><g:message code="company.iBeacon.startDate.label"></g:message></label><br />
+            </div>
+            <div class="companyIBeaconDialog-large">
+                <label for="companyIBeaconEndDate"><g:message code="company.iBeacon.endDate.label"></g:message></label><br />
+            </div>
+        </div>
         <div class="spacer-small"></div>
         <div class="newline">
             <div class="companyIBeaconDialog-large">

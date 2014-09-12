@@ -90,6 +90,8 @@ function companyIBeaconDrawAll(){
                         "iBeaconId": iBeacons[i].id,
                         "uuid": iBeacons[i].uuid,
                         "name": iBeacons[i].name,
+                        "minor": iBeacons[i].minor,
+                        "major": iBeacons[i].major,
                         "startDate": (iBeacons[i].startDate != "01/01/1970 00:00") ? iBeacons[i].startDate.split(" ")[0] : "",
                         "endDate": (iBeacons[i].endDate != "31/12/2049 00:00") ? iBeacons[i].endDate.split(" ")[0] : "",
                         "active": iBeacons[i].active
@@ -203,7 +205,7 @@ function companyIBeaconPageInitControls(isCreate){
 
 function companyIBeaconPageInitFields(iBeaconId, isCreate){
     $("#companyIBeaconId").val(iBeaconId);
-    $("#companyIBeaconUUID,#companyIBeaconName,#companyIBeaconStartDate,#companyIBeaconEndDate").val("");
+    $("#companyIBeaconUUID,#companyIBeaconName,#companyIBeaconMinor,#companyIBeaconMajor,#companyIBeaconStartDate,#companyIBeaconEndDate").val("");
     $("#companyIBeaconActive").prop("checked", false);
     if (!isCreate){
         var iBeacon = null;
@@ -217,6 +219,8 @@ function companyIBeaconPageInitFields(iBeaconId, isCreate){
         if(iBeacon){
             $("#companyIBeaconUUID").val(iBeacon.uuid);
             $("#companyIBeaconName").val(iBeacon.name);
+            $("#companyIBeaconMinor").val(iBeacon.minor);
+            $("#companyIBeaconMajor").val(iBeacon.major);
             $("#companyIBeaconStartDate").val(iBeacon.startDate);
             $("#companyIBeaconEndDate").val(iBeacon.endDate);
             if(iBeacon.active)
@@ -226,11 +230,15 @@ function companyIBeaconPageInitFields(iBeaconId, isCreate){
 }
 
 function companyIBeaconValidateForm(){
-    if ($("#companyIBeaconUUID").val() == "" || $("#companyIBeaconName").val() == "") {
+    if ($("#companyIBeaconUUID").val() == "" || $("#companyIBeaconName").val() == "" || $("#companyIBeaconMinor").val() == "" || $("#companyIBeaconMajor").val() == "") {
         if($("#companyIBeaconUUID").val() == "")
-            $('#companyIBeaconForm #companyIBeaconUUID').focus();
+            $("#companyIBeaconForm #companyIBeaconUUID").focus();
+        else if($("#companyIBeaconName").val() == "")
+            $("#companyIBeaconForm #companyIBeaconName").focus();
+        else if($("#companyIBeaconMinor").val() == "")
+            $("#companyIBeaconForm #companyIBeaconMinor").focus();
         else
-            $('#companyIBeaconForm #companyIBeaconName').focus();
+            $("#companyIBeaconForm #companyIBeaconMajor").focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : fieldsRequiredMessageLabel,
@@ -245,7 +253,7 @@ function companyIBeaconValidateForm(){
 function companyIBeaconCreateItem(){
     var startDate = ($("#companyIBeaconStartDate").val() != "") ? $("#companyIBeaconStartDate").val() : "01/01/1970";
     var endDate = ($("#companyIBeaconEndDate").val() != "") ? $("#companyIBeaconEndDate").val() : "31/12/2049";
-    var dataToSend = "uuid=" + $("#companyIBeaconUUID").val() + "&name=" + $("#companyIBeaconName").val();
+    var dataToSend = "uuid=" + $("#companyIBeaconUUID").val() + "&name=" + $("#companyIBeaconName").val() + "&minor=" + $("#companyIBeaconMinor").val() + "&major=" + $("#companyIBeaconMajor").val();
     dataToSend += "&startDate=" + startDate + "&endDate=" + endDate+ "&active=" + $("#companyIBeaconActive").is(":checked") + "&format=json";
     $.ajax({
         url : companySaveIBeaconUrl,
@@ -286,6 +294,7 @@ function companyIBeaconUpdateItem(){
     var startDate = ($("#companyIBeaconStartDate").val() != "") ? $("#companyIBeaconStartDate").val() : "01/01/1970";
     var endDate = ($("#companyIBeaconEndDate").val() != "") ? $("#companyIBeaconEndDate").val() : "31/12/2049";
     var dataToSend = "id=" + $("#companyIBeaconId").val() + "&uuid=" + $("#companyIBeaconUUID").val() + "&name=" + $("#companyIBeaconName").val();
+    dataToSend += "&minor=" + $("#companyIBeaconMinor").val() + "&major=" + $("#companyIBeaconMajor").val();
     dataToSend += "&startDate=" + startDate + "&endDate=" + endDate + "&active=" + $("#companyIBeaconActive").is(":checked") + "&format=json";
     $.ajax({
         url : companySaveIBeaconUrl,
