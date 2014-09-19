@@ -36,12 +36,14 @@ dataSource {
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
     url = "jdbc:postgresql://localhost/iper2010"
-    //    dialect = "org.hibernate.dialect.MySQLDialect"
-    //    driverClassName = "com.mysql.jdbc.Driver"
-    //    url = "jdbc:mysql://localhost/iper2010"
-    //    dialect = "org.hibernate.dialect.Oracle10gDialect"
-    //    driverClassName = "oracle.jdbc.driver.OracleDriver"
-    //    url = "jdbc:oracle:thin:@192.168.184.133:1521:orcl"
+
+    // dialect = "org.hibernate.dialect.MySQLDialect"
+    // driverClassName = "com.mysql.jdbc.Driver"
+    // url = "jdbc:mysql://localhost/iper2010"
+
+//    dialect = "com.mogobiz.hibernate.OracleDialect"
+//    driverClassName = "oracle.jdbc.driver.OracleDriver"
+//    url = "jdbc:oracle:thin:@192.168.184.133:1521:orcl"
 
 
     username = "iper2010"
