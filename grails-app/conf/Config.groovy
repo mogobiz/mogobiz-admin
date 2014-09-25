@@ -123,6 +123,8 @@ uuidData.lifetime.cart = 60 * 60 * 24 * 30 // 30j (en secondes)
 uuidData.lifetime.product = 60 * 60 * 24 * 30 // 30j (en secondes)
 uuidData.lifetime.country = 60 * 60 * 24 * 30 // 30j (en secondes)
 
+application.secret=1234567890123456
+
 rootPath = '/tmp/mogobiz-data'
 
 
