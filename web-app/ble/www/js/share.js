@@ -71,6 +71,7 @@ function registerBigData(scope, rootScope, location, route, action, params){
 }
 
 function checkForWaitingData(scope, rootScope, location, route){
+	var status = navigator.connection.type;
 	if(noInternetConnection(scope, rootScope, location, route, false))
 		return;
 	var ratesStr = localStorage.getItem("mogoBleRates");
@@ -118,7 +119,7 @@ function dateToString(date, withHours){
 
 function noInternetConnection(scope, rootScope, location, route, withNotification){
 	var status = navigator.connection.type;
-	if(status == Connection.UNKNOWN || status == Connection.ETHERNET || status == Connection.CELL_2G || status == Connection.CELL || status == Connection.NONE){
+	if(status == Connection.UNKNOWN || status == Connection.CELL_2G || status == Connection.NONE){
 		if(withNotification){
 			if($("#bottomTtooltip").is(":visible")){
 				clearTimeout(bottomTtooltipTimeout);

@@ -30,8 +30,8 @@ function categoryProductsListFilter(header, list) {
 	var productStates = [{label:productActiveLabel, value:"ACTIVE"},{label:productInActiveLabel, value:"INACTIVE"}];
 	stateSelect = addInput('','',InputType.MULTIPLE_SELECT,'ACTIVE','stateSelect','',productStates);
 	
-	var productOrderBy = [{label:nameLabel, value:"name"},{label:priceLabel, value:"montant"},{label:dateLabel, value:"creationDate"}];
-	orderBySelect = addInput('','',InputType.MULTIPLE_SELECT,'creationDate','orderBySelect','',productOrderBy);
+	var productOrderBy = [{label:nameLabel, value:"name"},{label:priceLabel, value:"montant"},{label:dateLabel, value:"dateCreated"}];
+	orderBySelect = addInput('','',InputType.MULTIPLE_SELECT,'dateCreated','orderBySelect','',productOrderBy);
 	
 	var productOrderDirections = [{label:ascendingLabel, value:"asc"},{label:descendingLabel, value:"desc"}];
 	orderDirectionSelect = addInput('','',InputType.MULTIPLE_SELECT,'desc','orderDirectionSelect','',productOrderDirections);
