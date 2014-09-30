@@ -84,6 +84,7 @@ function companyCouponsDrawAll(){
                         categories: coupons[i].categories,
                         products: coupons[i].products,
                         skus: coupons[i].ticketTypes,
+                        anonymous: coupons[i].anonymous,
                         rules: coupons[i].rules
                     }
                 }
@@ -332,6 +333,8 @@ function companyCouponsPageInitFields(couponId, isCreate){
             $("#companyCouponsNumberOfUse").val(coupon.numberOfUses);
             if(coupon.active)
                 $("#companyCouponsActive").prop("checked", true);
+            if(coupon.anonymous)
+                $("#companyCouponsAnonymous").prop("checked", true);
             if(coupon.catalogWise){
                 $("#companyCouponsCatalogWise").prop("checked", true);
                 $("#companyCouponsCategoriesTab").addClass("disabled");
@@ -417,7 +420,7 @@ function companyCouponsCreateCoupon(){
 
     var dataToSend = "name=" + $("#companyCouponsName").val() + "&code=" + $("#companyCouponsCode").val() + "&startDate=" + $("#companyCouponsStartDate").val();
     dataToSend += "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val()
-    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked");
+    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
 
@@ -471,7 +474,7 @@ function companyCouponsUpdateCoupon(){
     var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + $("#companyCouponsName").val();
     dataToSend += "&code=" + $("#companyCouponsCode").val() + "&startDate=" + $("#companyCouponsStartDate").val();
     dataToSend += "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val();
-    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked");
+    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
     $.ajax({
