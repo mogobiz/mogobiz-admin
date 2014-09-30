@@ -413,7 +413,7 @@ function companyCouponsCreateCoupon(){
     var rules = companyCouponsRulesGrid.getData();
     for(var i = 0; i < rules.length; i++){
         rulesToSend += "&rules[" + i + "].xtype=" + rules[i].xtype;
-        rulesToSend += "&rules[" + i + "].discount=" + rules[i].discount;
+        rulesToSend += "&rules[" + i + "].discount=" + encodeURIComponent(rules[i].discount);
         rulesToSend += "&rules[" + i + "].xPurchased=" + rules[i].xPurchased;
         rulesToSend += "&rules[" + i + "].yOffered=" + rules[i].yOffered;
     }
@@ -428,7 +428,7 @@ function companyCouponsCreateCoupon(){
         url : companyCreateCouponsUrl,
         type : "POST",
         noticeType : "POST",
-        data : encodeURI(dataToSend),
+        data : dataToSend,
         dataType : "json",
         cache : false,
         async : true,
@@ -466,7 +466,7 @@ function companyCouponsUpdateCoupon(){
     var rules = companyCouponsRulesGrid.getData();
     for(var i = 0; i < rules.length; i++){
         rulesToSend += "&rules[" + i + "].xtype=" + rules[i].xtype;
-        rulesToSend += "&rules[" + i + "].discount=" + rules[i].discount;
+        rulesToSend += "&rules[" + i + "].discount=" + encodeURIComponent(rules[i].discount);
         rulesToSend += "&rules[" + i + "].xPurchased=" + rules[i].xPurchased;
         rulesToSend += "&rules[" + i + "].yOffered=" + rules[i].yOffered;
     }
@@ -481,7 +481,7 @@ function companyCouponsUpdateCoupon(){
         url : companyUpdateCouponsUrl,
         type : "POST",
         noticeType : "PUT",
-        data : encodeURI(dataToSend),
+        data : dataToSend,
         dataType : "json",
         cache : false,
         async : true,

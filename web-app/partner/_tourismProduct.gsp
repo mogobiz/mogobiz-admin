@@ -74,7 +74,7 @@ function uploadAnotherFile() {
                         <label for="productKeywords"><g:message code="product.keywords.label" /></label>
                     </div>
                     <div class="general-small">
-                        <label for="productIBeacon"><g:message code="product.iBeacon.label" /></label>
+                        <label for="productAvailabilityDate"><g:message code="product.availabilityDate.label" /></label>
                     </div>
                 </div>
                 <div class="spacer-small"></div>
@@ -83,7 +83,7 @@ function uploadAnotherFile() {
                         <input type="text" id="productKeywords" name="product.keywords" class="textInput" placeholder="(<g:message code="product.enterProductKeywords.label" />)"/>
                     </div>
                     <div class="general-small">
-                        <select id="productIBeacon"></select>
+                        <input id="productAvailabilityDate" type="text" readonly="readonly"/>
                     </div>
                 </div>
                 <div class="spacer"></div>
@@ -93,7 +93,7 @@ function uploadAnotherFile() {
 						<label for="productTags"><g:message code="product.tags.label" /></label>
 					</div>
 					<div class="general-small">
-						<a id="brandLink"><label><g:message code="product.Brand.label" /></label></a>
+                        <label for="productIBeacon"><g:message code="product.iBeacon.label" /></label>
 					</div>
 				</div>
  				<div class="spacer-small"></div>
@@ -102,7 +102,15 @@ function uploadAnotherFile() {
      					<input id="productTags" type="text" class="tags" placeholder="<g:message code="product.add.tag"/>" removeMessage="<g:message code="product.remove.tag"/>"/>
      				</div>
 					<div class="general-small">
-						<select id="productBrand" multiple="multiple" name="product.brand.id"></select>
+                        <select id="productIBeacon"></select>
+                        <div class="spacer"></div>
+                        <div>
+                            <a id="brandLink"><label><g:message code="product.Brand.label" /></label></a>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div>
+                            <select id="productBrand" multiple="multiple" name="product.brand.id"></select>
+                        </div>
 					</div>
 				</div>
 				<div class="spacer"></div>

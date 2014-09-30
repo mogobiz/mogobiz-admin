@@ -53,7 +53,7 @@
                 <input type="text" id="shippingRuleMinAmount" pattern="(\d+).?(\d+)?"/>
             </div>
             <div class="taxRate-large">
-                <input type="text" id="shippingRuleMaxAmount" pattern="([+-])?(\d+)(\.\d+)?\%?"/>
+                <input type="text" id="shippingRuleMaxAmount" pattern="(\d+).?(\d+)?"/>
             </div>
         </div>
         <div class="spacer"></div>

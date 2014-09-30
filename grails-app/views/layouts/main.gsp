@@ -54,6 +54,7 @@ var companyShippingRuleErrors_uniqueCountryCode = "${message(code:'company.shipp
 var companyShippingRuleErrors_invalidPrice = "${message(code:'company.shipping.rule.errors.invalidPrice.label')}";
 var companyShippingRuleErrors_invalidMinAmount = "${message(code:'company.shipping.rule.errors.minAmount.label')}";
 var companyShippingRuleErrors_invalidMaxAmount = "${message(code:'company.shipping.rule.errors.maxAmount.label')}";
+var companyShippingRuleErrors_invalidMinAmountMaxAmount = "${message(code:'company.shipping.rule.errors.minAmountMaxAmount.label')}";
 
 //company Tax 
 var companyTax_createLabel = "${message(code:'company.tax.create.label')}";

@@ -83,6 +83,7 @@ function tourismPricingLoadPricings(productId) {
 					'maxOrder' : (response[i].maxOrder > 0) ? response[i].maxOrder : 'Unlimited',
 					'startDate' : (response[i].startDate ? response[i].startDate.split(' ')[0] : ""),
 					'stopDate' : (response[i].stopDate ? response[i].stopDate.split(' ')[0]: ""),
+                    'availabilityDate' : (response[i].availabilityDate ? response[i].availabilityDate.split(' ')[0]: ""),
 					'xprivate' : response[i].xprivate,
 					'sku' : response[i].sku,
 					'productId' : productId
@@ -269,6 +270,14 @@ function tourismPricingInitControls(create) {
 					}).keydown(function() {
 				return false;
 			});
+    $("#tourismPricingAvailabilityDate").datepicker("destroy");
+    $("#tourismPricingAvailabilityDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: new Date(),
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1
+    });
 
 	$("#tourismPricingMinOrder")
 			.change(
@@ -386,7 +395,7 @@ function tourismPricingInitControls(create) {
 }
 
 function tourismPricingInitFields(create, ticketId, ticketTypes) {
-    $("#tourismPricingId,#tourismPricingTicketType,#tourismPricingTicketPrice,#tourismPricingTicketStock,#tourismPricingMaxOrder,#tourismPricingStartDate,#tourismPricingEndDate").val("");
+    $("#tourismPricingId,#tourismPricingTicketType,#tourismPricingAvailabilityDate,#tourismPricingTicketPrice,#tourismPricingTicketStock,#tourismPricingMaxOrder,#tourismPricingStartDate,#tourismPricingEndDate").val("");
     $("#tourismPricingTicketStock").val("1");
     $("#tourismPricingMinOrder").val("0");
     $("#tourismPricingPrivate").prop("checked", false);
@@ -414,6 +423,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes) {
         var data = tourismPricingGetDataRowByTicketId(ticketId);
         $("#tourismPricingId").val(data.ticketId);
         $("#tourismPricingSKU").val(data.sku);
+        $("#tourismPricingAvailabilityDate").val(data.availabilityDate);
         $("#tourismPricingTicketType").val(data.ticketName);
         $("#tourismPricingVariation1").multiselect('uncheckAll');
         $('#tourismPricingVariation1').find('option:contains(' + data.variation1 + ')').attr('selected','selected');
@@ -452,11 +462,11 @@ function tourismPricingInitFields(create, ticketId, ticketTypes) {
         $("#tourismPricingStartDate").val("");
         $("#tourismPricingEndDate").val("");
         if (data.startDate) {
-            $("#tourismPricingStartDate").val(data.startDate.split(" ")[0]);
+            $("#tourismPricingStartDate").val(data.startDate);
             $("#tourismPricingEndDate").datepicker("option", "minDate", data.startDate);
         }
         if (data.stopDate) {
-            $("#tourismPricingEndDate").val(data.stopDate.split(" ")[0]);
+            $("#tourismPricingEndDate").val(data.stopDate);
             $("#tourismPricingStartDate").datepicker("option", "maxDate", data.stopDate);
         }
         if(data.xprivate){
@@ -593,6 +603,8 @@ function tourismPricingCreateTicketCombinaison(productId) {
 		dataToSend += '&ticketType.startDate=' + $('#tourismPricingStartDate').val() + " 00:00";
 	if ($('#tourismPricingEndDate').val().length > 0)
 		dataToSend += '&ticketType.stopDate=' + $('#tourismPricingEndDate').val() + " 00:00";
+	if ($('#tourismPricingAvailabilityDate').val().length > 0)
+		dataToSend += '&ticketType.availabilityDate=' + $('#tourismPricingAvailabilityDate').val() + " 00:00";
 	dataToSend += "&ticketType.stockOutSelling=" + $('#tourismPricingStockOutSelling').is(':checked');
 	dataToSend += "&ticketType.stockUnlimited=" + $('#tourismPricingStockUnlimited').is(':checked');
 	dataToSend += "&ticketType.xprivate=" + $('#tourismPricingPrivate').is(':checked');
@@ -645,6 +657,8 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
 		dataToSend += '&ticketType.startDate=' + $('#tourismPricingStartDate').val() + " 00:00";
 	if ($('#tourismPricingEndDate').val().length > 0)
 		dataToSend += '&ticketType.stopDate=' + $('#tourismPricingEndDate').val() + " 00:00";
+    if ($('#tourismPricingAvailabilityDate').val().length > 0)
+        dataToSend += '&ticketType.availabilityDate=' + $('#tourismPricingAvailabilityDate').val() + " 00:00";
 	dataToSend += "&ticketType.stockOutSelling=" + $('#tourismPricingStockOutSelling').is(':checked');
 	dataToSend += "&ticketType.stockUnlimited=" + $('#tourismPricingStockUnlimited').is(':checked');
 	dataToSend += "&ticketType.xprivate=" + $('#tourismPricingPrivate').is(':checked');

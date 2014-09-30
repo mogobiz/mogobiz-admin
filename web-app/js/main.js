@@ -40,12 +40,10 @@ jQuery.expr[':'].Contains = function(a, i, m) {
 
 
 function countriesLoad() {
-    var dataToSend = "format=json";
-    var regions = [];
     $.ajax({
         url : companyCountriesUrl,
         type : "GET",
-        data : dataToSend,
+        data : "format=json",
         dataType : "json",
         cache : false,
         async : true,

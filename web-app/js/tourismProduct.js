@@ -63,8 +63,6 @@ function productAttachEditForm(productId) {
 
             $('#closeBtn').click(function() {
                 if(productId){
-                    $("#productStartDate").datepicker("destroy");
-                    $("#productStopDate").datepicker("destroy");
                     $('#editProductTabs').remove();
                     $('#items').hide();
                     $('#categoriesMain').show();
@@ -103,13 +101,18 @@ function productAttachEditForm(productId) {
                 $('#productFree').text(productFreePriceLabel);
 
 // Fill Description Tab Fields
+            var availabilityDate = "";
+            if(product.availabilityDate != null)
+                availabilityDate = product.availabilityDate.split(" ")[0];
             $('#productId').val(product.id);
             $('#productType').val(product.xtype.name);
             $('#productName').val(product.name);
             $('#productSKU').val(product.code);
             $('#productExternalCode').val(product.externalCode);
             $('#productKeywords').val(product.keywords);
+            $("#productAvailabilityDate").val(availabilityDate);
             $('#productDescription').val(product.description);
+
 
             if((product.startDate == null && product.stopDate == null) || product.state.name == "INACTIVE")
                 $("#tourismCalendarValidityPeriod").prop("checked", false);
@@ -127,6 +130,7 @@ function productAttachEditForm(productId) {
             productAutoUpdateField(productId, '#productName', 'product.name',false);
             productAutoUpdateField(productId, '#productExternalCode', 'product.externalCode', true);
             productAutoUpdateField(productId, '#productKeywords', 'product.keywords', true);
+            productAutoUpdateField(productId, '#productAvailabilityDate', 'product.availabilityDate', true);
 
             $("#productCategories").bind("multiselectclick", function(event, ui) {
                 if(categoriesClickFromCategoriesLoad)
@@ -144,6 +148,15 @@ function productAttachEditForm(productId) {
                     async : true,
                     success : function(response, status) {}
                 });
+            });
+
+            $("#productAvailabilityDate").datepicker("destroy");
+            $("#productAvailabilityDate").datepicker({
+                dateFormat: 'dd/mm/yy',
+                minDate: new Date(),
+                changeMonth: true,
+                changeYear: true,
+                firstDay: 1
             });
 
             $('#brandLink').unbind();
@@ -798,7 +811,7 @@ function tourismProductGetAllTags(productId){
             });
             $('#productTags').val(tagsStr);
             $('#productTags').tagsInput({
-                height:'25px',
+                height:'70px',
                 onAddTag: tourismProductAddTag,
                 onRemoveTag: tourismProductRemoveTag,
                 //autocomplete_url:getCompanyTagsUrl+"?format=json",

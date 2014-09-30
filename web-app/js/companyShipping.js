@@ -343,7 +343,7 @@ function companyShippingRulesDrawAll(companyId){
 
 function companyShippingRulesCountryCodeFormatter(row, cell, value, columnDef, dataContext){
     for(var i = 0; i < countries.length; i++){
-        if(countries[i].code.toLowerCase() == value.toLowerCase()){
+        if(countries[i].code == value){
             return '<a href="javascript:void(0);" onclick="companyShippingRulesGetEditPage(\'' + dataContext.companyId + '\',\'' + dataContext.ruleId + '\')">' + countries[i].name + '</a>';
         }
     }
@@ -526,6 +526,16 @@ function companyShippingRulesValidateForm(isCreate){
         });
         return false;
     }
+    if(parseInt(parseFloat($("#shippingRuleMaxAmount").val())) < parseInt(parseFloat($("#shippingRuleMinAmount").val()))){
+        $("#shippingRuleForm #shippingRuleMinAmount").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyShippingRuleErrors_invalidMinAmountMaxAmount,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
     return true;
 }
 
@@ -541,9 +551,9 @@ function companyShippingRulesExistCountryInGrid(countryCode){
 
 function companyShippingRulesAddNew(){
     var dataToSend = "countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + $("#shippingRulePrice").val();
-    dataToSend += "&minAmount=" + $("#shippingRuleMinAmount").val();
-    dataToSend += "&maxAmount=" + $("#shippingRuleMaxAmount").val();
+    dataToSend += "&price=" + encodeURIComponent($("#shippingRulePrice").val());
+    dataToSend += "&minAmount=" + encodeURIComponent($("#shippingRuleMinAmount").val());
+    dataToSend += "&maxAmount=" + encodeURIComponent($("#shippingRuleMaxAmount").val());
     dataToSend += "&format=json";
     $.ajax({
         url : shippingRulesSaveUrl,
@@ -564,9 +574,9 @@ function companyShippingRulesAddNew(){
 function companyShippingRulesUpdate(){
     var dataToSend = "id=" + $("#shippingRuleId").val();
     dataToSend += "&countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + $("#shippingRulePrice").val();
-    dataToSend += "&minAmount=" + $("#shippingRuleMinAmount").val();
-    dataToSend += "&maxAmount=" + $("#shippingRuleMaxAmount").val();
+    dataToSend += "&price=" + encodeURIComponent($("#shippingRulePrice").val());
+    dataToSend += "&minAmount=" + encodeURIComponent($("#shippingRuleMinAmount").val());
+    dataToSend += "&maxAmount=" + encodeURIComponent($("#shippingRuleMaxAmount").val());
     dataToSend += "&format=json";
     $.ajax({
         url : shippingRulesSaveUrl,

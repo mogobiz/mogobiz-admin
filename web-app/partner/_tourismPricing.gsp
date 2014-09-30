@@ -45,12 +45,18 @@
 				<div class="pricing-large">
 					<label for="tourismPricingSKU"><g:message code="tourismPricing.SKU.label"/>&nbsp;<sup>*</sup></label>
 				</div>
+                <div class="pricing-large">
+                    <label for="tourismPricingAvailabilityDate"><g:message code="tourismPricing.availabilityDate.label"/></label>
+                </div>
 			</div>
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-large">
 					<input id="tourismPricingSKU" type="text" name="ticketType.sku" placeholder="<g:message code="tourismPricing.SKU.label"/>" required/>
 				</div>
+                <div class="pricing-large">
+                    <input id="tourismPricingAvailabilityDate" type="text" name="ticketType.availabilityDate" readonly="readonly"/>
+                </div>
 			</div>
 			<div class="spacer"></div>				
 			<div class="newline">
