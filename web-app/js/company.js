@@ -423,6 +423,11 @@ function compObjAttachEditForm(compId, partnerId) {
 					$('#useStoreAddress').click(function() {
 						getStoreAddress();
 					});
+                    companyShippingRulesDrawAll(compId);
+                    $('#addNewShippingRule').unbind();
+                    $('#addNewShippingRule').click(function() {
+                        companyShippingRulesGetDetails(compId, null, true);
+                    });
 				}
 				else if (selectedTabId == 'taxTab') {
 					$('#generalInfo').hide();

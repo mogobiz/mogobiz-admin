@@ -205,7 +205,7 @@
 								<label for="shippingCountry"><g:message code="company.shipping.country.label" />&nbsp;<sup>*</sup></label>
 							</div>
 							<div class="shipping_medium">
-								<label for="shippingCity"><g:message code="company.shipping.city.label" /></label>
+								<label for="shippingCity" class="spacer"><g:message code="company.shipping.city.label" /></label>
 							</div>
 							<div class="shipping_small">
 								<label for="shippingPostalCode"><g:message code="company.shipping.postalCode.label" /></label>
@@ -225,27 +225,21 @@
 						</div>
 						<div class="spacer"></div>
 						<div class="newline">
-							<div class="shipping_large">
-								<label for="shippingAddress1"><g:message code="company.shipping.address1.label" /></label>
-							</div>
+                            <div class="shipping_medium">
+                                <label for="shippingAddress1"><g:message code="company.shipping.address1.label" /></label>
+                            </div>
+                            <div class="shipping_medium">
+                                <label for="shippingAddress2"><g:message code="company.shipping.address2.label" /></label>
+                            </div>
 						</div>
 						<div class="spacer-small"></div>
 						<div class="newline">
-							<div class="shipping_large">
+							<div class="shipping_medium">
 								<input type="text" name="company.shipFrom.road1" id="shippingAddress1" />
 							</div>
-						</div>
-						<div class="spacer"></div>
-						<div class="newline">
-							<div class="shipping_large">
-								<label for="shippingAddress2"><g:message code="company.shipping.address2.label" /></label>
-							</div>
-						</div>
-						<div class="spacer-small"></div>
-						<div class="newline">
-							<div class="shipping_large">
-								<input type="text" name="company.shipFrom.road2" id="shippingAddress2" />
-							</div>
+                            <div class="shipping_medium">
+                                <input type="text" name="company.shipFrom.road2" id="shippingAddress2" />
+                            </div>
 						</div>
 						<div class="spacer"></div>
 						<div class="newline">
@@ -253,7 +247,7 @@
 								<label for="shippingCarriers"><g:message code="company.shipping.shippingCarriers.label" /></label>
 							</div>
 							<div class="shipping_medium">
-								<label for="shippingHandlingTime"><g:message code="company.shipping.handlingTime.label" /></label>
+								<label for="shippingHandlingTime" class="spacer"><g:message code="company.shipping.handlingTime.label" /></label>
 							</div>
 							<div class="shipping_small">
 								<label for="shippingWeightUnit"><g:message code="company.shipping.weightUnit.label" /></label>
@@ -268,7 +262,7 @@
 								</select>
 							</div>
 							<div class="shipping_medium">
-								<label style="white-space: nowrap;">
+								<label style="white-space: nowrap;" class="spacer">
 									<input type="number" min="0" max="999999999" name="company.handlingTime" id="shippingHandlingTime" pattern="\d+"/>
 									&nbsp;<g:message code="company.shipping.businessdays.label" />
 								</label>
@@ -287,7 +281,7 @@
 								<label for="shippingRefundPolicy"><g:message code="company.shipping.refundPolicy.label" /></label>
 							</div>
 							<div class="shipping_medium">
-								<label for="shippingReturnPolicy"><g:message code="company.shipping.returnPolicy.label" /></label>
+								<label for="shippingReturnPolicy" class="spacer"><g:message code="company.shipping.returnPolicy.label" /></label>
 							</div>
 						</div>
 						<div class="spacer-small"></div>
@@ -300,13 +294,20 @@
 								</select>
 							</div>
 							<div class="shipping_medium">
-								<label style="white-space: nowrap;">
+								<label style="white-space: nowrap;" class="spacer">
 									<input type="number" min="0" max="999999999" name="company.returnPolicy" id="shippingReturnPolicy" pattern="\d+" />
 									&nbsp;<g:message code="company.shipping.businessdays.label" />
 								</label>
 							</div>
 						</div>
 						<div class="spacer"></div>
+                        <div class="newline">
+                            <p style="font-weight: bold;"><g:message code="company.shipping.rules.header.label" /> <a href="javascript:void(0)" id="addNewShippingRule"><g:message code="company.shipping.rules.add.label" /></a></p>
+                            <div id="shippingRulesGridDiv">
+                                <div id="shippingRulesGrid"></div>
+                            </div>
+                        </div>
+                        <div class="spacer"></div>
 						<div class="newline">
 							<br style="clear: both;"/>
 							<input type="checkbox" id="shippingAllowInternational"/>

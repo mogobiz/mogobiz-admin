@@ -364,7 +364,7 @@ function companyTaxLocalPageSetup(htmlresponse, companyId, localTaxRateId, isCre
 				createLabel : function() {
 					if (companyTaxLocalValidateForm())
 						companyTaxLocalAddNew();
-				},
+				}
 			}
 		});
 	}
@@ -397,7 +397,7 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
 	if(isCreate){
 		$("#localTaxRateCountry").empty();
 		for(var i = 0; i < countries.length; i++){
-			if(!existCountryInGrid(countries[i].code)){
+			if(!companyTaxLocalExistCountryInGrid(countries[i].code)){
 				$("#localTaxRateCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
 			}
 		}
@@ -444,7 +444,7 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
 	}
 }
 
-function existCountryInGrid(countryCode){
+function companyTaxLocalExistCountryInGrid(countryCode){
 	var data = companyTaxLocalGrid.getData();
 	for (var i = 0; i < data.length; i++) {
 		if (data[i].countryCode == countryCode){

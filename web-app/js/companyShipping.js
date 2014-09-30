@@ -266,3 +266,338 @@ function getStoreAddress() {
 	$('#formShipping #shippingAddress1').val($('#formGeneral #generalAddress1').val());
 	$('#formShipping #shippingAddress2').val($('#formGeneral #generalAddress2').val());
 }
+
+// Shipping Rules Functions
+var companyShippingRulesGrid = null;
+var companyShippingRulesPageOffset = 0;
+
+function companyShippingRulesDrawAll(companyId){
+    companyShippingRulesGrid = null;
+    $.ajax({
+        url : shippingRulesListUrl,
+        type : "GET",
+        data : "pageSize=" + companyGridPageSize + "&pageOffset=" + companyIBeaconPageOffset + "&format=json",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            var gridColumns = [{
+                id : "countryCode",
+                name : companyShippingRulesCountryCodeLabel,
+                field : "countryCode",
+                width : 25,
+                formatter : companyShippingRulesCountryCodeFormatter,
+                cssClass : "cell-title"
+            },{
+                id : "maxAmount",
+                name : companyShippingRulesMaxAmountLabel,
+                field : "maxAmount",
+                width : 25,
+                cssClass : "cell-title"
+            },{
+                id : "minAmount",
+                name : companyShippingRulesMinAmountLabel,
+                field : "minAmount",
+                width : 25,
+                cssClass : "cell-title"
+            },{
+                id : "price",
+                name : companyShippingRulesPriceLabel,
+                field : "price",
+                width : 25,
+                cssClass : "cell-title"
+            }];
+
+            var gridOptions = {
+                editable : false,
+                enableAddRow : false,
+                asyncEditorLoading : false,
+                forceFitColumns : true,
+                enableCellNavigation : false,
+                enableColumnReorder : false,
+                rowHeight : 25
+            };
+
+            var gridData = [];
+            var rules = response.list;
+            if(rules){
+                for ( var i = 0; i < rules.length; i++) {
+                    gridData[gridData.length] = {
+                        "id" : i,
+                        "companyId": companyId,
+                        "ruleId": rules[i].id,
+                        "price": rules[i].price,
+                        "maxAmount": rules[i].maxAmount,
+                        "minAmount": rules[i].minAmount,
+                        "countryCode": rules[i].countryCode
+                    }
+                }
+            }
+            companyShippingRulesGrid = new Slick.Grid($("#shippingRulesGrid"), gridData, gridColumns, gridOptions);
+
+            companyShippingRulesGrid.setSelectionModel(new Slick.RowSelectionModel());
+            companyShippingRulesGrid.invalidate();
+        }
+    });
+}
+
+function companyShippingRulesCountryCodeFormatter(row, cell, value, columnDef, dataContext){
+    for(var i = 0; i < countries.length; i++){
+        if(countries[i].code.toLowerCase() == value.toLowerCase()){
+            return '<a href="javascript:void(0);" onclick="companyShippingRulesGetEditPage(\'' + dataContext.companyId + '\',\'' + dataContext.ruleId + '\')">' + countries[i].name + '</a>';
+        }
+    }
+}
+
+function companyShippingRulesGetEditPage(companyId, ruleId){
+    companyShippingRulesGetDetails(companyId, ruleId, false);
+}
+
+function companyShippingRulesGetDetails(companyId, ruleId, isCreate){
+    $.get(
+        companyShippingRulesCreatePageUrl,
+        {},
+        function(htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            companyShippingRulesPageSetup(htmlresponse, companyId, ruleId, isCreate);
+        },
+        "html"
+    );
+}
+
+function companyShippingRulesPageSetup(htmlresponse, companyId, ruleId, isCreate){
+    if ($("#shippingRuleDialog").dialog("isOpen") !== true) {
+        $("#shippingRuleDialog").empty();
+        $("#shippingRuleDialog").html(htmlresponse);
+        $("#shippingRuleDialog").dialog({
+            title : companyShippingRule_TitleLabel,
+            modal : true,
+            resizable : false,
+            width : "auto",
+            height : "auto",
+            open : function(event) {
+                companyShippingRulesInitControls(isCreate);
+                companyShippingRulesInitFields(companyId, ruleId, isCreate);
+            },
+            buttons : {
+                deleteLabel : function() {
+                    companyShippingRulesDelete();
+                },
+                cancelLabel : function() {
+                    $("#shippingRuleDialog").dialog("close");
+                },
+                updateLabel : function() {
+                    if (companyShippingRulesValidateForm(isCreate))
+                        companyShippingRulesUpdate();
+                },
+                createLabel : function() {
+                    if (companyShippingRulesValidateForm(isCreate))
+                        companyShippingRulesAddNew();
+                }
+            }
+        });
+    }
+}
+
+function companyShippingRulesInitControls(isCreate) {
+    if (isCreate) {
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+    }
+    else {
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+    }
+}
+
+function companyShippingRulesInitFields(companyId, ruleId, isCreate){
+    $("#shippingRuleCompanyId").val(companyId);
+    $("#shippingRuleMaxAmount, #shippingRuleMinAmount, #shippingRulePrice").val(0);
+    $("#shippingRuleCountry").empty();
+
+    if(isCreate){
+        $("#localTaxRateCountry").empty();
+        for(var i = 0; i < countries.length; i++){
+            $("#shippingRuleCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
+        }
+        $("#shippingRuleCountry").multiselect("destroy");
+        $("#shippingRuleCountry").multiselect({
+            header : false,
+            multiple : false,
+            noneSelectedText : multiselectNoneSelectedTextLabel,
+            minWidth : 229,
+            height: 60,
+            selectedList : 1
+        });
+    }
+    else{
+        var rule = null;
+        var data = companyShippingRulesGrid.getData();
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].ruleId == ruleId){
+                rule =  data[i];
+                break;
+            }
+        }
+        if(rule){
+            var html = "";
+            for(var i = 0; i < countries.length; i++){
+                if(rule.countryCode == countries[i].code){
+                    html += "<option value='" + countries[i].code + "'>" + countries[i].name + "</option>";
+                }
+            }
+            $("#shippingRuleCountry").html(html);
+            $("#shippingRuleCountry").multiselect("destroy");
+            $("#shippingRuleCountry").multiselect({header : false, multiple : false, selectedList : 1});
+            $("#shippingRuleDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_shippingRuleCountry']")[0].click();
+            $("#shippingRuleCountry").multiselect("refresh");
+            $("#shippingRuleCountry").multiselect("disable");
+            $("#shippingRuleCountry").val(rule.countryCode);
+
+            $("#shippingRuleId").val(rule.ruleId);
+            $("#shippingRulePrice").val(rule.price);
+            $("#shippingRuleMinAmount").val(rule.minAmount);
+            $("#shippingRuleMaxAmount").val(rule.maxAmount);
+        }
+    }
+}
+
+function companyShippingRulesValidateForm(isCreate){
+    if($("#shippingRuleCountry").val() == null || $("#shippingRulePrice").val() == "" || $("#shippingRuleMinAmount").val() == "" || $("#shippingRuleMaxAmount").val() == "") {
+        if ($("#shippingRulePrice").val() == "")
+            $("#shippingRuleForm #shippingRulePrice").focus();
+        else if ($("#shippingRuleMinAmount").val() == "")
+            $("#shippingRuleForm #shippingRuleMinAmount").focus();
+        else if ($("#shippingRuleMaxAmount").val() == "")
+            $("#shippingRuleForm #shippingRuleMaxAmount").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsRequiredMessageLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    if(companyShippingRulesExistCountryInGrid($("#shippingRuleCountry").val()) && isCreate){
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyShippingRuleErrors_uniqueCountryCode,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    if (!$("input#shippingRulePrice")[0].checkValidity()) {
+        $("#shippingRuleForm #shippingRulePrice").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyShippingRuleErrors_invalidPrice,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    if (!$("input#shippingRuleMinAmount")[0].checkValidity()) {
+        $("#shippingRuleForm #shippingRuleMinAmount").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyShippingRuleErrors_invalidMinAmount,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    if (!$("input#shippingRuleMaxAmount")[0].checkValidity()) {
+        $("#shippingRuleForm #shippingRuleMaxAmount").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyShippingRuleErrors_invalidMaxAmount,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    return true;
+}
+
+function companyShippingRulesExistCountryInGrid(countryCode){
+    var data = companyShippingRulesGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].countryCode == countryCode){
+            return true;
+        }
+    }
+    return false;
+}
+
+function companyShippingRulesAddNew(){
+    var dataToSend = "countryCode=" + $("#shippingRuleCountry").val();
+    dataToSend += "&price=" + $("#shippingRulePrice").val();
+    dataToSend += "&minAmount=" + $("#shippingRuleMinAmount").val();
+    dataToSend += "&maxAmount=" + $("#shippingRuleMaxAmount").val();
+    dataToSend += "&format=json";
+    $.ajax({
+        url : shippingRulesSaveUrl,
+        type : "POST",
+        noticeType : "POST",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
+            $("#shippingRuleDialog").dialog("close");
+        },
+        error: function(response, status){}
+    });
+}
+
+function companyShippingRulesUpdate(){
+    var dataToSend = "id=" + $("#shippingRuleId").val();
+    dataToSend += "&countryCode=" + $("#shippingRuleCountry").val();
+    dataToSend += "&price=" + $("#shippingRulePrice").val();
+    dataToSend += "&minAmount=" + $("#shippingRuleMinAmount").val();
+    dataToSend += "&maxAmount=" + $("#shippingRuleMaxAmount").val();
+    dataToSend += "&format=json";
+    $.ajax({
+        url : shippingRulesSaveUrl,
+        type : "POST",
+        noticeType : "PUT",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
+            $("#shippingRuleDialog").dialog("close");
+        },
+        error: function(response, status){}
+    });
+}
+
+function companyShippingRulesDelete(){
+    var dataToSend = "id=" + $("#shippingRuleId").val() + "&format=json";
+    $.ajax({
+        url : shippingRulesDeleteUrl,
+        type : "POST",
+        noticeType : "DELETE",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
+            $("#shippingRuleDialog").dialog("close");
+        },
+        error: function(response, status){}
+    });
+}

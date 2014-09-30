@@ -71,6 +71,7 @@ function registerBigData(scope, rootScope, location, route, action, params){
 }
 
 function checkForWaitingData(scope, rootScope, location, route){
+	var status = navigator.connection.type;
 	if(noInternetConnection(scope, rootScope, location, route, false))
 		return;
 	var ratesStr = localStorage.getItem("mogoBleRates");

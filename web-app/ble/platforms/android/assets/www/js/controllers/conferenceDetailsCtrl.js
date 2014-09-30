@@ -168,7 +168,11 @@ function conferenceDetailsShowSpeakerDetails(scope, rootScope, location, route, 
 }
 
 function conferenceDetailsShareTwitter(scope, rootScope, location, route){
-	window.plugins.socialsharing.shareViaTwitter(conferenceTwitterHashtag + " @" + rootScope.conferenceDetails.brand.twitter + " \"" + rootScope.conferenceDetails.name + "\"");
+    var twitterConfig = conferenceTwitterHashtag;
+    if(rootScope.conferenceDetails.brand.twitter != null && rootScope.conferenceDetails.brand.twitter !="")
+        twitterConfig += " @" + rootScope.conferenceDetails.brand.twitter;
+    twitterConfig +=  " \"" + rootScope.conferenceDetails.name + "\""
+    window.plugins.socialsharing.shareViaTwitter(twitterConfig);
 }
 
 function conferenceDetailsSubmitRate(scope, rootScope, location, route){

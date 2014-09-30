@@ -27,6 +27,16 @@
 	// Shipping
 	var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
 	var shippingPolicyUpdateUrl = "${createLink(controller: 'companyShippingPolicy', action:'update')}";
+	var shippingRulesListUrl = "${createLink(controller: 'shippingRule', action: 'list')}";
+	var shippingRulesSaveUrl = "${createLink(controller: 'shippingRule', action: 'save')}";
+	var shippingRulesDeleteUrl = "${createLink(controller: 'shippingRule', action: 'delete')}";
+
+	var companyShippingRulesCountryCodeLabel = "${message(code: 'company.shipping.rules.countryCode.label')}";
+	var companyShippingRulesMaxAmountLabel = "${message(code: 'company.shipping.rules.maxAmount.label')}";
+	var companyShippingRulesMinAmountLabel = "${message(code: 'company.shipping.rules.minAmount.label')}";
+	var companyShippingRulesPriceLabel = "${message(code: 'company.shipping.rules.price.label')}";
+
+	var companyShippingRulesCreatePageUrl = "${resource(dir: 'admin', file: '_createShippingRule.gsp')}";
 
 	// TaxRate
 	var taxRateListUrl = "${createLink(controller: 'taxRate', action:'listTaxRate')}";
@@ -90,6 +100,7 @@
 <div id="dialog"></div>
 <div id="sellerForm"></div>
 <div id="taxRateDialog"></div>
+<div id="shippingRuleDialog"></div>
 <content tag="footer">
 <!-- footer -->
 <g:render template="/layouts/footer" />
