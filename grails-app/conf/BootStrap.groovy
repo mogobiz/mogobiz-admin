@@ -9,18 +9,11 @@ class BootStrap {
     JahiaCommerceService jahiaCommerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
 
-    private def isFirstTime() {
-        return Role.findAll().size() == 0
-    }
-
     def init = { servletContext ->
-        boolean firstTime = isFirstTime()
-        println("firsttime=" + firstTime)
+        commonService.init()
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
-        //if (grailsApplication.config.dataSource.dbCreate in  ['create', 'create-drop', 'drop-create'])
-        if (firstTime) {
-            commonService.init()
+        if (grailsApplication.config.demo) {
             jahiaCommerceService.init()
         }
     }

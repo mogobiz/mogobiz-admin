@@ -134,7 +134,13 @@ externalAuthPath = 'http://mogobiz.ebiznext.com/auth'
 defaultCompany = 'ebiznext'
 resourcesServerURL = "http://mogobiz.ebiznext.com/iper2010"
 
+superadmin {
+    login = 'admin@iper2010.com'
+    email = 'admin@iper2010.com'
+    password = 'changeit'
+}
 
+demo = true
 
 environments {
     development {
