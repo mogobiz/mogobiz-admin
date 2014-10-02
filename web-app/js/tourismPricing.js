@@ -506,6 +506,14 @@ function tourismPricingValidateForm() {
             stay : false,
             type : 'error'
         });
+    } else if (!$('input#tourismPricingAvailabilityDate')[0].checkValidity()) {
+        $('#tourismPricingAvailabilityDate').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
     } else if (($('#tourismPricingTicketType').val() != "")
         && (!$('input#tourismPricingTicketType')[0].checkValidity())) {
         $('#tourismPricingTicketType').focus();

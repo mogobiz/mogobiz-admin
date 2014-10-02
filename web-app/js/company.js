@@ -381,6 +381,16 @@ function compObjAttachEditForm(compId, partnerId) {
 
 						//Fill General Tab
 						companyGetGeneralInfo(response);
+
+                        //Set auto update control
+                        companyGeneralAutoUpdateField(compId, "#generalCity", "company.location.city", true, false);
+                        companyGeneralAutoUpdateField(compId, "#generalPostalCode", "company.location.postalCode", true, false);
+                        companyGeneralAutoUpdateField(compId, "#generalPhoneNumber", "company.phone", true, true);
+                        companyGeneralAutoUpdateField(compId, "#generalAddress1", "company.location.road1", true, false);
+                        companyGeneralAutoUpdateField(compId, "#generalAddress2", "company.location.road2", true, false);
+                        companyGeneralAutoUpdateField(compId, "#generalWebsite", "company.website", true, true);
+                        companyGeneralAutoUpdateField(compId, "#generalEmail", "company.email", true, true);
+                        companyGeneralMultiSelectAutoUpdate(compId, "#generalCountry", "company.location.countryCode");
 					}
 				}
 				else if (selectedTabId == 'shippingTab') {
@@ -417,11 +427,27 @@ function compObjAttachEditForm(compId, partnerId) {
 						
 						//Fill Shipping Tab
 						companyGetShippingPolicy(compId);
+
+                        //Set auto update control
+                        companyShippingAutoUpdateField(compId, "#shippingCity", "company.shipFrom.city", true, false);
+                        companyShippingAutoUpdateField(compId, "#shippingPostalCode", "company.shipFrom.postalCode", true, false);
+                        companyShippingAutoUpdateField(compId, "#shippingAddress1", "company.shipFrom.road1", true, false);
+                        companyShippingAutoUpdateField(compId, "#shippingAddress2", "company.shipFrom.road2", true, false);
+                        companyShippingAutoUpdateField(compId, "#shippingHandlingTime", "company.handlingTime", true, true);
+                        companyShippingAutoUpdateField(compId, "#shippingReturnPolicy", "company.returnPolicy", true, true);
+
+                        companyShippingAutoUpdateCheckbox(compId, "#shippingAllowInternational", "company.shippingInternational");
+
+                        companyShippingMultiSelectAutoUpdate(compId, "#shippingCountry", "company.shipFrom.countryCode");
+                        companyShippingMultiSelectAutoUpdate(compId, "#shippingWeightUnit", "company.weightUnit");
+                        companyShippingMultiSelectAutoUpdate(compId, "#shippingRefundPolicy", "company.refundPolicy");
+
+                        companyShippingAutoUpdateCarriers(compId);
 					}
 					
 					$('#useStoreAddress').unbind();
 					$('#useStoreAddress').click(function() {
-						getStoreAddress();
+						getStoreAddress(compId);
 					});
                     companyShippingRulesDrawAll(compId);
                     $('#addNewShippingRule').unbind();
@@ -481,6 +507,9 @@ function compObjAttachEditForm(compId, partnerId) {
 
 						//Fill Payment Tab
 						companyGetPaymentPolicy(compId);
+
+                        //Set auto update control
+                        companyPaymentMultiSelectAutoUpdate(compId, "#paymentCurrencyCombo", "company.currencyCode");
 					}
 				}
 				else if (selectedTabId == 'sellersTab'){
@@ -514,6 +543,7 @@ function compObjAttachEditForm(compId, partnerId) {
 					sellersGridSetup(partnerId);
                     companyGetSellerOnLineValidation(compId);
 					sellersShowAll(compId);
+                    companySellerAutoUpdateCheckbox(compId, "#paymentOnLineValidation", "company.onlineValidation");
 				}
                 else if (selectedTabId == 'brandsTab'){
                     $('#generalInfo').hide();
@@ -624,6 +654,11 @@ function compObjAttachEditForm(compId, partnerId) {
                         $('#getNewKeyBtn').click(function() {
                             companyGenerateApiKey(compId);
                         });
+
+                        //Set auto update control
+                        companyApiKeysAutoUpdateField(compId, "#apiKeysGoogleAnalyticsKey", "company.gakey", true, false);
+
+                        companyApiKeysMultiSelectAutoUpdate(compId, "#apiKeysMapProvider", "company.mapProvider");
                     }
                 }
                 else if (selectedTabId == 'iBeaconTab'){
@@ -672,10 +707,6 @@ function compObjAttachEditForm(compId, partnerId) {
 			
 			// Update action from admin
 			if(!partnerId){
-				$('#editCompBtn').unbind();
-				$('#editCompBtn').click(function() {
-					companyUpdateAll(compId,"admin");
-				});
 				$('#cancelEditCompBtn').unbind();
 				$('#cancelEditCompBtn').click(function() {
 					compObjCancelEdit();
@@ -683,13 +714,6 @@ function compObjAttachEditForm(compId, partnerId) {
 			}
 			// Update action from partner
 			else {
-				$('#editCompBtn').unbind();
-				$('#editCompBtn').click(function() {
-                    if(categorySelectedId){
-                        categoryGeneralGetInfo();
-                    }
-					companyUpdateAll(compId,"partner");
-				});
 				$('#cancelEditCompBtn').unbind();
 				$('#cancelEditCompBtn').click(function() {
                     if(categorySelectedId){
@@ -727,79 +751,6 @@ function getAllCompanies() {
 			$('#items').append(pageContent);
 		}
 	});
-}
-
-// Update All: General, Description, Shipping, Payment
-function companyUpdateAll(compId, str) {
-	if (companyValidateAll()) {
-		var updates = [];
-		if (companyHashTable['generalInfo'] && companyHashTable['generalInfo'].visited) {
-			updates.splice(0,0,companyUpdateGeneralInfo);
-		}
-		if (companyHashTable['shipping'] && companyHashTable['shipping'].visited) {
-			updates.splice(0,0,companyUpdateShippingPolicy);
-		}
-		if (companyHashTable['payment'] && companyHashTable['payment'].visited) {
-			updates.splice(0,0,companyUpdatePaymentPolicy);
-		}
-        if (companyHashTable['seller'] && companyHashTable['seller'].visited) {
-            updates.splice(0,0,companyUpdateSeller);
-        }
-        if (companyHashTable['apiKeys'] && companyHashTable['apiKeys'].visited) {
-            updates.splice(0,0,companyUpdateApiKeysInfo);
-        }
-		updateCompanyCalls(compId, updates, str);
-	}
-}
-
-function updateCompanyCalls(compId, updates, str) {
-	if(updates && updates.length > 0) {
-		var update = updates[0];
-		if(typeof update == 'function') {
-			updates.splice(0, 1);
-			update.call(this, compId, updates, str);
-		}
-	}
-	if(updates.length == 0) {
-		$('#editCompanyTabs').remove();
-		$('#searchForm').show();
-		companyHashTable = [];
-		if (str == "admin") {
-			getAllCompanies(); // show companies
-		}
-		else if (str == "partner") {
-			$("#items").empty().hide(); // show ctatlogue tree
-			$("#categoriesMain").show();
-		}
-		else {
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : "ERROR",
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-}
-
-function companyValidateAll() {
-	var allvalid = true;
-	if(!validateGeneralInfo() && companyHashTable['generalInfo'] && companyHashTable['generalInfo'].visited) {
-		$('#generalTab').click();
-		validateGeneralInfo(true);
-		allvalid = false;
-	}
-	else if(!validateShippingPolicy() && companyHashTable['shipping'] && companyHashTable['shipping'].visited) {
-		$('#shippingTab').click();
-		validateShippingPolicy(true);
-		allvalid = false;
-	}
-	else if(!validatePaymentPolicy() && companyHashTable['payment'] && companyHashTable['payment'].visited) {
-		$('#paymentTab').click();
-		validatePaymentPolicy(true);
-		allvalid = false;
-	}
-	return allvalid;
 }
 
 // Function which apply multiselect combo style to <input type="select">

@@ -1299,9 +1299,9 @@ menu button
 	padding-right: 5px;
 }
 
-/* user_name_div */
+/* user_name_div and ../*/
 
-#user_name_div{
+#user_name_div, #active_company_div{
     background:url("../images/fb-menu.png") no-repeat;
 	float:right;
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -1339,7 +1339,11 @@ ul.topnav li a{
 	float: left;
 }
 
-#user ul.topnav li ul.subnav{
+#companies .topnav{
+    margin-right: 10px;
+}
+
+#user ul.topnav li ul.subnav, #companies ul.topnav li ul.subnav{
 	top: 37px;
 	z-index:999;
 }

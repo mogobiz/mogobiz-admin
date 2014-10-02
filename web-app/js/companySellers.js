@@ -1,24 +1,18 @@
-/**
- * Update Seller information
- */
-function companyUpdateSeller(compId, updates, str) {
-    var dataToSend = "company.id=" + compId;
-    dataToSend += "&company.onlineValidation=" + $('#paymentOnLineValidation').is(":checked");
-    dataToSend += "&format=json";
-
-    $.ajax({
-        url : paymentPolicyUpdateUrl,
-        type : "POST",
-        noticeType : "PUT",
-        data : dataToSend,
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            if (response.success) {
-                updateCompanyCalls(compId, updates, str);
-            }
-        }
+function companySellerAutoUpdateCheckbox(compId, objId, objProperty) {
+    $(objId).unbind();
+    $(objId).change(function() {
+        var dataToSend = "company.id=" + compId;
+        dataToSend += "&" + objProperty + "=" + $(objId).is(":checked");
+        dataToSend += "&format=json";
+        $.ajax({
+            url : shippingPolicyUpdateUrl,
+            type : "POST",
+            noticeType : "PUT",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true
+        });
     });
 }
 

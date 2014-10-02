@@ -491,7 +491,6 @@
 	<!-- Create/Edit submit buttons  -->
 	<br style="clear:both;"/>
 	<div align="right" id="editCompDivBtn" class="fk_button_area">
-		<button type="submit" id="editCompBtn" class="fk_ok_btn"><g:message code="default.button.update.label" /></button>
-		<button type="reset" id="cancelEditCompBtn" class="fk_ko_btn"><g:message code="default.button.close.label" /></button>
+		<button type="reset" id="cancelEditCompBtn" class="fk_ok_btn"><g:message code="default.button.close.label" /></button>
 	</div>
 </div>

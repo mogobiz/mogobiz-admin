@@ -1,21 +1,30 @@
 var companyAvailableTags = [];
 var firstTimeMap = true;
 
-function productAutoUpdateField(productId, objId, objProperty, blankOK) {
+function productAutoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     $(objId).unbind();
     $(objId).change(function() {
-        productDoUpdateField(productId, objId, objProperty, blankOK);
+        productDoUpdateField(productId, objId, objProperty, blankOK, checkValidity);
     });
 }
 
-function productDoUpdateField(productId, objId, objProperty, blankOK) {
+function productDoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     if (!blankOK && $(objId).val().length == 0) {
         $(objId).focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : fieldsInvalidMessageLabel,
             stay : false,
-            type : 'error'
+            type : "error"
+        });
+    }
+    else if(checkValidity && !$(objId)[0].checkValidity()){
+        $(objId).focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : "error"
         });
     }
     else {
@@ -33,9 +42,9 @@ function productDoUpdateField(productId, objId, objProperty, blankOK) {
             success : function(response, status) {
                 var productName = response.data.name;
                 if (productName.length > 100) {
-                    productName = productName.substring(0, 100) + '...';
+                    productName = productName.substring(0, 100) + "...";
                 }
-                $('#productLabel').text(productName);
+                $("#productLabel").text(productName);
             }
         });
     }
@@ -55,11 +64,11 @@ function productAttachEditForm(productId) {
             tourismSuggestionsFirstVisit = true;
             openedResourceForm = productId;
 // Main Controls
-            clear_form_elements('#formCreerProd');
-            clear_form_elements('#poiLocationForm');
-            clear_form_elements('#poiInfoForm');
+            clear_form_elements("#formCreerProd");
+            clear_form_elements("#poiLocationForm");
+            clear_form_elements("#poiInfoForm");
 
-            $('#editProductTabs').detach().appendTo('#items');
+            $("#editProductTabs").detach().appendTo('#items');
 
             $('#closeBtn').click(function() {
                 if(productId){
@@ -127,10 +136,10 @@ function productAttachEditForm(productId) {
             tourismProductLoadAllIBeacons(productId, product.ibeacon);
 
 // Init Description Tab Events
-            productAutoUpdateField(productId, '#productName', 'product.name',false);
-            productAutoUpdateField(productId, '#productExternalCode', 'product.externalCode', true);
-            productAutoUpdateField(productId, '#productKeywords', 'product.keywords', true);
-            productAutoUpdateField(productId, '#productAvailabilityDate', 'product.availabilityDate', true);
+            productAutoUpdateField(productId, '#productName', 'product.name', false, false);
+            productAutoUpdateField(productId, '#productExternalCode', 'product.externalCode', true, false);
+            productAutoUpdateField(productId, '#productKeywords', 'product.keywords', true, false);
+            productAutoUpdateField(productId, '#productAvailabilityDate', 'product.availabilityDate', true, true);
 
             $("#productCategories").bind("multiselectclick", function(event, ui) {
                 if(categoriesClickFromCategoriesLoad)
@@ -665,7 +674,7 @@ function tourismProductLoadAllIBeacons(productId, iBeacon){
             }
             $("#productIBeacon").empty().html("" + options).unbind().change(function(){
                 $(this).attr("style", $(this).find("option:selected").attr("style"));
-                productDoUpdateField(productId, '#productIBeacon', 'product.ibeaconId', true);
+                productDoUpdateField(productId, '#productIBeacon', 'product.ibeaconId', true, false);
             });
             $("#productIBeacon").attr("style", $("#productIBeacon").find("option:selected").attr("style"));
         }

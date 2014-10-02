@@ -9,6 +9,9 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 <r:script>
+    //-----Companies----//
+    var getAllCompaniesUrl = "${createLink(controller: 'seller', action:'show')}";
+
 	//-----CATALOG----//
 	var showCatalogUrl = "${createLink(controller: 'catalog', action:'show')}";
 	var createCatalogUrl = "${createLink(controller: 'catalog', action:'save')}";
@@ -183,6 +186,8 @@
 	var shippingRulesSaveUrl = "${createLink(controller: 'shippingRule', action: 'save')}";
 	var shippingRulesDeleteUrl = "${createLink(controller: 'shippingRule', action: 'delete')}";
 
+	var companyShippingChooseCountryErrorLabel = "${message(code: 'company.shipping.errors.chooseCountry.label')}";
+
 	var companyShippingRulesCountryCodeLabel = "${message(code: 'company.shipping.rules.countryCode.label')}";
 	var companyShippingRulesMaxAmountLabel = "${message(code: 'company.shipping.rules.maxAmount.label')}";
 	var companyShippingRulesMinAmountLabel = "${message(code: 'company.shipping.rules.minAmount.label')}";
@@ -321,10 +326,14 @@
 	var sellerAdmin = ${request.seller.admin};
 	var sellerCompanyId = ${request.seller.company.id};
 	var sellerCompanyMapProvider = "${request.seller.company.mapProvider}";
+	var partnerSellerId = "${request.seller.id};";
 
 	// hide username subnav menu after clicking an option
 	function hideUsernameSubnav() {
 		$("#user_name_div").parent().find("ul.subnav").hide();
+	}
+    function hideCompanySubnav() {
+		$("#active_company_div").parent().find("ul.subnav").hide();
 	}
 	
 </r:script>
@@ -351,6 +360,15 @@
 				</li>
 			</ul>
 		</div>
+        <div id="companies" align="right">
+            <ul class="topnav">
+                <li id="active_company_div">Active Compnay</li>
+                <li>
+                    <ul class="subnav" style="display:none;">
+                    </ul>
+                </li>
+            </ul>
+        </div>
 		
 		<div id="createProductMenu">
 			<ul class="topnav">  

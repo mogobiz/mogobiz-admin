@@ -83,7 +83,7 @@ function uploadAnotherFile() {
                         <input type="text" id="productKeywords" name="product.keywords" class="textInput" placeholder="(<g:message code="product.enterProductKeywords.label" />)"/>
                     </div>
                     <div class="general-small">
-                        <input id="productAvailabilityDate" type="text" readonly="readonly"/>
+                        <input id="productAvailabilityDate" type="text" pattern="\d{2}\/\d{2}/\d{4}" placeholder="<g:message code="calendar.datePlaceholder.label"/>" />
                     </div>
                 </div>
                 <div class="spacer"></div>

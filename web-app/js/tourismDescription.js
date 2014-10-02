@@ -48,7 +48,7 @@ function tourismDescriptionInitFields(productId, description) {
 }
 
 function tourismDescriptionUpdateValue(productId){
-	productDoUpdateField(productId, '#productDescriptionRichText', 'product.description',true);
+	productDoUpdateField(productId, '#productDescriptionRichText', 'product.description', true, false);
 	$('#productDescription').val('');
 	$('#productDescriptionTextDiv').empty();
 	$('#productDescription').val($('#productDescriptionRichText').val());

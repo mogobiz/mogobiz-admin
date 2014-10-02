@@ -55,7 +55,7 @@
 					<input id="tourismPricingSKU" type="text" name="ticketType.sku" placeholder="<g:message code="tourismPricing.SKU.label"/>" required/>
 				</div>
                 <div class="pricing-large">
-                    <input id="tourismPricingAvailabilityDate" type="text" name="ticketType.availabilityDate" readonly="readonly"/>
+                    <input id="tourismPricingAvailabilityDate" type="text" name="ticketType.availabilityDate" pattern="\d{2}\/\d{2}/\d{4}" placeholder="<g:message code="calendar.datePlaceholder.label"/>" />
                 </div>
 			</div>
 			<div class="spacer"></div>				

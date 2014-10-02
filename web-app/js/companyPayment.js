@@ -1,28 +1,18 @@
-/**
- * Update Payment information
- */
-function companyUpdatePaymentPolicy(compId, updates, str) {
-	var dataToSend = "company.id=" + compId;
-	dataToSend += "&company.currencyCode=" + $("#paymentCurrencyCombo").val();
-	dataToSend += "&format=json";
-	$.ajax({
-		url : paymentPolicyUpdateUrl,
-		type : "POST",
-		noticeType : "PUT",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if (response.success) {
-				updateCompanyCalls(compId, updates, str);
-			}
-			else {
-				$('#paymentTab').click();
-				showErrors('#formPayment .errors', response.errors);
-			}
-		}
-	});
+function companyPaymentMultiSelectAutoUpdate(compId, objId, objProperty){
+    $(objId).bind("multiselectclick", function(event, ui) {
+        var dataToSend = "company.id=" + compId;
+        dataToSend += "&" + objProperty + "=" + ui.value;
+        dataToSend += "&format=json";
+        $.ajax({
+            url : paymentPolicyUpdateUrl,
+            type : "POST",
+            noticeType : "PUT",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true
+        });
+    });
 }
 
 /**
@@ -60,7 +50,9 @@ function companyGetPaymentPolicy(compId) {
 							$("#paymentCurrencyCombo").multiselect('refresh');
 							$('#formPayment .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_paymentCurrencyCombo"]').each(function() {
 								if(this.value == response.data[key]) {
+                                    $("#paymentCurrencyCombo").unbind("multiselectclick");
 									this.click();
+                                    companyShippingMultiSelectAutoUpdate(compId, "#paymentCurrencyCombo", "company.currencyCode");
 								}
 							});
 						}
@@ -81,24 +73,4 @@ function companyGetPaymentPolicy(compId) {
 			}
 		}
 	});
-}
-
-/**
- * Function used to validate the Payment Form
- * @returns Boolean
- */
-function validatePaymentPolicy(showError) {
-	var valid = true;
-	if ($('#paymentCurrencyCombo').val()==null) {
-		valid = false;
-		if (showError) {
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyPaymentErrors_requiredCurrencyLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	return valid;
 }

@@ -1,26 +1,60 @@
-function companyUpdateGeneralInfo(compId, updates, str) {
-	var dataToSend = $('#formGeneral').serialize();
-	dataToSend += "&company.id="+compId;
-	dataToSend += "&format=json";
+function companyGeneralAutoUpdateField(compId, objId, objProperty, blankOK, checkValidity) {
+    $(objId).unbind();
+    $(objId).change(function() {
+        companyGeneralDoUpdateField(compId, objId, objProperty, blankOK, checkValidity);
+    });
+}
 
-	$.ajax({
-		url : updateCompanyUrl,
-		type : "POST",
-		noticeType : "PUT",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if (response.success) {
-				updateCompanyCalls(compId, updates, str);
-			}
-			else {
-				$('#generalTab').click();
-				showErrors('#formGeneral .errors', response.errors);
-			}
-		}
-	});
+function companyGeneralDoUpdateField(compId, objId, objProperty, blankOK, checkValidity) {
+    if (!blankOK && $(objId).val().length == 0) {
+        $(objId).focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+    }
+    else if(checkValidity && !$(objId)[0].checkValidity()){
+        $(objId).focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+    }
+    else {
+        var dataToSend = "company.id=" + compId;
+        dataToSend += "&" + objProperty + "=" + $(objId).val();
+        dataToSend += "&format=json";
+        $.ajax( {
+            url : updateCompanyUrl,
+            type : "POST",
+            noticeType : "PUT",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true
+        });
+    }
+}
+
+function companyGeneralMultiSelectAutoUpdate(compId, objId, objProperty){
+    $(objId).bind("multiselectclick", function(event, ui) {
+        var dataToSend = "company.id=" + compId;
+        dataToSend += "&" + objProperty + "=" + ui.value;
+        dataToSend += "&format=json";
+        $.ajax({
+            url : updateCompanyUrl,
+            type : "POST",
+            noticeType : "PUT",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true
+        });
+    });
 }
 
 function companyGetGeneralInfo(response) {
@@ -64,85 +98,4 @@ function companyGetGeneralInfo(response) {
 			}
 		});
 	}
-}
-
-function validateGeneralInfo(showError) {
-	var valid;
-	if($('#generalStoreName').val() == "") {
-		valid = false;
-		if (showError) {
-			$('#formGeneral #generalStoreName').focus();
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_requiredStoreNameLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else if($('#generalCountry').val() == null) {
-		valid = false;
-		if (showError) {
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_requiredCountryLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else if (!$('input#generalWebsite')[0].checkValidity()) {
-		valid = false;
-		if (showError) {
-			$('#formGeneral #generalWebsite').focus();
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_invalidWebsiteLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else if (!$('input#generalPhoneNumber')[0].checkValidity()) {
-		valid = false;
-		if (showError) {
-			$('#formGeneral #generalPhoneNumber').focus();
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_invalidPhoneNumberLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else if($('#generalEmail').val() == ""){
-		valid = false;
-		if (showError) {
-			$('#formGeneral #generalEmail').focus();
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_requiredEmailLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else if (!$('input#generalEmail')[0].checkValidity()) {
-		valid = false;
-		if (showError) {
-			$('#formGeneral #generalEmail').focus();
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : companyGeneralErrors_invalidEmailLabel,
-				stay : false,
-				type : 'error'
-			});
-		}
-	}
-	else {
-		$('#formGeneral .errors').html("");
-		$('#formGeneral .errors').hide();
-		valid = true;
-	}
-	return valid;
 }

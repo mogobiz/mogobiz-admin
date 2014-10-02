@@ -31,6 +31,8 @@
 	var shippingRulesSaveUrl = "${createLink(controller: 'shippingRule', action: 'save')}";
 	var shippingRulesDeleteUrl = "${createLink(controller: 'shippingRule', action: 'delete')}";
 
+	var companyShippingCountryRequiredLabel = "${message(code: 'company.shipping.errors.chooseCountry.label')}";
+
 	var companyShippingRulesCountryCodeLabel = "${message(code: 'company.shipping.rules.countryCode.label')}";
 	var companyShippingRulesMaxAmountLabel = "${message(code: 'company.shipping.rules.maxAmount.label')}";
 	var companyShippingRulesMinAmountLabel = "${message(code: 'company.shipping.rules.minAmount.label')}";
