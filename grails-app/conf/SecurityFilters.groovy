@@ -103,11 +103,26 @@ class SecurityFilters {
             afterView = {
             }
         }
+        /**
+         * Seller acl
+         */
+        showSeller(controller: "seller", action: "show") {
+            before = {
+                def idCompany = (params['company']?.id) ? params['company']?.id : params['seller']?.company?.id
+                accessControl(auth: true) {
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name()))
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
 
         /**
          * Seller acl
          */
-        seller(controller: "seller", action: "show|save|update|delete") {
+        modifySeller(controller: "seller", action: "save|update|delete") {
             before = {
                 def idCompany = (params['company']?.id) ? params['company']?.id : params['seller']?.company?.id
                 accessControl(auth: true) {
