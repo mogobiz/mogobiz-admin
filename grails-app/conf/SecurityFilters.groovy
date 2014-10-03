@@ -44,7 +44,18 @@ class SecurityFilters {
             }
         }
 
-        company(controller: "company", action: "show|update") {
+        showCompany(controller: "company", action: "show") {
+            before = {
+                accessControl(auth: true) {
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name()))
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+        updatCompany(controller: "company", action: "update") {
             before = {
                 def idCompany = params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code)?.id)
                 accessControl(auth: true) {
