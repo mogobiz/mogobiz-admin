@@ -282,7 +282,7 @@ function createCompany(){
  * Edit a company
  */
 
-function compObjGetEditCompanyPage(compId, partnerId) {
+function compObjGetEditCompanyPage(compId, companyCode, partnerId) {
 	$.get(companyPageUrl, {}, function(responseText) {
 		responseText = jQuery.trim(responseText);
 		$(responseText).appendTo(document.body);
@@ -298,13 +298,13 @@ function compObjGetEditCompanyPage(compId, partnerId) {
             $("#tagsLi").hide().remove();
             $("#tags").hide().remove();
 		}
-		compObjAttachEditForm(compId, partnerId);
+		compObjAttachEditForm(compId, companyCode, partnerId);
 	}, "html");
 }
 
-function compObjAttachEditForm(compId, partnerId) {
+function compObjAttachEditForm(compId, companyCode, partnerId) {
 	var dataToSend = "format=json";
-	dataToSend+= '&id='+compId;
+	dataToSend+= '&code=' + companyCode;
 	if(partnerId){
 		$("#categoriesMain").hide();
 		$("#items").empty().show();

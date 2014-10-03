@@ -1339,11 +1339,11 @@ ul.topnav li a{
 	float: left;
 }
 
-#companies .topnav{
+#userCompanies .topnav{
     margin-right: 10px;
 }
 
-#user ul.topnav li ul.subnav, #companies ul.topnav li ul.subnav{
+#user ul.topnav li ul.subnav, #userCompanies ul.topnav li ul.subnav{
 	top: 37px;
 	z-index:999;
 }

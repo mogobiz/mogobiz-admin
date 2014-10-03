@@ -11,6 +11,7 @@
 <r:script>
     //-----Companies----//
     var getAllCompaniesUrl = "${createLink(controller: 'seller', action:'show')}";
+    var setActiveCompanyUrl ="${createLink(controller: 'seller', action:'setActiveCompany')}";
 
 	//-----CATALOG----//
 	var showCatalogUrl = "${createLink(controller: 'catalog', action:'show')}";
@@ -327,6 +328,7 @@
 
 	var sellerAdmin = ${request.seller.admin};
 	var sellerCompanyId = ${request.seller.company.id};
+	var sellerCompanyCode = "${request.seller.company.code}";
 	var sellerCompanyMapProvider = "${request.seller.company.mapProvider}";
 	var partnerSellerId = "${request.seller.id}";
 
@@ -362,17 +364,11 @@
 				</li>
 			</ul>
 		</div>
-        <div id="companies" align="right">
+        <div id="userCompanies" align="right">
             <ul class="topnav">
-                <li id="active_company_div">Active Compnay</li>
+                <li id="active_company_div"></li>
                 <li>
-                    <ul class="subnav" style="display:none;">
-                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 1</a></li>
-                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 2</a></li>
-                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 3</a></li>
-                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 4</a></li>
-                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 5</a></li>
-                    </ul>
+                    <ul class="subnav" style="display:none;"></ul>
                 </li>
             </ul>
         </div>

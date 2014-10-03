@@ -57,7 +57,7 @@
                 <div class="spacer"></div>
                 <div class="newline">
                     <div class="sellerDialog-medium">
-                        <label for="sellerCompanies"><g:message code="company.sellers.countries.label" /></label>
+                        <label for="sellerCompanies"><g:message code="company.sellers.companies.label" /></label>
                     </div>
                 </div>
                 <div class="spacer-small"></div>

@@ -3,7 +3,7 @@
 <ul>
 <g:each in="${retList?}">
 	<li id=${it.id} class="item">
-		<a href ="javascript:void(0)" class = "listTitle" id="description${it.id}" onclick="compObjGetEditCompanyPage(${it.id});">${it.name}</a><br/><br/>
+		<a href ="javascript:void(0)" class = "listTitle" id="description${it.id}" onclick="compObjGetEditCompanyPage(${it.id}, '${it.code}');">${it.name}</a><br/><br/>
 		<label class="listAttributes"><g:message code="company.website.label" /></label>:&nbsp;&nbsp;<label id="companyWebsiteLabel${it.id}">${it.website}</label><br/>
 		<label class="listAttributes"><g:message code="company.phone.label" /></label>:&nbsp;&nbsp;<label id="companyPhoneLabel${it.id}">${it.phone}</label><br/>
 		<div id="details${it.id}">

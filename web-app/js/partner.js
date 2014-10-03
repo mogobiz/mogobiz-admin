@@ -2,7 +2,6 @@ var translateLanguage = [];
 var menu;
 
 $(document).ready(function() {
-
 	$("#user_name_div").click(function() {
 		$(this).parent().find("ul.subnav").css('width', $("#user_name_div").width()+28+'px');
 		$(this).parent().find("ul.subnav li").css('width', $("#user_name_div").width()+28+'px');
@@ -34,7 +33,7 @@ $(document).ready(function() {
             $(this).parent().find("ul.subnav").slideUp('slow');
         });
     });
-	
+
 	if(sellerAdmin){
 		$('#sellerAdmin').show();
 	}
@@ -70,7 +69,7 @@ function partnerGetAdminPage(partnerId) {
     companyHashTable = [];
     companyTagsPageOffset = 0;
     companyIBeaconPageOffset = 0;
-    compObjGetEditCompanyPage(sellerCompanyId, partnerId);
+    compObjGetEditCompanyPage(sellerCompanyId, sellerCompanyCode, partnerId);
 }
 
 function partnerGetAllUserCompanies(){
@@ -81,8 +80,29 @@ function partnerGetAllUserCompanies(){
         dataType : "json",
         cache : false,
         async : true,
+        success : function(response, status) {console.log(response)
+            var userCompanies = response.companies;
+            var html = "";
+            for(var i = 0; i < userCompanies.length; i++){
+                html += "<li onclick='hideCompanySubnav();'><a href='javascript:void(0);' onclick='partnerChangeActiveCompany(\"" + userCompanies[i] + "\")'>" + userCompanies[i] + "</a></li>";
+            }
+            $("#active_company_div").html(response.company.code);
+            $("#userCompanies ul.subnav").html(html);
+        }
+    });
+}
+
+function partnerChangeActiveCompany(companyCode){
+    $.ajax({
+        url : setActiveCompanyUrl,
+        type : "POST",
+        data : "company.code=" + companyCode,
+        dataType : "json",
+        cache : false,
+        async : true,
         success : function(response, status) {
-            console.log(response);
+            sellerCompanyCode = companyCode;
+            $("#active_company_div").html(companyCode);
         }
     });
 }
