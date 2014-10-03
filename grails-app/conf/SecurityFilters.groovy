@@ -55,7 +55,7 @@ class SecurityFilters {
             afterView = {
             }
         }
-        updatCompany(controller: "company", action: "update") {
+        updateCompany(controller: "company", action: "update") {
             before = {
                 def idCompany = params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code)?.id)
                 accessControl(auth: true) {
