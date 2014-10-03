@@ -80,7 +80,7 @@ function partnerGetAllUserCompanies(){
         dataType : "json",
         cache : false,
         async : true,
-        success : function(response, status) {console.log(response)
+        success : function(response, status) {
             var userCompanies = response.companies;
             var html = "";
             for(var i = 0; i < userCompanies.length; i++){
@@ -93,6 +93,8 @@ function partnerGetAllUserCompanies(){
 }
 
 function partnerChangeActiveCompany(companyCode){
+    if(sellerCompanyCode == companyCode)
+        return;
     $.ajax({
         url : setActiveCompanyUrl,
         type : "POST",
@@ -103,6 +105,8 @@ function partnerChangeActiveCompany(companyCode){
         success : function(response, status) {
             sellerCompanyCode = companyCode;
             $("#active_company_div").html(companyCode);
+            if($("#editCompanyTabs").is(":visible"))
+                partnerGetAdminPage(partnerSellerId);
         }
     });
 }
