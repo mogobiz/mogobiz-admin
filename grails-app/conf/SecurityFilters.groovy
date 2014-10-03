@@ -1,3 +1,4 @@
+import com.mogobiz.store.domain.Company
 import org.apache.shiro.SecurityUtils
 
 import com.mogobiz.store.customer.StoreSessionData
@@ -45,7 +46,7 @@ class SecurityFilters {
 
         company(controller: "company", action: "show|update") {
             before = {
-                def idCompany = params.id ? params.id : params['company']?.id
+                def idCompany = params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code).id)
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
                 }
@@ -108,7 +109,6 @@ class SecurityFilters {
          */
         showSeller(controller: "seller", action: "show") {
             before = {
-                def idCompany = (params['company']?.id) ? params['company']?.id : params['seller']?.company?.id
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name()))
                 }
