@@ -218,6 +218,7 @@ function showCreateSellerDialog(htmlresponse,compId) {
 			open: function(event) {
 				// Show Confirm Email Div
 				$('.sellerConfirmEmailDiv').show();
+                companySellerDrawCountriesMultiSelect(compId);
 				$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
 				$('.ui-dialog-buttonpane').find('button:contains("createLabel")').addClass("ui-create-button");
 				$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
@@ -225,7 +226,7 @@ function showCreateSellerDialog(htmlresponse,compId) {
 			},
 			buttons : {
 				cancelLabel : function() {
-					closeSellerDialog();
+					closeSellerDialog(compId);
 				},
 				createLabel : function() {
 					if(validateSellerDialog()) {
@@ -251,6 +252,7 @@ function showEditSellerDialog(htmlresponse,compId,sellerId) {
 			modal : true,
 			open: function(event) {
 				// Fill the Form
+                $(".sellerCompaniesDiv").show();
 				sellerShow(compId, sellerId);
 				// Disable modifying Email
 				$('#sellerEmail').attr('readonly','readonly')
@@ -262,30 +264,125 @@ function showEditSellerDialog(htmlresponse,compId,sellerId) {
 				}
 				
 				$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
-				$('.ui-dialog-buttonpane').find('button:contains("updateLabel")').addClass("ui-update-button");
-				$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
+				$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+closeLabel+'</span>');
 				$('.ui-dialog-buttonpane').find('button:contains("resetPasswordLabel")').html('<span class="ui-button-text">'+resetPasswordLabel+'</span>');
-				$('.ui-dialog-buttonpane').find('button:contains("updateLabel")').html('<span class="ui-button-text">'+updateLabel+'</span>');
 			},
 			buttons : {
 				cancelLabel : function() {
-					closeSellerDialog();
+					closeSellerDialog(compId);
 				},
 				resetPasswordLabel : function() {
 					sellerResetPassword(sellerId);
-				},
-				updateLabel : function() {
-					if(validateSellerDialog()) {
-			    		sellerUpdate(compId,sellerId);
-			    	}
 				}
 			}
 		});
 	}
 }
 
-function closeSellerDialog() {
-	$('#sellerForm').empty();
+function companySellerDrawCountriesMultiSelect(sellerCompanies, compId){
+    var html = "";
+    var selected = "";
+    if(self){
+        for (var i = 0; i < sellerCompanies.length; i++) {
+            html += "<option value=" + sellerCompanies[i] + " selected disabled>" + sellerCompanies[i] + "</option>";
+        }
+    }
+    else {
+        for (var i = 0; i < companies.length; i++) {
+            selected = "";
+            if (companies[i].id == compId) {
+                selected = " selected";
+            }
+            else {
+                for (var j = 0; j < sellerCompanies.length; j++) {
+                    if (companies[i].code == sellerCompanies[j]) {
+                        selected = " selected";
+                        break;
+                    }
+                }
+            }
+            html += "<option value=" + companies[i].code + selected + ">" + companies[i].code + "</option>";
+        }
+    }
+    $("#sellerCompanies").append(html).multiselect({
+        header: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        minWidth: 100,
+        height: 150,
+        selectedList: 4
+    });
+}
+
+function companySellerInitAutoUpdateEvents(compId, sellerId){
+    $("#sellerFirstName").unbind().change(function(){
+        if($("#sellerFirstName").val() == "") {
+            $("#formSeller #sellerFirstName").focus();
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : companySellersErrors_requiredFirstNameLabel,
+                stay : false,
+                type : "error"
+            });
+        }
+        else{
+            sellerAutoUpdate(compId, sellerId, "seller.firstName", $("#sellerFirstName").val())
+        }
+    });
+    $("#sellerLastName").unbind().change(function(){
+        if($("#sellerLastName").val() == "") {
+            $("#formSeller #sellerLastName").focus();
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : companySellersErrors_requiredLastNameLabel,
+                stay : false,
+                type : "error"
+            });
+        }
+        else{
+            sellerAutoUpdate(compId, sellerId, "seller.lastName", $("#sellerLastName").val())
+        }
+    });
+    $("#sellerCompanies").bind("multiselectclick", function(event, ui) {
+        if(ui.checked)
+            sellerAddCompany(sellerId, ui.value);
+        else {
+            var checkedValues = $("#sellerCompanies").multiselect("getChecked").map(function(){
+                return this.value;
+            }).get();
+            if(checkedValues.length == 0){
+                $("#sellerCompanies").val(ui.value);
+                $("#sellerCompanies").multiselect("refresh");
+                jQuery.noticeAdd({
+                    stayTime : 2000,
+                    text : companySellersErrors_requiredCompaniesLabel,
+                    stay : false,
+                    type : "error"
+                });
+            }
+            else
+                sellerRemoveCompany(sellerId, ui.value);
+        }
+    });
+    $("#sellerAdmin").unbind().change(function() {
+        sellerAutoUpdate(compId, sellerId, "seller.admin", $("#sellerAdmin").is(":checked"));
+    });
+    $("#sellerSell").unbind().change(function() {
+        sellerAutoUpdate(compId, sellerId, "seller.sell", $("#sellerSell").is(":checked"));
+    });
+    $("#sellerValidator").unbind().change(function() {
+        sellerAutoUpdate(compId, sellerId, "seller.validator", $("#sellerValidator").is(":checked"));
+    });
+    $("#sellerActive").unbind().change(function() {
+        sellerAutoUpdate(compId, sellerId, "seller.active", $("#sellerActive").is(":checked"));
+    });
+}
+
+function closeSellerDialog(compId) {
+    if(compId) {
+        sellersGridSetup();
+        sellersShowAll(compId);
+    }
+    $('#sellerForm').empty();
 	$('#sellerForm').dialog('close');
 }
 
@@ -413,6 +510,8 @@ function sellerShow(compId, sellerId) {
 			if(response.active){
 				$('#formSeller #sellerActive').attr("checked","checked");
 			}
+            companySellerDrawCountriesMultiSelect(seller.companies, compId);
+            companySellerInitAutoUpdateEvents(compId, sellerId);
 		}
 	});
 }
@@ -439,9 +538,7 @@ function sellerAddNew(compId) {
 		success : function(response, status) {
 			$('#sellerForm').parent().hideLoading();
 			if (response.success) {
-				sellersGridSetup();
-				sellersShowAll(compId);
-				closeSellerDialog();
+				closeSellerDialog(compId);
 			}
 			else {
 				jQuery.noticeAdd({
@@ -455,38 +552,68 @@ function sellerAddNew(compId) {
 	});
 }
 
-function sellerUpdate(compId,sellerId) {
-	var dataToSend = $('#formSeller').serialize();
-    dataToSend += "&seller.admin=" + $("#formSeller #sellerAdmin").is(":checked");
-    dataToSend += "&seller.sell=" + $("#formSeller #sellerSell").is(":checked");
-    dataToSend += "&seller.validator=" + $("#formSeller #sellerValidator").is(":checked");
-    dataToSend += "&seller.active=" + $("#formSeller #sellerActive").is(":checked");
-	dataToSend += "&seller.company.id="+compId;
-	dataToSend += "&seller.id="+sellerId;
-	dataToSend += "&format=json";
-	
-	$('#sellerForm').parent().showLoading({'addClass': 'loading-indicator-SquaresCircleBig'});
-	
-	$.ajax({
-		url : sellerUpdateUrl,
-		type : "POST",
+function sellerAutoUpdate(compId, sellerId, property, value) {
+    var dataToSend = "seller.company.id="+compId;
+    dataToSend += "&seller.id="+sellerId;
+    dataToSend += "&" + property + "=" + value;
+    dataToSend += "&format=json";
+
+    $.ajax({
+        url : sellerUpdateUrl,
+        type : "POST",
         noticeType : "PUT",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if (response.success) {
-				sellersGridSetup();
-				sellersShowAll(compId);
-				$('#sellerForm').parent().hideLoading();
-				closeSellerDialog();
-			}
-			else {
-				showErrors('#formSeller .errors', response.errors);
-			}
-		}
-	});
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if (!response.success) {
+                showErrors('#formSeller .errors', response.errors);
+            }
+        }
+    });
+}
+
+function sellerAddCompany(sellerId, companyCode){
+    var dataToSend = "company.code=" + companyCode;
+    dataToSend += "&seller.id=" + sellerId;
+    dataToSend += "&format=json";
+
+    $.ajax({
+        url : sellerAddCompanyUrl,
+        type : "POST",
+        noticeType : "PUT",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if (!response.success) {
+                showErrors('#formSeller .errors', response.errors);
+            }
+        }
+    });
+}
+
+function sellerRemoveCompany(sellerId, companyCode){
+    var dataToSend = "company.code=" + companyCode;
+    dataToSend += "&seller.id=" + sellerId;
+    dataToSend += "&format=json";
+
+    $.ajax({
+        url : sellerRemoveCompanyUrl,
+        type : "POST",
+        noticeType : "PUT",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if (!response.success) {
+                showErrors('#formSeller .errors', response.errors);
+            }
+        }
+    });
 }
 
 function sellerAdminUpdate(compId,sellerId,admin) {

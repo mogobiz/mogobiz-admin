@@ -270,6 +270,7 @@ function createCompany(){
 		success : function(response, status) {
 			if(response.success){
 				getAllCompanies();
+                companiesLoad();
 				$('#createCompanyDialog').empty();
 				$('#createCompanyDialog').dialog("close");
 			}

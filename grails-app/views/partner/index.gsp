@@ -175,6 +175,8 @@
 	var sellerShowUrl = "${createLink(controller: 'seller', action: 'show')}";
 	var sellerSaveUrl = "${createLink(controller: 'seller', action: 'save')}";
 	var sellerUpdateUrl = "${createLink(controller: 'seller', action: 'update')}";
+	var sellerAddCompanyUrl = "${createLink(controller: 'seller', action:'addCompany')}";
+	var sellerRemoveCompanyUrl = "${createLink(controller: 'seller', action:'removeCompany')}";
 	var existSellerEmailUrl = "${createLink(controller: 'seller', action: 'isEmailNew')}";
 	var sellerDialogPageUrl = "${createLink(controller: 'seller', action:'initSellerDialogPage')}";
 	var sellerPasswordUrl = "${createLink(controller: 'sellerPassword', action:'resetPassword')}";
@@ -326,7 +328,7 @@
 	var sellerAdmin = ${request.seller.admin};
 	var sellerCompanyId = ${request.seller.company.id};
 	var sellerCompanyMapProvider = "${request.seller.company.mapProvider}";
-	var partnerSellerId = "${request.seller.id};";
+	var partnerSellerId = "${request.seller.id}";
 
 	// hide username subnav menu after clicking an option
 	function hideUsernameSubnav() {
@@ -365,6 +367,11 @@
                 <li id="active_company_div">Active Compnay</li>
                 <li>
                     <ul class="subnav" style="display:none;">
+                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 1</a></li>
+                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 2</a></li>
+                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 3</a></li>
+                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 4</a></li>
+                        <li onclick="hideCompanySubnav();"><a href="javascript:void(0)">Compnay 5</a></li>
                     </ul>
                 </li>
             </ul>

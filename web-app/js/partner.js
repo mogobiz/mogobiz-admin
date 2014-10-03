@@ -42,6 +42,7 @@ $(document).ready(function() {
 	catalogueLoadList();
 	loadTranslateLanguages();
     countriesLoad();
+    companiesLoad();
 });
 
 var StateType = {
@@ -80,8 +81,8 @@ function partnerGetAllUserCompanies(){
         dataType : "json",
         cache : false,
         async : true,
-        success : function(data, status) {
-
+        success : function(response, status) {
+            console.log(response);
         }
     });
 }

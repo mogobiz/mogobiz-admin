@@ -1,4 +1,5 @@
 var countries = [];
+var companies = [];
 
 var CivilityType = {
 	MR : 'MR',
@@ -49,6 +50,27 @@ function countriesLoad() {
         async : true,
         success : function(data, status) {
             countries = data;
+        }
+    });
+}
+
+/**
+ * load companies
+ *
+ * @return the companies list from db
+ */
+
+
+function companiesLoad() {
+    $.ajax({
+        url : showCompanyUrl,
+        type : "GET",
+        data : "format=json",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(data, status) {
+            companies = data;
         }
     });
 }

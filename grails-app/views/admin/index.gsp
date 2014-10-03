@@ -20,6 +20,8 @@
 	var sellerShowUrl = "${createLink(controller: 'seller', action: 'show')}";
 	var sellerSaveUrl = "${createLink(controller: 'seller', action: 'save')}";
 	var sellerUpdateUrl = "${createLink(controller: 'seller', action: 'update')}";
+	var sellerAddCompanyUrl = "${createLink(controller: 'seller', action:'addCompany')}";
+	var sellerRemoveCompanyUrl = "${createLink(controller: 'seller', action:'removeCompany')}";
 	var existSellerEmailUrl = "${createLink(controller: 'seller', action: 'isEmailNew')}";
 	var sellerDialogPageUrl = "${createLink(controller: 'seller', action:'initSellerDialogPage')}";
 	var sellerPasswordUrl = "${createLink(controller: 'sellerPassword', action:'resetPassword')}";

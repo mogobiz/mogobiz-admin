@@ -220,7 +220,7 @@
 	margin: 5px 0px 0px 0px;
 }
 
-.sellerConfirmEmailDiv {
+.sellerConfirmEmailDiv, .sellerCompaniesDiv {
 	display: none;
 }
 
@@ -228,7 +228,7 @@
 	background-color: #F2F2F2;
 }
 
-#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail {
+#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail, #sellerCompanies {
 	width: 276px;
 }
 
