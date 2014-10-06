@@ -7,8 +7,6 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
-grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
         //compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -123,6 +121,7 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
 
         compile ":standalone:1.2.3"
+
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -161,6 +160,10 @@ grails.project.dependency.resolution = {
         compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:0.31'
         compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:0.31'
         runtime 'org.codehaus.jettison:jettison:1.2'
+
+        compile 'com.restfb:restfb:1.6.7'
+        compile 'com.google.zxing:core:1.7'
+        compile "com.mogobiz:mogobiz-core:1.0-SNAPSHOT"
     }
 }
 
