@@ -7,6 +7,8 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
+//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
         //compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
@@ -122,6 +124,7 @@ grails.project.dependency.resolution = {
 
         compile ":standalone:1.2.3"
 
+        compile "com.mogobiz:mogobiz-core:1.0-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -137,8 +140,8 @@ grails.project.dependency.resolution = {
         runtime "postgresql:postgresql:9.1-901.jdbc4"
 //        runtime "com.oracle:ojdbc6:11.2.0.1.0"
 
-        compile 'org.elasticsearch:elasticsearch:1.2.0'
-        compile ('org.elasticsearch:elasticsearch-analysis-icu:2.1.0') {
+        compile 'org.elasticsearch:elasticsearch:1.2.1'
+        compile ('org.elasticsearch:elasticsearch-analysis-icu:2.2.0') {
             excludes 'org.elasticsearch:elasticsearch'
         }
 
@@ -163,7 +166,13 @@ grails.project.dependency.resolution = {
 
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
-        compile "com.mogobiz:mogobiz-core:1.0-SNAPSHOT"
+
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+
+        compile (group:"com.mogobiz", name:"mogobiz-elasticsearch", version:"1.0-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
     }
 }
 
