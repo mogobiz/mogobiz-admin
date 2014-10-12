@@ -31,9 +31,10 @@ class ElasticSearchJob {
         cal.set(Calendar.MILLISECOND, 0)
         def now = cal.getTime()
         Company.findAll().each { Company company ->
-            Collection<Catalog> catalogs = Catalog.findAllByActivationDateLessThanEqualsAndCompany(
+            Collection<Catalog> catalogs = Catalog.findAllByActivationDateLessThanEqualsAndCompanyAndDeleted(
                     new Date(),
                     company,
+                    false,
                     [sort:'activationDate', order:'desc'])
             Catalog catalog = catalogs.size() > 0 ? catalogs.get(0) : null
             if(catalog){
