@@ -15,7 +15,7 @@
 	</h4>
 </div>
 <div id="speakerDetailsContent" class="container">
-	<div ng-bind-html="speakerDetails.description"></div>
+	<div class="descriptionText" ng-bind-html="speakerDetails.description"></div>
 	<hr ng-show="speakerDetails.description != null && speakerDetails.description != ''"/>
 	<div class="p">
 		<a href="javascript:void(0);" class="clickable" ng-click="speakersShareTwitter(speakerDetails)">

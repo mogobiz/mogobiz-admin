@@ -30,7 +30,7 @@
 	<div id="conferenceDetailsTracks" class="p tracks" ng-show="conferenceDetails.tags && conferenceDetails.tags.length > 0">
 		<div ng-repeat="tag in conferenceDetails.tags">{{tag.name}}</div>
 	</div>
-	<p ng-show="conferenceDetails.descriptionAsText != null && conferenceDetails.descriptionAsText != ''">{{conferenceDetails.descriptionAsText}}</p>
+	<p class="descriptionText" ng-show="conferenceDetails.descriptionAsText != null && conferenceDetails.descriptionAsText != ''">{{conferenceDetails.descriptionAsText}}</p>
 	<hr ng-show="conferenceDetails.descriptionAsText != null && conferenceDetails.descriptionAsText != ''"/>
 	<div class="p"><a href="javascript:void(0);" class="clickable" ng-click="conferenceDetailsShareTwitter()">
 		<table><tbody><tr><td width="47px"><span class="big social twitter"/></td><td>{{resourceBundle.label_share}}</td></tr></tbody></table>

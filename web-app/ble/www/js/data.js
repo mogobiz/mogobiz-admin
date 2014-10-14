@@ -130,8 +130,6 @@ function dataSuccessReadConferencesDirectory(scope, rootScope, location, route, 
 				reader.onloadend = function (e) {
 					var obj = JSON.parse(reader.result);
 					if (file.name.indexOf("product_") == 0) {
-	                    if(!obj.room) // TO BE DELETED
-							obj.room = staticRooms[parseInt(Math.random() * 6)] // TO BE DELETED
 						dataConferences[dataConferences.length] = obj;
 					}
 					else if (file.name.indexOf("dates_product_") == 0) {
@@ -483,15 +481,33 @@ function dataResolveSpeakersConferences(speakers, conferences) {
 function dataResolveSpeakerLogo(scope, rootScope, location, route, list) {
 	for (var i = 0; i < rootScope.speakers.length; i++) {
 		var index = dataSpeakerHasLogo(list, rootScope.speakers[i].id);
-		var logo = "images/no_image.gif";
-		if (index >= 0) {
-			logo = list[index].logo;
-		}
-		rootScope.speakers[i].logo = logo;
-		for (var j = 0; j < rootScope.allConferences.length; j++) {
-			if (rootScope.allConferences[j].brand && rootScope.allConferences[j].brand.id == rootScope.speakers[i].id) {
-				rootScope.allConferences[j].brand.logo = logo;
+		if(index < 0){
+			rootScope.speakers[i].logo = "images/no_image.gif";
+			for (var j = 0; j < rootScope.allConferences.length; j++) {
+				if (rootScope.allConferences[j].brand && rootScope.allConferences[j].brand.id == rootScope.speakers[i].id) {
+					rootScope.allConferences[j].brand.logo = "images/no_image.gif";
+				}
 			}
+		}
+		else{
+			$("<img/>").attr("index", i).attr("src", list[index].logo).load(function() {
+				var imgElement = this;
+				var canvas = document.createElement("canvas");
+				canvas.width = 50;
+				canvas.height = 50;
+				var ctx = canvas.getContext("2d");
+				ctx.scale(50 / this.width, 50 / this.height);
+				ctx.drawImage(imgElement, 0, 0);
+				var logo = canvas.toDataURL();
+				var speakerIndex = $(this).attr("index");
+				rootScope.speakers[speakerIndex].logo = logo;
+
+				for (var j = 0; j < rootScope.allConferences.length; j++) {
+					if (rootScope.allConferences[j].brand && rootScope.allConferences[j].brand.id == rootScope.speakers[speakerIndex].id) {
+						rootScope.allConferences[j].brand.logo = logo;
+					}
+				}
+			});
 		}
 	}
 }
