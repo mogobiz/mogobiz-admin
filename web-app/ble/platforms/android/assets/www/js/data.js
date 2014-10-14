@@ -1,5 +1,3 @@
-var staticRooms = ["Pleniere", "Voisine pleniere", "7eme-1", "7eme-2", "7eme-3", "7eme-4", "7eme-5"]; // TO BE DELETED
-
 var dataXhr = null;
 var dataFileEntry = null;
 var dataFileUrl = null;
