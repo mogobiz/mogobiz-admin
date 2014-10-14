@@ -27,7 +27,7 @@ function speakersGetConferenceDetails(scope, rootScope, location, route, confere
 function speakersShareTwitter(scope, rootScope, location, route, speaker){
 	var twitterConfig = conferenceTwitterHashtag;
 	if(speaker.twitter != null && speaker.twitter !="")
-		twitterConfig += " @" + speaker.twitter;
+		twitterConfig += " " + speaker.twitter;
 	window.plugins.socialsharing.shareViaTwitter(twitterConfig);
 }
 

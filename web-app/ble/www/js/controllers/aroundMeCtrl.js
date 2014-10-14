@@ -134,7 +134,7 @@ var aroundMeBle = {
 			setTimeout(function(){
 				$("#bottomTtooltip").html("").hide(0).removeAttr("style");
 			}, 500);
-		}, 2000);
+		}, 5000);
 		aroundMeBle.startBluetoothScan(scope, rootScope, location, route);
 		aroundMeScanInterval = setInterval(function(){aroundMeBle.startBluetoothScan(scope, rootScope, location, route);}, scanInterval);
 	},

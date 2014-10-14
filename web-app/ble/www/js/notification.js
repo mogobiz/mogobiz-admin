@@ -2,9 +2,12 @@ var pushNotification;
 
 function registerDevice() {
 	pushNotification = window.plugins.pushNotification
-	if (localStorage.getItem('mogoBleRegid') && JSON.parse(localStorage.getItem('mogoBleRegid')) != "") {
-		return;
-	}
+    try {
+        var data = JSON.parse(localStorage.getItem('mogoBleRegid'))
+        if (data != "") return
+            }
+    catch(e) {
+    }
 
 	var successHandler = function successHandler(result) {};
 	var errorHandler = function (result) {};
