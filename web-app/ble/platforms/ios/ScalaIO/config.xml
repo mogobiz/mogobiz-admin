@@ -19,25 +19,6 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <preference name="UIViewControllerBasedStatusBarAppearance" value="false" />
-    <preference name="UIStatusBarHidden" value="true" />
-    <name>ScalaIO</name>
-    <description>
-        Indoor Navigation
-    </description>
-    <author email="contact@ebiznext.com">
-        ebiznext
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
-    <preference name="Orientation" value="portrait" />
-    <icon src="res/android/icon.png" />
-    <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#000000" />
-    <preference name="StatusBarStyle" value="lightcontent" />
     <feature name="PushPlugin">
         <param name="ios-package" value="PushPlugin" />
     </feature>
@@ -81,10 +62,35 @@
     <feature name="Zip">
         <param name="ios-package" value="Zip" />
     </feature>
+    <preference name="UIViewControllerBasedStatusBarAppearance" value="false" />
+    <preference name="UIStatusBarHidden" value="true" />
+    <name>ScalaIO</name>
+    <description>
+        Indoor Navigation
+    </description>
+    <author email="contact@ebiznext.com">
+        ebiznext
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="Orientation" value="portrait" />
+    <icon src="res/android/icon.png" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="lightcontent" />
     <feature name="HttpRequest">
         <param name="ios-package" value="HttpRequest" />
     </feature>
     <feature name="GoogleMaps">
         <param name="ios-package" value="GoogleMaps" />
+    </feature>
+    <feature name="External">
+        <param name="ios-package" value="External" />
+    </feature>
+    <feature name="Geocoder">
+        <param name="ios-package" value="Geocoder" />
     </feature>
 </widget>

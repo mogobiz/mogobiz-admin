@@ -326,7 +326,7 @@ module.exports.metadata =
     "nl.x-services.plugins.calendar": "4.2.5",
     "org.apache.cordova.file-transfer": "0.4.5",
     "org.apache.cordova.statusbar": "0.1.7",
-    "plugin.google.maps": "1.1.4",
+    "plugin.google.maps": "1.2.2",
     "org.apache.cordova.file": "1.2.0",
     "plugin.http.request": "1.0.0",
     "com.google.playservices": "17.0.0",

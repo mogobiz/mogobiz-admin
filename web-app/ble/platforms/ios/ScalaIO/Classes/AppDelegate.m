@@ -27,6 +27,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "GoogleMaps/GoogleMaps.h"
 
 #import <Cordova/CDVPlugin.h>
 
@@ -84,6 +85,7 @@
 
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
+    [GMSServices provideAPIKey:@"AIzaSyC15AcW_K2xbBUwcx9kt0TX_v1ULpuJl8w"];
 
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

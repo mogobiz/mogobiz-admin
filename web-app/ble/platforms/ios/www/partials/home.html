@@ -36,11 +36,11 @@
 					<td width="25px"><span class="pull-right halflings chevron-right"></span></td>
 				</tr></tbody></table>
 			</a>
-			<a href="javascript:void(0)" class="list-group-item" ng-click="navigateToPage('info')">
+			<a href="javascript:void(0)" class="list-group-item" ng-click="goToTwitterTimeline()">
 				<table><tbody><tr>
-					<td width="47px"><span class="big glyphicons circle_info"></span></td>
-					<td>{{resourceBundle.menu_info}}</td>
-					<td width="25px"><span class="pull-right halflings chevron-right"></span></td>
+					<td width="47px"><span class="big social twitter"></span></td>
+					<td>{{resourceBundle.menu_timeline}}</td>
+					<td width="25px"><span class="pull-right halflings" ng-class="{'chevron-right': isAndroid, 'new_window': !isAndroid}"></span></td>
 				</tr></tbody></table>
 			</a>
 		</div>

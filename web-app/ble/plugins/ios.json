@@ -207,6 +207,14 @@
                         {
                             "xml": "<feature name=\"GoogleMaps\"><param name=\"ios-package\" value=\"GoogleMaps\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"External\"><param name=\"ios-package\" value=\"External\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geocoder\"><param name=\"ios-package\" value=\"Geocoder\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -228,6 +236,18 @@
                     "Google Maps API Key": [
                         {
                             "xml": "<string>AIzaSyDSrkyTWrJ4Oev1KYcFstQIfdijqZRmzss</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string>Show your location on the map</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSLocationAlwaysUsageDescription": [
+                        {
+                            "xml": "<string>Trace your location on the map</string>",
                             "count": 1
                         }
                     ]
@@ -289,12 +309,12 @@
         },
         "plugin.google.maps": {
             "API_KEY_FOR_IOS": "AIzaSyDSrkyTWrJ4Oev1KYcFstQIfdijqZRmzss",
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         }
     },
     "dependent_plugins": {
         "plugin.http.request": {
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         }
     }
 }

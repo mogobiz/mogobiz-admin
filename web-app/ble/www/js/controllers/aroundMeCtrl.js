@@ -302,7 +302,7 @@ function aroundMeCalculateDestinationDistance(scope, rootScope, location, route)
 		var request = {
 			"address": localStorage.getItem("destinationAddress")
 		};
-		aroundMeMap.geocode(request, function(results) {
+			aroundMeMap.geocode(request, function(results, errorMsg) {
 			if (results.length) {
 				var destinationPosition = results[0].position;
 				var lat1 = aroundMeMyLocation.lat;

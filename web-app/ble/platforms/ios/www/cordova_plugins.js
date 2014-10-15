@@ -358,7 +358,7 @@ module.exports.metadata =
     "org.apache.cordova.network-information": "0.2.10",
     "org.apache.cordova.statusbar": "0.1.7",
     "org.chromium.zip": "2.1.0",
-    "plugin.google.maps": "1.1.4",
+    "plugin.google.maps": "1.2.2",
     "plugin.http.request": "1.0.0"
 }
 // BOTTOM OF METADATA

@@ -170,7 +170,7 @@ function conferenceDetailsShowSpeakerDetails(scope, rootScope, location, route, 
 function conferenceDetailsShareTwitter(scope, rootScope, location, route){
     var twitterConfig = conferenceTwitterHashtag;
     if(rootScope.conferenceDetails.brand.twitter != null && rootScope.conferenceDetails.brand.twitter !="")
-        twitterConfig += " @" + rootScope.conferenceDetails.brand.twitter;
+        twitterConfig += " " + rootScope.conferenceDetails.brand.twitter;
     twitterConfig +=  " \"" + rootScope.conferenceDetails.name + "\""
     window.plugins.socialsharing.shareViaTwitter(twitterConfig);
 }

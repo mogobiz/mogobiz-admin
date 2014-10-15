@@ -134,7 +134,7 @@ var aroundMeBle = {
 			setTimeout(function(){
 				$("#bottomTtooltip").html("").hide(0).removeAttr("style");
 			}, 500);
-		}, 2000);
+		}, 5000);
 		aroundMeBle.startBluetoothScan(scope, rootScope, location, route);
 		aroundMeScanInterval = setInterval(function(){aroundMeBle.startBluetoothScan(scope, rootScope, location, route);}, scanInterval);
 	},
@@ -302,7 +302,7 @@ function aroundMeCalculateDestinationDistance(scope, rootScope, location, route)
 		var request = {
 			"address": localStorage.getItem("destinationAddress")
 		};
-		aroundMeMap.geocode(request, function(results) {
+			aroundMeMap.geocode(request, function(results, errorMsg) {
 			if (results.length) {
 				var destinationPosition = results[0].position;
 				var lat1 = aroundMeMyLocation.lat;

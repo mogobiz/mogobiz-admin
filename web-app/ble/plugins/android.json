@@ -63,6 +63,14 @@
                         {
                             "xml": "<feature name=\"GoogleMaps\"><param name=\"android-package\" value=\"plugin.google.maps.GoogleMaps\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"External\"><param name=\"android-package\" value=\"plugin.google.maps.External\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geocoder\"><param name=\"android-package\" value=\"plugin.google.maps.MyGeocoder\" /></feature>",
+                            "count": 1
                         }
                     ],
                     "/widget": [
@@ -239,7 +247,7 @@
         },
         "plugin.google.maps": {
             "API_KEY_FOR_ANDROID": "AIzaSyBdY57uoOyM2yw4zqiScLFF0o9YGUrJDVI",
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         }
     },
     "dependent_plugins": {
@@ -247,13 +255,13 @@
             "PACKAGE_NAME": "com.ebiznext.ble"
         },
         "plugin.http.request": {
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         },
         "com.google.playservices": {
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         },
         "android.support.v4": {
-            "PACKAGE_NAME": "com.ebiznext.ble"
+            "PACKAGE_NAME": "com.ebiznext.scalaio"
         }
     }
 }

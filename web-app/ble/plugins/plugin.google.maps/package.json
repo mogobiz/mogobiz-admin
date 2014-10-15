@@ -1,5 +1,5 @@
 {
-    "version": "1.1.4",
+    "version": "1.2.2",
     "name": "plugin.google.maps",
     "cordova_name": "phonegap-googlemaps-plugin",
     "description": "Google Maps native SDK for Android and iOS",
@@ -18,7 +18,7 @@
     "engines": [
         {
             "name": "cordova",
-            "version": ">=3.0.0"
+            "version": ">=3.5.0"
         }
     ]
 }
