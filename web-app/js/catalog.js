@@ -395,12 +395,30 @@ function catalogDelete(){
 			catalogueLoadList();
 		},
 		error: function(response, status){
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : catalogDeleteEmptyLabel,
-				stay : false,
-				type : "error"
-			});
+            if(response.status == 401){
+                $.ajax({
+                    url : markDeletedCatalogUrl,
+                    type : "POST",
+                    noticeType : "DELETE",
+                    data : dataToSend,
+                    dataType : "json",
+                    cache : false,
+                    async : true,
+                    success : function(response, status) {
+                        catalogSelectedId = null;
+                        $("#categoryTree").empty();
+                        catalogueLoadList();
+                    },
+                    error: function(response, status){
+                        jQuery.noticeAdd({
+                            stayTime : 2000,
+                            text : catalogDeleteEmptyLabel,
+                            stay : false,
+                            type : "error"
+                        });
+                    }
+                });
+            }
 		}
 	});
 }

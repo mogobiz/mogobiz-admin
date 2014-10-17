@@ -371,12 +371,32 @@ function categoryDeleteValidation(id){
 			}
 		},
 		error : function(response, status) {
-			jQuery.noticeAdd({
-				stayTime : 1000,
-				text : categoryDeleteFailedLabel,
-				stay : false,
-				type : "error"
-			});
+            if(response.status == 403){
+                $.ajax({
+                    url : markDeletedCategoryUrl,
+                    type : "POST",
+                    noticeType : "DELETE",
+                    data : dataToSend,
+                    dataType : "json",
+                    cache : false,
+                    async : true,
+                    success : function(response, status) {
+                        $("#categoryTreeList").jstree("remove", "#categoryTreeNode-" + id);
+                        if(id == categorySelectedId){
+                            $("#createProductMenu").detach().prependTo(document.body).hide();
+                            $("#categoryDetails").empty();
+                        }
+                    },
+                    error: function(response, status){
+                        jQuery.noticeAdd({
+                            stayTime : 1000,
+                            text : categoryDeleteFailedLabel,
+                            stay : false,
+                            type : "error"
+                        });
+                    }
+                });
+            }
 		}
 	});
 }

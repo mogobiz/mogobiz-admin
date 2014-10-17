@@ -18,6 +18,7 @@
 	var createCatalogUrl = "${createLink(controller: 'catalog', action:'save')}";
 	var updateCatalogUrl = "${createLink(controller: 'catalog', action:'update')}";
 	var deleteCatalogUrl = "${createLink(controller: 'catalog', action:'delete')}";
+	var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action:'markDeleted')}";
 	var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action:'publish')}";
 
 	var catalogCreatePageUrl = "${resource(dir: 'partner', file:'_createCatalog.gsp')}";
@@ -32,6 +33,7 @@
 	var createCategoryUrl = "${createLink(controller: 'category', action:'save')}";
 	var updateCategoryUrl = "${createLink(controller: 'category', action:'update')}";
 	var deleteCategoryUrl = "${createLink(controller: 'category', action:'delete')}";
+	var markDeletedCategoryUrl = "${createLink(controller: 'category', action:'markDeleted')}";
 
 	var categoryCreateTreeLabel = "${message(code:'category.tree.create.label')}";
 	var categoryDeleteTreeLabel = "${message(code:'category.tree.delete.label')}";
