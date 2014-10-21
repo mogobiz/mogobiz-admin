@@ -296,16 +296,28 @@ function dataFailedReadVenueDirectory(scope, rootScope, location, route) { // TO
 	rootScope.venueImageInfo = {
 		"roomsCoordinates": [{
 			"location": {"x": 1038, "y": 330},
-			"name": "Pleniere"
-		}, {"location": {"x": 1038, "y": 670}, "name": "Voisine Pleniere"}, {
+			"name": "(1)"
+		},{
+			"location": {"x": 1038, "y": 670},
+			"name": "(2)"
+		},{
 			"location": {"x": 1038, "y": 945},
-			"name": "7eme-1"
-		}, {"location": {"x": 1038, "y": 1195}, "name": "7eme-2"}, {
+			"name": "Salon Parisien"
+		},{
+			"location": {"x": 1038, "y": 1195},
+			"name": "Sponsor"
+		},{
 			"location": {"x": 1038, "y": 1425},
-			"name": "7eme-3"
-		}, {"location": {"x": 2300, "y": 1100}, "name": "7eme-4"}, {
+			"name": "Salon France"
+		},{
+			"location": {"x": 2300, "y": 1100},
+			"name": "(7)"
+		},{
 			"location": {"x": 2300, "y": 1360},
-			"name": "7eme-5"
+			"name": "Petit salon"
+		},{
+			"location": {"x": 2300, "y": 1590},
+			"name": "Accueil"
 		}],
 		"originalImageDimensions": {"width": 2700, "height": 2100}
 	};
