@@ -105,8 +105,17 @@ function partnerChangeActiveCompany(companyCode){
         success : function(response, status) {
             sellerCompanyCode = companyCode;
             $("#active_company_div").html(companyCode);
-            if($("#editCompanyTabs").is(":visible"))
+            if($("#editCompanyTabs").is(":visible")) {
                 partnerGetAdminPage(partnerSellerId);
+            }
+            else{
+                $("#createProductMenu").detach().prependTo(document.body).hide();
+                $("#items").empty().hide();
+                $("#categoryTree").empty();
+                $("#categoryDetails").empty();
+                $("#categoriesMain").show();
+                catalogueLoadList();
+            }
         }
     });
 }

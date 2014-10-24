@@ -90,7 +90,7 @@ function sellersGridSetup(partnerId) {
 function sellersNameCellFormatter(row, cell, value, columnDef, dataContext) {
 	if (value == null || value === "")
 		return "";
-	return "<a href='javascript:void(0)' onclick='sellerRowEdit("+ dataContext.company.id + "," + dataContext.id + ");'>" + dataContext.firstName + " " + dataContext.lastName + "</a>";
+	return "<a href='javascript:void(0)' onclick='sellerRowEdit("+ dataContext.companyId + "," + dataContext.id + ");'>" + dataContext.firstName + " " + dataContext.lastName + "</a>";
 }
 
 /**
@@ -99,18 +99,18 @@ function sellersNameCellFormatter(row, cell, value, columnDef, dataContext) {
 function sellersAdminCellFormatter(row, cell, value, columnDef, dataContext) {	
 	if(self && (dataContext.id == self)) {
 		if (dataContext.admin == true) {
-			return "<input type='checkbox' name='seller.admin' value='true' checked disabled onClick='sellerAdminUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.admin + ")' />";
+			return "<input type='checkbox' name='seller.admin' value='true' checked disabled onClick='sellerAdminUpdate("+dataContext.companyId + "," +dataContext.id+ "," + !dataContext.admin + ")' />";
 		}
 		else {
-			return "<input type='checkbox' name='seller.admin' value='true' disabled onClick='sellerAdminUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.admin + ")' />";
+			return "<input type='checkbox' name='seller.admin' value='true' disabled onClick='sellerAdminUpdate("+dataContext.companyId + "," +dataContext.id+ "," + !dataContext.admin + ")' />";
 		}
 	}
 	else {
 		if (dataContext.admin == true) {
-			return "<input type='checkbox' name='seller.admin' value='true' checked  onClick='sellerAdminUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.admin + ")' />";
+			return "<input type='checkbox' name='seller.admin' value='true' checked  onClick='sellerAdminUpdate("+dataContext.companyId + "," +dataContext.id+ "," + !dataContext.admin + ")' />";
 		}
 		else {
-			return "<input type='checkbox' name='seller.admin' value='true'  onClick='sellerAdminUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.admin + ")' />";
+			return "<input type='checkbox' name='seller.admin' value='true'  onClick='sellerAdminUpdate("+dataContext.companyId + "," +dataContext.id+ "," + !dataContext.admin + ")' />";
 		}
 	}
 }
@@ -121,10 +121,10 @@ function sellersAdminCellFormatter(row, cell, value, columnDef, dataContext) {
  */
 function sellersSellerCellFormatter(row, cell, value, columnDef, dataContext) {
 	if (dataContext.sell == true) {
-		return "<input type='checkbox' name='seller.sell' checked  onClick='sellerSellUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.sell + ")' />";
+		return "<input type='checkbox' name='seller.sell' checked  onClick='sellerSellUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.sell + ")' />";
 	}
 	else {
-		return "<input type='checkbox' name='seller.sell'  onClick='sellerSellUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.sell + ")' />";
+		return "<input type='checkbox' name='seller.sell'  onClick='sellerSellUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.sell + ")' />";
 	}
 }
 
@@ -133,10 +133,10 @@ function sellersSellerCellFormatter(row, cell, value, columnDef, dataContext) {
  */
 function sellersValidatorCellFormatter(row, cell, value, columnDef, dataContext) {
 	if (dataContext.validator == true) {
-		return "<input type='checkbox' name='seller.validator' checked  onClick='sellerValidatorUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.validator+ ")' />";
+		return "<input type='checkbox' name='seller.validator' checked  onClick='sellerValidatorUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.validator+ ")' />";
 	}
 	else {
-		return "<input type='checkbox' name='seller.validator'  onClick='sellerValidatorUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.validator+ ")' />";
+		return "<input type='checkbox' name='seller.validator'  onClick='sellerValidatorUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.validator+ ")' />";
 	}
 }
 
@@ -148,20 +148,20 @@ function sellersValidatorCellFormatter(row, cell, value, columnDef, dataContext)
 function sellersActiveCellFormatter(row, cell, value, columnDef, dataContext) {
 	if(self && (dataContext.id == self)) {
 		if (dataContext.active == true) {
-			return "<input type='checkbox' name='seller.active' checked disabled  onClick='sellerActiveUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
+			return "<input type='checkbox' name='seller.active' checked disabled  onClick='sellerActiveUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
 		}
 		else {
-			return "<input type='checkbox' name='seller.active' disabled  onClick='sellerActiveUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
+			return "<input type='checkbox' name='seller.active' disabled  onClick='sellerActiveUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
 		}
 	}
 	else {
 		if (dataContext.active == true) {
 			return "<input type='checkbox' name='seller.active' checked " +
-					" onClick='sellerActiveUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
+					" onClick='sellerActiveUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
 		}
 		else {
 			return "<input type='checkbox' name='seller.active' " +
-					" onClick='sellerActiveUpdate("+dataContext.company.id+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
+					" onClick='sellerActiveUpdate("+dataContext.companyId+ "," +dataContext.id+ "," + !dataContext.active + ")' />";
 		}
 	}
 }
@@ -184,6 +184,9 @@ function sellersShowAll(compId) {
         cache : false,
         async : true,
         success : function(response, status) {
+            for(var i = 0; i < response.length; i++){
+                response[i].companyId = compId;
+            }
             sellersGridObject.setData(response);
             sellersGridObject.invalidate();
         }
