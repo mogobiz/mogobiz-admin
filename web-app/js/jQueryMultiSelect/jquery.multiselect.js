@@ -575,7 +575,11 @@ $.widget("ech.multiselect", {
 	isOpen: function(){
 		return this._isOpen;
 	},
-	
+
+    isDisabled: function(){
+        return this.button.is(':disabled');
+    },
+
 	widget: function(){
 		return this.menu;
 	},
