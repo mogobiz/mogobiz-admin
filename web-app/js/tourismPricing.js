@@ -267,9 +267,11 @@ function tourismPricingInitControls(create) {
 							availablesDates.not(this).datepicker("option",
 									option, date);
 						}
-					}).keydown(function() {
-				return false;
-			});
+					}).keydown(function(e) {
+                        if(e.keyCode == 8 || e.keyCode == 46)
+                            $(this).val("")
+                        return false;
+                    });
     $("#tourismPricingAvailabilityDate").datepicker("destroy");
     $("#tourismPricingAvailabilityDate").datepicker({
         dateFormat: 'dd/mm/yy',
@@ -405,7 +407,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes) {
     $('#tourismPricingEndDate').datepicker("option", "minDate", new Date());
     if ($('#productType').val() != 'SERVICE') {
         for ( var i = 0; i < ticketTypes.length; i++) {
-            $('#tourismPricingVariation' + ticketTypes[i].position + 'Label').html(ticketTypes[i].name + "&nbsp;<sup>*</sup>");
+            $('#tourismPricingVariation' + ticketTypes[i].position + 'Label').html(ticketTypes[i].name);
             $('#tourismPricingVariation' + ticketTypes[i].position).multiselect('uncheckAll');
             $('#tourismPricingVariation' + ticketTypes[i].position).multiselect('enable');
             var options = document.getElementById('tourismPricingVariation' + ticketTypes[i].position).options;
@@ -495,17 +497,11 @@ function tourismPricingGetDataRowByTicketId(ticketId) {
 
 function tourismPricingValidateForm() {
     var valid = false;
-    var variationValuesValid = true;
-    for(var i = 1; i <= 3; i++){
-        if(!$('#tourismPricingVariation' + i).multiselect('isDisabled') && (!$('#tourismPricingVariation' + i).val() || $('#tourismPricingVariation' + i).val() == ""))
-            variationValuesValid = false;
-    }
     if ($('#tourismPricingSKU').val() == ''
         || $('#tourismPricingTicketType').val() == ''
         || $('#tourismPricingTicketPrice').val() == ''
         || $('#tourismPricingMinOrder').val() == ''
-        || ($('#tourismPricingTicketStock').val() == '' && !$('#tourismPricingStockUnlimited').is(':checked'))
-        || !variationValuesValid) {
+        || ($('#tourismPricingTicketStock').val() == '' && !$('#tourismPricingStockUnlimited').is(':checked'))) {
         jQuery.noticeAdd({
             stayTime : 2000,
             text : fieldsRequiredMessageLabel,
