@@ -29,7 +29,7 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
     }
     else {
         var dataToSend = "product.id=" + productId;
-        dataToSend += "&" + objProperty + "=" + $(objId).val();
+        dataToSend += "&" + objProperty + "=" + encodeURIComponent($(objId).val());
         dataToSend += "&format=json";
         $.ajax( {
             url : updateProductUrl,

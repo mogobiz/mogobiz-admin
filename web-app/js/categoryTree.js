@@ -280,6 +280,12 @@ function categoryCreatePageSetup(responseText, parentId){
 				$(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
 				$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
 				$(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+                $("#createCategoryNameField").unbind().bind("keyup", function(e){
+                    if((/\\/).test($("#createCategoryNameField").val()))
+                        $("#createCategoryNameField")[0].setCustomValidity(fieldsInvalidMessageLabel);
+                    else
+                        $("#createCategoryNameField")[0].setCustomValidity("");
+                })
 			},
 			buttons : {
 				cancelLabel : function() {
@@ -295,6 +301,15 @@ function categoryCreatePageSetup(responseText, parentId){
 }
 
 function categoryCreateValidation(){
+    if(!$("#createCategoryNameField")[0].checkValidity()){
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : $("#createCategoryNameField")[0].validationMessage,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
 	if($("#createCategoryNameField").val() != "") {
 		var dataToSend = $($("#categoryCreateForm")).serialize();
 		dataToSend += "&category.catalogId=" + catalogSelectedId + "&format=json";

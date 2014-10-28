@@ -34,8 +34,22 @@ function categoryGeneralGetInfo() {
 			}
             cleditor_description.updateFrame();
 			$("#categoryEditName").change(function(){
+                if(!$(this)[0].checkValidity()){
+                    jQuery.noticeAdd({
+                        stayTime : 2000,
+                        text : $(this)[0].validationMessage,
+                        stay : false,
+                        type : "error"
+                    });
+                    return false;
+                }
 				categoryGeneralUpdateInfo("category.name", $(this), $(this).val(), false);
-			});
+			}).keyup(function(){
+                if((/\\/).test($(this).val()))
+                    $(this)[0].setCustomValidity(fieldsInvalidMessageLabel);
+                else
+                    $(this)[0].setCustomValidity("");
+            });
 			$("#categoryEditExternalCode").change(function(){
 				categoryGeneralUpdateInfo("category.externalCode", $(this), $(this).val(), true);
 			});
@@ -43,7 +57,7 @@ function categoryGeneralGetInfo() {
                 cleditor_description.updateTextArea();
                 categoryGeneralUpdateInfo("category.description", $("#categoryEditDescription"), $("#categoryEditDescription").val(), true);
             });
-			$("#categoryEditHide").click(function(){
+			$("#categoryEditHide").unbind().click(function(){
 				categoryGeneralUpdateInfo("category.hide", $(this), $(this).is(':checked'), false);
 			});
 
