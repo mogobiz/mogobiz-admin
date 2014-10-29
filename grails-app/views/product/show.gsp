@@ -28,7 +28,11 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 				</div>
 				<div style="margin-left: 150px">
 					<a onclick="categoryProductsGetEditPage(${it.id}, '${it.xtype?.toString().toLowerCase()}');"><label>${it.name?.length() > 35 ?it.name?.substring(0, 35)+" ... ":it.name}</label></a>
-					<span><strong>&nbsp;|&nbsp;</strong>${it.code?.length() > 30 ?it.code?.substring(0, 30)+" ... ":it.code}
+                    <g:if test="${it.brand && it.brand.name != ""}">
+                        <strong>&nbsp;|&nbsp;</strong>${it.brand.name}
+                    </g:if>
+
+                    <span><strong>&nbsp;|&nbsp;</strong>${it.code?.length() > 30 ?it.code?.substring(0, 30)+" ... ":it.code}
 					<g:if test="${it.price && it.price > 0}">
 						<strong>&nbsp;|&nbsp;</strong>${it.price / 100}
 					</g:if>

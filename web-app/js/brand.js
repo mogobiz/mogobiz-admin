@@ -425,7 +425,7 @@ function productBrandsValidateForm(){
 function productBrandsCreateBrand(){
     brandCleditor.updateTextArea();
     var dataToSend = "brand.name=" + $("#productBrandsName").val() + "&brand.website=" + $("#productBrandsWebsite").val() + "&brand.ibeaconId=" + $("#productBrandsIBeacon").val();
-    dataToSend += "&brand.description=" + $("#productBrandsDescription").val() + "&brand.hide=" + $("#productBrandsHide").is(':checked') + "&format=json";
+    dataToSend += "&brand.description=" + encodeURIComponent($("#productBrandsDescription").val()) + "&brand.hide=" + $("#productBrandsHide").is(':checked') + "&format=json";
     $.ajax({
         url : createBrandUrl,
         type : "POST",
@@ -459,7 +459,7 @@ function productBrandsCreateBrand(){
 function productBrandsUpdateBrand(){
     brandCleditor.updateTextArea();
     var dataToSend = "brand.id=" + $("#productBrandsId").val() + "&brand.name=" + $("#productBrandsName").val() + "&brand.website=" + $("#productBrandsWebsite").val();
-    dataToSend += "&brand.ibeaconId=" + $("#productBrandsIBeacon").val() + "&brand.description=" + $("#productBrandsDescription").val();
+    dataToSend += "&brand.ibeaconId=" + $("#productBrandsIBeacon").val() + "&brand.description=" + encodeURIComponent($("#productBrandsDescription").val());
     dataToSend += "&brand.hide=" + $("#productBrandsHide").is(':checked') + "&format=json";
     $.ajax({
         url : updateBrandUrl,

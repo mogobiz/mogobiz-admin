@@ -129,7 +129,7 @@ function categoryGeneralUpdateInfo(property, field, value, allowBlank){
 		});
 	}
 	else {
-		var dataToSend = "category.id=" + categorySelectedId + "&category.parentId=" + $("#categoryEditParentId").val() + "&" + property + "=" + value + "&format=json";
+		var dataToSend = "category.id=" + categorySelectedId + "&category.parentId=" + $("#categoryEditParentId").val() + "&" + property + "=" + encodeURIComponent(value) + "&format=json";
 		$.ajax( {
 			url : updateCategoryUrl,
 			type : "POST",
