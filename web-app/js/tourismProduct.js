@@ -85,6 +85,10 @@ function productAttachEditForm(productId) {
                 }, 150);
             });
 
+            $('#deleteBtn').click(function() {
+                tourismProductMarkAsDeleted(productId);
+            });
+
             $('#tourismProperties').hide();
             $('#featuresInfo').hide();
             $('#tourismPricing').hide();
@@ -786,7 +790,6 @@ function productDeleteResource(productId, resourceId) {
     });
 }
 
-
 function productUploadFileSetup(productId) {
     var filesUpload = document.getElementById("files-upload");
     filesUpload.addEventListener("change", function() {
@@ -976,5 +979,28 @@ function tourismProductUpdateShipping(productId, param, value){
         cache : false,
         async : true,
         success : function(response, status) {}
+    });
+}
+
+function tourismProductMarkAsDeleted(productId){
+    var dataToSend = "id=" + productId + "&format=json";
+    $.ajax( {
+        url : markDeletedProductUrl,
+        type : "POST",
+        noticeType : "DELETE",
+        data : dataToSend,
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            $('#editProductTabs').remove();
+            $('#items').hide();
+            $('#categoriesMain').show();
+            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+            $("#categoryProductsTab").addClass("selected");
+            firstTimeMap = true;
+            setTimeout(function(){
+                categoryProductsDrawAll(0);
+            }, 150);
+        }
     });
 }
