@@ -400,7 +400,16 @@ function categoryVariationsDeleteVariation(categoryId, variationId){
 				categoryVariationsDrawAll();
 			}
 		},
-		error : function() {}
+		error : function(response, status) {
+            if(response.status == 403){
+                jQuery.noticeAdd({
+                    stayTime : 2000,
+                    text : variationsReferenceErrorLabel,
+                    stay : false,
+                    type : "error"
+                });
+            }
+        }
 	});
 }
 
