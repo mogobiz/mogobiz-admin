@@ -27,7 +27,7 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 					</g:else>
 				</div>
 				<div style="margin-left: 150px">
-					<a onclick="categoryProductsGetEditPage(${it.id}, '${it.xtype?.toString().toLowerCase()}');"><label>${it.name?.length() > 35 ?it.name?.substring(0, 35)+" ... ":it.name}</label></a>
+					<a onclick="categoryProductsGetEditPage(${it.id}, '${it.xtype?.name.toString().toLowerCase()}');"><label>${it.name?.length() > 35 ?it.name?.substring(0, 35)+" ... ":it.name}</label></a>
                     <g:if test="${it.brand && it.brand.name != ""}">
                         <strong>&nbsp;|&nbsp;</strong>${it.brand.name}
                     </g:if>
@@ -37,7 +37,7 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 						<strong>&nbsp;|&nbsp;</strong>${it.price / 100}
 					</g:if>
 					</span>
-					<span><strong>&nbsp;|&nbsp;</strong>${it.xtype?.toString().toLowerCase().capitalize()}</span>
+					<span><strong>&nbsp;|&nbsp;</strong>${it.xtype?.name.toString().toLowerCase().capitalize()}</span>
 					<g:if test="${it.state }">
 						<span id="${it.id}" class="iphoneSwitchAroundStyle" state="${it.state.toString().equals('ACTIVE')?'on':'off'}">
 						</span>

@@ -154,7 +154,7 @@
 						<div class="spacer-small"></div>
 						<div class="newline">
 							<div class="general_medium">
-								<input type="url" name="company.website" id="generalWebsite" pattern="http://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?" />
+								<input type="url" name="company.website" id="generalWebsite" pattern="https?://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?" />
 							</div>
 							<div class="general_medium">
 								<input type="email" name="company.email" id="generalEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}" required/>

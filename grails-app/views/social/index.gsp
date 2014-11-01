@@ -3,8 +3,24 @@
 <head>
 <title>iper2010 Social Networks</title>
 <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
-<r:require modules="social"/>
+%{--<r:require modules="social"/>--}%
 <r:layoutResources/>
+<g:if env="development">
+    <g:set var="env" value="development"/>
+</g:if>
+<g:else>
+    <g:set var="env" value="release"/>
+</g:else>
+
+<!-- stylesheet -->
+<link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-ui/themes/facebook-theme/jquery-ui-1.8.10.custom.css")}' />
+<link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/main.css")}' />
+<link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/social.css")}' />
+
+<!-- javascript -->
+<g:javascript src="${env}/jquery/jquery-1.9.1.js"/>
+<g:javascript src="${env}/jquery/jquery-ui.js"/>
+
 </head>
 <body>
 	<div id="container" class="group">

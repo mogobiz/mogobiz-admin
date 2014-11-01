@@ -1,0 +1,436 @@
+/**
+ * this file is used by admin and partner
+ * that's why it's separated from the css files
+ */
+
+.selectPlaceHolder {
+	color:#999;
+}
+
+/* Company - General Tab */
+
+.general_small {
+	float: left;
+	width: 25%;
+}
+
+.general_medium {
+	float: left;
+	width: 50%;
+}
+
+.general_large {
+	float: left;
+	width: 100%;
+}
+
+#generalStoreName, #generalStoreCode, #generalWebsite, #generalPhoneNumber, #generalEmail {
+	width: 95.8%;
+}
+
+#generalCountry{
+	width: 166px;
+}
+
+#generalCity, #generalPostalCode {
+	width: 91.5%;
+}
+
+#generalAddress1,#generalAddress2 {
+	width: 97.8%;
+}
+
+/* Company - Variation Tab */
+
+.variation_left{
+	float: left;
+	width: 15%;
+	height: 24px;
+	margin-top: 5px;
+}
+
+.variation_right{
+	float: left;
+	width: 85%;
+	left: 90px;
+}
+
+.variation_right .variation_name{
+	width: 20%;
+	margin-right: 5px;
+}
+
+.variation_right .variation_values{
+	width: 75%;
+}
+
+/* Company - Shipping Tab */
+
+.shipping_small {
+	float: left;
+	width: 25%;
+}
+
+.shipping_medium {
+	float: left;
+	width: 50%;
+}
+
+.shipping_large {
+	float: left;
+	width: 100%;
+}
+
+#shippingCountry, #shippingCarriers, #shippingRefundPolicy, #shippingWeightUnit {
+	width: 149px;
+}
+
+#shippingCity{
+	margin-left: 25%;
+	width: 50%;
+}
+
+#shippingPostalCode {
+	width: 91.5%;
+}
+
+#shippingAddress1 {
+	width: 95%;
+}
+
+#shippingAddress2{
+    width: 96%;
+}
+
+.shipping_medium label.spacer {
+	margin-left: 25%;
+}
+
+#shippingHandlingTime, #shippingReturnPolicy {
+	width: 30%;
+}
+
+#shippingRulesGridDiv{
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#shippingRulesGrid{
+    height: 200px;
+}
+
+/* Company - Tax Tab */
+#taxRateDialog{
+    display: none;
+}
+
+#taxGridHeader, #taxGrid, #taxGridPager {
+	width: 100%;
+}
+
+#taxGrid {
+	border: 1px solid #A6C9E2;
+	border-top: 0px;
+	height:340px;
+}
+
+#taxGrid .slick-header {
+	text-align: left;
+}
+
+#taxGrid .slick-cell.r2, #taxGrid .slick-cell.r3 {
+	text-align: center;
+}
+
+.taxRate-large {
+	float: left;
+	width: 240px;
+}
+
+.taxRate-large input[type="text"] {
+	width: 235px;
+}
+
+/* Company - Payment Tab */
+
+.payment_left {
+	float: left;
+	width: 369px;
+	padding-right: 4px;
+}
+
+.payment_right {
+	float: right;
+	width: 360px;
+}
+
+.payment_left_small{
+	float: left;
+	width: 105px;
+}
+
+.payment_left_large{
+	float: left;
+	left: 105px;
+	width: 259px;
+}
+
+.payment_left select {
+	width: 314px;
+}
+
+.payment_left_small select {
+	width: 100px;
+}
+
+/* Company - Seller Tab */
+
+#sellersGridHeader, #sellersGrid, #sellersGridPager {
+	width: 100%;
+}
+
+#sellersGrid {
+	border: 1px solid #A6C9E2;
+	border-top: 0px;
+	height:340px;
+}
+
+#sellersGrid .slick-header {
+	text-align: left;
+}
+
+#sellersGrid .slick-cell.r2, #sellersGrid .slick-cell.r3, #sellersGrid .slick-cell.r4, #sellersGrid .slick-cell.r5 {
+	text-align: center;
+}
+
+.sellerDialog-medium {
+	float: left;
+	width: 100%;
+}
+
+#sellerForm {
+    display: none;
+	overflow: visible;
+	color: #888;
+	text-align: left;
+	direction: ltr;
+	background:#F2F2F2;
+	border:1px solid #CCCCCC;
+	padding:10px;
+	margin: 5px 0px 0px 0px;
+}
+
+.sellerConfirmEmailDiv, .sellerCompaniesDiv {
+	display: none;
+}
+
+.sellerEmailReadOnly {
+	background-color: #F2F2F2;
+}
+
+#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail, #sellerCompanies {
+	width: 276px;
+}
+
+div.createCompany {
+	float:left;
+	width:250px;
+}
+
+div.createCompany input[type ="email"], div.createCompany input[type ="text"] {
+	width: 240px;
+}
+
+div.createCompany select {
+	width:234px;
+}
+
+/* Company - Brands And Coupons Tab */
+#brandsGridDiv, #couponsGridDiv, #publishingGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#brandsGrid, #couponsGrid, #publishingGrid, #iBeaconGrid, #tagsGrid{
+    height: 396px;
+}
+
+#companyBrandsCreateDiv, #companyBrandsTranslationDiv, #companyCouponsCreateDiv, #companyCouponsRulesCreateDiv, #companyCouponsRulesDiv,
+#companyCouponsTranslationDiv, #companyPublishingCreateDiv, #companyIBeaconCreateDiv{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    width: 500px;
+}
+
+#companyBrandsDialog, #companyCouponsDialog, #companyCouponsRulesDialog, #companyCouponsDialog, #companyIBeaconDialog{
+    display: none;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    background:#F2F2F2;
+    border:1px solid #CCCCCC;
+    padding: 10px;
+    margin: 5px 0px 0px 0px;
+}
+
+#companyBrandsTabs ul.tabs, #companyCouponsTabs ul.tabs{
+    padding-top: 5px;
+    padding-left: 0px;
+}
+
+.companyBrandsDialog-large{
+    float: left;
+    width: 300px;
+}
+
+.companyBrandsDialog-small{
+    float: left;
+    width: 200px;
+    text-align: right;
+}
+
+.companyBrandsDialog-full{
+    float: left;
+    width: 500px;
+}
+
+.companyCouponsDialog-large, .companyPublishingDialog-large, .companyIBeaconDialog-large{
+    float: left;
+    width: 245px;
+}
+
+.companyCouponsDialog-large input[type="text"], .companyPublishingDialog-large input[type="text"], .companyIBeaconDialog-large input[type="text"] {
+    width: 235px;
+}
+
+.companyBrandsDialog-large input[type="text"]{
+    width: 290px;
+}
+
+.companyBrandsDialog-small .imgDiv{
+    margin-top: 15px;
+    width: 200px;
+    height: 103px;
+    text-align: center;
+}
+
+.companyBrandsDialog-small .imgDiv img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.companyBrandsDialog-small a{
+    position: relative;
+    top: 7px;
+}
+
+.companyBrandsDialog-large select{
+    width: 294px;
+    border-radius: 5px;
+    padding: 2px 0px;
+    height: 24px;
+}
+
+#companyCouponsTabs #companyCouponsCategoriesDiv,
+#companyCouponsTabs #companyCouponsProductDiv,
+#companyCouponsTabs #companyCouponsSkuDiv,
+#companyCouponsTabs #companyCouponsTranslationDiv{
+    display: none;
+}
+
+#companyCouponsTabs .multiselectSlides .search{
+    margin : 15px 0px;
+}
+
+#companyCouponsTabs .multiselectSlides .search button{
+    width: 35px;
+    text-align: center;
+    position: relative;
+    top: 2px;
+    left: 5px;
+}
+
+#companyCouponsTabs .multiselectSlides .search button i{
+    display: inline-block;
+    position: relative;
+    top: 1px;
+}
+
+#companyCouponsTabs .multiselectSlides .search input{
+    width: 210px;
+}
+
+#companyCouponsTabs .multiselectSlides .left{
+    float: left;
+    width: 220px;
+}
+
+#companyCouponsTabs .multiselectSlides .center{
+    float: left;
+    width: 55px;
+    padding-top: 50px;
+}
+
+#companyCouponsTabs .multiselectSlides .right{
+    float: left;
+    width: 215px;
+}
+
+#companyCouponsTabs .multiselectSlides .left select, .right select{
+    width: 210px;
+}
+
+#companyCouponsTabs .multiselectSlides .center button{
+    display: block;
+    width: 45px;
+    height: 20px;
+    margin-top: 5px;
+    padding: 0px;
+    text-align: center;
+}
+
+#companyCouponsTabs .multiselectSlides .center .icon{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-image: url("../../images/multiselectSlidesArrows.png");
+}
+
+#companyCouponsTabs .multiselectSlides .center .icon-forward-all{
+    background-position: -45px 0px;
+}
+
+#companyCouponsTabs .multiselectSlides .center .icon-forward{
+    background-position: -30px 0px;
+}
+
+#companyCouponsTabs .multiselectSlides .center .icon-backward-all{
+    background-position: 0px 0px;
+}
+
+#companyCouponsTabs .multiselectSlides .center .icon-backward{
+    background-position: -15px 0px;
+}
+
+/* Company Api Keys Tab */
+.apiKeys_medium{
+    width: 50%;
+    float: left;
+}
+
+.apiKeys_medium input{
+    width: 356px;
+}
+
+#apiKeysMapProvider{
+    width: 354px;
+}
+
+#getNewKeyBtn {
+    float:left;
+    width: 130px;
+    margin: 0px;
+}

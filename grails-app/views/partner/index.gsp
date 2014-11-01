@@ -10,7 +10,167 @@
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 
-        <r:require modules="core, partner, company"/>
+        %{--<r:require modules="core, partner, company"/>--}%
+        <g:if env="development">
+            <g:set var="env" value="development"/>
+        </g:if>
+        <g:else>
+            <g:set var="env" value="release"/>
+        </g:else>
+
+        <!-- core stylesheet -->
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-ui/themes/facebook-theme/jquery-ui-1.8.10.custom.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jwysiwyg/jquery.wysiwyg.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jQueryMultiSelect/jquery.multiselect.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jQueryMultiSelect/jquery.multiselect.filter.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/fancybox/jquery.fancybox-1.3.4.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/showLoading/showLoading.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery.notice/jquery.notice.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/cleditor/jquery.cleditor.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jQueryPaginate/jquery.paginate.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/slickgrid_v2.0/slick.grid.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/slickgrid_v2.0/slick.pager.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/slickgrid_v2.0/slick.columnpicker.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jQueryFileUpload/jquery.fileupload-ui.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-cron/jquery-cron.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-gentleSelect/jquery-gentleSelect.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery.tagsinput.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery.weekcalendar.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/uniform.aristo.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/agile_carousel.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/upload.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/popup.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/main.css")}' />
+
+        <!-- company stylesheet -->
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/company.css")}' />
+
+        <!-- partner stylesheet -->
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/openStreetMap/openStreetMap.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/openStreetMap/openStreetMapContextMenu.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/googleMap/googleMap.css")}' />
+
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/partner.css")}' />
+        <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/categories.css")}' />
+
+        <!-- core javascript -->
+        <g:javascript src="${env}/jquery/jquery-1.9.1.js"/>
+        <g:javascript src="${env}/jquery/jquery-ui.js"/>
+        <g:javascript src="${env}/jquery/JStepper.js"/>
+        <g:javascript src="${env}/jquery/jquery.json-2.2.min.js"/>
+        <g:javascript src="${env}/jquery/jquery.populate.js"/>
+        <g:javascript src="${env}/jquery/agile_carousel.a1.js"/>
+        <g:javascript src="${env}/jquery/jquery.notice.js"/>
+        <g:javascript src="${env}/jquery/jquery.event.drag-2.0.min.js"/>
+        <g:javascript src="${env}/jquery.weekcalendar.js"/>
+        <g:javascript src="${env}/jquery/jquery.tagsinput.js"/>
+
+        <g:javascript src="${env}/jQueryBrowser/jQuery.browser.js"/>
+
+        <g:javascript src="${env}/jQueryMultiSelect/jquery.multiselect.js"/>
+        <g:javascript src="${env}/jQueryMultiSelect/jquery.multiselect.filter.js"/>
+        <g:javascript src="${env}/jQueryMultiSelect/multiselectSlides.min.js"/>
+
+        <g:javascript src="${env}/fancybox/jquery.fancybox-1.3.4.js"/>
+
+        <g:javascript src="${env}/showLoading/showLoading.js"/>
+
+        <g:javascript src="${env}/jwysiwyg/jquery.wysiwyg.js"/>
+
+        <g:javascript src="${env}/cleditor/jquery.cleditor.js"/>
+
+        <g:javascript src="${env}/jQueryPaginate/jquery.paginate.js"/>
+
+        <g:javascript src="${env}/iphone-switch/jquery.iphone-switch.js"/>
+
+        <g:javascript src="${env}/slickgrid_v2.0/slick.autotooltips.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.cellcopymanager.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.cellrangedecorator.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.cellrangeselector.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.cellselectionmodel.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.checkboxselectcolumn.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.columnpicker.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.core.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.dataview.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.editors.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.formatters.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.grid.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.groupitemmetadataprovider.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.pager.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.remotemodel.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.rowmovemanager.js"/>
+        <g:javascript src="${env}/slickgrid_v2.0/slick.rowselectionmodel.js"/>
+
+        <g:javascript src="${env}/jQueryFileUpload/jquery.fileupload.js"/>
+        <g:javascript src="${env}/jQueryFileUpload/jquery.fileupload-ui.js"/>
+
+        <g:javascript src="${env}/jquery-cron/jquery-cron.js"/>
+
+        <g:javascript src="${env}/jquery-gentleSelect/jquery-gentleSelect.js"/>
+
+        <g:javascript src="${env}/application.js"/>
+        <g:javascript src="${env}/main.js"/>
+
+        <!-- company javascript -->
+        <g:javascript src="${env}/company.js"/>
+        <g:javascript src="${env}/companyGeneral.js"/>
+        <g:javascript src="${env}/companyVariations.js"/>
+        <g:javascript src="${env}/companyShipping.js"/>
+        <g:javascript src="${env}/companyTax.js"/>
+        <g:javascript src="${env}/companyPayment.js"/>
+        <g:javascript src="${env}/companySellers.js"/>
+        <g:javascript src="${env}/companyBrands.js"/>
+        <g:javascript src="${env}/companyCoupons.js"/>
+        <g:javascript src="${env}/companyPublishing.js"/>
+        <g:javascript src="${env}/companyApiKeys.js"/>
+        <g:javascript src="${env}/companyIBeacon.js"/>
+        <g:javascript src="${env}/companyTags.js"/>
+
+        <!-- partner javascript -->
+        <g:javascript src="${env}/openStreetMap/openStreetMap.js"/>
+        <g:javascript src="${env}/openStreetMap/openStreetMapContextMenu.js"/>
+
+        <g:javascript src="${env}/googleMap/googleMap.js"/>
+
+        <g:javascript src="${env}/catalog.js"/>
+        <g:javascript src="${env}/category.js"/>
+        <g:javascript src="${env}/partner.js"/>
+        <g:javascript src="${env}/brand.js"/>
+
+        <g:javascript src="${env}/tourismDescription.js"/>
+        <g:javascript src="${env}/tourismFeatures.js"/>
+        <g:javascript src="${env}/tourismPricing.js"/>
+        <g:javascript src="${env}/tourismCalendar.js"/>
+        <g:javascript src="${env}/tourismSuggestions.js"/>
+        <g:javascript src="${env}/tourismProduct.js"/>
+        <g:javascript src="${env}/tourismProperties.js"/>
+        <g:javascript src="${env}/tourismTranslation.js"/>
+        <g:javascript src="${env}/sale.js"/>
+
+        <g:javascript src="${env}/categoryTree.js"/>
+        <g:javascript src="${env}/categoryGeneral.js"/>
+        <g:javascript src="${env}/categoryFeatures.js"/>
+        <g:javascript src="${env}/categoryProducts.js"/>
+        <g:javascript src="${env}/categoryTranslation.js"/>
+        <g:javascript src="${env}/categoryVariations.js"/>
+
+        <g:javascript src="${env}/jQueryJSTree/jquery.jstree.js"/>
+        <g:javascript src="${env}/jQueryJSTree/script.js"/>
+
+        <g:javascript src="${env}/translation.js"/>
 
         <r:script>
             //-----Companies----//

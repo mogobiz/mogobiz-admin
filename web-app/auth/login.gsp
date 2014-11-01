@@ -2,11 +2,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
 <meta name="layout" content="empty" />
-<r:require modules="login" />
+%{--<r:require modules="login" />--}%
 <link rel="shortcut icon"
 	href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 </head>
 <body>
+    <g:if env="development">
+        <g:set var="env" value="development"/>
+    </g:if>
+    <g:else>
+        <g:set var="env" value="release"/>
+    </g:else>
+
+    <!-- stylesheet -->
+    <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-ui/themes/facebook-theme/jquery-ui-1.8.10.custom.css")}' />
+    <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/main.css")}' />
+    <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery.notice/jquery.notice.css")}' />
+
+    <!-- javascript -->
+    <g:javascript src="${env}/jquery/jquery-1.9.1.js"/>
+    <g:javascript src="${env}/jquery/jquery-ui.js"/>
+    <g:javascript src="${env}/jquery/jquery.notice.js"/>
+    <g:javascript src="${env}/login.js"/>
+
+
 	<div id="signInDiv" align="center">
 		<div id="main" class="page">
 			<table>

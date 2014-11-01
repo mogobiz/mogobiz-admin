@@ -1,0 +1,73 @@
+/* Default */
+.loading-indicator {
+	background-image: url('ajax-loader-Facebook Big.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 32px;
+	width: 32px;
+}
+.loading-indicator-overlay {
+	background-color: #FFFFFF;
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
+}
+
+/* Custom */
+.loading-indicator-Facebook {
+	background-image: url('ajax-loader-Facebook.gif');
+	height: 11px;
+	width: 16px;
+}
+.loading-indicator-FacebookBig {
+	background-image: url('ajax-loader-Facebook Big.gif');
+	height: 32px;
+	width: 32px;
+}
+.loading-indicator-SquaresCircle {
+	background-image: url('ajax-loader-Squares Circle.gif');
+	height: 31px;
+	width: 31px;
+}
+.loading-indicator-SquaresCircleBig {
+	background-image: url('ajax-loader-Squares Circle Big.gif');
+	height: 128px;
+	width: 128px;
+}
+.loading-indicator-Bar {
+	background-image: url('ajax-loader-Bar.gif');
+	height: 19px;
+	width: 220px;
+}
+.loading-indicator-Pk {
+	background-image: url('ajax-loader-Pk.gif');
+	height: 66px;
+	width: 66px;
+}
+
+/* Custom Store Loading CSS */
+.store-loading-32 {
+	background-image: url('store/store-loading-32.gif');
+	height: 32px;
+	width: 32px;
+}
+.store-loading-48 {
+	background-image: url('store/store-loading-48.gif');
+	height: 48px;
+	width: 48px;
+}
+.store-loading-72 {
+	background-image: url('store/store-loading-72.gif');
+	height: 72px;
+	width: 72px;
+}
+.store-loading-96 {
+	background-image: url('store/store-loading-96.gif');
+	height: 96px;
+	width: 96px;
+}
+.store-loading-128 {
+	background-image: url('store/store-loading-128.gif');
+	height: 128px;
+	width: 128px;
+}
+

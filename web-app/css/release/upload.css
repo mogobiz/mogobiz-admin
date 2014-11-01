@@ -1,0 +1,29 @@
+#sources {
+	float: left;
+	margin-right: 20px;
+}
+
+#albums {
+	float: left;
+}
+
+div.file_upload {
+	background: #DDDCDC;
+	border: 1px dashed black;
+}
+
+.slideshow {
+	/*float: left;*/
+	/*-moz-box-shadow: 3px 3px 3px #DDDCDC;*/
+	/*-webkit-box-shadow: 3px 3px 3px #DDDCDC;*/
+	/*box-shadow: 3px 3px 3px #DDDCDC;*/
+}
+
+.resize {
+	max-height: 200px;
+	height: auto !important;
+	height: 200px;
+	max-width: 160px;
+	width: auto !important;
+	width: 160px;
+}
