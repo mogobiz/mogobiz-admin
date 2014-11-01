@@ -33,21 +33,35 @@ grails.serverURL = "http://mogobiz.ebiznext.com/iper2010"
 
 dataSource {
 	pooled = true
+
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
     url = "jdbc:postgresql://localhost/iper2010"
 
-    // dialect = "org.hibernate.dialect.MySQLDialect"
-    // driverClassName = "com.mysql.jdbc.Driver"
-    // url = "jdbc:mysql://localhost/iper2010"
+//    dialect = "org.hibernate.dialect.MySQLDialect"
+//    driverClassName = "com.mysql.jdbc.Driver"
+//    url = "jdbc:mysql://localhost/iper2010"
 
 //    dialect = "com.mogobiz.hibernate.OracleDialect"
 //    driverClassName = "oracle.jdbc.driver.OracleDriver"
 //    url = "jdbc:oracle:thin:@192.168.184.133:1521:orcl"
 
 
+//    First create a derby database as follow
+//    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
+//    $ ./ij
+//      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
+//    You are now ready to access the database from grails.
+//    user / password should be empty for a default conf
+
+//    dialect = "org.hibernate.dialect.DerbyDialect"
+//    driverClassName = "org.apache.derby.jdbc.ClientDriver"
+//    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/iper2010"
+
     username = "iper2010"
     password = "iper2010"
+
+
     logSql = true
     properties {
         jmxEnabled = true
@@ -178,6 +192,12 @@ environments {
 
     }
 
+    test {
+        dataSource {
+            dbCreate = "update"
+        }
+    }
+
     production {
         dataSource {
             dbCreate = "update"
@@ -193,6 +213,13 @@ environments {
 
 
 log4j = {
+    error   'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
+            'grails.util.GrailsUtil',
+            'org.codehaus.groovy.grails.commons.spring.ReloadAwareAutowireCapableBeanFactory',
+            'org.grails.plugin.platform.events.EventsImpl'
+
+    warn 'org.springframework'
+
     appenders {
         file name: 'file', file: 'mogobiz-admin.log'
     }
