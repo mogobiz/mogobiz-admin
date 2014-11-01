@@ -1,3 +1,10 @@
+import com.mogobiz.service.ElasticsearchService
+import com.mogobiz.service.GoogleCategoryService
+import com.mogobiz.service.ProductService
+import com.mogobiz.service.RateService
+import com.mogobiz.service.SanitizeUrlService
+import com.mogobiz.service.TaxRateService
+import com.mogobiz.service.UuidDataService
 import com.mogobiz.service.TrackingService
 import grails.rest.render.json.JsonCollectionRenderer
 import grails.rest.render.json.JsonRenderer
@@ -364,17 +371,17 @@ beans = {
     calendarConverter com.mogobiz.grails.CalendarValueConverter
     defaultDateConverter com.mogobiz.grails.DateValueConverter
 
-    sanitizeUrlService(com.mogobiz.service.SanitizeUrlService)
-    rateService(com.mogobiz.service.RateService)
-    taxRateService(com.mogobiz.service.TaxRateService)
+    sanitizeUrlService(SanitizeUrlService)
+    rateService(RateService)
+    taxRateService(TaxRateService)
     cookieService(com.dalew.CookieService)
     trackingService(TrackingService) {
         cookieService = ref("cookieService")
     }
-    uuidDataService(com.mogobiz.service.UuidDataService) {
+    uuidDataService(UuidDataService) {
         trackingService = ref("trackingService")
     }
-    productService(com.mogobiz.service.ProductService) {
+    productService(ProductService) {
         sanitizeUrlService = ref("sanitizeUrlService")
         rateService = ref("rateService")
         taxRateService = ref("taxRateService")
@@ -387,8 +394,8 @@ beans = {
     suggestionRender(com.mogobiz.store.domain.SuggestionRender) {
         productService = ref("productService")
     }
-    googleCategoryService (com.mogobiz.service.GoogleCategoryService)
-    elasticsearchService (com.mogobiz.service.ElasticsearchService){
+    googleCategoryService (GoogleCategoryService)
+    elasticsearchService (ElasticsearchService){
         uuidDataService = ref('uuidDataService')
         grailsApplication = ref('grailsApplication')
     }

@@ -281,7 +281,7 @@ modules = {
 		resource '/js/main.js'
 	}
 	
-	store{
+	store {
 		dependsOn 'storeCore'
 
 		resource '/css/storeFiles/index.css'
