@@ -32,7 +32,7 @@ println('**************************************************')
 grails.serverURL = "http://mogobiz.ebiznext.com/iper2010"
 
 dataSource {
-	pooled = true
+    pooled = true
 
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
@@ -45,7 +45,6 @@ dataSource {
 //    dialect = "com.mogobiz.hibernate.OracleDialect"
 //    driverClassName = "oracle.jdbc.driver.OracleDriver"
 //    url = "jdbc:oracle:thin:@192.168.184.133:1521:orcl"
-
 
 //    First create a derby database as follow
 //    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
@@ -137,7 +136,7 @@ uuidData.lifetime.cart = 60 * 60 * 24 * 30 // 30j (en secondes)
 uuidData.lifetime.product = 60 * 60 * 24 * 30 // 30j (en secondes)
 uuidData.lifetime.country = 60 * 60 * 24 * 30 // 30j (en secondes)
 
-application.secret="1234567890123456"
+application.secret = "1234567890123456"
 
 rootPath = '/tmp/mogobiz-data'
 
@@ -192,6 +191,51 @@ environments {
 
     }
 
+//    grails -Dgrails.env=postgresql schema-export
+    postgresql {
+        dataSource {
+            dialect = "org.hibernate.dialect.PostgreSQLDialect"
+            driverClassName = "org.postgresql.Driver"
+            url = "jdbc:postgresql://localhost/iper2010"
+        }
+    }
+
+//    grails -Dgrails.env=mysql schema-export
+    mysql {
+        dataSource {
+            dialect = "org.hibernate.dialect.MySQLDialect"
+            driverClassName = "com.mysql.jdbc.Driver"
+            url = "jdbc:mysql://localhost/iper2010"
+        }
+    }
+
+//    grails -Dgrails.env=oracle schema-export
+    oracle {
+        dataSource {
+            dialect = "com.mogobiz.hibernate.OracleDialect"
+            driverClassName = "oracle.jdbc.driver.OracleDriver"
+            url = "jdbc:oracle:thin:@192.168.184.133:1521:orcl"
+        }
+    }
+
+//    First create a derby database as follow
+//    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
+//    $ ./ij
+//      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
+//    You are now ready to access the database from grails.
+//    user / password should be empty for a default conf
+//    CREATE SEQUENCE mogobiz_sequence3 as BIGINT START WITH -10000000000 INCREMENT BY 1;
+//    grails -Dgrails.env=derby schema-export
+    derby {
+        dataSource {
+            dialect = "org.hibernate.dialect.DerbyDialect"
+            driverClassName = "org.apache.derby.jdbc.ClientDriver"
+            url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/iper2010"
+        }
+    }
+
+
+
     test {
         dataSource {
             dbCreate = "update"
@@ -213,7 +257,7 @@ environments {
 
 
 log4j = {
-    error   'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
+    error 'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
             'grails.util.GrailsUtil',
             'org.codehaus.groovy.grails.commons.spring.ReloadAwareAutowireCapableBeanFactory',
             'org.grails.plugin.platform.events.EventsImpl'
@@ -400,8 +444,8 @@ roles = org.apache.shiro.web.filter.authz.RolesAuthorizationFilter
 
 
 jquery {
-	sources = 'jquery' // Holds the value where to store jQuery-js files /web-app/js/
-	version = '1.7.1' // The jQuery version in use
+    sources = 'jquery' // Holds the value where to store jQuery-js files /web-app/js/
+    version = '1.7.1' // The jQuery version in use
 }
 
 grails {
