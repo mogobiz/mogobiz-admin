@@ -124,7 +124,7 @@ grails.project.dependency.resolution = {
 
         compile ":standalone:1.2.3"
 
-        compile "com.mogobiz:mogobiz-core:1.0-SNAPSHOT"
+        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -167,12 +167,12 @@ grails.project.dependency.resolution = {
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
 
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
 
-        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
     }
 }
 
