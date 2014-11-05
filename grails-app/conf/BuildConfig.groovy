@@ -7,14 +7,13 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
-grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
 
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
         //compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
         // configure settings for the test-app JVM, uses the daemon by default
-        test: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
+        test: [maxMemory: 1500, minMemory: 64, debug: false, maxPerm: 1024, daemon:true],
         // configure settings for the run-app JVM
         run: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
         // configure settings for the run-war JVM
@@ -22,7 +21,6 @@ grails.project.fork = [
         // configure settings for the Console UI JVM
         console: [maxMemory: 2048, minMemory: 2048, debug: true, maxPerm: 1024]
 ]
-
 grails{
     tomcat{
         jvmArgs = [
@@ -92,7 +90,6 @@ grails.project.dependency.resolution = {
 // plugins for the compile step
         //compile ':scaffolding:2.0.3'
         compile ':cache:1.1.3'
-//        compile ':asset-pipeline:1.9.9'
 //        compile ':asset-pipeline:1.8.3'
 
 // plugins needed at runtime but not for compilation
@@ -100,14 +97,15 @@ grails.project.dependency.resolution = {
         runtime ':hibernate:3.6.10.15' // ':hibernate4:4.3.5.3' for Hibernate 4
 //        runtime ':hibernate:3.6.10.14'
         runtime ':database-migration:1.4.0'
-        runtime ':jquery:1.9.1'
+//        runtime ':jquery:1.11.0.2'
         compile ":facebook-graph:0.14"
         compile ':platform-core:1.0.0'
         compile ":google-data:0.1.3"
-//        runtime ":resources:1.2.8"
+        runtime ":resources:1.2.8"
         compile (":email-confirmation:2.0.8") {
             excludes 'quartz'
         }
+        compile ":jquery:1.9.1"
         compile ":jquery-ui:1.8.24"
         compile (":shiro:1.2.1") {
             excludes 'shiro-quartz'
@@ -122,10 +120,11 @@ grails.project.dependency.resolution = {
         compile ":cookie:0.51"
         compile ":rest:0.8"
         compile ":joda-time:1.4"
+        test ':spock:0.7'
 
         compile ":standalone:1.2.3"
 
-        compile "com.mogobiz:mogobiz-core:1.0-SNAPSHOT"
+        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -168,12 +167,15 @@ grails.project.dependency.resolution = {
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
 
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
 
-//        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+
+        compile 'org.jsoup:jsoup:1.8.1'
+
     }
 }
 
