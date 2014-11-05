@@ -579,7 +579,7 @@
             <scope>runtime</scope>
             <type>zip</type>
         </dependency>
-        
+
         <dependency>
             <groupId>org.grails.plugins</groupId>
             <artifactId>resources</artifactId>
@@ -587,7 +587,7 @@
             <scope>runtime</scope>
             <type>zip</type>
         </dependency>
-        
+
         <!--
         <dependency>
             <groupId>org.grails.plugins</groupId>
@@ -597,6 +597,12 @@
             <type>zip</type>
         </dependency>
         //-->
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.8.1</version>
+        </dependency>
 
         <!-- end from grails-app/BuildConfig.groovy //-->
 

@@ -173,6 +173,9 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
 
         compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+
+        compile 'org.jsoup:jsoup:1.8.1'
+
     }
 }
 
