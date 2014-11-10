@@ -1,5 +1,6 @@
 var translateLanguage = [];
 var menu;
+var partnerActiveCompanyChanged = false;
 
 $(document).ready(function() {
     $("#user_name_div").click(function() {
@@ -35,9 +36,6 @@ $(document).ready(function() {
     });
 
     $("#catalogMenuDiv").click(function() {
-        $(this).parent().find("ul.subnav").css({"width": $("#catalogMenuDiv").width() + 28 + "px", top: "0px"});
-        $(this).parent().find("ul.subnav li").css("width", $("#catalogMenuDiv").width() + 28 + "px");
-        $(this).parent().find("ul.subnav li a").css("width", $("#catalogMenuDiv").width() + 3 + "px");
         var subnav = $(this).parent().find("ul.subnav");
         if(subnav.is(':visible'))
             subnav.slideUp('slow');
@@ -120,9 +118,13 @@ function partnerChangeActiveCompany(companyCode){
         async : true,
         success : function(response, status) {
             sellerCompanyCode = companyCode;
+            categorySelectedId = null;
+            catalogSelectedId = null;
+            partnerActiveCompanyChanged = false;
             $("#active_company_div").html(companyCode);
             if($("#editCompanyTabs").is(":visible")) {
                 partnerGetAdminPage(partnerSellerId);
+                partnerActiveCompanyChanged = true;
             }
             else{
                 $("#createProductMenu").detach().prependTo(document.body).hide();

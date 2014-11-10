@@ -728,7 +728,6 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     if(categorySelectedId){
                         categoryGeneralGetInfo();
                     }
-                    alert(partnerActiveCompanyChanged)
                     if(partnerActiveCompanyChanged){
                         partnerActiveCompanyChanged = false;
                         $("#createProductMenu").detach().prependTo(document.body).hide();

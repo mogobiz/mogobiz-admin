@@ -585,21 +585,29 @@
             <tr>
                 <td class="treeCol">
                     <div class="tree">
-                        <div id="catalogMenu">
-                            <ul class="topnav">
-                                <li id="catalogMenuDiv"><g:message code="catalog.title.label"/></li>
-                                <li>
-                                    <ul class="subnav" style="display:none;">
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div class="newline">
+                            <div id="catalogList"></div>
+                            <div id="catalogMenu">
+                                <ul class="topnav">
+                                    <li id="catalogMenuDiv">
+                                        <span class="catalog-menu-icon-bar"></span>
+                                        <span class="catalog-menu-icon-bar"></span>
+                                        <span class="catalog-menu-icon-bar"></span>
+                                    </li>
+                                    <li>
+                                        <ul class="subnav" style="display:none;">
+                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
+                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
+                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
+                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div id="catalogList"></div>
-                        <div id="categoryTree" class="categoryTree"></div>
+                        <div class="newline">
+                            <div id="categoryTree" class="categoryTree"></div>
+                        </div>
                     </div>
                 </td>
                 <td>

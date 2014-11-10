@@ -36,9 +36,6 @@ $(document).ready(function() {
     });
 
     $("#catalogMenuDiv").click(function() {
-        $(this).parent().find("ul.subnav").css({"width": $("#catalogMenuDiv").width() + 28 + "px", top: "0px"});
-        $(this).parent().find("ul.subnav li").css("width", $("#catalogMenuDiv").width() + 28 + "px");
-        $(this).parent().find("ul.subnav li a").css("width", $("#catalogMenuDiv").width() + 3 + "px");
         var subnav = $(this).parent().find("ul.subnav");
         if(subnav.is(':visible'))
             subnav.slideUp('slow');

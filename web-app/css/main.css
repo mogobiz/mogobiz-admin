@@ -1301,7 +1301,7 @@ menu button
 
 /* user_name_div and ../*/
 
-#user_name_div, #active_company_div, #catalogMenuDiv{
+#user_name_div, #active_company_div{
     background:url("../../images/fb-menu.png") no-repeat;
     float:right;
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -1320,13 +1320,17 @@ menu button
     z-index:1000;
 }
 
-#catalogMenuDiv{
-    float: none;
-    top : 0px;
+#catalogList{
+    float: left;
 }
 
-#catalogMenu{
-    margin-bottom: 5px;
+.catalog-menu-icon-bar{
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #5B74A8;
+    margin-top: 3px;
 }
 
 ul.topnav {
@@ -1334,10 +1338,6 @@ ul.topnav {
     margin: 0;
     float: right;
     font-size: 1.2em;
-}
-
-#catalogMenu ul.topnav{
-    float: none;
 }
 
 ul.topnav li {
@@ -1356,7 +1356,7 @@ ul.topnav li a{
     margin-right: 10px;
 }
 
-#user ul.topnav li ul.subnav, #userCompanies ul.topnav li ul.subnav, #catalogMenu ul.topnav li ul.subnav{
+#user ul.topnav li ul.subnav, #userCompanies ul.topnav li ul.subnav{
     top: 37px;
     z-index:999;
 }
@@ -1425,6 +1425,43 @@ ul.topnav li ul.subnav li a.disabled:hover { /*--Hover effect for subnav links--
     background: #FFFFFF;
 }
 
+/* Catalog Menu */
+#catalogMenuDiv {
+    min-width: 18px;
+    background: none;
+    padding: 2px 4px;
+    border-color: #a6c9e2;
+    height: 18px;
+    background-color:#FFFFFF;
+    border: 1px solid #A6C9E2;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index:1000;
+}
+
+#catalogMenu{
+    margin-left: 5px;
+    float: right;
+}
+
+#catalogMenu ul.topnav{
+    float: none;
+}
+
+#catalogMenu ul.topnav li ul.subnav{
+    top: 24px;
+    left: -28px;
+    z-index:999;
+    min-width: 135px;
+}
+
+#catalogMenu ul.topnav li ul.subnav li{
+    min-width: 135px;
+}
+
+#catalogMenu ul.topnav li ul.subnav li a{
+    min-width: 110px;
+}
 
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header{ margin-bottom: 8px; }

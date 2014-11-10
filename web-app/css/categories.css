@@ -23,7 +23,7 @@
 }
 
 .categoriesMain .categoryTree{
-	margin-top: 10px;
+	padding-top: 10px;
 	max-height: 800px;
 	overflow: auto;
 }

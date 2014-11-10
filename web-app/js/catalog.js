@@ -21,7 +21,7 @@ function catalogueLoadList(){
                 header : false,
                 multiple : false,
                 noneSelectedText : multiselectNoneSelectedTextLabel,
-                minWidth : 180,
+                minWidth : 151,
                 selectedList : 1
             }).bind("multiselectclick", function(event, ui) {
                 setTimeout(function(){
