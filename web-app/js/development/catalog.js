@@ -1,4 +1,5 @@
 var catalogSelectedId = null;
+var catalogImported = false;
 function catalogueLoadList(){
 	var dataToSend = "format=html";
 	$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
@@ -34,14 +35,18 @@ function catalogueLoadList(){
 				$("#catalogDropDownList").multiselect("uncheckAll");
 				$("#catalogDropDownList option").each(function() {
 					if(this.value == catalogSelectedId)
-						$(this).attr("selected", "selected");
-					else
+                        $(this).attr("selected", "selected");
+                    else
 						$(this).removeAttr("selected");
 				});
 				$("#catalogDropDownList").multiselect("refresh");
 				$("#categoriesMain .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogDropDownList']").each(function() {
 					if (this.value == catalogSelectedId) {
                         $(this.parentNode).addClass("ui-state-active");
+                        if(catalogImported){
+                            catalogImported = false;
+                            this.click();
+                        }
 					}
 				});
 				$("#catalogDropDownList").val(catalogSelectedId);
@@ -470,22 +475,13 @@ function catalogValidateImportForm(){
 }
 
 function catalogImport(){
-//    $.ajax({
-//        url : importCatalogUrl,
-//        type : "GET",
-//        data : "",
-//        cache : false,
-//        async : true,
-//        success : function(response, status) {},
-//        error: function(response, status){}
-//    });
-
-
-
     document.getElementById("catalogImportForm").target = "catalogImportHiddenFrame"; // 'upload_target' is the name of the iframe
     document.getElementById("catalogImportForm").action = importCatalogUrl;
     document.getElementById("catalogImportForm").submit();
     document.getElementById("catalogImportHiddenFrame").onload = function() {
+        var cat = JSON.parse(document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText);
+        catalogSelectedId = cat.id;
+        catalogImported = true;
         catalogueLoadList();
         $("#catalogCreateDialog").dialog("close");
     }

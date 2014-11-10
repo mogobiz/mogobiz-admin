@@ -1,4 +1,5 @@
 var catalogSelectedId = null;
+var catalogImported = false;
 function catalogueLoadList(){
     var dataToSend = "format=html";
     $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
@@ -13,6 +14,7 @@ function catalogueLoadList(){
             $("#categoriesMain").hideLoading();
             $("#item").hide();
             $("#categoriesMain").show();
+            $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
             $("#catalogList").empty();
             $("#catalogList").append(pageContent);
             $("#catalogDropDownList").multiselect({
@@ -41,6 +43,10 @@ function catalogueLoadList(){
                 $("#categoriesMain .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogDropDownList']").each(function() {
                     if (this.value == catalogSelectedId) {
                         $(this.parentNode).addClass("ui-state-active");
+                        if(catalogImported){
+                            catalogImported = false;
+                            this.click();
+                        }
                     }
                 });
                 $("#catalogDropDownList").val(catalogSelectedId);
@@ -362,7 +368,6 @@ function catalogDelete(){
             catalogSelectedId = null;
             $("#categoryTree").empty();
             $("#categoryDetails").empty();
-            $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
             catalogueLoadList();
         },
         error: function(response, status){
@@ -379,7 +384,6 @@ function catalogDelete(){
                         catalogSelectedId = null;
                         $("#categoryTree").empty();
                         $("#categoryDetails").empty();
-                        $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
                         catalogueLoadList();
                     },
                     error: function(response, status){
@@ -475,6 +479,9 @@ function catalogImport(){
     document.getElementById("catalogImportForm").action = importCatalogUrl;
     document.getElementById("catalogImportForm").submit();
     document.getElementById("catalogImportHiddenFrame").onload = function() {
+        var cat = JSON.parse(document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText);
+        catalogSelectedId = cat.id;
+        catalogImported = true;
         catalogueLoadList();
         $("#catalogCreateDialog").dialog("close");
     }
