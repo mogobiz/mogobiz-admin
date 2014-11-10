@@ -19,6 +19,7 @@ var updateLabel = "${message(code:'default.button.update.label')}";
 var deleteLabel = "${message(code:'default.button.delete.label')}";
 var cancelLabel = "${message(code:'default.button.cancel.label')}";
 var closeLabel = "${message(code:'default.button.close.label')}";
+var importLabel = "${message(code:'default.button.import.label')}";
 var okLabel = "${message(code:'default.button.ok.label')}";
 var resetPasswordLabel = "${message(code:'default.button.resetPassword.label')}";
 var defaultSearchLabel = "${message(code:'default.search.label')}";

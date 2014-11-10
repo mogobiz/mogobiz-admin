@@ -1,27 +1,12 @@
 var translateLanguage = [];
 var menu;
+var partnerActiveCompanyChanged = false;
 
 $(document).ready(function() {
-	$("#user_name_div").click(function() {
-		$(this).parent().find("ul.subnav").css('width', $("#user_name_div").width()+28+'px');
-		$(this).parent().find("ul.subnav li").css('width', $("#user_name_div").width()+28+'px');
-		$(this).parent().find("ul.subnav li a").css('width', $("#user_name_div").width()+3+'px');
-		var subnav = $(this).parent().find("ul.subnav");
-		if(subnav.is(':visible'))
-			subnav.slideUp('slow');
-		else
-			subnav.slideDown('fast');
-
-		$(this).parent().hover(function() {
-		}, function(){
-			$(this).parent().find("ul.subnav").slideUp('slow');
-		});
-	});
-
-    $("#active_company_div").click(function() {
-        $(this).parent().find("ul.subnav").css('width', $("#user_name_div").width()+28+'px');
-        $(this).parent().find("ul.subnav li").css('width', $("#user_name_div").width()+28+'px');
-        $(this).parent().find("ul.subnav li a").css('width', $("#user_name_div").width()+3+'px');
+    $("#user_name_div").click(function() {
+        $(this).parent().find("ul.subnav").css("width", $("#user_name_div").width() + 28 + "px");
+        $(this).parent().find("ul.subnav li").css("width", $("#user_name_div").width() + 28 + "px");
+        $(this).parent().find("ul.subnav li a").css("width", $("#user_name_div").width() + 3 + "px");
         var subnav = $(this).parent().find("ul.subnav");
         if(subnav.is(':visible'))
             subnav.slideUp('slow');
@@ -34,34 +19,66 @@ $(document).ready(function() {
         });
     });
 
-	if(sellerAdmin){
-		$('#sellerAdmin').show();
-	}
+    $("#active_company_div").click(function() {
+        $(this).parent().find("ul.subnav").css("width", $("#active_company_div").width() + 28 + "px");
+        $(this).parent().find("ul.subnav li").css("width", $("#active_company_div").width() + 28 + "px");
+        $(this).parent().find("ul.subnav li a").css("width", $("#active_company_div").width() + 3 + "px");
+        var subnav = $(this).parent().find("ul.subnav");
+        if(subnav.is(':visible'))
+            subnav.slideUp('slow');
+        else
+            subnav.slideDown('fast');
+
+        $(this).parent().hover(function() {
+        }, function(){
+            $(this).parent().find("ul.subnav").slideUp('slow');
+        });
+    });
+
+    $("#catalogMenuDiv").click(function() {
+        $(this).parent().find("ul.subnav").css({"width": $("#catalogMenuDiv").width() + 28 + "px", top: "0px"});
+        $(this).parent().find("ul.subnav li").css("width", $("#catalogMenuDiv").width() + 28 + "px");
+        $(this).parent().find("ul.subnav li a").css("width", $("#catalogMenuDiv").width() + 3 + "px");
+        var subnav = $(this).parent().find("ul.subnav");
+        if(subnav.is(':visible'))
+            subnav.slideUp('slow');
+        else
+            subnav.slideDown('fast');
+
+        $(this).parent().hover(function() {
+        }, function(){
+            $(this).parent().find("ul.subnav").slideUp('slow');
+        });
+    });
+
+    if(sellerAdmin){
+        $('#sellerAdmin').show();
+    }
     partnerGetAllUserCompanies();
-	catalogueLoadList();
-	loadTranslateLanguages();
+    catalogueLoadList();
+    loadTranslateLanguages();
     countriesLoad();
     companiesLoad();
 });
 
 var StateType = {
-	ACTIF : 'actif',
-	INACTIF : 'inactif',
-	DELETED : 'deleted'
+    ACTIF : 'actif',
+    INACTIF : 'inactif',
+    DELETED : 'deleted'
 }
 
 function loadTranslateLanguages(){
-	$.ajax({
-		url : languagesTranslationUrl,
-		type : "GET",
-		data : "",
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(data, status) {
-			translateLanguage = data;
-		}
-	});
+    $.ajax({
+        url : languagesTranslationUrl,
+        type : "GET",
+        data : "",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(data, status) {
+            translateLanguage = data;
+        }
+    });
 }
 
 function partnerGetAdminPage(partnerId) {
@@ -104,9 +121,13 @@ function partnerChangeActiveCompany(companyCode){
         async : true,
         success : function(response, status) {
             sellerCompanyCode = companyCode;
+            categorySelectedId = null;
+            catalogSelectedId = null;
+            partnerActiveCompanyChanged = false;
             $("#active_company_div").html(companyCode);
             if($("#editCompanyTabs").is(":visible")) {
                 partnerGetAdminPage(partnerSellerId);
+                partnerActiveCompanyChanged = true;
             }
             else{
                 $("#createProductMenu").detach().prependTo(document.body).hide();

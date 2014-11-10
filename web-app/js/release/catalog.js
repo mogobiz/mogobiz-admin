@@ -1,123 +1,92 @@
 var catalogSelectedId = null;
 function catalogueLoadList(){
-	var dataToSend = "format=html";
-	$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-	$.ajax({
-		url : showCatalogUrl,
-		type : "GET",
-		data : dataToSend,
-		dataType : "html",
-		cache : false,
-		async : true,
-		success : function(pageContent, status) {
-			$("#categoriesMain").hideLoading();
-			$("#item").hide();
-			$("#categoriesMain").show();
-			$("#catalogList").empty();
-			$("#catalogList").append(pageContent);
-			$("#catalogDropDownList").multiselect({
-				header : false,
-				multiple : false,
-				noneSelectedText : multiselectNoneSelectedTextLabel,
-				minWidth : 180,
-				selectedList : 1
-			}).bind("multiselectclick", function(event, ui) {
-				setTimeout(function(){
-					if(ui.value == "create"){
-						catalogGetCreatePage();
-						setTimeout(function(){
-							if(catalogSelectedId == null){
-								$("#catalogDropDownList").val("");
-								$("#catalogDropDownList").multiselect("uncheckAll");
-								$("#catalogDropDownList").multiselect("refresh");
-								$("#catalogDropDownList option").each(function() {
-									$(this).removeAttr("selected", "selected");
-								});
-							}
-							else{
-								$("#catalogDropDownList").multiselect("uncheckAll");
-								$("#catalogDropDownList option").each(function() {
-									if(this.value == catalogSelectedId)
-										$(this).attr("selected", "selected");
-									else
-										$(this).removeAttr("selected");
-								});
-								$("#catalogDropDownList").multiselect("refresh");
-								$("#categoriesMain .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogDropDownList']").each(function() {
-									if (this.value == catalogSelectedId) {
-										$(this.parentNode).addClass("ui-state-active");
-									}
-								});
-								$("#catalogDropDownList").val(catalogSelectedId);
-							}
-						}, 10);
-					}
-					else{
-						$("#createProductMenu").detach().prependTo(document.body).hide();
-						$("#categoryDetails").empty();
-						catalogSelectedId = ui.value;
-						categoryTreeDrawByCatalog(catalogSelectedId, ui.text);
-					}
-				}, 10);
-			});
-			if(catalogSelectedId != null){
-				$("#catalogDropDownList").multiselect("uncheckAll");
-				$("#catalogDropDownList option").each(function() {
-					if(this.value == catalogSelectedId)
-						$(this).attr("selected", "selected");
-					else
-						$(this).removeAttr("selected");
-				});
-				$("#catalogDropDownList").multiselect("refresh");
-				$("#categoriesMain .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogDropDownList']").each(function() {
-					if (this.value == catalogSelectedId) {
+    var dataToSend = "format=html";
+    $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+    $.ajax({
+        url : showCatalogUrl,
+        type : "GET",
+        data : dataToSend,
+        dataType : "html",
+        cache : false,
+        async : true,
+        success : function(pageContent, status) {
+            $("#categoriesMain").hideLoading();
+            $("#item").hide();
+            $("#categoriesMain").show();
+            $("#catalogList").empty();
+            $("#catalogList").append(pageContent);
+            $("#catalogDropDownList").multiselect({
+                header : false,
+                multiple : false,
+                noneSelectedText : multiselectNoneSelectedTextLabel,
+                minWidth : 180,
+                selectedList : 1
+            }).bind("multiselectclick", function(event, ui) {
+                setTimeout(function(){
+                    $("#createProductMenu").detach().prependTo(document.body).hide();
+                    $("#categoryDetails").empty();
+                    catalogSelectedId = ui.value;
+                    categoryTreeDrawByCatalog(catalogSelectedId, ui.text);
+                }, 10);
+            });
+            if(catalogSelectedId != null){
+                $("#catalogDropDownList").multiselect("uncheckAll");
+                $("#catalogDropDownList option").each(function() {
+                    if(this.value == catalogSelectedId)
+                        $(this).attr("selected", "selected");
+                    else
+                        $(this).removeAttr("selected");
+                });
+                $("#catalogDropDownList").multiselect("refresh");
+                $("#categoriesMain .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogDropDownList']").each(function() {
+                    if (this.value == catalogSelectedId) {
                         $(this.parentNode).addClass("ui-state-active");
-					}
-				});
-				$("#catalogDropDownList").val(catalogSelectedId);
-			}
-		},
-		error: function(response, status){}
-	});
+                    }
+                });
+                $("#catalogDropDownList").val(catalogSelectedId);
+            }
+        },
+        error: function(response, status){}
+    });
 }
 
 function catalogGetCreatePage(){
-	$.get(
-		catalogCreatePageUrl,
-		{},
-		function(htmlresponse) {
-			htmlresponse = jQuery.trim(htmlresponse);
-			catalogCreatePageSetup(htmlresponse);
-		},
-		"html"
-	);
+    $.get(
+        catalogCreatePageUrl,
+        {},
+        function(htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            catalogCreatePageSetup(htmlresponse);
+        },
+        "html"
+    );
 }
 
 function catalogCreatePageSetup(htmlresponse){
-	if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
-		$("#catalogCreateDialog").empty();
-		$("#catalogCreateDialog").html(htmlresponse);
-		$("#catalogCreateDialog").dialog({
-			title : catalogTitleLabel,
-			modal : true,
-			resizable : false,
-			width : "530",
-			height : "auto",
-			open : function(event) {
-				catalogCreatePageInitControls();
+    if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
+        $("#catalogCreateDialog").empty();
+        $("#catalogCreateDialog").html(htmlresponse);
+        $("#catalogCreateDialog").dialog({
+            title : catalogTitleLabel,
+            modal : true,
+            resizable : false,
+            width : "530",
+            height : "auto",
+            open : function(event) {
+                catalogCreatePageInitControls();
                 catalogGeneralInitControls(true);
-			},
-			buttons : {
-				cancelLabel : function() {
-					$("#catalogCreateDialog").dialog("close");
-				},
-				createLabel : function() {
-					if (catalogValidateCreateForm())
-						catalogAddNew();
-				}
-			}
-		});
-	}
+            },
+            buttons : {
+                cancelLabel : function() {
+                    $("#catalogCreateDialog").dialog("close");
+                },
+                createLabel : function() {
+                    if (catalogValidateCreateForm())
+                        catalogAddNew();
+                }
+            }
+        });
+    }
 }
 
 function catalogCreatePageInitControls() {
@@ -146,16 +115,16 @@ function catalogCreatePageInitControls() {
 }
 
 function catalogValidateCreateForm(){
-	if ($("#catalogCreateName").val() == "" || $("#catalogCreateActivationDate").val() == "") {
-		jQuery.noticeAdd({
-			stayTime : 2000,
-			text : fieldsRequiredMessageLabel,
-			stay : false,
-			type : "error"
-		});
-		return false;
-	}
-	return true;
+    if ($("#catalogCreateName").val() == "" || $("#catalogCreateActivationDate").val() == "") {
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsRequiredMessageLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    return true;
 }
 
 function catalogAddNew(){
@@ -166,31 +135,31 @@ function catalogAddNew(){
             channelsStr += ",";
         channelsStr += channels[i].value;
     }
-	var dataToSend = "catalog.name=" + $("#catalogCreateName").val() + "&catalog.externalCode=" + $("#catalogCreateExternalCode").val();
-	dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + $("#catalogCreateDescription").val();
-	dataToSend += "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogCreateSocial").is(":checked");
-	dataToSend += "&format=json";
-	$.ajax({
-		url : createCatalogUrl,
-		type : "POST",
-		noticeType : "POST",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			catalogueLoadList();
-			$("#catalogCreateDialog").dialog("close");
-		},
-		error: function(response, status){
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : catalogUniqueNameLabel,
-				stay : false,
-				type : "error"
-			});
-		}
-	});
+    var dataToSend = "catalog.name=" + $("#catalogCreateName").val() + "&catalog.externalCode=" + $("#catalogCreateExternalCode").val();
+    dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + $("#catalogCreateDescription").val();
+    dataToSend += "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogCreateSocial").is(":checked");
+    dataToSend += "&format=json";
+    $.ajax({
+        url : createCatalogUrl,
+        type : "POST",
+        noticeType : "POST",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            catalogueLoadList();
+            $("#catalogCreateDialog").dialog("close");
+        },
+        error: function(response, status){
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : catalogUniqueNameLabel,
+                stay : false,
+                type : "error"
+            });
+        }
+    });
 }
 
 function catalogGetTabPage(){
@@ -348,53 +317,55 @@ function catalogUpdate(){
             channelsStr += ",";
         channelsStr += channels[i].value;
     }
-	var date = $("#catalogActivationDate").val();
-	var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + $("#catalogName").val() + "&catalog.externalCode=" + $("#catalogExternalCode").val();
-	dataToSend += "&catalog.activationDate_year=" + date.substring(6, 10) + "&catalog.activationDate_month=" + date.substring(3, 5) + "&catalog.activationDate_day=" + date.substring(0, 2);
-	dataToSend += "&catalog.description=" + $("#catalogDescription").val() + "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogSocial").is(":checked");
-	dataToSend += "&format=json";
-	$.ajax({
-		url : updateCatalogUrl,
-		type : "POST",
-		noticeType : "PUT",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
+    var date = $("#catalogActivationDate").val();
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + $("#catalogName").val() + "&catalog.externalCode=" + $("#catalogExternalCode").val();
+    dataToSend += "&catalog.activationDate_year=" + date.substring(6, 10) + "&catalog.activationDate_month=" + date.substring(3, 5) + "&catalog.activationDate_day=" + date.substring(0, 2);
+    dataToSend += "&catalog.description=" + $("#catalogDescription").val() + "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogSocial").is(":checked");
+    dataToSend += "&format=json";
+    $.ajax({
+        url : updateCatalogUrl,
+        type : "POST",
+        noticeType : "PUT",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
             var selectedNode = $("#categoryTreeList").jstree("get_selected");
             $.jstree._focused().rename_node(selectedNode , $("#catalogName").val());
-			catalogueLoadList();
-			$("#catalogCreateDialog").dialog("close");
-		},
-		error: function(response, status){
-			jQuery.noticeAdd({
-				stayTime : 2000,
-				text : catalogUniqueNameLabel,
-				stay : false,
-				type : "error"
-			});
-		}
-	});
+            catalogueLoadList();
+            $("#catalogCreateDialog").dialog("close");
+        },
+        error: function(response, status){
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : catalogUniqueNameLabel,
+                stay : false,
+                type : "error"
+            });
+        }
+    });
 }
 
 function catalogDelete(){
-	var dataToSend = "catalog.id=" + catalogSelectedId;
-	dataToSend += "&format=json";
-	$.ajax({
-		url : deleteCatalogUrl,
-		type : "POST",
-		noticeType : "DELETE",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			catalogSelectedId = null;
-			$("#categoryTree").empty();
-			catalogueLoadList();
-		},
-		error: function(response, status){
+    var dataToSend = "catalog.id=" + catalogSelectedId;
+    dataToSend += "&format=json";
+    $.ajax({
+        url : deleteCatalogUrl,
+        type : "POST",
+        noticeType : "DELETE",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            catalogSelectedId = null;
+            $("#categoryTree").empty();
+            $("#categoryDetails").empty();
+            $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
+            catalogueLoadList();
+        },
+        error: function(response, status){
             if(response.status == 401){
                 $.ajax({
                     url : markDeletedCatalogUrl,
@@ -407,6 +378,8 @@ function catalogDelete(){
                     success : function(response, status) {
                         catalogSelectedId = null;
                         $("#categoryTree").empty();
+                        $("#categoryDetails").empty();
+                        $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
                         catalogueLoadList();
                     },
                     error: function(response, status){
@@ -419,8 +392,8 @@ function catalogDelete(){
                     }
                 });
             }
-		}
-	});
+        }
+    });
 }
 
 function catalogPublish(){
@@ -438,40 +411,125 @@ function catalogPublish(){
     });
 }
 
+function catalogGetImportPage(){
+    $.get(
+        catalogImportPageUrl,
+        {},
+        function(htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            catalogImportPageSetup(htmlresponse);
+        },
+        "html"
+    );
+}
+
+function catalogImportPageSetup(htmlresponse){
+    if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
+        $("#catalogCreateDialog").empty();
+        $("#catalogCreateDialog").html(htmlresponse);
+        $("#catalogCreateDialog").dialog({
+            title : catalogTitleLabel,
+            modal : true,
+            resizable : false,
+            width : "530",
+            height : "auto",
+            open : function(event) {
+                catalogImportPageInitControls();
+            },
+            buttons : {
+                cancelLabel : function() {
+                    $("#catalogCreateDialog").dialog("close");
+                },
+                importLabel : function() {
+                    if (catalogValidateImportForm())
+                        catalogImport();
+                }
+            }
+        });
+    }
+}
+
+function catalogImportPageInitControls() {
+    $("#catalogImportFile").val("");
+    $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+    $(".ui-dialog-buttonpane").find("button:contains('importLabel')").addClass("ui-create-button");
+    $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+    $(".ui-dialog-buttonpane").find("button:contains('importLabel')").html("<span class='ui-button-text'>" + importLabel + "</span>");
+}
+
+function catalogValidateImportForm(){
+    if ($("#catalogImportFile").val() == "") {
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsRequiredMessageLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    return true;
+}
+
+function catalogImport(){
+//    $.ajax({
+//        url : importCatalogUrl,
+//        type : "GET",
+//        data : "",
+//        cache : false,
+//        async : true,
+//        success : function(response, status) {},
+//        error: function(response, status){}
+//    });
+
+
+
+    document.getElementById("catalogImportForm").target = "catalogImportHiddenFrame"; // 'upload_target' is the name of the iframe
+    document.getElementById("catalogImportForm").action = importCatalogUrl;
+    document.getElementById("catalogImportForm").submit();
+    document.getElementById("catalogImportHiddenFrame").onload = function() {
+        catalogueLoadList();
+        $("#catalogCreateDialog").dialog("close");
+    }
+}
+
+function catalogExport(){
+    window.open(exportCatalogUrl + "?catalog.id=" + catalogSelectedId);
+}
+
 //TRANSLATION
 
 var catalogTranslationGrid = null;
 
 function catalogTranslationDrawAll(){
-	catalogTranslationGrid = null;
-	var successCallback = function (response){
-		var fields = ["name", "description"];
+    catalogTranslationGrid = null;
+    var successCallback = function (response){
+        var fields = ["name", "description"];
         var defaultsData = {name:  $("#catalogName").val(), description:  $("#catalogDescription").val()};
-		$("#catalogTranslationAddLink").unbind();
-		$("#catalogTranslationAddLink").bind("click", function(){translationGetCreatePage("catalog", catalogSelectedId, fields, defaultsData);});
-		var columns = [{field: "name", title: translationNameGridLabel},{field: "description", title: translationDescriptionGridLabel}];
-		var data = [];
-		for (var i = 0; i < response.length; i++) {
-			var value = eval( "(" + response[i].value + ")" );
-			data[data.length] = {
-				"id" : response[i].id,
-				"targetId":  catalogSelectedId,
-				"translationType":  "catalog",
-				"lang": response[i].lang,
-				"type": response[i].type,
-				"name": value.name,
-				"description": value.description
-			}
-		}
-		var tabVisible = $("#catalogTranslationDiv").is(":visible");
-		if(! tabVisible)
-			$("#catalogTranslationDiv").show();
+        $("#catalogTranslationAddLink").unbind();
+        $("#catalogTranslationAddLink").bind("click", function(){translationGetCreatePage("catalog", catalogSelectedId, fields, defaultsData);});
+        var columns = [{field: "name", title: translationNameGridLabel},{field: "description", title: translationDescriptionGridLabel}];
+        var data = [];
+        for (var i = 0; i < response.length; i++) {
+            var value = eval( "(" + response[i].value + ")" );
+            data[data.length] = {
+                "id" : response[i].id,
+                "targetId":  catalogSelectedId,
+                "translationType":  "catalog",
+                "lang": response[i].lang,
+                "type": response[i].type,
+                "name": value.name,
+                "description": value.description
+            }
+        }
+        var tabVisible = $("#catalogTranslationDiv").is(":visible");
+        if(! tabVisible)
+            $("#catalogTranslationDiv").show();
 
-		catalogTranslationGrid = translationGetGrid("catalogTranslationGrid", catalogSelectedId, fields, columns, data);
+        catalogTranslationGrid = translationGetGrid("catalogTranslationGrid", catalogSelectedId, fields, columns, data);
 
-		if(! tabVisible)
-			$("#catalogTranslationDiv").hide();
-		$("#categoriesMain").hideLoading();
-	}
-	translationGetAllData(catalogSelectedId, successCallback);
+        if(! tabVisible)
+            $("#catalogTranslationDiv").hide();
+        $("#categoriesMain").hideLoading();
+    }
+    translationGetAllData(catalogSelectedId, successCallback);
 }

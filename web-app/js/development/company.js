@@ -728,6 +728,14 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     if(categorySelectedId){
                         categoryGeneralGetInfo();
                     }
+                    alert(partnerActiveCompanyChanged)
+                    if(partnerActiveCompanyChanged){
+                        partnerActiveCompanyChanged = false;
+                        $("#createProductMenu").detach().prependTo(document.body).hide();
+                        $("#categoryTree").empty();
+                        $("#categoryDetails").empty();
+                        catalogueLoadList();
+                    }
 					$("#items").empty().hide(); // show catalog tree
 					$("#categoriesMain").show();
 				});

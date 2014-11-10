@@ -12,6 +12,9 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
         async : true,
         success : function(pageContent, status) {
             $("#categoryTree").empty();
+            $("#catalogMenu ul.subnav li a.disabled").removeClass("disabled");
+            $("#deleteCatalogLink").click(function(){catalogDelete()});
+            $("#exportCatalogLink").click(function(){catalogExport()});
             var html = "<div id='categoryTreeList' value='-1'><ul><li id='categoryTreeNode-0' value='0' class='loaded'>";
             html += "<a href='javascript:void(0)'>" + catalogName + "</a>";
             html += "<ul id='categoryTreeNode-0-Childs'>" + pageContent + "</ul></li></div>";
@@ -43,12 +46,6 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                                     "label": categoryCreateTreeLabel,
                                     "action": function (obj) {
                                         categoryGetCreatePage(obj[0].value);
-                                    }
-                                },
-                                "Delete": {
-                                    "label": categoryDeleteCatalogTreeLabel,
-                                    "action": function (obj) {
-                                        catalogDelete();
                                     }
                                 }
                             }

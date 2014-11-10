@@ -184,13 +184,20 @@
             var deleteCatalogUrl = "${createLink(controller: 'catalog', action:'delete')}";
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action:'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action:'publish')}";
+            var importCatalogUrl = "${createLink(controller: 'impex', action:'ximport')}";
+            var exportCatalogUrl = "${createLink(controller: 'impex', action:'export')}";
+
 
             var catalogCreatePageUrl = "${resource(dir: 'partner', file:'_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file:'_catalogTab.gsp')}";
+            var catalogImportPageUrl = "${resource(dir: 'partner', file:'_importCatalog.gsp')}";
 
             var catalogTitleLabel = "${message(code:'catalog.title.label')}";
             var catalogUniqueNameLabel = "${message(code:'catalog.unique.name.label')}";
             var catalogDeleteEmptyLabel = "${message(code:'catalog.delete.empty.label')}";
+            var catalogDeleteLabel = "${message(code:'catalog.delete.label')}";
+            var catalogImportLabel  = "${message(code:'catalog.import.label')}";
+            var catalogExportLabel = "${message(code:'catalog.export.label')}";
 
             //-----CATEGORY----//
             var showCategoryUrl = "${createLink(controller: 'category', action:'show')}";
@@ -208,7 +215,6 @@
             var categoryDeleteFailedLabel = "${message(code:'category.delete.failed.label')}";
             var categoryFeaturesTitleLabel = "${message(code:'category.features.title.label')}";
             var categoryVariationsTitleLabel = "${message(code:'category.variations.title.label')}";
-            var categoryDeleteCatalogTreeLabel = "${message(code:'category.tree.deleteCatalog.label')}";
 
             var categoryCreatePageUrl = "${resource(dir: 'partner', file:'_createCategory.gsp')}";
             var categoryTabPageUrl = "${resource(dir: 'partner', file:'_categoryTab.gsp')}";
@@ -507,7 +513,9 @@
             function hideCompanySubnav() {
                 $("#active_company_div").parent().find("ul.subnav").hide();
             }
-
+            function hideCatalogMenuSubnav() {
+                $("#catalogMenuDiv").parent().find("ul.subnav").hide();
+            }
         </r:script>
 
     </head>
@@ -577,6 +585,19 @@
             <tr>
                 <td class="treeCol">
                     <div class="tree">
+                        <div id="catalogMenu">
+                            <ul class="topnav">
+                                <li id="catalogMenuDiv"><g:message code="catalog.title.label"/></li>
+                                <li>
+                                    <ul class="subnav" style="display:none;">
+                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
+                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
+                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
+                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                         <div id="catalogList"></div>
                         <div id="categoryTree" class="categoryTree"></div>
                     </div>
