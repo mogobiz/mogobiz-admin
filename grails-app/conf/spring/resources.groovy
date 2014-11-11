@@ -83,12 +83,6 @@ beans = {
     bOCartCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOCart) {
         excludes = ['class']
     }
-    eventRenderer(JsonRenderer, com.mogobiz.store.domain.Event) {
-        excludes = ['class']
-    }
-    eventCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Event) {
-        excludes = ['class']
-    }
     consumptionRenderer(JsonRenderer, com.mogobiz.store.domain.Consumption) {
         excludes = ['class']
     }
@@ -433,8 +427,6 @@ beans = {
     externalAuthLoginRender (com.mogobiz.store.domain.ExternalAuthLoginRender)
     BOCartValidation (com.mogobiz.store.domain.BOCartValidation)
     BOCartRender (com.mogobiz.store.domain.BOCartRender)
-    eventValidation (com.mogobiz.store.domain.EventValidation)
-    eventRender (com.mogobiz.store.domain.EventRender)
     consumptionValidation (com.mogobiz.store.domain.ConsumptionValidation)
     consumptionRender (com.mogobiz.store.domain.ConsumptionRender)
     permissionValidation (com.mogobiz.store.domain.PermissionValidation)
