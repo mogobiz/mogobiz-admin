@@ -21,7 +21,13 @@ function companyCouponsDrawAll(){
                 id : "code",
                 name : companyCouponsCodeLabel,
                 field : "code",
-                width : 20,
+                width : 15,
+                cssClass : ""
+            },{
+                id : "pastille",
+                name : companyCouponsPastilleLabel,
+                field : "pastille",
+                width : 15,
                 cssClass : ""
             },{
                 id : "numberOfUses",
@@ -33,26 +39,26 @@ function companyCouponsDrawAll(){
                 id : "startDate",
                 name : companyCouponsStartDateLabel,
                 field : "startDate",
-                width : 15,
+                width : 12,
                 cssClass : ""
             },{
                 id : "endDate",
                 name : companyCouponsEndDateLabel,
                 field : "endDate",
-                width : 15,
+                width : 12,
                 cssClass : ""
             },{
                 id : "active",
                 name : companyCouponsActiveLabel,
                 field : "active",
-                width : 10,
+                width : 8,
                 formatter : companyCouponsGridActiveFormatter,
                 cssClass : "cell-centered"
             },{
                 id : "catalogWise",
                 name : companyCouponsCatalogWiseLabel,
                 field : "catalogWise",
-                width : 10,
+                width : 8,
                 formatter : companyCouponsGridCatalogWiseFormatter,
                 cssClass : "cell-centered"
             }];

@@ -21,38 +21,44 @@ function companyCouponsDrawAll(){
                 id : "code",
                 name : companyCouponsCodeLabel,
                 field : "code",
-                width : 20,
+                width : 15,
+                cssClass : ""
+            },{
+                id : "pastille",
+                name : companyCouponsPastilleLabel,
+                field : "pastille",
+                width : 15,
                 cssClass : ""
             },{
                 id : "numberOfUses",
                 name : companyCouponsNumberOfUseLabel,
                 field : "numberOfUses",
-                width : 10,
+                width : 8,
                 cssClass : ""
             },{
                 id : "startDate",
                 name : companyCouponsStartDateLabel,
                 field : "startDate",
-                width : 15,
+                width : 14,
                 cssClass : ""
             },{
                 id : "endDate",
                 name : companyCouponsEndDateLabel,
                 field : "endDate",
-                width : 15,
+                width : 14,
                 cssClass : ""
             },{
                 id : "active",
                 name : companyCouponsActiveLabel,
                 field : "active",
-                width : 10,
+                width : 7,
                 formatter : companyCouponsGridActiveFormatter,
                 cssClass : "cell-centered"
             },{
                 id : "catalogWise",
                 name : companyCouponsCatalogWiseLabel,
                 field : "catalogWise",
-                width : 10,
+                width : 7,
                 formatter : companyCouponsGridCatalogWiseFormatter,
                 cssClass : "cell-centered"
             }];
@@ -254,8 +260,8 @@ function companyCouponsPageInitControls(isCreate) {
                 "datepicker"), date = $.datepicker
                 .parseDate(
                     instance.settings.dateFormat
-                        || $.datepicker._defaults.dateFormat,
-                    selectedDate, instance.settings);
+                    || $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings);
             availableDates.not(this).datepicker("option",
                 option, date);
         }
@@ -612,7 +618,7 @@ function companyCouponsTranslationDrawAll(couponId){
 }
 
 /**
-    Rules functions
+ Rules functions
  **/
 var companyCouponsRulesXTypes = {};
 var companyCouponsRulesGrid = null;

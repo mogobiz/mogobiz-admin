@@ -428,6 +428,7 @@
             var companyCouponsTitleLabel = "${message(code:'company.coupons.title.label')}";
             var companyCouponsNameLabel = "${message(code:'company.coupons.name.label')}";
             var companyCouponsCodeLabel = "${message(code:'company.coupons.code.label')}";
+            var companyCouponsPastilleLabel= "${message(code:'company.coupons.pastille.label')}";
             var companyCouponsActiveLabel = "${message(code:'company.coupons.active.label')}";
             var companyCouponsCatalogWiseLabel = "${message(code:'company.coupons.catalogWise.label')}";
             var companyCouponsNumberOfUseLabel = "${message(code:'company.coupons.numberOfUse.label')}";
