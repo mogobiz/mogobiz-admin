@@ -57,6 +57,24 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
+                    <label for="companyCouponsPastille"><g:message code="company.coupons.pastille.label"></g:message></label><br />
+                </div>
+                <div class="companyCouponsDialog-large">
+                    <label for="companyCouponsNumberOfUse"><g:message code="company.coupons.numberOfUse.label"></g:message></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="companyCouponsDialog-large">
+                    <input type="text" id="companyCouponsPastille" />
+                </div>
+                <div class="companyCouponsDialog-large">
+                    <input type="text" id="companyCouponsNumberOfUse" pattern="[0-9]+" />
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="newline">
+                <div class="companyCouponsDialog-large">
                     <label for="companyCouponsStartDate"><g:message code="company.coupons.startDate.label"></g:message></label><br />
                 </div>
                 <div class="companyCouponsDialog-large">
@@ -70,18 +88,6 @@
                 </div>
                 <div class="companyCouponsDialog-large">
                     <input type="text" id="companyCouponsEndDate"/>
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsNumberOfUse"><g:message code="company.coupons.numberOfUse.label"></g:message></label><br />
-                </div>
-            </div>
-            <div class="spacer-small"></div>
-            <div class="newline">
-                <div class="companyCouponsDialog-large">
-                    <input type="text" id="companyCouponsNumberOfUse" pattern="[0-9]+" />
                 </div>
             </div>
             <div class="spacer"></div>

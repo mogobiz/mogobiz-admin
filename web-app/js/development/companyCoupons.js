@@ -76,16 +76,17 @@ function companyCouponsDrawAll(){
                         "couponId": coupons[i].id,
                         "name": coupons[i].name,
                         "code": coupons[i].code,
+                        "pastille": coupons[i].pastille,
                         "startDate": coupons[i].startDate,
                         "endDate": coupons[i].endDate,
                         "numberOfUses": coupons[i].numberOfUses,
                         "active": coupons[i].active,
                         "catalogWise": coupons[i].catalogWise,
-                        categories: coupons[i].categories,
-                        products: coupons[i].products,
-                        skus: coupons[i].ticketTypes,
-                        anonymous: coupons[i].anonymous,
-                        rules: coupons[i].rules
+                        "categories": coupons[i].categories,
+                        "products": coupons[i].products,
+                        "skus": coupons[i].ticketTypes,
+                        "anonymous": coupons[i].anonymous,
+                        "rules": coupons[i].rules
                     }
                 }
             }
@@ -328,6 +329,7 @@ function companyCouponsPageInitFields(couponId, isCreate){
         if(coupon){
             $("#companyCouponsName").val(coupon.name);
             $("#companyCouponsCode").val(coupon.code);
+            $("#companyCouponsPastille").val(coupon.pastille);
             $("#companyCouponsStartDate").val(coupon.startDate);
             $("#companyCouponsEndDate").val(coupon.endDate);
             $("#companyCouponsNumberOfUse").val(coupon.numberOfUses);
@@ -418,8 +420,8 @@ function companyCouponsCreateCoupon(){
         rulesToSend += "&rules[" + i + "].yOffered=" + rules[i].yOffered;
     }
 
-    var dataToSend = "name=" + $("#companyCouponsName").val() + "&code=" + $("#companyCouponsCode").val() + "&startDate=" + $("#companyCouponsStartDate").val();
-    dataToSend += "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val()
+    var dataToSend = "name=" + $("#companyCouponsName").val() + "&code=" + $("#companyCouponsCode").val() + "&pastille=" + $("#companyCouponsPastille").val();
+    dataToSend += "&startDate=" + $("#companyCouponsStartDate").val() + "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val()
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
@@ -472,8 +474,8 @@ function companyCouponsUpdateCoupon(){
     }
 
     var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + $("#companyCouponsName").val();
-    dataToSend += "&code=" + $("#companyCouponsCode").val() + "&startDate=" + $("#companyCouponsStartDate").val();
-    dataToSend += "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val();
+    dataToSend += "&code=" + $("#companyCouponsCode").val() + "&pastille=" + $("#companyCouponsPastille").val();
+    dataToSend += "&startDate=" + $("#companyCouponsStartDate").val() + "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val();
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
@@ -578,11 +580,11 @@ var companyCouponsTranslationGrid = null;
 function companyCouponsTranslationDrawAll(couponId){
     companyCouponsTranslationGrid = null;
     var successCallback = function (response){
-        var fields = ["name"];
-        var defaultsData = {name: $("#companyCouponsName").val()};
+        var fields = ["name", "pastille"];
+        var defaultsData = {name: $("#companyCouponsName").val(), pastille: $("#companyCouponsPastille").val()};
         $("#companyCouponsTranslationAddLink").unbind();
         $("#companyCouponsTranslationAddLink").bind("click", function(){translationGetCreatePage("companyCoupons", couponId, fields, defaultsData);});
-        var columns = [{field: "name", title: translationNameGridLabel}];
+        var columns = [{field: "name", title: translationNameGridLabel}, {field: "pastille", title: translationPastilleGridLabel}];
         var data = [];
         for (var i = 0; i < response.length; i++) {
             var value = eval( "(" + response[i].value + ")" );
@@ -592,7 +594,8 @@ function companyCouponsTranslationDrawAll(couponId){
                 "translationType": "companyCoupons",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name
+                "name": value.name,
+                "pastille": value.pastille
             }
         }
         var tabVisible = $("#companyCouponsTranslationDiv").is(":visible");

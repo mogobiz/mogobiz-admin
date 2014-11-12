@@ -237,6 +237,7 @@
             var translationValuesGridLabel = "${message(code:'translation.values.label')}";
             var translationWebstieGridLabel = "${message(code:'translation.website.label')}";
             var translationDescriptionGridLabel = "${message(code:'translation.description.label')}";
+            var translationPastilleGridLabel = "${message(code:'translation.pastille.label')}";
             var translationDialogTitleLabel = "${message(code:'translation.dialog.title.label')}";
 
             //-----VARIATIONS----//
