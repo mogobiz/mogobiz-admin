@@ -8,6 +8,7 @@ grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
 //grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
 
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -89,7 +90,7 @@ grails.project.dependency.resolution = {
 
 // plugins for the compile step
         //compile ':scaffolding:2.0.3'
-        compile ':cache:1.1.3'
+        compile ':cache:1.1.8'
 //        compile ':asset-pipeline:1.8.3'
 
 // plugins needed at runtime but not for compilation

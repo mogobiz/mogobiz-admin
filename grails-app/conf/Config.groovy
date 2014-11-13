@@ -6,8 +6,9 @@ import grails.util.Environment
 grails.config.locations = []
 
 println('**************************************************')
+
 if (Environment.isWarDeployed()) {
-    if (System.properties["${appName}.config.location"]) {
+    if (System.properties["mogobiz.config.location"]) {
         grails.config.locations << "file:" + System.properties["mogobiz.config.location"]
     } else if (System.properties["catalina.home"]) {
         def dir = System.properties["catalina.home"]
@@ -101,6 +102,12 @@ grails.cache.config = {
     }
 }
 
+//importCountries.cron='59 59 23 31 12 ? 2099' // never fire
+importCountries.cron='0 * * * * ?' // every minute
+importCountries.codes='FR,GB,SN'
+importCountries.dir="/data/mogopay/import/countries"
+
+
 // mail
 grails.mail.host = 'smtp.gmail.com'
 grails.mail.port = 465
@@ -139,6 +146,8 @@ uuidData.lifetime.country = 60 * 60 * 24 * 30 // 30j (en secondes)
 application.secret = "1234567890123456"
 
 rootPath = '/tmp/mogobiz-data'
+
+impexPath = '/tmp/impex'
 
 
 rootDomain = '.mogobiz.com'
@@ -269,7 +278,7 @@ log4j = {
     }
     root {
         //error stdout:"StackTrace"
-        info 'stdout', 'file'
+        error 'stdout', 'file'
         additivity = false
     }
 }

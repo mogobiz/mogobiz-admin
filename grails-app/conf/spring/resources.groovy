@@ -11,6 +11,18 @@ import grails.rest.render.json.JsonRenderer
 
 beans = {
 
+    countryRenderer(JsonRenderer, com.mogobiz.store.domain.Country) {
+        excludes = ['class']
+    }
+    countryCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Country) {
+        excludes = ['class']
+    }
+    countryAdminRenderer(JsonRenderer, com.mogobiz.store.domain.CountryAdmin) {
+        excludes = ['class']
+    }
+    countryAdminCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.CountryAdmin) {
+        excludes = ['class']
+    }
     poiTypeRenderer(JsonRenderer, com.mogobiz.geolocation.domain.PoiType) {
         excludes = ['class']
     }
@@ -399,6 +411,10 @@ beans = {
 
 
 
+    countryAdminValidation (com.mogobiz.store.domain.CountryAdminValidation)
+    countryAdminRender (com.mogobiz.store.domain.CountryAdminRender)
+    countryValidation (com.mogobiz.store.domain.CountryValidation)
+    countryRender (com.mogobiz.store.domain.CountryRender)
     poiTypeValidation (com.mogobiz.geolocation.domain.PoiTypeValidation)
     poiTypeRender (com.mogobiz.geolocation.domain.PoiTypeRender)
     locationValidation (com.mogobiz.geolocation.domain.LocationValidation)
