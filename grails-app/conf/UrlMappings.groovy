@@ -58,20 +58,6 @@ class UrlMappings {
 		// "/store/$companyCode?/$action?/$id?"(controller:"store", parseRequest:true) {
 		// }
         "/api/store/publish"(controller:"elasticsearch", action:"publish", parseRequest:false)
-        "/api/store/$store?/resources/$id/$size?"(controller:"resource", action:"display", parseRequest:false) {
-            action = [GET:'display']
-        }
-        "/api/store/$store?/comments/$commentId?"(controller:"elasticsearch", parseRequest:true) {
-                action = [POST:'saveComment', PUT:'updateComment']
-        }
-        "/api/store/$store?/products/$productId/comments/"(controller:"elasticsearch"){
-            action = [GET:'listProductComments']
-        }
-        "/api/store/$store?/products/$categoryPath**/$sku?"(controller:"elasticsearch", parseRequest:true) {
-            action = [GET:'products']
-        }
-        "/api/store/$store?/$action?/$categoryPath**?/$productId?"(controller:"elasticsearch", parseRequest:true) {
-        }
 
 		"/$controller/$action?/$id?"{ constraints { // apply constraints here
 			} }

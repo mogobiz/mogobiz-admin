@@ -29,15 +29,19 @@ println('**************************************************')
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+// public URL to the mogobiz-admin application
 grails.serverURL = "http://mogobiz.ebiznext.com/iper2010"
 
 dataSource {
-    pooled = true
-
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
     url = "jdbc:postgresql://localhost/iper2010"
+    username = "iper2010"
+    password = "iper2010"
+
+    pooled = true
+    dbCreate = "update"
+//    dbCreate = "create-drop"
 
 //    dialect = "org.hibernate.dialect.MySQLDialect"
 //    driverClassName = "com.mysql.jdbc.Driver"
@@ -57,9 +61,6 @@ dataSource {
 //    dialect = "org.hibernate.dialect.DerbyDialect"
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
 //    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/iper2010"
-
-    username = "iper2010"
-    password = "iper2010"
 
 
     logSql = true
@@ -84,29 +85,11 @@ dataSource {
     }
 }
 
-// cache
-grails.cache.config = {
-    cache {
-        name 'currencyCache'
-        eternal false
-        timeToIdleSeconds 86400
-        timeToLiveSeconds 86400
-        maxElementsInMemory 100
-    }
-    cache {
-        name 'countryCache'
-        eternal false
-        timeToIdleSeconds 86400
-        timeToLiveSeconds 86400
-        maxElementsInMemory 100
-    }
-}
-
 //importCountries.cron='59 59 23 31 12 ? 2099' // never fire
-importCountries.cron='0 * * * * ?' // every minute
-importCountries.codes='FR,GB,SN'
-importCountries.dir="/data/mogopay/import/countries"
-
+importCountries.cron = '0 * * * * ?' // every minute
+//importCountries.codes='FR,GB,SN'
+importCountries.codes = 'FR,GB,SN'
+importCountries.dir = "/data/mogopay/import/countries"
 
 // mail
 grails.mail.host = 'smtp.gmail.com'
@@ -117,6 +100,7 @@ grails.mail.props = ['mail.smtp.auth'                  : 'true',
                      'mail.smtp.socketFactory.port'    : '465',
                      'mail.smtp.socketFactory.class'   : 'javax.net.ssl.SSLSocketFactory',
                      'mail.smtp.socketFactory.fallback': 'false']
+
 grails.mail.default.from = 'mogobiz@gmail.com'
 
 // email confirmation
@@ -124,80 +108,87 @@ emailConfirmation.from = 'mogobiz@gmail.com'
 // 24hr 1000 * 60 * 60 * 24
 emailConfirmation.maxAge = 86400000
 
-// 2 years in seconds
-cookie.tracking.lifetime = 60 * 60 * 24 * 365 * 2
-cookie.tracking.name = "mogobiz_uuid"
+mogopay.url = 'http://mogopay.ebiznext.com/pay/'
 
-user.product.visit.history = 10
-crypto.secret = "1234567890"
-crypto.algorithm = "Blowfish"
-
-
-mogopay.url = 'http://mogopay.ebiznext.com/mogopay/'
-mogopay.secretKey = "0808cffd-4064-41a7-92e9-d2b6d6a872ef"
-
-partner.languages = ['fr', 'en', 'de', 'es']
-
-uuidData.recycle.cron = '0 0/10 * * * ?'
-uuidData.lifetime.cart = 60 * 60 * 24 * 30 // 30j (en secondes)
-uuidData.lifetime.product = 60 * 60 * 24 * 30 // 30j (en secondes)
-uuidData.lifetime.country = 60 * 60 * 24 * 30 // 30j (en secondes)
-
-application.secret = "1234567890123456"
-
-rootPath = '/tmp/mogobiz-data'
-
-impexPath = '/tmp/impex'
+application {
+    languages = ['fr', 'en', 'de', 'es']
+    secret = "1234567890123456"
+}
 
 
-rootDomain = '.mogobiz.com'
-maxSiteSize = 100 * 1000 * 1000 // 100MB is the max size of user site
-externalAuthPath = 'http://mogobiz.ebiznext.com/auth'
-defaultCompany = 'ebiznext'
-resourcesServerURL = "http://mogobiz.ebiznext.com/iper2010"
+
+resources {
+    path = '/tmp/mogobiz-data'
+    url = "http://mogobiz.ebiznext.com/iper2010"
+}
+
+impex.path = '/tmp/impex'
+
+
+external.authPath = 'http://mogobiz.ebiznext.com/auth'
 
 superadmin {
-    login = 'admin@iper2010.com'
-    email = 'admin@iper2010.com'
-    password = 'changeit'
+    login = 'admin@mogobiz.com'
+    email = 'admin@mogobiz.com'
+    password = '00810cf8b94d6fcb9c5de484d3bec4187620b3e2876e59aab90d852fe0f18fb6' // changeit
+}
+
+elasticsearch {
+    export.cron = '0 * * * * ?'
+    serverURL = 'http://localhost:9200'
+    shards = 1
+    replicas = 1
+    embedded {
+        active = false
+        settings {
+            path_data = System.getProperty("java.io.tmpdir") + '/data'
+        }
+    }
+}
+
+
+log4j = {
+    error 'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
+            'grails.util.GrailsUtil',
+            'org.codehaus.groovy.grails.commons.spring.ReloadAwareAutowireCapableBeanFactory',
+            'org.grails.plugin.platform.events.EventsImpl'
+
+    warn 'org.springframework'
+
+    appenders {
+        file name: 'file', file: 'mogobiz-admin.log'
+    }
+    root {
+        //error stdout:"StackTrace"
+        error 'stdout', 'file'
+        additivity = false
+    }
 }
 
 demo = true
 
+// Do not minimize resources
+grails.resources.debug = true
+grails.resources.mappers.yuicssminify.disable = true
+grails.resources.mappers.yuijsminify.disable = true
+
 environments {
+    production {
+    }
+
     development {
-        dataSource {
-            dbCreate = "update"
-//            dbCreate = "create-drop"
-            // datasource development-environment merge-point
-        }
-        grails.resources.debug = true
-        grails.resources.mappers.yuicssminify.disable = true
-        grails.resources.mappers.yuijsminify.disable = true
+    }
+
+    test {
         elasticsearch {
-            export.cron = '0 * * * * ?'
-            serverURL = 'http://localhost:9200'
-            shards = 1
-            replicas = 1
             embedded {
                 active = true
                 settings {
                     path_data = System.getProperty("java.io.tmpdir") + '/data'
                 }
             }
-        }
-        oauth {
-            eboutique {
-                client_id = 'eboutique'
-                client_secret = 'changeit'
-                redirect_uri = 'http://mogobiz.ebiznext.com/auth/oauthcallbackIPER'
-            }
-        }
 
-        sso {
-            // define sso uris
         }
-
     }
 
 //    grails -Dgrails.env=postgresql schema-export
@@ -227,15 +218,15 @@ environments {
         }
     }
 
-//    First create a derby database as follow
-//    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
-//    $ ./ij
-//      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
-//    You are now ready to access the database from grails.
-//    user / password should be empty for a default conf
-//    CREATE SEQUENCE mogobiz_sequence3 as BIGINT START WITH -10000000000 INCREMENT BY 1;
 //    grails -Dgrails.env=derby schema-export
     derby {
+        //    First create a derby database as follow
+        //    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
+        //    $ ./ij
+        //      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
+        //    You are now ready to access the database from grails.
+        //    user / password should be empty for a default conf
+        //    CREATE SEQUENCE mogobiz_sequence3 as BIGINT START WITH -10000000000 INCREMENT BY 1;
         dataSource {
             dialect = "org.hibernate.dialect.DerbyDialect"
             driverClassName = "org.apache.derby.jdbc.ClientDriver"
@@ -244,43 +235,6 @@ environments {
     }
 
 
-
-    test {
-        dataSource {
-            dbCreate = "update"
-        }
-    }
-
-    production {
-        dataSource {
-            dbCreate = "update"
-            // datasource production-environment merge-point
-        }
-        grails.resources.debug = false
-        grails.resources.mappers.yuicssminify.disable = false
-        grails.resources.mappers.yuijsminify.disable = false
-
-    }
-}
-
-
-
-log4j = {
-    error 'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
-            'grails.util.GrailsUtil',
-            'org.codehaus.groovy.grails.commons.spring.ReloadAwareAutowireCapableBeanFactory',
-            'org.grails.plugin.platform.events.EventsImpl'
-
-    warn 'org.springframework'
-
-    appenders {
-        file name: 'file', file: 'mogobiz-admin.log'
-    }
-    root {
-        //error stdout:"StackTrace"
-        error 'stdout', 'file'
-        additivity = false
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

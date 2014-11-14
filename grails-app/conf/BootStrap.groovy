@@ -1,12 +1,12 @@
 import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
-import bootstrap.JahiaCommerceService
+import bootstrap.CommerceService
 import com.mogobiz.store.domain.Role
 
 class BootStrap {
     def grailsApplication
     CommonService commonService
-    JahiaCommerceService jahiaCommerceService
+    CommerceService commerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
 
     def init = { servletContext ->
@@ -14,12 +14,12 @@ class BootStrap {
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
         if (grailsApplication.config.demo) {
-            jahiaCommerceService.init()
+            commerceService.init()
         }
     }
 
     def destroy = {
-        jahiaCommerceService.destroy()
+        commerceService.destroy()
         commonService.destroy()
         embeddedElasticSearchService.destroy()
     }

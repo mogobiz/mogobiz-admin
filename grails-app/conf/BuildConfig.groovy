@@ -65,7 +65,7 @@ grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
         // uncomment to disable ehcache
-        // excludes 'ehcache'
+        excludes 'ehcache'
     }
 
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
@@ -88,10 +88,6 @@ grails.project.dependency.resolution = {
         // plugins for the build system only
         build ':tomcat:7.0.50'
 
-// plugins for the compile step
-        //compile ':scaffolding:2.0.3'
-        compile ':cache:1.1.8'
-//        compile ':asset-pipeline:1.8.3'
 
 // plugins needed at runtime but not for compilation
         // runtime ':hibernate4:4.3.5.2' // or
@@ -118,7 +114,6 @@ grails.project.dependency.resolution = {
         compile ":cached-resources:1.0"
 //		compile ":zipped-resources:1.0"
 //		runtime ":yui-minify-resources:0.1.5"
-        compile ":cookie:0.51"
         compile ":rest:0.8"
         compile ":joda-time:1.4"
         test ':spock:0.7'

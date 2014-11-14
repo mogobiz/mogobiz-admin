@@ -1,11 +1,8 @@
 import com.mogobiz.service.ElasticsearchService
 import com.mogobiz.service.GoogleCategoryService
 import com.mogobiz.service.ProductService
-import com.mogobiz.service.RateService
 import com.mogobiz.service.SanitizeUrlService
 import com.mogobiz.service.TaxRateService
-import com.mogobiz.service.UuidDataService
-import com.mogobiz.service.TrackingService
 import grails.rest.render.json.JsonCollectionRenderer
 import grails.rest.render.json.JsonRenderer
 
@@ -233,12 +230,6 @@ beans = {
     albumCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Album) {
         excludes = ['class']
     }
-    uuidDataRenderer(JsonRenderer, com.mogobiz.store.domain.UuidData) {
-        excludes = ['class']
-    }
-    uuidDataCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.UuidData) {
-        excludes = ['class']
-    }
     googleContentRenderer(JsonRenderer, com.mogobiz.store.domain.GoogleContent) {
         excludes = ['class']
     }
@@ -378,20 +369,11 @@ beans = {
     defaultDateConverter com.mogobiz.grails.DateValueConverter
 
     sanitizeUrlService(SanitizeUrlService)
-    rateService(RateService)
     taxRateService(TaxRateService)
-    cookieService(com.dalew.CookieService)
-    trackingService(TrackingService) {
-        cookieService = ref("cookieService")
-    }
-    uuidDataService(UuidDataService) {
-        trackingService = ref("trackingService")
-    }
+
     productService(ProductService) {
         sanitizeUrlService = ref("sanitizeUrlService")
-        rateService = ref("rateService")
         taxRateService = ref("taxRateService")
-        uuidDataService = ref("uuidDataService")
     }
     productRender(com.mogobiz.store.domain.ProductRender) {
         productService = ref("productService")
@@ -402,7 +384,6 @@ beans = {
     }
     googleCategoryService (GoogleCategoryService)
     elasticsearchService (ElasticsearchService){
-        uuidDataService = ref('uuidDataService')
         grailsApplication = ref('grailsApplication')
     }
     embeddedElasticSearchService (bootstrap.EmbeddedElasticSearchService)
@@ -487,8 +468,6 @@ beans = {
     translationRender (com.mogobiz.store.domain.TranslationRender)
     albumValidation (com.mogobiz.store.domain.AlbumValidation)
     albumRender (com.mogobiz.store.domain.AlbumRender)
-    uuidDataValidation (com.mogobiz.store.domain.UuidDataValidation)
-    uuidDataRender (com.mogobiz.store.domain.UuidDataRender)
     googleContentValidation (com.mogobiz.store.domain.GoogleContentValidation)
     googleContentRender (com.mogobiz.store.domain.GoogleContentRender)
     taxRateValidation (com.mogobiz.store.domain.TaxRateValidation)
