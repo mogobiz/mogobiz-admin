@@ -25,19 +25,14 @@ if (Environment.isWarDeployed()) {
 println grails.config.locations
 println('**************************************************')
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// public URL to the mogobiz-admin application
-grails.serverURL = "http://mogobiz.ebiznext.com/iper2010"
 
 dataSource {
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
-    url = "jdbc:postgresql://localhost/iper2010"
-    username = "iper2010"
-    password = "iper2010"
+    url = "jdbc:postgresql://localhost/mogobiz"
+    username = "mogobiz"
+    password = "mogobiz"
 
     pooled = true
     dbCreate = "update"
@@ -45,7 +40,7 @@ dataSource {
 
 //    dialect = "org.hibernate.dialect.MySQLDialect"
 //    driverClassName = "com.mysql.jdbc.Driver"
-//    url = "jdbc:mysql://localhost/iper2010"
+//    url = "jdbc:mysql://localhost/mogobiz"
 
 //    dialect = "com.mogobiz.hibernate.OracleDialect"
 //    driverClassName = "oracle.jdbc.driver.OracleDriver"
@@ -54,13 +49,13 @@ dataSource {
 //    First create a derby database as follow
 //    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
 //    $ ./ij
-//      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
+//      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/mogobiz';
 //    You are now ready to access the database from grails.
 //    user / password should be empty for a default conf
 
 //    dialect = "org.hibernate.dialect.DerbyDialect"
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
-//    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/iper2010"
+//    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/mogobiz"
 
 
     logSql = true
@@ -85,30 +80,39 @@ dataSource {
     }
 }
 
-//importCountries.cron='59 59 23 31 12 ? 2099' // never fire
-importCountries.cron = '0 * * * * ?' // every minute
-//importCountries.codes='FR,GB,SN'
-importCountries.codes = 'FR,GB,SN'
-importCountries.dir = "/data/mogopay/import/countries"
+// importCountries.cron='59 59 23 31 12 ? 2099' // never fire
 
-// mail
-grails.mail.host = 'smtp.gmail.com'
-grails.mail.port = 465
-grails.mail.username = 'mogobiz@gmail.com'
-grails.mail.password = 'e-z12B24'
-grails.mail.props = ['mail.smtp.auth'                  : 'true',
-                     'mail.smtp.socketFactory.port'    : '465',
-                     'mail.smtp.socketFactory.class'   : 'javax.net.ssl.SSLSocketFactory',
-                     'mail.smtp.socketFactory.fallback': 'false']
+importCountries {
+    cron = '0 * * * * ?' // every minute
+    codes = 'FR,GB,SN'
+    dir = "/data/mogopay/import/countries"
+}
 
-grails.mail.default.from = 'mogobiz@gmail.com'
+grails {
+    serverURL = "http://mogobiz.ebiznext.com/mogobiz"
+    mail {
+        from = 'mogobiz@gmail.com'
+        host = 'smtp.gmail.com'
+        port = 465
+        username = 'mogobiz@gmail.com'
+        password = 'e-z12B24'
+        props = ['mail.smtp.auth'                  : 'true',
+                 'mail.smtp.socketFactory.port'    : '465',
+                 'mail.smtp.socketFactory.class'   : 'javax.net.ssl.SSLSocketFactory',
+                 'mail.smtp.socketFactory.fallback': 'false']
+    }
+}
 
 // email confirmation
-emailConfirmation.from = 'mogobiz@gmail.com'
-// 24hr 1000 * 60 * 60 * 24
-emailConfirmation.maxAge = 86400000
+emailConfirmation {
+    from = 'mogobiz@gmail.com'
+    // 24hr 1000 * 60 * 60 * 24
+    maxAge = 86400000
+}
 
-mogopay.url = 'http://mogopay.ebiznext.com/pay/'
+mogopay {
+    url = 'http://mogopay.ebiznext.com/pay/'
+}
 
 application {
     languages = ['fr', 'en', 'de', 'es']
@@ -119,13 +123,17 @@ application {
 
 resources {
     path = '/tmp/mogobiz-data'
-    url = "http://mogobiz.ebiznext.com/iper2010"
+    url = "http://mogobiz.ebiznext.com/mogobiz"
 }
 
-impex.path = '/tmp/impex'
+impex  {
+    path = '/tmp/impex'
+}
 
 
-external.authPath = 'http://mogobiz.ebiznext.com/auth'
+external {
+    authPath = 'http://mogobiz.ebiznext.com/auth'
+}
 
 superadmin {
     login = 'admin@mogobiz.com'
@@ -138,12 +146,6 @@ elasticsearch {
     serverURL = 'http://localhost:9200'
     shards = 1
     replicas = 1
-    embedded {
-        active = false
-        settings {
-            path_data = System.getProperty("java.io.tmpdir") + '/data'
-        }
-    }
 }
 
 
@@ -196,7 +198,7 @@ environments {
         dataSource {
             dialect = "org.hibernate.dialect.PostgreSQLDialect"
             driverClassName = "org.postgresql.Driver"
-            url = "jdbc:postgresql://localhost/iper2010"
+            url = "jdbc:postgresql://localhost/mogobiz"
         }
     }
 
@@ -205,7 +207,7 @@ environments {
         dataSource {
             dialect = "org.hibernate.dialect.MySQLDialect"
             driverClassName = "com.mysql.jdbc.Driver"
-            url = "jdbc:mysql://localhost/iper2010"
+            url = "jdbc:mysql://localhost/mogobiz"
         }
     }
 
@@ -223,14 +225,14 @@ environments {
         //    First create a derby database as follow
         //    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
         //    $ ./ij
-        //      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/iper2010';
+        //      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/mogobiz';
         //    You are now ready to access the database from grails.
         //    user / password should be empty for a default conf
         //    CREATE SEQUENCE mogobiz_sequence3 as BIGINT START WITH -10000000000 INCREMENT BY 1;
         dataSource {
             dialect = "org.hibernate.dialect.DerbyDialect"
             driverClassName = "org.apache.derby.jdbc.ClientDriver"
-            url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/iper2010"
+            url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/mogobiz"
         }
     }
 

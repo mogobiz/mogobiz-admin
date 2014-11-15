@@ -8,6 +8,12 @@ import grails.rest.render.json.JsonRenderer
 
 beans = {
 
+    paymentDataRenderer(JsonRenderer, com.mogobiz.pay.domain.PaymentData) {
+        excludes = ['class']
+    }
+    paymentDataCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.PaymentData) {
+        excludes = ['class']
+    }
     countryRenderer(JsonRenderer, com.mogobiz.store.domain.Country) {
         excludes = ['class']
     }
@@ -390,8 +396,8 @@ beans = {
 
 
 
-
-
+    paymentDataValidation (com.mogobiz.pay.domain.PaymentDataValidation)
+    paymentDataRender (com.mogobiz.pay.domain.PaymentDataRender)
     countryAdminValidation (com.mogobiz.store.domain.CountryAdminValidation)
     countryAdminRender (com.mogobiz.store.domain.CountryAdminRender)
     countryValidation (com.mogobiz.store.domain.CountryValidation)

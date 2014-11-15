@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Welcome to Iper2010</title>
+        <title>Welcome to Mogobiz</title>
         <meta name="layout" content="main" />
 
         %{--<r:require modules="core"/>--}%
