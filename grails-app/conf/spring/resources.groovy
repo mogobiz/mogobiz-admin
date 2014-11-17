@@ -8,6 +8,24 @@ import grails.rest.render.json.JsonRenderer
 
 beans = {
 
+    warehouseRenderer(JsonRenderer, com.mogobiz.store.domain.Warehouse) {
+        excludes = ['class']
+    }
+    warehouseCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Warehouse) {
+        excludes = ['class']
+    }
+    priceRenderer(JsonRenderer, com.mogobiz.store.domain.Price) {
+        excludes = ['class']
+    }
+    priceCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Price) {
+        excludes = ['class']
+    }
+    customerProfileRenderer(JsonRenderer, com.mogobiz.store.domain.CustomerProfile) {
+        excludes = ['class']
+    }
+    customerProfileCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.CustomerProfile) {
+        excludes = ['class']
+    }
     paymentDataRenderer(JsonRenderer, com.mogobiz.pay.domain.PaymentData) {
         excludes = ['class']
     }
@@ -396,6 +414,12 @@ beans = {
 
 
 
+    warehouseAdminRender (com.mogobiz.store.domain.WarehouseRender)
+    warehouseValidation (com.mogobiz.store.domain.WarehouseValidation)
+    priceRender (com.mogobiz.store.domain.PriceRender)
+    priceValidation (com.mogobiz.store.domain.PriceValidation)
+    customerProfileRender (com.mogobiz.store.domain.CustomerProfileRender)
+    customerProfileValidation (com.mogobiz.store.domain.CustomerProfileValidation)
     paymentDataValidation (com.mogobiz.pay.domain.PaymentDataValidation)
     paymentDataRender (com.mogobiz.pay.domain.PaymentDataRender)
     countryAdminValidation (com.mogobiz.store.domain.CountryAdminValidation)
