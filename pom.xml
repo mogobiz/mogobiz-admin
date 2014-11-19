@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>com.mogobiz</groupId>
-    <artifactId>iper2010</artifactId>
+    <artifactId>mogobiz</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
 
