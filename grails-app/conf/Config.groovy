@@ -25,8 +25,6 @@ if (Environment.isWarDeployed()) {
 println grails.config.locations
 println('**************************************************')
 
-
-
 dataSource {
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
@@ -122,8 +120,8 @@ application {
 
 
 resources {
-    path = '/tmp/mogobiz-data'
-    url = "http://mogobiz.ebiznext.com/mogobiz"
+    path = "/data/mogobiz"
+    url = 'http://localhost:8082'
 }
 
 impex  {
