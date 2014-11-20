@@ -1,5 +1,6 @@
 import com.mogobiz.service.ElasticsearchService
 import com.mogobiz.service.GoogleCategoryService
+import com.mogobiz.service.GoogleService
 import com.mogobiz.service.ProductService
 import com.mogobiz.service.SanitizeUrlService
 import com.mogobiz.service.TaxRateService
@@ -411,6 +412,7 @@ beans = {
         grailsApplication = ref('grailsApplication')
     }
     embeddedElasticSearchService (bootstrap.EmbeddedElasticSearchService)
+    googleService (GoogleService)
 
 
 
