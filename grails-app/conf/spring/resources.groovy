@@ -8,6 +8,12 @@ import grails.rest.render.json.JsonRenderer
 
 beans = {
 
+    featureValueRenderer(JsonRenderer, com.mogobiz.store.domain.FeatureValue) {
+        excludes = ['class']
+    }
+    featureValueCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.FeatureValue) {
+        excludes = ['class']
+    }
     warehouseRenderer(JsonRenderer, com.mogobiz.store.domain.Warehouse) {
         excludes = ['class']
     }
@@ -412,9 +418,9 @@ beans = {
     }
     embeddedElasticSearchService (bootstrap.EmbeddedElasticSearchService)
 
-
-
-    warehouseAdminRender (com.mogobiz.store.domain.WarehouseRender)
+    featureValueRender (com.mogobiz.store.domain.FeatureValue)
+    featureValueValidation (com.mogobiz.store.domain.FeatureValue)
+    warehouseRender (com.mogobiz.store.domain.WarehouseRender)
     warehouseValidation (com.mogobiz.store.domain.WarehouseValidation)
     priceRender (com.mogobiz.store.domain.PriceRender)
     priceValidation (com.mogobiz.store.domain.PriceValidation)
@@ -534,6 +540,4 @@ beans = {
     productPropertyRender (com.mogobiz.store.domain.ProductPropertyRender)
     shippingRuleValidation (com.mogobiz.store.domain.ShippingRuleValidation)
     shippingRuleRender (com.mogobiz.store.domain.ShippingRuleRender)
-
-
 }
