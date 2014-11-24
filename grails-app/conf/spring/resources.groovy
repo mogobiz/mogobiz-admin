@@ -285,12 +285,6 @@ beans = {
     reductionRuleCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ReductionRule) {
         excludes = ['class']
     }
-    reductionSoldRenderer(JsonRenderer, com.mogobiz.store.domain.ReductionSold) {
-        excludes = ['class']
-    }
-    reductionSoldCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ReductionSold) {
-        excludes = ['class']
-    }
     esEnvRenderer(JsonRenderer, com.mogobiz.store.domain.EsEnv) {
         excludes = ['class']
     }
@@ -514,8 +508,6 @@ beans = {
     couponRender (com.mogobiz.store.domain.CouponRender)
     reductionRuleValidation (com.mogobiz.store.domain.ReductionRuleValidation)
     reductionRuleRender (com.mogobiz.store.domain.ReductionRuleRender)
-    reductionSoldValidation (com.mogobiz.store.domain.ReductionSoldValidation)
-    reductionSoldRender (com.mogobiz.store.domain.ReductionSoldRender)
     esEnvValidation (com.mogobiz.store.domain.EsEnvValidation)
     esEnvRender (com.mogobiz.store.domain.EsEnvRender)
     ibeaconValidation (com.mogobiz.store.domain.IbeaconValidation)
