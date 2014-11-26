@@ -39,7 +39,6 @@
 	</div>
 	<div id="categoryVariationsCreateDiv" >
 		<form id="categoryVariationsEditForm" onsubmit="return false;">
-			<input type="hidden" name="variation.id" id="categoryVariationId"/>
 			<div class="newline">
 				<div class="variations-large">
 					<label for="categoryVariationName"><g:message code="category.variations.name.label"/>&nbsp;<sup>*</sup></label>

@@ -7,6 +7,11 @@
                 </a>
             </li>
             <li>
+                <a id="companyCouponsDescriptionTab">
+                    <g:message code="tabs.description.label" />
+                </a>
+            </li>
+            <li>
                 <a id="companyCouponsRulesTab">
                     <g:message code="tabs.rules.label" />
                 </a>
@@ -101,6 +106,20 @@
             </div>
             <div class="spacer"></div>
         </form>
+    </div>
+    <div id="companyCouponsDescriptionDiv">
+        <div class="newline">
+            <div class="companyCouponsDialog-large">
+                <label for="companyCouponsDescription"><g:message code="company.coupons.description.label"></g:message></label><br />
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div>
+                <textarea id="companyCouponsDescription" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="spacer"></div>
     </div>
     <div id="companyCouponsRulesDiv">
         <div style="padding: 10px;">

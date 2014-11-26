@@ -375,7 +375,7 @@ function uploadAnotherFile() {
 		<div align="right" id="editProductBtn">
 			<div class="fk_button_area" id="activePrdBtn">
 				<button type="submit" id="closeBtn" class="fk_ok_btn"><g:message code="default.button.close.label" /></button>
-                <button type="submit" id="deleteBtn" class="fk_ko_btn"><g:message code="default.button.delete.label" /></button>
+                <button type="submit" id="deleteBtn" class="fk_ko_btn deleteBtn"><g:message code="default.button.delete.label" /></button>
 			</div>
 		</div>
 	</div>

@@ -90,11 +90,13 @@
 			</form>
 		</div>
 		<div id="categoryVariationsTabInfo" style="display:none;">
+            <p style="font-weight: bold; padding: 5px;"><g:message code="category.variations.header.label" /> <a href="javascript:void(0)" id="categoryAddNewVariation"><g:message code="category.variations.add.label" /></a></p>
 			<div id="categoryVariationsGridDiv">
 				<div id="categoryVariationsGrid" style="height: 335px;"></div>
 			</div>
 		</div>
 		<div id="categoryFeaturesTabInfo" style="display:none;">
+            <p style="font-weight: bold; padding: 5px;"><g:message code="category.features.header.label" /> <a href="javascript:void(0)" id="categoryAddNewFeature"><g:message code="category.features.add.label" /></a></p>
 			<div id="categoryFeaturesGridDiv">
 				<div id="categoryFeaturesGrid" style="height: 335px;"></div>
 			</div>

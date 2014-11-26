@@ -204,13 +204,18 @@
         <jsec:isLoggedIn>
             <div id="user" align="right">
                 <ul class="topnav">
-                    <li id="user_name_div">${request.user?.firstName}&nbsp;${request.user?.lastName}</li>
+                    <li id="user_name_div"><g:message code="default.menu.label" /></li>
                     <li>
                         <ul class="subnav" style="display: none; ">
                             <li onclick="hideUsernameSubnav();"><a href="javascript:void(0);"><g:message code="default.support.label" /></a></li>
                             <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'auth',action:'signOut')}" id="logout"><g:message code="default.logout.label" /></a></li>
                         </ul>
                     </li>
+                </ul>
+            </div>
+            <div id="userLabel" align="right">
+                <ul class="topnav">
+                    <li id="username_label_div">${request.user?.firstName}&nbsp;${request.user?.lastName}</li>
                 </ul>
             </div>
             <div id="createCompanyLnk">

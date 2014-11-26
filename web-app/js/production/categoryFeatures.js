@@ -1,6 +1,9 @@
 var categoryFeaturesGrid = null;
 var categoryFeatureListLoaded = false;
 function categoryFeaturesDrawAll(){
+    $("#categoryAddNewFeature").unbind().click(function() {
+        categoryFeaturesGetDetails(null, true);
+    });
 	categoryFeatureListLoaded = false;
 	categoryFeaturesGrid = null;
 	var dataToSend = "category.id=" + categorySelectedId + "&format=json";
@@ -127,22 +130,22 @@ function categoryFeaturesGridHideFormatter(row, cell, value, columnDef, dataCont
 }
 
 function categoryFeaturesGridNameFormatter (row, cell, value, columnDef, dataContext){
-	return "<a href='javascript:categoryFeaturesGetDetails(" + categorySelectedId + "," + dataContext.featureId + ", " + false + ")'>" + value + "</a>";
+	return "<a href='javascript:categoryFeaturesGetDetails(" + dataContext.featureId + ", " + false + ")'>" + value + "</a>";
 }
 
-function categoryFeaturesGetDetails(categoryId, featureId, isCreate){
+function categoryFeaturesGetDetails(featureId, isCreate){
 	$.get(
 		categoryFeaturePageUrl,
 		{},
 		function(htmlresponse) {
 			htmlresponse = jQuery.trim(htmlresponse);
-			categoryFeaturesPageSetup(htmlresponse, categoryId, featureId, isCreate);
+			categoryFeaturesPageSetup(htmlresponse, featureId, isCreate);
 		},
 		"html"
 	);
 }
 
-function categoryFeaturesPageSetup(htmlresponse, categoryId, featureId, isCreate){
+function categoryFeaturesPageSetup(htmlresponse, featureId, isCreate){
 	if ($("#categoryFeaturesDialog").dialog("isOpen") !== true) {
 		$("#categoryFeaturesDialog").empty();
 		$("#categoryFeaturesDialog").html(htmlresponse);
@@ -154,22 +157,22 @@ function categoryFeaturesPageSetup(htmlresponse, categoryId, featureId, isCreate
 			height : "auto",
 			open : function(event) {
 				categoryFeaturesPageInitControls(isCreate);
-				categoryFeaturesPageInitFields(categoryId, featureId, isCreate);
+				categoryFeaturesPageInitFields(featureId, isCreate);
 			},
 			buttons : {
 				deleteLabel : function() {
-					categoryFeaturesDeleteFeature(categoryId, featureId);
+					categoryFeaturesDeleteFeature(featureId);
 				},
 				cancelLabel : function() {
 					$("#categoryFeaturesDialog").dialog("close");
 				},
 				updateLabel : function() {
 					if (categoryFeaturesValidateForm())
-						categoryFeaturesUpdateFeature(categoryId, featureId);
+						categoryFeaturesUpdateFeature(featureId);
 				},
 				createLabel : function() {
 					if (categoryFeaturesValidateForm())
-						categoryFeaturesCreateFeature(categoryId);
+						categoryFeaturesCreateFeature();
 				}
 			}
 		});
@@ -218,8 +221,7 @@ function categoryFeaturesPageInitControls(isCreate) {
 	}
 }
 
-function categoryFeaturesPageInitFields(categoryId, featureId, isCreate){
-	$("#categoryFeatureId").val(categoryId);
+function categoryFeaturesPageInitFields(featureId, isCreate){
 	$("#categoryFeatureName,#categoryFeatureExternalCode,#categoryFeatureValue,#categoryFeatureUUID").val("");
 	$("#categoryFeatureHide").prop("checked", false);
 	if (!isCreate){
@@ -256,8 +258,8 @@ function categoryFeaturesValidateForm(){
 	return true;
 }
 
-function categoryFeaturesCreateFeature(categoryId){
-	var dataToSend = "category.id=" + categoryId + "&feature.name=" + $("#categoryFeatureName").val();
+function categoryFeaturesCreateFeature(){
+	var dataToSend = "category.id=" + categorySelectedId + "&feature.name=" + $("#categoryFeatureName").val();
 	dataToSend += "&feature.value=" + $("#categoryFeatureValue").val() + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
 		url : createFeaturesUrl,
@@ -269,10 +271,8 @@ function categoryFeaturesCreateFeature(categoryId){
 		async : true,
 		success : function(response, status) {
 			$("#categoryFeaturesDialog").dialog("close");
-			if(categorySelectedId == categoryId){
-				$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-				categoryFeaturesDrawAll();
-			}
+            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+            categoryFeaturesDrawAll();
 		},
 		error : function(response, status) {
 			$("#categoryFeatureName").focus();
@@ -286,8 +286,8 @@ function categoryFeaturesCreateFeature(categoryId){
 	});
 }
 
-function categoryFeaturesUpdateFeature(categoryId, featureId){
-	var dataToSend = "category.id=" + categoryId + "&feature.id=" + featureId
+function categoryFeaturesUpdateFeature(featureId){
+	var dataToSend = "category.id=" + categorySelectedId+ "&feature.id=" + featureId;
 	dataToSend += "&feature.name=" + $("#categoryFeatureName").val() + "&feature.value=" + $("#categoryFeatureValue").val();
 	dataToSend += "&feature.externalCode=" + $("#categoryFeatureExternalCode").val() + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
@@ -315,8 +315,8 @@ function categoryFeaturesUpdateFeature(categoryId, featureId){
 	});
 }
 
-function categoryFeaturesDeleteFeature(categoryId, featureId){
-	var dataToSend = "category.id=" + categoryId + "&feature.id=" + featureId + "&format=json";
+function categoryFeaturesDeleteFeature(featureId){
+	var dataToSend = "category.id=" + categorySelectedId + "&feature.id=" + featureId + "&format=json";
 	$.ajax({
 		url : deleteFeaturesUrl,
 		type : "POST",

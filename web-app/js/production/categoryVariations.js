@@ -3,6 +3,9 @@ var categoryVariationsListLoaded = false;
 var categoryVariationsValues = [];
 var categoryVariationsValuesIndex = 0;
 function categoryVariationsDrawAll(){
+    $("#categoryAddNewVariation").unbind().click(function() {
+        categoryVariationsGetDetails(null, true);
+    });
     categoryVariationsListLoaded = false;
     var dataToSend = "category.id=" + categorySelectedId + "&format=json";
     $.ajax({
@@ -114,22 +117,22 @@ function categoryVariationsDrawAll(){
 }
 
 function categoryVariationsGridNameFormatter (row, cell, value, columnDef, dataContext){
-    return "<a href='javascript:categoryVariationsGetDetails(" + categorySelectedId + "," + dataContext.variationId + ", " + false + ")'>" + value + "</a>";
+    return "<a href='javascript:categoryVariationsGetDetails(" + dataContext.variationId + ", " + false + ")'>" + value + "</a>";
 }
 
-function categoryVariationsGetDetails(categoryId, variationId, isCreate){
+function categoryVariationsGetDetails(variationId, isCreate){
     $.get(
         categoryVariationsPageUrl,
         {},
         function(htmlresponse) {
             htmlresponse = jQuery.trim(htmlresponse);
-            categoryVariationsPageSetup(htmlresponse, categoryId, variationId, isCreate);
+            categoryVariationsPageSetup(htmlresponse, variationId, isCreate);
         },
         "html"
     );
 }
 
-function categoryVariationsPageSetup(htmlresponse, categoryId, variationId, isCreate){
+function categoryVariationsPageSetup(htmlresponse, variationId, isCreate){
     if ($("#categoryVariationsDialog").dialog("isOpen") !== true) {
         $("#categoryVariationsDialog").empty();
         $("#categoryVariationsDialog").html(htmlresponse);
@@ -141,22 +144,22 @@ function categoryVariationsPageSetup(htmlresponse, categoryId, variationId, isCr
             height : "auto",
             open : function(event) {
                 categoryVariationsPageInitControls(isCreate);
-                categoryVariationsPageInitFields(categoryId, variationId, isCreate);
+                categoryVariationsPageInitFields(variationId, isCreate);
             },
             buttons : {
                 deleteLabel : function() {
-                    categoryVariationsDeleteVariation(categoryId, variationId);
+                    categoryVariationsDeleteVariation(variationId);
                 },
                 cancelLabel : function() {
                     $("#categoryVariationsDialog").dialog("close");
                 },
                 updateLabel : function() {
                     if (categoryVariationsValidateForm())
-                        categoryVariationsUpdateVariation(categoryId, variationId);
+                        categoryVariationsUpdateVariation(variationId);
                 },
                 createLabel : function() {
                     if (categoryVariationsValidateForm())
-                        categoryVariationsCreateVariation(categoryId);
+                        categoryVariationsCreateVariation();
                 }
             }
         });
@@ -205,8 +208,7 @@ function categoryVariationsPageInitControls(isCreate) {
     }
 }
 
-function categoryVariationsPageInitFields(categoryId, variationId, isCreate){
-    $("#categoryVariationId").val(categoryId);
+function categoryVariationsPageInitFields(variationId, isCreate){
     $("#categoryVariationName, #categoryVariationExternalCode, #categoryVariationUUID").val("");
     $("#categoryVariationHide").prop("checked", false);
     if (!isCreate){
@@ -261,8 +263,8 @@ function categoryVariationsValidateForm(){
     return true;
 }
 
-function categoryVariationsCreateVariation(categoryId){
-    var dataToSend = "category.id=" + categoryId + "&variation.name=" + $("#categoryVariationName").val();
+function categoryVariationsCreateVariation(){
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.name=" + $("#categoryVariationName").val();
     dataToSend += "&variation.externalCode=" + $("#categoryVariationExternalCode").val() + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
     $.ajax({
         url : createVariationsUrl,
@@ -280,14 +282,12 @@ function categoryVariationsCreateVariation(categoryId){
                     variationsValues[i] = {value: values[i], position: (i + 1)};
                 }
                 categoryVariationsValuesIndex = 0;
-                categoryVariationsAddVariationValues(categoryId, response.id, variationsValues);
+                categoryVariationsAddVariationValues(response.id, variationsValues);
             }
             else{
                 $("#categoryVariationsDialog").dialog("close");
-                if(categorySelectedId == categoryId){
-                    $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-                    categoryVariationsDrawAll();
-                }
+                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+                categoryVariationsDrawAll();
             }
         },
         error : function(response, status) {
@@ -314,8 +314,8 @@ function categoryVariationsCreateVariation(categoryId){
     });
 }
 
-function categoryVariationsUpdateVariation(categoryId, variationId){
-    var dataToSend = "category.id=" + categoryId + "&variation.id=" + variationId + "&variation.name=" + $("#categoryVariationName").val();
+function categoryVariationsUpdateVariation(variationId){
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId + "&variation.name=" + $("#categoryVariationName").val();
     dataToSend += "&variation.externalCode=" + $("#categoryVariationExternalCode").val() + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
     $.ajax({
         url : updateVariationsUrl,
@@ -333,10 +333,8 @@ function categoryVariationsUpdateVariation(categoryId, variationId){
 
             if(values.length == 0 && categoryVariationsValues.length == 0){
                 $("#categoryVariationsDialog").dialog("close");
-                if(categorySelectedId == categoryId){
-                    $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-                    categoryVariationsDrawAll();
-                }
+                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+                categoryVariationsDrawAll();
                 return;
             }
             categoryVariationsValuesIndex = 0;
@@ -344,11 +342,11 @@ function categoryVariationsUpdateVariation(categoryId, variationId){
                 for(var i = 0; i < values.length; i++){
                     addedVariationValues[addedVariationValues.length] = {value: values[i], position: (i + 1)};
                 }
-                categoryVariationsAddVariationValues(categoryId, response.data.id, addedVariationValues);
+                categoryVariationsAddVariationValues(response.data.id, addedVariationValues);
                 return;
             }
             if(values.length == 0 && categoryVariationsValues.length != 0){
-                categoryVariationsDeleteVariationValues(categoryId, response.data.id, categoryVariationsValues);
+                categoryVariationsDeleteVariationValues(response.data.id, categoryVariationsValues);
                 return;
             }
             if(values.length != 0 && categoryVariationsValues.length != 0){
@@ -368,7 +366,7 @@ function categoryVariationsUpdateVariation(categoryId, variationId){
                             deletedVariationValues[deletedVariationValues.length] = {value: categoryVariationsValues[i].value};
                     }
                 }
-                categoryVariationsUpdateVariationValues(categoryId, response.data.id, updatedVariationValues, addedVariationValues, deletedVariationValues);
+                categoryVariationsUpdateVariationValues(response.data.id, updatedVariationValues, addedVariationValues, deletedVariationValues);
             }
         },
         error : function(response, status) {
@@ -383,8 +381,8 @@ function categoryVariationsUpdateVariation(categoryId, variationId){
     });
 }
 
-function categoryVariationsDeleteVariation(categoryId, variationId){
-    var dataToSend = "category.id=" + categoryId + "&variation.id=" + variationId + "&format=json";
+function categoryVariationsDeleteVariation(variationId){
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId + "&format=json";
     $.ajax({
         url : deleteVariationsUrl,
         type : "POST",
@@ -395,10 +393,8 @@ function categoryVariationsDeleteVariation(categoryId, variationId){
         async : true,
         success : function(response, status) {
             $("#categoryVariationsDialog").dialog("close");
-            if(categorySelectedId == categoryId){
-                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-                categoryVariationsDrawAll();
-            }
+            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+            categoryVariationsDrawAll();
         },
         error : function(response, status) {
             if(response.status == 403){
@@ -436,17 +432,15 @@ function categoryVariationsUpdatePosition(data){
     });
 }
 
-function categoryVariationsAddVariationValues(categoryId, variationId, values){
+function categoryVariationsAddVariationValues(variationId, values){
     if(values.length == categoryVariationsValuesIndex){
         $("#categoryVariationsDialog").dialog("close");
-        if(categorySelectedId == categoryId){
-            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-            categoryVariationsDrawAll();
-        }
+        $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+        categoryVariationsDrawAll();
         return;
     }
 
-    var dataToSend = "category.id=" + categoryId + "&variation.id=" + variationId;
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
     dataToSend += "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&variationValue.position=" + values[categoryVariationsValuesIndex].position + "&format=json";
     $.ajax({
         url : createVariationValueUrl,
@@ -457,30 +451,27 @@ function categoryVariationsAddVariationValues(categoryId, variationId, values){
         async : true,
         success : function(response, status) {
             categoryVariationsValuesIndex++;
-            categoryVariationsAddVariationValues(categoryId, variationId, values);
+            categoryVariationsAddVariationValues(variationId, values);
         },
         error : function(response, status) {}
     });
 }
 
-function categoryVariationsUpdateVariationValues(categoryId, variationId, values, addedValues, deletedValues){
+function categoryVariationsUpdateVariationValues(variationId, values, addedValues, deletedValues){
     if(values.length == categoryVariationsValuesIndex){
         categoryVariationsValuesIndex = 0;
         if(addedValues.length > 0)
-            categoryVariationsAddVariationValues(categoryId, variationId, addedValues);
+            categoryVariationsAddVariationValues(variationId, addedValues);
         else if(deletedValues.length > 0)
-            categoryVariationsDeleteVariationValues(categoryId, variationId, deletedValues);
+            categoryVariationsDeleteVariationValues(variationId, deletedValues);
         else{
             $("#categoryVariationsDialog").dialog("close");
-            if(categorySelectedId == categoryId){
-                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-                categoryVariationsDrawAll();
-            }
+            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+            categoryVariationsDrawAll();
         }
         return;
     }
-
-    var dataToSend = "category.id=" + categoryId + "&variation.id=" + variationId;
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
     dataToSend += "&variationValue.id=" + values[categoryVariationsValuesIndex].id + "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&format=json";
     $.ajax({
         url : updateVariationValueUrl,
@@ -491,23 +482,21 @@ function categoryVariationsUpdateVariationValues(categoryId, variationId, values
         async : true,
         success : function(response, status) {
             categoryVariationsValuesIndex++;
-            categoryVariationsUpdateVariationValues(categoryId, variationId, values, addedValues, deletedValues);
+            categoryVariationsUpdateVariationValues(variationId, values, addedValues, deletedValues);
         },
         error : function(response, status) {}
     });
 }
 
-function categoryVariationsDeleteVariationValues(categoryId, variationId, values){
+function categoryVariationsDeleteVariationValues(variationId, values){
     if(values.length == categoryVariationsValuesIndex){
         $("#categoryVariationsDialog").dialog("close");
-        if(categorySelectedId == categoryId){
-            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-            categoryVariationsDrawAll();
-        }
+        $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+        categoryVariationsDrawAll();
         return;
     }
 
-    var dataToSend = "category.id=" + categoryId + "&variation.id=" + variationId;
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
     dataToSend += "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&format=json";
     $.ajax({
         url : deleteVariationValueUrl,
@@ -518,7 +507,7 @@ function categoryVariationsDeleteVariationValues(categoryId, variationId, values
         async : true,
         success : function(response, status) {
             categoryVariationsValuesIndex++;
-            categoryVariationsDeleteVariationValues(categoryId, variationId, values);
+            categoryVariationsDeleteVariationValues(variationId, values);
         },
         error : function(response, status) {}
     });

@@ -1,4 +1,5 @@
 var companyCouponsGrid = null;
+var companyCouponsDescriptionCkeditor = null;
 
 function companyCouponsDrawAll(){
     companyCouponsGrid = null;
@@ -88,6 +89,7 @@ function companyCouponsDrawAll(){
                         "numberOfUses": coupons[i].numberOfUses,
                         "active": coupons[i].active,
                         "catalogWise": coupons[i].catalogWise,
+                        "description": coupons[i].description,
                         "categories": coupons[i].categories,
                         "products": coupons[i].products,
                         "skus": coupons[i].ticketTypes,
@@ -181,11 +183,6 @@ function companyCouponsPageInitControls(isCreate) {
     $("#companyCouponsCategoriesTab").removeClass("disabled");
     $("#companyCouponsProductTab").removeClass("disabled");
     $("#companyCouponsSkuTab").removeClass("disabled");
-    $("#companyCouponsRulesDiv").hide();
-    $("#companyCouponsCategoriesDiv").hide();
-    $("#companyCouponsProductDiv").hide();
-    $("#companyCouponsSkuDiv").hide();
-    $("#companyCouponsTranslationDiv").hide();
     $("#companyCouponsGeneralTab").addClass("selected");
     $("#companyCouponsTabs .tabs a").click(function() {
         if(isCreate && $(this).attr("id") == "companyCouponsTranslationTab")
@@ -197,6 +194,7 @@ function companyCouponsPageInitControls(isCreate) {
         $(this).addClass("selected");
         switch($(this).attr("id")){
             case "companyCouponsGeneralTab":
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsRulesDiv").hide();
                 $("#companyCouponsCategoriesDiv").hide();
                 $("#companyCouponsProductDiv").hide();
@@ -204,8 +202,18 @@ function companyCouponsPageInitControls(isCreate) {
                 $("#companyCouponsTranslationDiv").hide();
                 $("#companyCouponsCreateDiv").show();
                 break;
+            case "companyCouponsDescriptionTab":
+                $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsRulesDiv").hide();
+                $("#companyCouponsProductDiv").hide();
+                $("#companyCouponsCategoriesDiv").hide();
+                $("#companyCouponsSkuDiv").hide();
+                $("#companyCouponsTranslationDiv").hide();
+                $("#companyCouponsDescriptionDiv").show();
+                break;
             case "companyCouponsRulesTab":
                 $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsProductDiv").hide();
                 $("#companyCouponsCategoriesDiv").hide();
                 $("#companyCouponsSkuDiv").hide();
@@ -214,6 +222,7 @@ function companyCouponsPageInitControls(isCreate) {
                 break;
             case "companyCouponsProductTab":
                 $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsRulesDiv").hide();
                 $("#companyCouponsCategoriesDiv").hide();
                 $("#companyCouponsSkuDiv").hide();
@@ -222,6 +231,7 @@ function companyCouponsPageInitControls(isCreate) {
                 break;
             case "companyCouponsCategoriesTab":
                 $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsRulesDiv").hide();
                 $("#companyCouponsProductDiv").hide();
                 $("#companyCouponsSkuDiv").hide();
@@ -230,6 +240,7 @@ function companyCouponsPageInitControls(isCreate) {
                 break;
             case "companyCouponsSkuTab":
                 $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsRulesDiv").hide();
                 $("#companyCouponsProductDiv").hide();
                 $("#companyCouponsCategoriesDiv").hide();
@@ -238,6 +249,7 @@ function companyCouponsPageInitControls(isCreate) {
                 break;
             case "companyCouponsTranslationTab":
                 $("#companyCouponsCreateDiv").hide();
+                $("#companyCouponsDescriptionDiv").hide();
                 $("#companyCouponsRulesDiv").hide();
                 $("#companyCouponsProductDiv").hide();
                 $("#companyCouponsCategoriesDiv").hide();
@@ -267,6 +279,18 @@ function companyCouponsPageInitControls(isCreate) {
         }
     }).keydown(function() {
         return false;
+    });
+
+    companyCouponsDescriptionCkeditor = $("#companyCouponsDescription").val("").cleditor({
+        width: 480,
+        height: 230,
+        controls: "bold italic underline | font size " +
+            "style | color highlight removeformat | bullets numbering | outdent " +
+            "indent | alignleft center alignright justify | undo redo | " +
+            "cut copy paste pastetext"
+    })[0];
+    companyCouponsDescriptionCkeditor.change(function(){
+        companyCouponsDescriptionCkeditor.updateTextArea();
     });
 
     $("#companyCouponsRulesAddLink").unbind().bind("click", function(){companyCouponsRulesGetDetails("", true)});
@@ -317,6 +341,13 @@ function companyCouponsPageInitControls(isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
         $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
     }
+    $("#companyCouponsCreateDiv").show();
+    $("#companyCouponsDescriptionDiv").hide();
+    $("#companyCouponsRulesDiv").hide();
+    $("#companyCouponsCategoriesDiv").hide();
+    $("#companyCouponsProductDiv").hide();
+    $("#companyCouponsSkuDiv").hide();
+    $("#companyCouponsTranslationDiv").hide();
 }
 
 function companyCouponsPageInitFields(couponId, isCreate){
@@ -349,6 +380,9 @@ function companyCouponsPageInitFields(couponId, isCreate){
                 $("#companyCouponsProductTab").addClass("disabled");
                 $("#companyCouponsSkuTab").addClass("disabled");
             }
+
+            $("#companyCouponsDescription").val(coupon.description);
+            companyCouponsDescriptionCkeditor.updateFrame();
 
             for(var i = 0; i < coupon.categories.length; i++){
                 $("#companyCouponsCategories_to").append($("<option></option>").attr("value", coupon.categories[i].id).text(coupon.categories[i].name));
@@ -421,14 +455,23 @@ function companyCouponsCreateCoupon(){
     var rules = companyCouponsRulesGrid.getData();
     for(var i = 0; i < rules.length; i++){
         rulesToSend += "&rules[" + i + "].xtype=" + rules[i].xtype;
-        rulesToSend += "&rules[" + i + "].discount=" + encodeURIComponent(rules[i].discount);
-        rulesToSend += "&rules[" + i + "].xPurchased=" + rules[i].xPurchased;
-        rulesToSend += "&rules[" + i + "].yOffered=" + rules[i].yOffered;
+        rulesToSend += "&rules[" + i + "].discount=";
+        if(rules[i].discount != null)
+            rulesToSend += encodeURIComponent(rules[i].discount);
+
+        rulesToSend += "&rules[" + i + "].xPurchased=";
+        if(rules[i].xPurchased != null)
+            rulesToSend += encodeURIComponent(rules[i].xPurchased);
+
+        rulesToSend += "&rules[" + i + "].yOffered=";
+        if(rules[i].yOffered != null)
+            rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
 
-    var dataToSend = "name=" + $("#companyCouponsName").val() + "&code=" + $("#companyCouponsCode").val() + "&pastille=" + $("#companyCouponsPastille").val();
-    dataToSend += "&startDate=" + $("#companyCouponsStartDate").val() + "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val()
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent($("#companyCouponsPastille").val());
+    dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
+    dataToSend += "&description=" + $("#companyCouponsDescription").val();
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
 
@@ -474,15 +517,24 @@ function companyCouponsUpdateCoupon(){
     var rules = companyCouponsRulesGrid.getData();
     for(var i = 0; i < rules.length; i++){
         rulesToSend += "&rules[" + i + "].xtype=" + rules[i].xtype;
-        rulesToSend += "&rules[" + i + "].discount=" + encodeURIComponent(rules[i].discount);
-        rulesToSend += "&rules[" + i + "].xPurchased=" + rules[i].xPurchased;
-        rulesToSend += "&rules[" + i + "].yOffered=" + rules[i].yOffered;
+        rulesToSend += "&rules[" + i + "].discount=";
+        if(rules[i].discount != null)
+            rulesToSend += encodeURIComponent(rules[i].discount);
+
+        rulesToSend += "&rules[" + i + "].xPurchased=";
+        if(rules[i].xPurchased != null)
+            rulesToSend += encodeURIComponent(rules[i].xPurchased);
+
+        rulesToSend += "&rules[" + i + "].yOffered=";
+        if(rules[i].yOffered != null)
+            rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
 
-    var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + $("#companyCouponsName").val();
-    dataToSend += "&code=" + $("#companyCouponsCode").val() + "&pastille=" + $("#companyCouponsPastille").val();
-    dataToSend += "&startDate=" + $("#companyCouponsStartDate").val() + "&endDate=" + $("#companyCouponsEndDate").val() + "&numberOfUses=" + $("#companyCouponsNumberOfUse").val();
+    var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + encodeURIComponent($("#companyCouponsName").val());
+    dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent($("#companyCouponsPastille").val());
+    dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
+    dataToSend += "&description=" + $("#companyCouponsDescription").val();
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
 
     $.ajax({
@@ -512,7 +564,7 @@ function companyCouponsUpdateCoupon(){
 function companyCouponsSearchCategories(){
     if($("#companyCouponsCategoriesSearch").val() == "")
         return;
-    var dataToSend = "name=" + $("#companyCouponsCategoriesSearch").val() + "&format=json";
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsCategoriesSearch").val()) + "&format=json";
     $.ajax({
         url : companyCouponsSearchCategoriesUrl,
         type : "GET",
@@ -535,7 +587,7 @@ function companyCouponsSearchCategories(){
 function companyCouponsSearchProducts(){
     if($("#companyCouponsProductSearch").val() == "")
         return;
-    var dataToSend = "name=" + $("#companyCouponsProductSearch").val() + "&format=json";
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsProductSearch").val()) + "&format=json";
     $.ajax({
         url : companyCouponsSearchProductsUrl,
         type : "GET",
@@ -559,7 +611,7 @@ function companyCouponsSearchProducts(){
 function companyCouponsSearchSku(){
     if($("#companyCouponsSkuSearch").val() == "")
         return;
-    var dataToSend = "name=" + $("#companyCouponsSkuSearch").val() + "&format=json";
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsSkuSearch").val()) + "&format=json";
     $.ajax({
         url : companyCouponsSearchSkuUrl,
         type : "GET",

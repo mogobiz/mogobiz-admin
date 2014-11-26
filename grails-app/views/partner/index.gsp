@@ -208,8 +208,6 @@
 
             var categoryCreateTreeLabel = "${message(code:'category.tree.create.label')}";
             var categoryDeleteTreeLabel = "${message(code:'category.tree.delete.label')}";
-            var categoryCreateFeatureTreeLabel = "${message(code:'category.tree.create.feature.label')}";
-            var categoryCreateVariationTreeLabel = "${message(code:'category.tree.create.variation.label')}";
             var categoryCreateTitleLabel = "${message(code:'category.create.title.label')}";
             var categoryNameExistLabel = "${message(code:'category.name.exist.error.label')}";
             var categoryDeleteFailedLabel = "${message(code:'category.delete.failed.label')}";
@@ -530,7 +528,7 @@
             <jsec:isLoggedIn>
                 <div id="user" align="right">
                     <ul class="topnav">
-                        <li id="user_name_div">${request.user?.firstName}&nbsp;${request.user?.lastName}</li>
+                        <li id="user_name_div"><g:message code="default.menu.label" /></li>
                         <li>
                             <ul class="subnav" style="display:none;">
                                 <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetAdminPage(${request.user?.id});"><g:message code="seller.admin.link"/></a></li>
@@ -548,6 +546,11 @@
                         <li>
                             <ul class="subnav" style="display:none;"></ul>
                         </li>
+                    </ul>
+                </div>
+                <div id="userLabel" align="right">
+                    <ul class="topnav">
+                        <li id="username_label_div">${request.user?.firstName}&nbsp;${request.user?.lastName}</li>
                     </ul>
                 </div>
 

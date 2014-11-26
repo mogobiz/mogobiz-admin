@@ -57,18 +57,18 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                                     categoryGetCreatePage(obj[0].value);
                                 }
                             },
-                            "CreateVariation": {
-                                "label": categoryCreateVariationTreeLabel,
-                                "action": function (obj) {
-                                    categoryVariationsGetDetails(obj[0].value, null, true);
-                                }
-                            },
-                            "CreateFeature": {
-                                "label": categoryCreateFeatureTreeLabel,
-                                "action": function (obj) {
-                                    categoryFeaturesGetDetails(obj[0].value, null, true);
-                                }
-                            },
+//                            "CreateVariation": {
+//                                "label": categoryCreateVariationTreeLabel,
+//                                "action": function (obj) {
+//                                    categoryVariationsGetDetails(obj[0].value, null, true);
+//                                }
+//                            },
+//                            "CreateFeature": {
+//                                "label": categoryCreateFeatureTreeLabel,
+//                                "action": function (obj) {
+//                                    categoryFeaturesGetDetails(obj[0].value, null, true);
+//                                }
+//                            },
                             "Delete": {
                                 "label": categoryDeleteTreeLabel,
                                 "action": function (obj) {

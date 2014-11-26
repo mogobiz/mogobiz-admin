@@ -504,7 +504,6 @@ function tourismPricingValidateForm() {
     }
     if ($('#tourismPricingSKU').val() == ''
         || $('#tourismPricingTicketType').val() == ''
-        || $('#tourismPricingTicketPrice').val() == ''
         || $('#tourismPricingMinOrder').val() == ''
         || ($('#tourismPricingTicketStock').val() == '' && !$('#tourismPricingStockUnlimited').is(':checked'))
         || !variationValuesValid) {
@@ -605,13 +604,14 @@ function tourismPricingCreateTicketCombinaison(productId) {
     var variation1 = ($("#tourismPricingVariation1").val() && $("#tourismPricingVariation1").val() != 'NONE') ? $("#tourismPricingVariation1").val() : '';
     var variation2 = ($("#tourismPricingVariation2").val() && $("#tourismPricingVariation2").val() != 'NONE') ? $("#tourismPricingVariation2").val() : '';
     var variation3 = ($("#tourismPricingVariation3").val() && $("#tourismPricingVariation3").val() != 'NONE') ? $("#tourismPricingVariation3").val() : '';
+    var price = ($("#tourismPricingTicketPrice").val() != "") ? $("#tourismPricingTicketPrice").val(): $("#productMontant").val();
     var dataToSend = 'product.id=' + productId;
     dataToSend += '&ticketType.sku=' + $('#tourismPricingSKU').val();
     dataToSend += '&ticketType.name=' + $('#tourismPricingTicketType').val();
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURI(parseInt(parseFloat($('#tourismPricingTicketPrice').val()) * 100));
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat(price) * 100));
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;
@@ -658,6 +658,7 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
     var variation1 = ($("#tourismPricingVariation1").val() && $("#tourismPricingVariation1").val() != 'NONE') ? $("#tourismPricingVariation1").val() : '';
     var variation2 = ($("#tourismPricingVariation2").val() && $("#tourismPricingVariation2").val() != 'NONE') ? $("#tourismPricingVariation2").val() : '';
     var variation3 = ($("#tourismPricingVariation3").val() && $("#tourismPricingVariation3").val() != 'NONE') ? $("#tourismPricingVariation3").val() : '';
+    var price = ($("#tourismPricingTicketPrice").val() != "") ? $("#tourismPricingTicketPrice").val(): $("#productMontant").val();
     var dataToSend = 'product.id=' + productId;
     dataToSend += '&ticketType.id=' + ticketId;
     dataToSend += '&ticketType.sku=' + $('#tourismPricingSKU').val();
@@ -665,7 +666,7 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURI(parseInt(parseFloat($('#tourismPricingTicketPrice').val()) * 100));
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat(price) * 100));
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;

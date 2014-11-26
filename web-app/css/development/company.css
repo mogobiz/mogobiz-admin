@@ -255,7 +255,7 @@ div.createCompany select {
     height: 396px;
 }
 
-#companyBrandsCreateDiv, #companyBrandsTranslationDiv, #companyCouponsCreateDiv, #companyCouponsRulesCreateDiv, #companyCouponsRulesDiv,
+#companyBrandsCreateDiv, #companyCouponsDescriptionDiv, #companyBrandsTranslationDiv, #companyCouponsCreateDiv, #companyCouponsRulesCreateDiv, #companyCouponsRulesDiv,
 #companyCouponsTranslationDiv, #companyPublishingCreateDiv, #companyIBeaconCreateDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
     font-size: 11px;

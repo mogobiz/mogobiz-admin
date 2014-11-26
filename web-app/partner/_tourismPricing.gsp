@@ -91,7 +91,7 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-small">
-					<label for="tourismPricingTicketPrice"><g:message code="tourismPricing.ticketPrice.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismPricingTicketPrice"><g:message code="tourismPricing.ticketPrice.label"/></label>
 				</div>
 				<div class="pricing-small">
 					<label for="tourismPricingTicketStock"><g:message code="tourismPricing.ticketStock.label"/>&nbsp;<sup>*</sup></label>
@@ -106,7 +106,7 @@
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-small">
-					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" required placeholder="<g:message code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
+					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" placeholder="<g:message code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
 				</div>
 				<div class="pricing-small">
 					<input id="tourismPricingTicketStock" type="number" min="1" max="999999999" required pattern="\d+"/>

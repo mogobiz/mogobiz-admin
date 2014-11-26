@@ -39,7 +39,6 @@
 	</div>
 	<div id="categoryFeaturesCreateDiv" >
 		<form id="categoryFeaturesEditForm" onsubmit="return false;">
-			<input type="hidden" name="feature.id" id="categoryFeatureId"/>
 			<div class="newline">
 				<div class="features-large">
 					<label for="categoryFeatureName"><g:message code="category.features.name.label"/>&nbsp;<sup>*</sup></label>
