@@ -408,6 +408,8 @@ function catalogDelete(){
 }
 
 function catalogPublish(){
+    $("#catalogLastPublicationSatus").html("");
+    $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
     $.ajax({
@@ -524,19 +526,21 @@ function catalogCheckEsEnvRunning(){
         async : true,
         success : function(response, status) {
             //console.log(response);
+            var html = ""
             if(response[0].running){
                 $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                html = "Publication running, please wait ..."
             }
             else{
                 $("#catalogPublishBtn").bind("click", function(){catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                html = "Last Publication Status: ";
+                if(response[0].success)
+                    html += "Success";
+                else
+                    html += "failure";
+                if(response[0].extra != null && response[0].extra != "")
+                    html += " (" + response[0].extra + ")"
             }
-            var html = "Last Publication Status: ";
-            if(response[0].success)
-                html += "Success";
-            else
-                html += "failure";
-            if(response[0].extra != null)
-                html += " (" + response[0].extra + ")"
             $("#catalogLastPublicationSatus").html(html);
         },
         error: function(response, status){}
