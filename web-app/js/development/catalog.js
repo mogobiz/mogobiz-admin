@@ -1,5 +1,8 @@
 var catalogSelectedId = null;
 var catalogImported = false;
+var catalogRunningInterval = null;
+var catalogRunningIntervalTime = 10000;
+
 function catalogueLoadList(){
 	var dataToSend = "format=html";
 	$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
@@ -176,6 +179,7 @@ function catalogGetTabPage(){
         {},
         function(pageContent){
             $("#categoryDetails").empty().html(pageContent);
+            catalogResetRunningInterval();
             catalogInitAllTabs();
             catalogGeneralGetInfo();
             catalogTranslationDrawAll();
@@ -193,6 +197,7 @@ function catalogInitAllTabs(){
             case "catalogGeneralTab":
                 $("#catalogTranslationDiv").hide();
                 $("#catalogGeneralDiv").show();
+                catalogResetRunningInterval();
                 break;
             case "catalogTranslationTab":
                 $("#catalogGeneralDiv").hide();
@@ -274,6 +279,8 @@ function catalogGeneralInitControls(){
         selectedList: 1,
         height: 100,
         minWidth: 239
+    }).bind("multiselectclick", function(event, ui) {
+        catalogResetRunningInterval();
     });
     $("#catalogName, #catalogExternalCode, #catalogDescription").change(function(){if(catalogValidateForm())catalogUpdate();});
     $("#catalogChannels").bind("multiselectbeforeclose", function() {if(catalogValidateForm())catalogUpdate();});
@@ -489,6 +496,51 @@ function catalogImport(){
 
 function catalogExport(){
     window.open(exportCatalogUrl + "?catalog.id=" + catalogSelectedId);
+}
+
+function catalogResetRunningInterval(){
+    catalogCheckEsEnvRunning();
+    if(catalogRunningInterval)
+        clearInterval(catalogRunningInterval);
+    catalogRunningInterval = setInterval(function() {
+        if($("#catalogGeneralDiv").is(":visible")){
+            catalogCheckEsEnvRunning();
+        }
+        else{
+            clearInterval(catalogRunningInterval);
+            catalogRunningInterval = null;
+        }
+    }, catalogRunningIntervalTime);
+}
+
+function catalogCheckEsEnvRunning(){
+    var dataToSend = "id=" + $("#catalogListPublication").val() + "&format=json";
+    $.ajax({
+        url : companyShowPublishingUrl,
+        type : "GET",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            //console.log(response);
+            if(response[0].running){
+                $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+            }
+            else{
+                $("#catalogPublishBtn").bind("click", function(){catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+            }
+            var html = "Last Publication Status: ";
+            if(response[0].success)
+                html += "Success";
+            else
+                html += "failure";
+            if(response[0].extra != null)
+                html += " (" + response[0].extra + ")"
+            $("#catalogLastPublicationSatus").html(html);
+        },
+        error: function(response, status){}
+    });
 }
 
 //TRANSLATION

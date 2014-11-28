@@ -89,6 +89,8 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
+        <div id="catalogLastPublicationSatus"></div>
+		<div class="spacer"></div>
 	</div>
 	<div id="catalogTranslationDiv" style="display:none;">
 		<div style="padding: 10px;">
