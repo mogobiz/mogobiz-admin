@@ -198,6 +198,10 @@
             var catalogDeleteLabel = "${message(code:'catalog.delete.label')}";
             var catalogImportLabel  = "${message(code:'catalog.import.label')}";
             var catalogExportLabel = "${message(code:'catalog.export.label')}";
+            var catalogPublicationRunningLabel = "${message(code:'catalog.publicationRunning.label')}";
+            var catalogLastPublicationLabel = "${message(code:'catalog.lastPublication.label')}";
+            var catalogPublicationSuccessLabel = "${message(code:'catalog.publicationSuccess.label')}";
+            var catalogPublicationFailureLabel = "${message(code:'catalog.publicationFailure.label')}";
 
             //-----CATEGORY----//
             var showCategoryUrl = "${createLink(controller: 'category', action:'show')}";

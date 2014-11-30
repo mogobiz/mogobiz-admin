@@ -529,15 +529,15 @@ function catalogCheckEsEnvRunning(){
             var html = ""
             if(response[0].running){
                 $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
-                html = "Publication running, please wait ..."
+                html = catalogPublicationRunningLabel;
             }
             else{
                 $("#catalogPublishBtn").bind("click", function(){catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
-                html = "Last Publication Status: ";
+                html = catalogLastPublicationLabel + " : ";
                 if(response[0].success)
-                    html += "Success";
+                    html += catalogPublicationSuccessLabel;
                 else
-                    html += "failure";
+                    html += catalogPublicationFailureLabel;
                 if(response[0].extra != null && response[0].extra != "")
                     html += " (" + response[0].extra + ")"
             }
