@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
 <title>
-<g:layoutTitle default="IPER2010" /></title>
+<g:layoutTitle default="Mogobiz" /></title>
 <r:layoutResources/>
 
 <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />

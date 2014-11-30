@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>IPER2010 - ${request.seller.company.name}</title>
+        <title>Mogobiz - ${request.seller.company.name}</title>
 
 
 
@@ -536,7 +536,7 @@
                         <li>
                             <ul class="subnav" style="display:none;">
                                 <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetAdminPage(${request.user?.id});"><g:message code="seller.admin.link"/></a></li>
-                                <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="getBackOfficePage();"><g:message code="sales.admin.salesByBuyer" /></a></li>
+                                <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="getBackOfficePage();"><g:message code="sale.label" /></a></li>
                                 <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'social')}"><g:message code="seller.social.link" /></a></li>
                                 <li onclick="hideUsernameSubnav();"><a href="javascript:void(0);"><g:message code="default.support.label" /></a></li>
                                 <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'auth',action:'signOut')}" id="logout"><g:message code="default.logout.label" /></a></li>

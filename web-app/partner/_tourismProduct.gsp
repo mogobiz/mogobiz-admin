@@ -105,7 +105,7 @@ function uploadAnotherFile() {
                         <select id="productIBeacon"></select>
                         <div class="spacer"></div>
                         <div>
-                            <a id="brandLink"><label><g:message code="product.Brand.label" /></label></a>
+                            <a id="brandLink"><label><g:message code="product.brand.label" /></label></a>
                         </div>
                         <div class="spacer-small"></div>
                         <div>
