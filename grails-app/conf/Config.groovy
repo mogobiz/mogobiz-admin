@@ -56,7 +56,7 @@ dataSource {
 //    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/mogobiz"
 
 
-    logSql = true
+    logSql = false
     properties {
         jmxEnabled = true
         initialSize = 5
@@ -154,6 +154,8 @@ log4j = {
             'org.grails.plugin.platform.events.EventsImpl'
 
     warn 'org.springframework'
+
+    info 'com.mogobiz'
 
     appenders {
         file name: 'file', file: 'mogobiz-admin.log'
