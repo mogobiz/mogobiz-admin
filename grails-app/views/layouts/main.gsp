@@ -21,6 +21,7 @@ var cancelLabel = "${message(code:'default.button.cancel.label')}";
 var closeLabel = "${message(code:'default.button.close.label')}";
 var importLabel = "${message(code:'default.button.import.label')}";
 var okLabel = "${message(code:'default.button.ok.label')}";
+var orLabel = "${message(code:'default.or.label')}";
 var resetPasswordLabel = "${message(code:'default.button.resetPassword.label')}";
 var defaultSearchLabel = "${message(code:'default.search.label')}";
 var defaultNameLabel = "${message(code:'default.name.label')}";

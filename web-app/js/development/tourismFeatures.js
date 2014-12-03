@@ -41,6 +41,7 @@ function tourismFeaturesLoad(productId) {
 				id : "featureValue",
 				name : "Value",
 				field : "featureValue",
+                formatter : tourismFeaturesGridValueFormatter,
 				width : 25,
 				cssClass : ""
 			},{
@@ -142,9 +143,23 @@ function tourismFeaturesLoad(productId) {
 function tourismFeaturesGridNameFormatter(row, cell, value, columnDef, dataContext) {
 	var val = value;
 	if(dataContext.category != null && dataContext.category.id != null){
-		val += " <sup style='color: #075899;'>*</sup>";
+        if(dataContext.featureValue.indexOf("||||") > 0)
+	    	val += " <sup style='color: #075899;'>^</sup>";
+        else
+    		val += " <sup style='color: #075899;'>*</sup>";
 	}
 	return "<a href='javascript:void(0);' onclick='tourismFeaturesLoadFeature("+ dataContext.productId + "," + dataContext.featureId + ")'>" + val + "</a>";
+}
+
+function tourismFeaturesGridValueFormatter(row, cell, value, columnDef, dataContext) {
+    if(!value || value == null || value == undefined)
+        return "";
+    var val = value;
+    var index = value.indexOf("||||");
+    if(index > 0) {
+        val = value.substring(index + 4) + " (<span style='text-decoration: line-through;'> " + value.replace("||||", " " + orLabel + " ")  + "</span>)";
+    }
+    return val;
 }
 
 function tourismFeaturesGridHideFormatter(row, cell, value, columnDef, dataContext) {
@@ -243,8 +258,15 @@ function tourismFeaturesInitFields(create, featureId) {
 	$("#tourismFeatureHide").prop("checked", false);
 	if (!create) {
 		var data = tourismFeaturesGetDataRowByFeatureId(featureId);
+        var value = data.featureValue;
+        if(value && value != null && value != undefined) {
+            var index = value.indexOf("||||");
+            if (index > 0) {
+                value = value.substring(index + 4);
+            }
+        }
 		$("#tourismFeatureName").val(data.featureName);
-		$("#tourismFeatureValue").val(data.featureValue);
+		$("#tourismFeatureValue").val(value);
 		$("#tourismFeatureExternalCode").val(data.featureExternalCode);
 		$("#tourismFeatureUUID").val(data.featureUUID);
 		if(data.featureHide)
