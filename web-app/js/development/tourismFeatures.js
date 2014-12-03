@@ -157,7 +157,7 @@ function tourismFeaturesGridValueFormatter(row, cell, value, columnDef, dataCont
     var val = value;
     var index = value.indexOf("||||");
     if(index > 0) {
-        val = value.substring(index + 4) + " (<span style='text-decoration: line-through;'> " + value.replace("||||", " " + orLabel + " ")  + "</span>)";
+        val = value.substring(index + 4) + " (<span style='text-decoration: line-through;'>" + value.substring(0,index)  + "</span>)";
     }
     return val;
 }
