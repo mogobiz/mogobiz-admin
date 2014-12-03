@@ -414,8 +414,8 @@ beans = {
     embeddedElasticSearchService (bootstrap.EmbeddedElasticSearchService)
     googleService (GoogleService)
 
-    featureValueRender (com.mogobiz.store.domain.FeatureValue)
-    featureValueValidation (com.mogobiz.store.domain.FeatureValue)
+    featureValueRender (com.mogobiz.store.domain.FeatureValueRender)
+    featureValueValidation (com.mogobiz.store.domain.FeatureValueValidation)
     warehouseRender (com.mogobiz.store.domain.WarehouseRender)
     warehouseValidation (com.mogobiz.store.domain.WarehouseValidation)
     priceRender (com.mogobiz.store.domain.PriceRender)
