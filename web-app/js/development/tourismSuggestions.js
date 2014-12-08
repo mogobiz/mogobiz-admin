@@ -93,6 +93,7 @@ function tourismSuggestionsLoadProducts(productId) {
 	
 	var dataToSend = 'company.id=' + $('#tourismSuggestionsCompanySelect').val();
 	dataToSend += '&fullSearch=' + $('#multiselectfilter_searchInput').val();
+	dataToSend += '&catalog.id='+catalogSelectedId;
 	dataToSend += '&format=json';
 
 	$.ajax({

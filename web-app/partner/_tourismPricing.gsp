@@ -109,7 +109,7 @@
 					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" placeholder="<g:message code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
 				</div>
 				<div class="pricing-small">
-					<input id="tourismPricingTicketStock" type="number" min="1" max="999999999" required pattern="\d+"/>
+					<input id="tourismPricingTicketStock" type="number" min="0" max="999999999" required pattern="\d+"/>
 				</div>
 				<div class="pricing-small">
 					<input id="tourismPricingMinOrder" type="number" min="0" name="ticketType.minOrder" max="999999999" pattern="\d+"/>
