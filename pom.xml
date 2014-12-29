@@ -672,6 +672,7 @@
                         </goals>
                         <configuration>
                             <command>build-standalone</command>
+                            <!--<env>prod</env>-->
                         </configuration>
                     </execution>
                 </executions>

@@ -1,4 +1,6 @@
 import grails.util.Environment
+import org.codehaus.groovy.grails.plugins.codecs.HexCodec
+import org.codehaus.groovy.grails.plugins.codecs.SHA256BytesCodec
 
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
@@ -15,7 +17,7 @@ if (Environment.isWarDeployed()) {
         def f1 = "${dir}" + File.separator + "conf" + File.separator + "mogobiz" + File.separator + "mogobiz-config.groovy"
         grails.config.locations << "file:${f1}"
     } else {
-        println(' ERROR : Configuration file location could not be found ')
+        grails.config.locations << ["classpath:mogobiz-config.groovy"]
     }
 } else {
     def dir = System.properties["base.dir"]
@@ -136,7 +138,7 @@ external {
 superadmin {
     login = 'admin@mogobiz.com'
     email = 'admin@mogobiz.com'
-    password = '00810cf8b94d6fcb9c5de484d3bec4187620b3e2876e59aab90d852fe0f18fb6' // changeit
+    password = HexCodec.encode(SHA256BytesCodec.encode("changeit"))
 }
 
 elasticsearch {
