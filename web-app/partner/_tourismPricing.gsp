@@ -141,9 +141,9 @@
 					<input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
 					<label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
 					<input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
-					<label for="tourismPricingStockUnlimited"><g:message code="tourismPricing.stockunlimited.label"/></label>&nbsp;&nbsp;
+					<label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
 					<input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
-					<label for="tourismPricingStockOutSelling"><g:message code="tourismPricing.stockoutselling.label"/></label>
+					<label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
 			</div>
 		</form>
 	</div>
