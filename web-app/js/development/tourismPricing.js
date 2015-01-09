@@ -738,6 +738,16 @@ function tourismPricingDeleteTicketCombinaison(productId, ticketId) {
         success : function(response, status) {
             $('#tourismPricingCreateDialog').dialog("close");
             tourismPricingLoadPricings(productId);
+        },
+        error : function(response, status) {
+            if (response.status == "401") {
+                jQuery.noticeAdd({
+                    stayTime : 2000,
+                    text : tourismPricingErrors_deleteSold_label,
+                    stay : false,
+                    type : "error"
+                });
+            }
         }
     });
 }

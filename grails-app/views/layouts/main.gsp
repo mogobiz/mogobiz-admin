@@ -143,6 +143,7 @@ var tourismPricing_endDate_label = "${message(code:'tourismPricing.endDate.label
 var tourismPricingErrors_ticketTypeUniqueLabel = "${message(code:'tourismPricing.errors.ticketTypeUnique.label')}";
 var tourismPricingErrors_insufficientStockLabel = "${message(code:'tourismPricing.errors.insufficientStock.label')}";
 var tourismPricingErrors_maxMustBeGreaterThanMin_label = "${message(code:'tourismPricing.errors.maxMustBeGreaterThanMin.label')}";
+var tourismPricingErrors_deleteSold_label = "${message(code:'tourismPricing.errors.deleteSold.label')}";
 
 //tourismCalendar labels
 var calendarComboTicketValidityTitle = "${message(code:'product.calendar.select.nonselected')}";
