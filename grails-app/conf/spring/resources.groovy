@@ -363,6 +363,24 @@ beans = {
     shippingRuleCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ShippingRule){
         excludes = ['class']
     }
+    bODeliveryRenderer(JsonRenderer, com.mogobiz.store.domain.BODelivery){
+        excludes = ['class']
+    }
+    bODeliveryCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BODelivery){
+        excludes = ['class']
+    }
+    bOReturnRenderer(JsonRenderer, com.mogobiz.store.domain.BOReturn){
+        excludes = ['class']
+    }
+    bOReturnCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOReturn){
+        excludes = ['class']
+    }
+    boReturnedItemRenderer(JsonRenderer, com.mogobiz.store.domain.BoReturnedItem){
+        excludes = ['class']
+    }
+    boReturnedItemCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BoReturnedItem){
+        excludes = ['class']
+    }
 
     loadBeans("classpath:*defaultResources.groovy")
 /*
@@ -534,4 +552,14 @@ beans = {
     productPropertyRender (com.mogobiz.store.domain.ProductPropertyRender)
     shippingRuleValidation (com.mogobiz.store.domain.ShippingRuleValidation)
     shippingRuleRender (com.mogobiz.store.domain.ShippingRuleRender)
+
+    BODeliveryValidation (com.mogobiz.store.domain.BODeliveryValidation)
+    BODeliveryRender (com.mogobiz.store.domain.BODeliveryRender)
+
+    BOReturnValidation (com.mogobiz.store.domain.BOReturnValidation)
+    BOReturnRender (com.mogobiz.store.domain.BOReturnRender)
+
+    boReturnedItemValidation (com.mogobiz.store.domain.BoReturnedItemValidation)
+    boReturnedItemRender (com.mogobiz.store.domain.BoReturnedItemRender)
+
 }
