@@ -221,7 +221,7 @@ function catalogGeneralGetInfo(){
         cache : false,
         async : true,
         success : function(response, status) {
-            catalogGeneralInitControls();
+            catalogGeneralInitControls(false);
             catalogGeneralInitFields(response);
             $.ajax({
                 url : companyShowPublishingUrl,
@@ -246,14 +246,14 @@ function catalogGeneralGetInfo(){
     });
 }
 
-function catalogGeneralInitControls(){
+function catalogGeneralInitControls(isCreate){
     $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, #catalogSocial, #catalogChannels, #catalogPublishBtn").unbind();
     $("#catalogActivationDate").datepicker("destroy");
     $("#catalogActivationDate").datepicker({
         onSelect : function(date){
             if(isCreate)
                 return;
-            catalogGeneralUpdateInfo("catalog.activationDate", $(this), date, false);
+            catalogUpdate();
         },
         dateFormat : "dd/mm/yy",
         minDate : new Date(),
