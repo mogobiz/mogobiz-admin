@@ -39,12 +39,16 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
             dataType : "json",
             cache : false,
             async : true,
-            success : function(response, status) {
+            success : function(response, status) {console.log(response.data)
                 var productName = response.data.name;
                 if (productName.length > 100) {
                     productName = productName.substring(0, 100) + "...";
                 }
-                $("#productLabel").text(productName);
+                var productType = "";
+                if(response.data.xtype){
+                    productType = " (" + response.data.xtype.substring(0, 1).toUpperCase() + response.data.xtype.substring(1).toLowerCase() + ")";
+                }
+                $("#productLabel").text(productName + productType);
             }
         });
     }
@@ -106,7 +110,11 @@ function productAttachEditForm(productId) {
             if (productName.length > 100) {
                 productName = productName.substring(0, 100) + '...';
             }
-            $('#productLabel').text(productName);
+            var productType = "";
+            if(product.xtype){
+                productType = " (" + product.xtype.name.substring(0, 1).toUpperCase() + product.xtype.name.substring(1).toLowerCase() + ")";
+            }
+            $('#productLabel').text(productName + productType);
 
             if(product.price != 0)
                 $('#productFree').empty();
@@ -337,18 +345,20 @@ function productAttachEditForm(productId) {
                 var height = (shipping.height && shipping.height != "0") ? shipping.height : "";
                 var depth = (shipping.depth && shipping.depth != "0") ? shipping.depth : "";
                 var amount = (shipping.amount && shipping.amount != "0") ? shipping.amount : "";
+                var returnMaxDelay = (shipping.returnMaxDelay && shipping.returnMaxDelay >= "0") ? shipping.returnMaxDelay : "";
 
                 $("#tourismShippingWeight").val(weight);
                 $("#tourismShippingWidth").val(width);
                 $("#tourismShippingHeight").val(height);
                 $("#tourismShippingDepth").val(depth);
                 $("#tourismShippingAmount").val(amount);
+                $("#tourismShippingReturnMaxDelay").val(returnMaxDelay);
                 $("#tourismShippingWeightUnit").val(shipping.weightUnit.name);
                 $("#tourismShippingLinearUnit").val(shipping.linearUnit.name);
                 $("#tourismShippingFree").prop("checked", shipping.free);
             }
 // Init Shipping Tab Events
-            $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingFree").unbind();
+            $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingReturnMaxDelay, #tourismShippingFree").unbind();
             $("#tourismShippingWeightUnit, #tourismShippingLinearUnit").unbind().multiselect("destroy");
             $("#tourismShippingWeightUnit").multiselect({
                 header : false,
@@ -367,8 +377,9 @@ function productAttachEditForm(productId) {
             });
 
             if(product.xtype.name == "PRODUCT"){
-                $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingFree").change(function(){
-                    tourismProductUpdateShipping(productId, "", "");
+                $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingReturnMaxDelay, #tourismShippingFree").change(function(){
+                    if(tourismProductValidateShipping())
+                        tourismProductUpdateShipping(productId, "", "");
                 });
 
                 $("#tourismShippingWeightUnit option").each(function() {
@@ -947,12 +958,77 @@ function tourismProductLoadTaxList(product){
     });
 }
 
+function tourismProductValidateShipping(){
+    if (!$('input#tourismShippingWeight')[0].checkValidity()) {
+        $('#tourismShippingWeight').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if (!$('input#tourismShippingWidth')[0].checkValidity()) {
+        $('#tourismShippingWidth').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if (!$('input#tourismShippingHeight')[0].checkValidity()) {
+        $('#tourismShippingHeight').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if (!$('input#tourismShippingDepth')[0].checkValidity()) {
+        $('#tourismShippingDepth').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsInvalidMessageLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if (!$('input#tourismShippingAmount')[0].checkValidity()) {
+        $('#tourismShippingAmount').focus();
+        jQuery.noticeAdd({
+            stayTime: 2000,
+            text: fieldsInvalidMessageLabel,
+            stay: false,
+            type: 'error'
+        });
+        return false;
+    }
+    if (!$('input#tourismShippingReturnMaxDelay')[0].checkValidity()) {
+        $('#tourismShippingReturnMaxDelay').focus();
+        jQuery.noticeAdd({
+            stayTime: 2000,
+            text: fieldsInvalidMessageLabel,
+            stay: false,
+            type: 'error'
+        });
+        return false;
+    }
+    return true;
+}
+
 function tourismProductUpdateShipping(productId, param, value){
     var weight = ($("#tourismShippingWeight").val() != "") ? $("#tourismShippingWeight").val() : 0;
     var width = ($("#tourismShippingWidth").val() != "") ? $("#tourismShippingWidth").val() : 0;
     var height = ($("#tourismShippingHeight").val() != "") ? $("#tourismShippingHeight").val() : 0;
     var depth = ($("#tourismShippingDepth").val() != "") ? $("#tourismShippingDepth").val() : 0;
     var amount = ($("#tourismShippingAmount").val() != "") ? $("#tourismShippingAmount").val() : 0;
+    var returnMaxDelay = $("#tourismShippingReturnMaxDelay").val();
 
     var dataToSend = "product.id=" + productId;
     dataToSend += "&product.shipping.weight=" + weight;
@@ -968,6 +1044,7 @@ function tourismProductUpdateShipping(productId, param, value){
     else
         dataToSend += "&product.shipping.linearUnit=" + $("#tourismShippingLinearUnit").val();
     dataToSend += "&product.shipping.amount=" + amount;
+    dataToSend += "&product.shipping.returnMaxDelay=" + returnMaxDelay;
     dataToSend += "&product.shipping.free=" + $("#tourismShippingFree").is(':checked');
     dataToSend += "&format=json";
     $.ajax( {

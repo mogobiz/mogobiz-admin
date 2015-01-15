@@ -18,10 +18,10 @@
 </style>
 
 <div id="translationDeleteDiv" >
-	<form id="translationDeleteForm" onsubmit="return false;">
-		<div class="newline">
-		<label><g:message code="translation.delete.message.label"/></label>
-	</div>
-	<div class="spacer"></div>
-	</form>
+<form id="translationDeleteForm" onsubmit="return false;">
+    <div class="newline">
+        <label><g:message code="translation.delete.message.label"/></label>
+    </div>
+    <div class="spacer"></div>
+</form>
 </div>

@@ -346,11 +346,17 @@ function uploadAnotherFile() {
                 <div class="product-shipping">
                     <label for="tourismShippingAmount"><g:message code="shipping.amount.label"/></label>
                 </div>
+                <div class="product-shipping">
+                    <label for="tourismShippingReturnMaxDelay"><g:message code="shipping.returnDelay.label"/></label>
+                </div>
             </div>
             <div class="spacer-small"></div>
             <div class="newline">
                 <div class='product-shipping'>
                     <input type="text" id="tourismShippingAmount" pattern="[0-9]+"/>
+                </div>
+                <div class='product-shipping'>
+                    <input type="text" id="tourismShippingReturnMaxDelay" pattern="[0-9]+"/>
                 </div>
             </div>
             <div class="spacer"></div>
