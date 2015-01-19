@@ -375,10 +375,22 @@ beans = {
     bOReturnCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOReturn){
         excludes = ['class']
     }
-    boReturnedItemRenderer(JsonRenderer, com.mogobiz.store.domain.BoReturnedItem){
+    bOReturnedItemRenderer(JsonRenderer, com.mogobiz.store.domain.BOReturnedItem){
         excludes = ['class']
     }
-    boReturnedItemCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BoReturnedItem){
+    bOReturnedItemCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOReturnedItem){
+        excludes = ['class']
+    }
+    bOTransactionRenderer(JsonRenderer, com.mogobiz.pay.domain.BOTransaction){
+        excludes = ['class']
+    }
+    bOTransactionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOTransaction){
+        excludes = ['class']
+    }
+    bOAccountRenderer(JsonRenderer, com.mogobiz.pay.domain.BOAccount){
+        excludes = ['class']
+    }
+    bOAccountCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOAccount){
         excludes = ['class']
     }
 
@@ -559,7 +571,7 @@ beans = {
     BOReturnValidation (com.mogobiz.store.domain.BOReturnValidation)
     BOReturnRender (com.mogobiz.store.domain.BOReturnRender)
 
-    boReturnedItemValidation (com.mogobiz.store.domain.BoReturnedItemValidation)
-    boReturnedItemRender (com.mogobiz.store.domain.BoReturnedItemRender)
+    BOReturnedItemValidation (com.mogobiz.store.domain.BOReturnedItemValidation)
+    BOReturnedItemRender (com.mogobiz.store.domain.BOReturnedItemRender)
 
 }
