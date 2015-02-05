@@ -7,8 +7,10 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
-//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+/*
+grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+*/
 
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -117,7 +119,6 @@ grails.project.dependency.resolution = {
         compile ":rest:0.8"
         compile ":joda-time:1.4"
         test ':spock:0.7'
-
         compile ":standalone:1.2.3"
 
         compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
@@ -132,7 +133,7 @@ grails.project.dependency.resolution = {
         compile group:"org.twitter4j", name:"twitter4j-core", version:"2.2.5"
         compile group:"org.twitter4j", name:"twitter4j-media-support", version:"2.2.5"
         compile group:"org.twitter4j", name:"twitter4j-stream", version:"2.2.5"
-        runtime 'mysql:mysql-connector-java:5.1.30'
+//        runtime 'mysql:mysql-connector-java:5.1.30'
         runtime "postgresql:postgresql:9.1-901.jdbc4"
 //        runtime "com.oracle:ojdbc6:11.2.0.1.0"
 
