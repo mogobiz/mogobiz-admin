@@ -4,6 +4,9 @@ import bootstrap.CommerceService
 import bootstrap.PerfCommerceService
 
 class BootStrap {
+    public static final int LEVEL_ONE_CATEGORY = 10
+    public static final int LEVEL_TWO_CATEGORY = 5
+    public static final int MAX_PRODUCTS_PER_CATEGORY = 10
     def grailsApplication
     CommonService commonService
     CommerceService commerceService
@@ -15,7 +18,7 @@ class BootStrap {
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
         if (grailsApplication.config.demo) {
-            perfCommerceService.init()
+            perfCommerceService.init(LEVEL_ONE_CATEGORY, LEVEL_TWO_CATEGORY, MAX_PRODUCTS_PER_CATEGORY)
         }
     }
 
