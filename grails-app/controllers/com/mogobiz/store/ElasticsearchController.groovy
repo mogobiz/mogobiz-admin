@@ -16,10 +16,10 @@ class ElasticsearchController {
 
     def elasticsearchService
 
-    private static final STORE_DATA = 'storeData'
+    // private static final STORE_DATA = 'storeData'
 
     def isNewVersionAvailable(String store, long millis) {
-        File file = new File(grailsApplication.config.resources.path + '/stores/' + store + '.zip')
+        File file = new File((grailsApplication.config.resources.path + '/stores/' as String) + store + '.zip')
         if (!file.exists() || file.lastModified() > millis) {
             render "true"
         } else {
@@ -38,7 +38,7 @@ class ElasticsearchController {
         long catalogId = params.long('catalog.id')
         EsEnv env = envId ? EsEnv.get(envId) : null
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
-        elasticsearchService.publish(company, env, catalog)
+        elasticsearchService.publish(company, env, catalog, true)
         withFormat {
             xml { render [:] as XML }
             json { render [:] as JSON }
