@@ -1,12 +1,13 @@
 import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
 import bootstrap.CommerceService
-import com.mogobiz.store.domain.Role
+import bootstrap.PerfCommerceService
 
 class BootStrap {
     def grailsApplication
     CommonService commonService
     CommerceService commerceService
+    PerfCommerceService perfCommerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
 
     def init = { servletContext ->
@@ -14,7 +15,7 @@ class BootStrap {
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
         if (grailsApplication.config.demo) {
-            commerceService.init()
+            perfCommerceService.init()
         }
     }
 
