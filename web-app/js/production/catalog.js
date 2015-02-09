@@ -332,7 +332,7 @@ function catalogUpdate(){
     }
     var date = $("#catalogActivationDate").val();
     var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + $("#catalogName").val() + "&catalog.externalCode=" + $("#catalogExternalCode").val();
-    dataToSend += "&catalog.activationDate_year=" + date.substring(6, 10) + "&catalog.activationDate_month=" + date.substring(3, 5) + "&catalog.activationDate_day=" + date.substring(0, 2);
+    dataToSend += "&catalog.activationDate_year=" + date.substring(0, 4) + "&catalog.activationDate_month=" + date.substring(5, 7) + "&catalog.activationDate_day=" + date.substring(8, 10);
     dataToSend += "&catalog.description=" + $("#catalogDescription").val() + "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogSocial").is(":checked");
     dataToSend += "&format=json";
     $.ajax({
