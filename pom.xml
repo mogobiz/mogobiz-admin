@@ -604,6 +604,12 @@
             <version>1.8.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.mogobiz</groupId>
+            <artifactId>mogobiz-tools</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- end from grails-app/BuildConfig.groovy //-->
 
     </dependencies>
