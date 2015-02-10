@@ -111,7 +111,7 @@ emailConfirmation {
 }
 
 mogopay {
-    url = 'http://mogopay.ebiznext.com/pay/'
+    url = 'http://jahiacommerce.ebiznext.com/pay/'
 }
 
 application {
