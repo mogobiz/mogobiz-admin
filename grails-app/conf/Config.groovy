@@ -243,7 +243,7 @@ environments {
         dataSource {
             dialect = "org.hibernate.dialect.DerbyDialect"
             driverClassName = "org.apache.derby.jdbc.ClientDriver"
-            url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/mogobiz"
+            url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
         }
     }
 
