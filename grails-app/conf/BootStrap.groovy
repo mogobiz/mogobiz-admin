@@ -26,6 +26,7 @@ class BootStrap {
             embeddedElasticSearchService.init()
         if (grailsApplication.config.demo) {
             perfCommerceService.init(LEVEL_ONE_CATEGORY, LEVEL_TWO_CATEGORY, MAX_PRODUCTS_PER_CATEGORY)
+            //commerceService.init()
         }
     }
 
