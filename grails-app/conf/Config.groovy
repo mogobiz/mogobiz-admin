@@ -28,11 +28,12 @@ println grails.config.locations
 println('**************************************************')
 
 dataSource {
+    username = "mogobiz"
+    password = "mogobiz"
+
     dialect = "org.hibernate.dialect.PostgreSQLDialect"
     driverClassName = "org.postgresql.Driver"
     url = "jdbc:postgresql://localhost/mogobiz"
-    username = "mogobiz"
-    password = "mogobiz"
 
     pooled = true
     dbCreate = "update"
@@ -55,7 +56,7 @@ dataSource {
 
 //    dialect = "org.hibernate.dialect.DerbyDialect"
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
-//    url = "jdbc:derby://localhost:1527//Users/hayssams/tmp/db/mogobiz"
+//    url = "jdbc:derby://localhost:1527//data/derby/mogobiz;create=true"
 
 
     logSql = false
@@ -126,7 +127,7 @@ resources {
     url = 'http://localhost:8082'
 }
 
-impex  {
+impex {
     path = '/tmp/impex'
 }
 
@@ -181,6 +182,14 @@ environments {
     }
 
     development {
+        elasticsearch {
+            embedded {
+                active = false
+                settings {
+                    path_data = System.getProperty("java.io.tmpdir") + '/data'
+                }
+            }
+        }
     }
 
     test {
