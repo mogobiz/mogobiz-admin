@@ -394,6 +394,19 @@ beans = {
         excludes = ['class']
     }
 
+    profileRenderer(JsonRenderer, com.mogobiz.store.domain.Profile){
+        excludes = ['class']
+    }
+    profileCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Profile){
+        excludes = ['class']
+    }
+    profilePermissionRenderer(JsonRenderer, com.mogobiz.store.domain.ProfilePermission){
+        excludes = ['class']
+    }
+    profilePermissionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ProfilePermission){
+        excludes = ['class']
+    }
+
     loadBeans("classpath:*defaultResources.groovy")
 /*
 	messageSource(com.mogobiz.i18n.SiteMessageSource)
@@ -564,6 +577,10 @@ beans = {
     productPropertyRender (com.mogobiz.store.domain.ProductPropertyRender)
     shippingRuleValidation (com.mogobiz.store.domain.ShippingRuleValidation)
     shippingRuleRender (com.mogobiz.store.domain.ShippingRuleRender)
+    profileValidation (com.mogobiz.store.domain.ProfileValidation)
+    profileRender (com.mogobiz.store.domain.ProfileRender)
+    profilePermissionValidation (com.mogobiz.store.domain.ProfilePermissionValidation)
+    profilePermissionRender (com.mogobiz.store.domain.ProfilePermissionRender)
 
     BODeliveryValidation (com.mogobiz.store.domain.BODeliveryValidation)
     BODeliveryRender (com.mogobiz.store.domain.BODeliveryRender)
