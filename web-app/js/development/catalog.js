@@ -55,8 +55,7 @@ function catalogueLoadList() {
                 $("#catalogDropDownList").val(catalogSelectedId);
             }
         },
-        error: function (response, status) {
-        }
+        error: function (response, status) {}
     });
 }
 
@@ -240,12 +239,10 @@ function catalogGeneralGetInfo() {
                     $("#catalogListPublication").multiselect("refresh");
                     $("#categoriesMain").hideLoading();
                 },
-                error: function (response, status) {
-                }
+                error: function (response, status) {}
             });
         },
-        error: function (response, status) {
-        }
+        error: function (response, status) {}
     });
 }
 
@@ -258,7 +255,7 @@ function catalogGeneralInitControls(isCreate) {
                 return;
             catalogUpdate();
         },
-        dateFormat: "dd/mm/yy",
+        dateFormat: "yy-mm-dd",
         minDate: new Date(),
         changeMonth: true,
         changeYear: true,
@@ -430,10 +427,8 @@ function catalogPublish() {
         dataType: "json",
         cache: false,
         async: true,
-        success: function (response, status) {
-        },
-        error: function (response, status) {
-        }
+        success: function (response, status) {},
+        error: function (response, status) {}
     });
 }
 
@@ -538,16 +533,13 @@ function catalogCheckEsEnvRunning() {
         cache: false,
         async: true,
         success: function (response, status) {
-            //console.log(response);
             var html = ""
             if (response[0].running) {
                 $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
                 html = catalogPublicationRunningLabel;
             }
             else {
-                $("#catalogPublishBtn").bind("click", function () {
-                    catalogPublish();
-                }).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogPublishBtn").bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
                 html = catalogLastPublicationLabel + " : ";
                 if (response[0].success)
                     html += catalogPublicationSuccessLabel;
@@ -558,8 +550,7 @@ function catalogCheckEsEnvRunning() {
             }
             $("#catalogLastPublicationSatus").html(html);
         },
-        error: function (response, status) {
-        }
+        error: function (response, status) {}
     });
 }
 
