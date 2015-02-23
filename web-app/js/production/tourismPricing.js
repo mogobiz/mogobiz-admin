@@ -757,9 +757,11 @@ function tourismPricingTranslationDrawAll(ticketId){
     tourismPricingTranslationGrid = null;
     var successCallback = function (response){
         var fields = ["name"];
-        var defaultsData = {name: $("#tourismPricingTicketType").val()};
         $("#tourismPricingTranslationAddLink").unbind();
-        $("#tourismPricingTranslationAddLink").bind("click", function(){translationGetCreatePage("ticketType", ticketId, fields, defaultsData);});
+        $("#tourismPricingTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#tourismPricingTicketType").val()};
+            translationGetCreatePage("ticketType", ticketId, fields, defaultsData);
+        });
         var columns = [{field: "name", title: translationNameGridLabel}];
         var data = [];
         for (var i = 0; i < response.length; i++) {
@@ -770,7 +772,7 @@ function tourismPricingTranslationDrawAll(ticketId){
                 "translationType": "ticketType",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name
+                "name": decodeURIComponent(value.name)
             }
         }
         var tabVisible = $("#tourismPricingTranslationDiv").is(":visible");

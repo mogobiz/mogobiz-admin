@@ -379,9 +379,11 @@ function tourismFeaturesTranslationDrawAll(featureId){
 	tourismFeaturesTranslationGrid = null;
 	var successCallback = function (response){
 		var fields = ["name", "value"];
-        var defaultsData = {name: $("#tourismFeatureName").val(), value: $("#tourismFeatureValue").val()};
 		$("#tourismFeaturesTranslationAddLink").unbind();
-		$("#tourismFeaturesTranslationAddLink").bind("click", function(){translationGetCreatePage("productFeatures", featureId, fields, defaultsData);});
+		$("#tourismFeaturesTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#tourismFeatureName").val(), value: $("#tourismFeatureValue").val()};
+            translationGetCreatePage("productFeatures", featureId, fields, defaultsData);
+        });
 		var columns = [{field: "name", title: translationNameGridLabel},{field: "value", title: translationValueGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
@@ -392,8 +394,8 @@ function tourismFeaturesTranslationDrawAll(featureId){
 				"translationType": "productFeatures",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": value.name,
-				"value": value.value
+				"name": decodeURIComponent(value.name),
+				"value": decodeURIComponent(value.value)
 			}
 		}
 		var tabVisible = $("#tourismFeaturesTranslationDiv").is(":visible");

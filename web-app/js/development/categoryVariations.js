@@ -557,9 +557,11 @@ function categoryVariationTranslationDrawAll(variationId){
             values += categoryVariationsValues[i].value;
         }
         var fields = ["name"];
-        var defaultsData = {name: $("#categoryVariationName").val()};
         $("#categoryVariationsTranslationAddLink").unbind();
-        $("#categoryVariationsTranslationAddLink").bind("click", function(){translationGetCreatePage("categoryVariation", variationId, fields, defaultsData);});
+        $("#categoryVariationsTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#categoryVariationName").val()};
+            translationGetCreatePage("categoryVariation", variationId, fields, defaultsData);
+        });
         var columns = [{
             field: "name",
             title: translationNameGridLabel
@@ -589,7 +591,7 @@ function categoryVariationTranslationDrawAll(variationId){
                 "translationType": "categoryVariation",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name,
+                "name": decodeURIComponent(value.name),
                 "values": values
             }
         }

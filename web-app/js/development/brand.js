@@ -558,9 +558,11 @@ function productBrandsTranslationDrawAll(brandId){
     productBrandsTranslationGrid = null;
     var successCallback = function (response){
         var fields = ["name", "website"];
-        var defaultsData = {name: $("#productBrandsName").val(), website: $("#productBrandsWebsite").val()};
         $("#productBrandsTranslationAddLink").unbind();
-        $("#productBrandsTranslationAddLink").bind("click", function(){translationGetCreatePage("productBrands", brandId, fields, defaultsData);});
+        $("#productBrandsTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#productBrandsName").val(), website: $("#productBrandsWebsite").val()};
+            translationGetCreatePage("productBrands", brandId, fields, defaultsData);
+        });
         var columns = [{field: "name", title: translationNameGridLabel},{field: "website", title: translationWebstieGridLabel}];
         var data = [];
         for (var i = 0; i < response.length; i++) {
@@ -571,8 +573,8 @@ function productBrandsTranslationDrawAll(brandId){
                 "translationType": "productBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name,
-                "website": value.website
+                "name": decodeURIComponent(value.name),
+                "website": decodeURIComponent(value.website)
             }
         }
         var tabVisible = $("#productBrandsTranslationDiv").is(":visible");

@@ -6,9 +6,11 @@ function categoryTranslationDrawAll(){
 	categoryTranslationGrid = null;
 	var successCallback = function (response){
 		var fields = ["name", "description"];
-        var defaultsData = {name: $("#categoryEditName").val(), description: $("#categoryEditDescription").val()};
 		$("#categoryTranslationAddLink").unbind();
-		$("#categoryTranslationAddLink").bind("click", function(){translationGetCreatePage("categories", categorySelectedId, fields, defaultsData);});
+		$("#categoryTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#categoryEditName").val(), description: $("#categoryEditDescription").val()};
+            translationGetCreatePage("categories", categorySelectedId, fields, defaultsData);
+        });
 		var columns = [{field: "name", title: translationNameGridLabel}, {field: "description", title: translationDescriptionGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
@@ -19,8 +21,8 @@ function categoryTranslationDrawAll(){
 				"translationType": "categories",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": value.name,
-				"description": value.description
+				"name": decodeURIComponent(value.name),
+				"description": decodeURIComponent(value.description)
 			}
 		}
 		var tabVisible = $("#categoryTranslationTabInfo").is(":visible");

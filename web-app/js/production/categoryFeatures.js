@@ -365,9 +365,11 @@ function categoryFeaturesTranslationDrawAll(featureId){
 	categoryFeaturesTranslationGrid = null;
 	var successCallback = function (response){
 		var fields = ["name", "value"];
-        var defaultsData = {name: $("#categoryFeatureName").val(), value: $("#categoryFeatureValue").val()};
 		$("#categoryFeaturesTranslationAddLink").unbind();
-		$("#categoryFeaturesTranslationAddLink").bind("click", function(){translationGetCreatePage("categoryFeatures", featureId, fields, defaultsData);});
+		$("#categoryFeaturesTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#categoryFeatureName").val(), value: $("#categoryFeatureValue").val()};
+            translationGetCreatePage("categoryFeatures", featureId, fields, defaultsData);
+        });
 		var columns = [{field: "name", title: translationNameGridLabel},{field: "value", title: translationValueGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
@@ -378,8 +380,8 @@ function categoryFeaturesTranslationDrawAll(featureId){
 				"translationType": "categoryFeatures",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": value.name,
-				"value": value.value
+				"name": decodeURIComponent(value.name),
+				"value": decodeURIComponent(value.value)
 			}
 		}
 		var tabVisible = $("#categoryFeaturesTranslationDiv").is(":visible");

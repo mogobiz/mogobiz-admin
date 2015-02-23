@@ -481,9 +481,11 @@ function companyBrandsTranslationDrawAll(brandId){
     companyBrandsTranslationGrid = null;
     var successCallback = function (response){
         var fields = ["name", "website"];
-        var defaultsData = {name: $("#companyBrandsName").val(), website: $("#companyBrandsWebsite").val()};
         $("#companyBrandsTranslationAddLink").unbind();
-        $("#companyBrandsTranslationAddLink").bind("click", function(){translationGetCreatePage("companyBrands", brandId, fields, defaultsData);});
+        $("#companyBrandsTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#companyBrandsName").val(), website: $("#companyBrandsWebsite").val()};
+            translationGetCreatePage("companyBrands", brandId, fields, defaultsData);
+        });
         var columns = [{field: "name", title: translationNameGridLabel},{field: "website", title: translationWebstieGridLabel}];
         var data = [];
         for (var i = 0; i < response.length; i++) {
@@ -494,8 +496,8 @@ function companyBrandsTranslationDrawAll(brandId){
                 "translationType": "companyBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name,
-                "website": value.website
+                "name": decodeURIComponent(value.name),
+                "website": decodeURIComponent(value.website)
             }
         }
         var tabVisible = $("#companyBrandsTranslationDiv").is(":visible");

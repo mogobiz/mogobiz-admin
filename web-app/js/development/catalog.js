@@ -562,9 +562,9 @@ function catalogTranslationDrawAll() {
     catalogTranslationGrid = null;
     var successCallback = function (response) {
         var fields = ["name", "description"];
-        var defaultsData = {name: $("#catalogName").val(), description: $("#catalogDescription").val()};
         $("#catalogTranslationAddLink").unbind();
         $("#catalogTranslationAddLink").bind("click", function () {
+            var defaultsData = {name: $("#catalogName").val(), description: $("#catalogDescription").val()};
             translationGetCreatePage("catalog", catalogSelectedId, fields, defaultsData);
         });
         var columns = [{field: "name", title: translationNameGridLabel}, {
@@ -580,8 +580,8 @@ function catalogTranslationDrawAll() {
                 "translationType": "catalog",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name,
-                "description": value.description
+                "name": decodeURIComponent(value.name),
+                "description": decodeURIComponent(value.description)
             }
         }
         var tabVisible = $("#catalogTranslationDiv").is(":visible");

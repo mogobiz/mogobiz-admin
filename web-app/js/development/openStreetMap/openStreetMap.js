@@ -775,9 +775,11 @@ function poiTranslationDrawAll(poiId){
 	poiTranslationGrid = null;
 	var successCallback = function (response){
 		var fields = ["name", "description"];
-        var defaultsData = {name: $("#poiName").val(), description: $("#poiDescription").val()};
 		$("#poiTranslationAddLink").unbind();
-		$("#poiTranslationAddLink").bind("click", function(){translationGetCreatePage("poi", poiId, fields, defaultsData);});
+		$("#poiTranslationAddLink").bind("click", function(){
+            var defaultsData = {name: $("#poiName").val(), description: $("#poiDescription").val()};
+            translationGetCreatePage("poi", poiId, fields, defaultsData);
+        });
 		var columns = [{field: "name", title: translationNameGridLabel},{field: "description", title: translationDescriptionGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
@@ -788,8 +790,8 @@ function poiTranslationDrawAll(poiId){
 				"translationType": "poi",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": value.name,
-				"description": value.description
+				"name": decodeURIComponent(value.name),
+				"description": decodeURIComponent(value.description)
 			}
 		}
 		var tabVisible = $("#poiTranslationDiv").is(":visible");
