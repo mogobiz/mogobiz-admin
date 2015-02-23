@@ -198,8 +198,7 @@ function translationCreateTranslation(type, target, fields, data){
 	for(var i = 0; i < fields.length; i++){
 		if(i > 0)
 			dataToSend += ", ";
-		dataToSend += "\"" + fields[i] + "\": \"" + data[fields[i]] + "\"";
-	}
+        dataToSend += "\"" + fields[i] + "\": \"" + encodeURIComponent(encodeURIComponent(data[fields[i]])) + "\"";	}
 	dataToSend += "}";
 
 	$.ajax({
@@ -221,15 +220,13 @@ function translationCreateTranslation(type, target, fields, data){
 }
 
 function translationUpdateTranslation(targetId, fields, data){
-	var value = "";
-	for(var i = 0; i < fields.length; i++){
-		if(data[fields[i]] && data[fields[i]] != ""){
-			if(value != "")
-				value += ", ";
-			value += "\"" + fields[i] + "\": \"" + data[fields[i]] + "\"";
-		}
-	}
-	var dataToSend = "target=" + targetId + "&language=" + data.lang + "&type=" + data.type + "&value={" + value + "}";
+    var dataToSend = "target=" + targetId + "&language=" + data.lang + "&type=" + data.type + "&value={";
+    for(var i = 0; i < fields.length; i++){
+        if(i > 0)
+            dataToSend += ", ";
+        dataToSend += "\"" + fields[i] + "\": \"" + encodeURIComponent(encodeURIComponent(data[fields[i]])) + "\"";
+        }
+    dataToSend += "}";
 
 	$.ajax({
 		url : updateTranslationUrl,
