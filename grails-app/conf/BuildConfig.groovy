@@ -144,11 +144,12 @@ grails.project.dependency.resolution = {
 
         compile 'org.scala-lang:scala-library:2.11.2'
 
-        compile 'com.typesafe.akka:akka-actor_2.11:2.3.3'
-        compile 'com.typesafe.akka:akka-stream-experimental_2.11:0.4'
-        compile 'org.reactivestreams:reactive-streams-spi:0.3'
+        compile 'com.typesafe.akka:akka-actor_2.11:2.3.9'
+        compile 'com.typesafe.akka:akka-stream-experimental_2.11:1.0-M3'
 
-        runtime ('com.netflix.rxjava:rxjava-groovy:0.16.1') {excludes "groovy-all"}
+        runtime 'io.reactivex:rxjava:1.0.7'
+        runtime 'io.reactivex:rxjava-reactive-streams:0.3.0'
+        runtime ('com.netflix.rxjava:rxjava-groovy:0.20.7') {excludes "groovy-all", "rxjava"}
 
         runtime 'org.json4s:json4s-native_2.11:3.2.9'
         runtime 'org.json4s:json4s-jackson_2.11:3.2.9'
