@@ -2,7 +2,6 @@ import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
 import bootstrap.CommerceService
 import bootstrap.PerfCommerceService
-import org.apache.shiro.session.mgt.SessionFactory
 
 class BootStrap {
     // Nombre de catégories principales
