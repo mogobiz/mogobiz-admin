@@ -2,6 +2,7 @@ import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
 import bootstrap.CommerceService
 import bootstrap.PerfCommerceService
+import org.apache.shiro.session.mgt.SessionFactory
 
 class BootStrap {
     // Nombre de catégories principales
@@ -11,7 +12,7 @@ class BootStrap {
     public static final int LEVEL_TWO_CATEGORY = 5
 
     // Nombre de produits par sous catégorie
-    public static final int MAX_PRODUCTS_PER_CATEGORY = 10
+    public static final int MAX_PRODUCTS_PER_CATEGORY = 100
     // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 10 = 500)
 
     def grailsApplication
@@ -19,7 +20,6 @@ class BootStrap {
     CommerceService commerceService
     PerfCommerceService perfCommerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
-
     def init = { servletContext ->
         commonService.init()
         if (grailsApplication.config.elasticsearch.embedded.active)
