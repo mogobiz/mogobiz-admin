@@ -84,7 +84,7 @@ dataSource {
 // importCountries.cron='59 59 23 31 12 ? 2099' // never fire
 
 importCountries {
-    cron = '0 * * * * ?' // every minute
+    cron = '0 0 0 * * ?' // every day
     codes = 'FR,GB,SN'
     dir = "/data/mogopay/import/countries"
 }
@@ -143,7 +143,7 @@ superadmin {
 }
 
 elasticsearch {
-    export.cron = '0 * * * * ?'
+    export.cron = '0 0 0 * * ?'
     serverURL = 'http://localhost:9200'
     shards = 1
     replicas = 1
@@ -177,7 +177,7 @@ log4j = {
 demo = false
 
 // Do not minimize resources
-grails.resources.debug = true
+grails.resources.debug = false
 grails.resources.mappers.yuicssminify.disable = true
 grails.resources.mappers.yuijsminify.disable = true
 
