@@ -58,6 +58,12 @@ dataSource {
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
 //    url = "jdbc:derby://localhost:1527//data/derby/mogobiz;create=true"
 
+//    username = "jahiaCommerce"
+//    password = "jahiaCommerce"
+//    dialect = "org.hibernate.dialect.DerbyDialect"
+//    driverClassName = "org.apache.derby.jdbc.ClientDriver"
+//    url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
+
 
     logSql = false
     properties {
@@ -89,6 +95,10 @@ importCountries {
     dir = "/data/mogopay/import/countries"
 }
 
+importCatalog {
+    nbthreads = 4
+    flushsize = 100
+}
 grails {
     serverURL = "http://mogobiz.ebiznext.com/mogobiz"
     mail {
@@ -165,7 +175,7 @@ log4j = {
     }
     root {
         //error stdout:"StackTrace"
-        error 'stdout', 'file'
+        info 'stdout', 'file'
         additivity = false
     }
 }
@@ -236,7 +246,7 @@ environments {
         //    First create a derby database as follow
         //    $ cd /Library/Java/JavaVirtualMachines/jdk1.7.0_11.jdk/Contents/Home/db/bin
         //    $ ./ij
-        //      > CONNECT 'jdbc:derby:/Users/hayssams/tmp/db/mogobiz';
+        //      > CONNECT 'jdbc:derby:/data/derby/mogobiz;
         //    You are now ready to access the database from grails.
         //    user / password should be empty for a default conf
         //    CREATE SEQUENCE mogobiz_sequence3 as BIGINT START WITH -10000000000 INCREMENT BY 1;
