@@ -149,6 +149,10 @@ elasticsearch {
     replicas = 1
 }
 
+google {
+    importCategories.cron = '0 0 0 * * ?'
+    export.cron = '0 0 0 * * ?'
+}
 
 log4j = {
     error 'net.sf.ehcache.hibernate.AbstractEhcacheRegionFactory',
