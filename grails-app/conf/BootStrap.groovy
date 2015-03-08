@@ -12,7 +12,7 @@ class BootStrap {
 
     // Nombre de produits par sous catégorie
     public static final int MAX_PRODUCTS_PER_CATEGORY = 100
-    // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 10 = 500)
+    // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 100 = 5000)
 
     def grailsApplication
     CommonService commonService
