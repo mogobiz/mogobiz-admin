@@ -591,4 +591,5 @@ beans = {
     BOReturnedItemValidation (com.mogobiz.store.domain.BOReturnedItemValidation)
     BOReturnedItemRender (com.mogobiz.store.domain.BOReturnedItemRender)
 
+//    permissionTypeConverter (com.mogobiz.utils.PermissionTypeConverter)
 }
