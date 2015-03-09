@@ -632,6 +632,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.grails.plugins</groupId>
+            <artifactId>executor</artifactId>
+            <version>0.3</version>
+            <scope>runtime</scope>
+            <type>zip</type>
+        </dependency>
         <!-- end from grails-app/BuildConfig.groovy //-->
 
     </dependencies>
