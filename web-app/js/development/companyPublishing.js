@@ -252,7 +252,7 @@ function companyPublishingCreatePublishing(){
 }
 
 function companyPublishingUpdatePublishing(){
-    var dataToSend = "esenv.id=" + $("#companyPublishingId").val() + "&esenv.name=" + $("#companyPublishingName").val() + "&esenv.website=" + $("#companyPublishingUrl").val();
+    var dataToSend = "esenv.id=" + $("#companyPublishingId").val() + "&esenv.name=" + $("#companyPublishingName").val() + "&esenv.url=" + $("#companyPublishingUrl").val();
     if($("#companyPublishingManual").is(":checked"))
         dataToSend += "&esenv.cronExpr=\"\"";
     else
