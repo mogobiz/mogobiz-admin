@@ -292,7 +292,7 @@ function catalogGeneralInitControls(isCreate) {
         if (catalogValidateForm())catalogUpdate();
     });
     $("#catalogPublishBtn").click(function () {
-        catalogPublish()
+        catalogPublish();
     });
 }
 
@@ -539,7 +539,7 @@ function catalogCheckEsEnvRunning() {
                 html = catalogPublicationRunningLabel;
             }
             else {
-                $("#catalogPublishBtn").bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
                 html = catalogLastPublicationLabel + " : ";
                 if (response[0].success)
                     html += catalogPublicationSuccessLabel;
