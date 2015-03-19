@@ -16,9 +16,9 @@ class ElasticSearchJob {
     }
 
     def execute(){
-        log.info("Export to Elastic Search has started ...")
+        log.debug("Export to Elastic Search has started ...")
         elasticsearchService.publishAll()
-        log.info("Export to Elastic Search has finished")
+        log.debug("Export to Elastic Search has finished")
     }
 
 }
