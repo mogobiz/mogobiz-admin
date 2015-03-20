@@ -221,6 +221,8 @@ function catalogGeneralGetInfo() {
         cache: false,
         async: true,
         success: function (response, status) {
+            try{response.name = decodeURIComponent(response.name);} catch(e){};
+            try{response.description = decodeURIComponent(response.description);} catch(e){};
             catalogGeneralInitControls(false);
             catalogGeneralInitFields(response);
             $.ajax({
@@ -416,7 +418,8 @@ function catalogDelete() {
 }
 
 function catalogPublish() {
-    $("#catalogLastPublicationSatus").html("");
+    $("#catalogLastPublicationStatus").show().html("");
+    $("#catalogPublicationError").hide()
     $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
@@ -428,7 +431,15 @@ function catalogPublish() {
         cache: false,
         async: true,
         success: function (response, status) {},
-        error: function (response, status) {}
+        error: function (response, status) {
+            if(response.status == "403"){
+                var html = response.responseText.substring(response.responseText.indexOf("<body>") + 6, response.responseText.indexOf("</body>"));
+                var div = $("<div>" + html + "</div>");
+                var message = $($($(div).find("p")[1]).find("u")[0]).html();
+                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + message);
+                $("#catalogLastPublicationStatus").hide();
+            }
+        }
     });
 }
 
@@ -548,7 +559,7 @@ function catalogCheckEsEnvRunning() {
                 if (response[0].extra != null && response[0].extra != "")
                     html += " (" + response[0].extra + ")"
             }
-            $("#catalogLastPublicationSatus").html(html);
+            $("#catalogLastPublicationStatus").html(html);
         },
         error: function (response, status) {}
     });

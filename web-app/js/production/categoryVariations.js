@@ -17,6 +17,11 @@ function categoryVariationsDrawAll(){
         cache : false,
         async : true,
         success : function(response, status) {
+            for(var i = 0; i < response.length; i++) {
+                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
+                for(var j = 0; j < response[i].variationValues.length; j++)
+                    try{response[i].variationValues[j].value = decodeURIComponent(response[i].variationValues[j].value);} catch(e){};
+            }
             var gridColumns = [{
                 id : "#",
                 name : "",
@@ -527,7 +532,7 @@ function categoryVariationGetValuesTranslation(variationId){
     var dataToSend = "target=" + categoryVariationsValues[categoryVariationsTranslationIndex].id;
     $.ajax({
         url : listTranslationUrl,
-        type : "POST",
+        type : "GET",
         data : dataToSend,
         dataType : "json",
         cache : false,
@@ -535,6 +540,7 @@ function categoryVariationGetValuesTranslation(variationId){
         success : function(response, status) {
             for (var i = 0; i < response.length; i++) {
                 var value = eval( "(" + response[i].value + ")" );
+                try{value.value = decodeURIComponent(value.value);} catch(e){}
                 if(!categoryVariationsTranslationValues[response[i].lang]){
                     categoryVariationsTranslationValues[response[i].lang] = [];
                 }
@@ -629,7 +635,7 @@ function categoryVariationUpdateTranslationValues(values){
     for(var i = 0; i < values.length; i++){
         var targetId = "";
         for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i){
+            if(categoryVariationsValues[j].position == i + 1){
                 targetId = categoryVariationsValues[j].id;
                 break;
             }
@@ -667,7 +673,7 @@ function categoryVariationCreateTranslationValues(language, variationId){
     for(var i = 0; i < categoryVariationsValues.length; i++){
         var targetId = "";
         for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i){
+            if(categoryVariationsValues[j].position == i + 1){
                 targetId = categoryVariationsValues[j].id;
                 break;
             }

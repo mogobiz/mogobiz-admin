@@ -151,10 +151,14 @@ function translationCreateTranslation(type, target, fields, data){
         typeTranslation = "CATEGORY";
 		callback = function(){categoryTranslationDrawAll();};
 		break;
-	case "productFeatures":
+    case "productProperties":
         typeTranslation = "FEATURE";
-		callback = function(){tourismFeaturesTranslationDrawAll(target);};
-		break;
+        callback = function(){tourismPropertiesTranslationDrawAll(target);};
+        break;
+    case "productFeatures":
+        typeTranslation = "FEATURE";
+        callback = function(){tourismFeaturesTranslationDrawAll(target);};
+        break;
 	case "categoryFeatures":
         typeTranslation = "FEATURE";
 		callback = function(){categoryFeaturesTranslationDrawAll(target);};
@@ -288,6 +292,9 @@ function translationDeleteTranslation(type, target, language){
 	case "categories":
 		callback = function(){categoryTranslationDrawAll();};
 		break;
+    case "productProperties":
+        callback = function(){tourismPropertiesTranslationDrawAll(target);};
+        break;
 	case "productFeatures":
 		callback = function(){tourismFeaturesTranslationDrawAll(target);};
 		break;

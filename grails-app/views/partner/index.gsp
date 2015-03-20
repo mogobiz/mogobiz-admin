@@ -256,6 +256,14 @@
             var variationsEmptyValueErrorLabel = "${message(code:'variations.error.emptyValue.label')}";
             var variationsTranslationErrorLabel = "${message(code:'variations.error.translation.label')}";
             var variationsReferenceErrorLabel = "${message(code:'variations.error.reference.label')}";
+            var variationsResourceErrorLabel = "${message(code:'variations.error.invalidResource.label')}";
+
+            var listVariationResourcesUrl = "${createLink(controller: 'variation', action:'ListVariationsResources')}";
+            var addVariationResourceUrl = "${createLink(controller: 'variation', action:'AddVariationResource')}";
+            var removeVariationResourceUrl = "${createLink(controller: 'variation', action:'RemoveVariationResource')}";
+            var removeAllVariationResourcesUrl = "${createLink(controller: 'variation', action:'RemoveVariationResources')}";
+
+            var removeAllVariationResourcesMessage = "${message(code:'variations.resources.removeAll.message')}";
 
             //-----PRODUCT----//
             var showProductUrl = "${createLink(controller: 'product', action:'show')}";
@@ -589,6 +597,7 @@
         <div id="categoryCreateDialog"></div>
         <div id="categoryFeaturesDialog"></div>
         <div id="categoryVariationsDialog"></div>
+        <div id="categoryVariationsResourcesDialog"></div>
         <div id="translationDialog"></div>
         <table id="categoriesMain" class="categoriesMain">
             <tr>

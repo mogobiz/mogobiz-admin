@@ -15,6 +15,10 @@ function categoryFeaturesDrawAll(){
 		cache : false,
 		async : true,
 		success : function(response, status) {
+            for ( var i = 0; i < response.features.length; i++) {
+                try{response.features[i].name = decodeURIComponent(response.features[i].name);} catch(e){};
+                try{response.features[i].value = decodeURIComponent(response.features[i].value);} catch(e){};
+            }
 			var gridColumns = [{
 				id : "#",
 				name : "",

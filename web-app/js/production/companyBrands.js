@@ -13,6 +13,10 @@ function companyBrandsDrawAll(){
         cache : false,
         async : true,
         success : function(response, status) {
+            for ( var i = 0; i < response.length; i++) {
+                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
+                try{response[i].website = (response[i].website != null) ? decodeURIComponent(response[i].website) : "";} catch(e){response[i].website = (response[i].website != null) ? response[i].website : "";};
+            }
             var gridColumns = [{
                 id : "name",
                 name : companyBrandsNameLabel,

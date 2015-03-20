@@ -21,7 +21,7 @@ function tourismTranslationDrawAll(productId){
 				"type": response[i].type,
 				"name": decodeURIComponent(value.name),
 				"keywords": decodeURIComponent(value.keywords),
-				"description": decodeURIComponent(value.description)
+				"description":decodeURIComponent( value.description)
 			}
 		}
 		tourismTranslationGrid = translationGetGrid("tourismTranslationGrid", productId, fields, columns, data);

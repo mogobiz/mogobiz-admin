@@ -181,6 +181,10 @@ function productBrandsListLoadAll(){
         cache : false,
         async : true,
         success : function(response, status) {
+            for ( var i = 0; i < response.length; i++) {
+                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
+                try{response[i].website = (response[i].website != null) ? decodeURIComponent(response[i].website) : "";} catch(e){response[i].website = (response[i].website != null) ? response[i].website : "";};
+            }
             var gridData = [];
             var brands = response;
             if(brands){
@@ -492,7 +496,7 @@ function productBrandsUpdateBrand(){
 }
 
 function productBrandsDeleteBrand(){
-    var dataToSend = "brand.id=" + $("#productBrandsId").val();
+    var dataToSend = "brand.id=" + $("#productBrandsId").val() + "&format=json";
     $.ajax({
         url : deleteBrandUrl,
         type : "POST",

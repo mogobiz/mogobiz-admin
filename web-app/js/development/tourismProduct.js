@@ -39,14 +39,15 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
             dataType : "json",
             cache : false,
             async : true,
-            success : function(response, status) {console.log(response.data)
+            success : function(response, status) {
                 var productName = response.data.name;
+                try{productName = decodeURIComponent(response.data.name);} catch(e){};
                 if (productName.length > 100) {
                     productName = productName.substring(0, 100) + "...";
                 }
                 var productType = "";
                 if(response.data.xtype){
-                    productType = " (" + response.data.xtype.substring(0, 1).toUpperCase() + response.data.xtype.substring(1).toLowerCase() + ")";
+                    productType = " (" + response.data.xtype.name.substring(0, 1).toUpperCase() + response.data.xtype.name.substring(1).toLowerCase() + ")";
                 }
                 $("#productLabel").text(productName + productType);
             }
@@ -64,6 +65,9 @@ function productAttachEditForm(productId) {
         cache : false,
         async : true,
         success : function(response, status) {
+            try{response.name = decodeURIComponent(response.name);} catch(e){};
+            try{response.keywords = decodeURIComponent(response.keywords);} catch(e){};
+            try{response.description = decodeURIComponent(response.description);} catch(e){};
             var product = response;
             tourismSuggestionsFirstVisit = true;
             openedResourceForm = productId;

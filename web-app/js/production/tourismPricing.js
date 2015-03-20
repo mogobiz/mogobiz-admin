@@ -11,6 +11,9 @@ function tourismPricingLoadPricings(productId) {
         cache : false,
         async : true,
         success : function(response, status) {
+            for (var i = 0; i < response.length; i++) {
+                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
+            }
             $("#tourismPriceAddLink").unbind();
             $("#tourismPriceAddLink").click(function() {
                 tourismPricingLoadTicketTypes(productId, null, true);
@@ -738,6 +741,16 @@ function tourismPricingDeleteTicketCombinaison(productId, ticketId) {
         success : function(response, status) {
             $('#tourismPricingCreateDialog').dialog("close");
             tourismPricingLoadPricings(productId);
+        },
+        error : function(response, status) {
+            if (response.status == "401") {
+                jQuery.noticeAdd({
+                    stayTime : 2000,
+                    text : tourismPricingErrors_deleteSold_label,
+                    stay : false,
+                    type : "error"
+                });
+            }
         }
     });
 }

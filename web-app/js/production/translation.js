@@ -151,10 +151,14 @@ function translationCreateTranslation(type, target, fields, data){
         typeTranslation = "CATEGORY";
 		callback = function(){categoryTranslationDrawAll();};
 		break;
-	case "productFeatures":
+    case "productProperties":
         typeTranslation = "FEATURE";
-		callback = function(){tourismFeaturesTranslationDrawAll(target);};
-		break;
+        callback = function(){tourismPropertiesTranslationDrawAll(target);};
+        break;
+    case "productFeatures":
+        typeTranslation = "FEATURE";
+        callback = function(){tourismFeaturesTranslationDrawAll(target);};
+        break;
 	case "categoryFeatures":
         typeTranslation = "FEATURE";
 		callback = function(){categoryFeaturesTranslationDrawAll(target);};
@@ -198,7 +202,8 @@ function translationCreateTranslation(type, target, fields, data){
 	for(var i = 0; i < fields.length; i++){
 		if(i > 0)
 			dataToSend += ", ";
-        dataToSend += "\"" + fields[i] + "\": \"" + encodeURIComponent(encodeURIComponent(data[fields[i]])) + "\"";	}
+		dataToSend += "\"" + fields[i] + "\": \"" + encodeURIComponent(encodeURIComponent(data[fields[i]])) + "\"";
+	}
 	dataToSend += "}";
 
 	$.ajax({
@@ -225,7 +230,7 @@ function translationUpdateTranslation(targetId, fields, data){
         if(i > 0)
             dataToSend += ", ";
         dataToSend += "\"" + fields[i] + "\": \"" + encodeURIComponent(encodeURIComponent(data[fields[i]])) + "\"";
-        }
+    }
     dataToSend += "}";
 
 	$.ajax({
@@ -287,6 +292,9 @@ function translationDeleteTranslation(type, target, language){
 	case "categories":
 		callback = function(){categoryTranslationDrawAll();};
 		break;
+    case "productProperties":
+        callback = function(){tourismPropertiesTranslationDrawAll(target);};
+        break;
 	case "productFeatures":
 		callback = function(){tourismFeaturesTranslationDrawAll(target);};
 		break;

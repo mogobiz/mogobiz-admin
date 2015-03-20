@@ -11,6 +11,9 @@ function tourismPricingLoadPricings(productId) {
         cache : false,
         async : true,
         success : function(response, status) {
+            for (var i = 0; i < response.length; i++) {
+                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
+            }
             $("#tourismPriceAddLink").unbind();
             $("#tourismPriceAddLink").click(function() {
                 tourismPricingLoadTicketTypes(productId, null, true);
