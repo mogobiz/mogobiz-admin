@@ -39,7 +39,7 @@ class ElasticsearchController {
         EsEnv env = envId ? EsEnv.get(envId) : null
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
         if (catalog?.name == "impex") {
-            response.sendError(403, "Impex Catalog cannot be published")
+            render status:403, text: "Impex Catalog cannot be published"
         }
         else {
             elasticsearchService.publish(company, env, catalog, true)

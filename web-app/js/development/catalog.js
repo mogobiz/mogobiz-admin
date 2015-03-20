@@ -433,7 +433,7 @@ function catalogPublish() {
         success: function (response, status) {},
         error: function (response, status) {
             if(response.status == "403"){
-                var html = response.responseText.substring(response.responseText.indexOf("<body>") + 6, response.responseText.indexOf("</body>"));
+                var html = response.responseText;
                 var div = $("<div>" + html + "</div>");
                 var message = $($($(div).find("p")[1]).find("u")[0]).html();
                 $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + message);
