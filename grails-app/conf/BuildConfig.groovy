@@ -8,8 +8,8 @@ grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
 
-grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
 
 
 grails.project.fork = [
@@ -121,7 +121,7 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
         compile ":standalone:1.2.3"
 
-//        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
+        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -169,7 +169,7 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
 
-//        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 
