@@ -202,6 +202,7 @@
             var catalogLastPublicationLabel = "${message(code:'catalog.lastPublication.label')}";
             var catalogPublicationSuccessLabel = "${message(code:'catalog.publicationSuccess.label')}";
             var catalogPublicationFailureLabel = "${message(code:'catalog.publicationFailure.label')}";
+            var catalogImportFailureLabel = "${message(code:'catalog.importFailure.label')}";
 
             //-----CATEGORY----//
             var showCategoryUrl = "${createLink(controller: 'category', action:'show')}";

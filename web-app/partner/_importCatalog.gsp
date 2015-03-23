@@ -18,6 +18,7 @@
 </style>
 <div id="catalogImportDiv">
     <form id="catalogImportForm" onsubmit="return false;" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="format" value="html"/>
         <div class="newline">
             <div>
                 <label for="catalogImportFile"><g:message code="catalog.selectFile.label"></g:message>&nbsp;<sup>*</sup></label><br />
@@ -30,6 +31,7 @@
             </div>
         </div>
         <div class="spacer"></div>
+        <div id="catalogImportError"></div>
     </form>
-    <iframe id="catalogImportHiddenFrame" name="catalogImportHiddenFrame" style="display: none"></iframe>
+    <iframe id="catalogImportHiddenFrame" name="catalogImportHiddenFrame" style="display:none;"></iframe>
 </div>

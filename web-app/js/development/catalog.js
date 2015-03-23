@@ -433,10 +433,7 @@ function catalogPublish() {
         success: function (response, status) {},
         error: function (response, status) {
             if(response.status == "403"){
-                var html = response.responseText;
-                var div = $("<div>" + html + "</div>");
-                var message = $($($(div).find("p")[1]).find("u")[0]).html();
-                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + message);
+                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
                 $("#catalogLastPublicationStatus").hide();
             }
         }
@@ -490,6 +487,7 @@ function catalogImportPageInitControls() {
 }
 
 function catalogValidateImportForm() {
+    $("#catalogImportError").html("");
     if ($("#catalogImportFile").val() == "") {
         jQuery.noticeAdd({
             stayTime: 2000,
@@ -507,11 +505,22 @@ function catalogImport() {
     document.getElementById("catalogImportForm").action = importCatalogUrl;
     document.getElementById("catalogImportForm").submit();
     document.getElementById("catalogImportHiddenFrame").onload = function () {
-        var cat = JSON.parse(document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText);
-        catalogSelectedId = cat.id;
-        catalogImported = true;
-        catalogueLoadList();
-        $("#catalogCreateDialog").dialog("close");
+        var responseText = document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText;
+        try {
+            var cat = JSON.parse(responseText);
+            catalogSelectedId = cat.id;
+            catalogImported = true;
+            catalogueLoadList();
+            $("#catalogCreateDialog").dialog("close");
+        }
+        catch(e){
+            if(responseText.toLowerCase().indexOf("error:") == 0){
+                $("#catalogImportError").html(responseText.substring(6));
+            }
+            else{
+                $("#catalogImportError").html(catalogImportFailureLabel);
+            }
+        }
     }
 }
 
