@@ -9,7 +9,7 @@ function tourismTranslationDrawAll(productId){
             var defaultsData = {name: $("#productName").val(), keywords: $("#productKeywords").val(), description: $("#productDescription").val()};
             translationGetCreatePage("product", productId, fields, defaultsData);
         });
-		var columns = [{field: "name", title: translationNameGridLabel}, {field: "keywords", title: translationKeywordsGridLabel}, {field: "description", title: translationDescriptionGridLabel}];
+		var columns = [{field: "name", title: translationNameGridLabel}, {field: "keywords", title: translationKeywordsGridLabel}, {field: "descriptionEditor", title: translationDescriptionGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
 			var value = eval( "(" + response[i].value + ")" );

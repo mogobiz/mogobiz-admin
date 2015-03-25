@@ -11,7 +11,7 @@ function categoryTranslationDrawAll(){
             var defaultsData = {name: $("#categoryEditName").val(), description: $("#categoryEditDescription").val()};
             translationGetCreatePage("categories", categorySelectedId, fields, defaultsData);
         });
-		var columns = [{field: "name", title: translationNameGridLabel}, {field: "description", title: translationDescriptionGridLabel}];
+		var columns = [{field: "name", title: translationNameGridLabel}, {field: "descriptionEditor", title: translationDescriptionGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
 			var value = eval( "(" + response[i].value + ")" );

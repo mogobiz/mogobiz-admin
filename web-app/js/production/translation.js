@@ -16,59 +16,74 @@ function translationGetAllData(targetId, successCallback){
 }
 
 function translationGetGrid(gridId, targetId, fields, columns, data){
-	var grid = null;
-	var gridColumns = [{
-		id : "language",
-		name : translationLanguageGridLabel,
-		field : "lang",
-		width : 20,
-		formatter : translationLanguageFormatter,
-		cssClass : "cell-title"
-	}];
-	for(var i=0; i < columns.length; i++){
-		var len = gridColumns.length;
-		gridColumns[len] = {
-			id : columns[i].field,
-			name : columns[i].title,
-			field : columns[i].field,
-			width : parseInt(parseFloat(80 / columns.length)),
-			cssClass : "",
-			editorEvents: (columns[i].editorEvents) ? columns[i].editorEvents : {
-				"blur": function(){grid.getEditorLock().commitCurrentEdit();grid.invalidate();},
-				"keydown": function(e){if(e.keyCode === 13){e.stopImmediatePropagation();grid.getEditorLock().commitCurrentEdit();grid.invalidate();}}
-			}
-		};
-		if(columns[i].field == "description"){
-			gridColumns[len].editor = Slick.Editors.LongText;
-		}
-		else{
-			gridColumns[len].editor = Slick.Editors.Text;
-			gridColumns[len].addEditorButtons = "false";
-		}
-	}
+    var grid = null;
+    var gridColumns = [{
+        id : "language",
+        name : translationLanguageGridLabel,
+        field : "lang",
+        width : 20,
+        formatter : translationLanguageFormatter,
+        cssClass : "cell-title"
+    }];
+    var isRich;
+    for(var i=0; i < columns.length; i++){
+        isRich = false;
+        if(columns[i].field == "descriptionEditor"){
+            isRich = true;
+            columns[i].field = "description";
+        }
+        var len = gridColumns.length;
+        gridColumns[len] = {
+            id : columns[i].field,
+            name : columns[i].title,
+            field : columns[i].field,
+            width : parseInt(parseFloat(80 / columns.length)),
+            cssClass : "",
+            formatter : translationFieldFormatter,
+            editorEvents: (columns[i].editorEvents) ? columns[i].editorEvents : {
+                "blur": (isRich) ? function(){} : function(){grid.getEditorLock().commitCurrentEdit();grid.invalidate();},
+                "keydown": function(e){if(e.keyCode === 13){e.stopImmediatePropagation();grid.getEditorLock().commitCurrentEdit();grid.invalidate();}}
+            }
+        };
+        gridColumns[len].addEditorButtons = "false";
+        if(isRich){
+            gridColumns[len].editor = Slick.Editors.RichText;
+            gridColumns[len].addEditorButtons = "true";
+        }
+        else if(columns[i].field == "description"){
+            gridColumns[len].editor = Slick.Editors.LongText;
+        }
+        else{
+            gridColumns[len].editor = Slick.Editors.Text;
+        }
+    }
 
-	var gridOptions = {
-		editable : true,
-		enableAddRow : false,
-		asyncEditorLoading : false,
-		forceFitColumns : true,
-		enableCellNavigation : true,
-		enableColumnReorder : false,
-		rowHeight : 25,
-		autoEdit: false
-	};
-	grid = new Slick.Grid($("#" + gridId), data, gridColumns, gridOptions);
-	grid.setSelectionModel(new Slick.CellSelectionModel());
-	grid.invalidate();
+    var gridOptions = {
+        editable : true,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : true,
+        enableColumnReorder : false,
+        rowHeight : 25,
+        autoEdit: false
+    };
+    grid = new Slick.Grid($("#" + gridId), data, gridColumns, gridOptions);
+    grid.setSelectionModel(new Slick.CellSelectionModel());
+    grid.invalidate();
 
-	grid.onBeforeCellEditorDestroy.subscribe(function(e,args){
-		translationUpdateTranslation(targetId, fields, args.grid.getDataItem(args.grid.getSelectedRows()[0]));
-	});
-	return grid;
+    grid.onCellChange.subscribe(function(e,args){
+        translationUpdateTranslation(targetId, fields, args.grid.getDataItem(args.grid.getSelectedRows()[0]));
+    });
+    return grid;
 }
 
 function translationLanguageFormatter(row, cell, value, columnDef, dataContext){
 	return "<a href='javascript:void(0)' onclick='translationGetDeletePage(\"" + dataContext.translationType + "\",\"" + dataContext.targetId + "\",\"" + dataContext.lang + "\")'>" + value + "</a>";
+}
+
+function translationFieldFormatter(row, cell, value, columnDef, dataContext){
+    return "<div>" + value + "</div>";
 }
 
 function translationGetCreatePage(type, target, fields, data) {
