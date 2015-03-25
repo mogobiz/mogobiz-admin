@@ -19,9 +19,9 @@ function tourismTranslationDrawAll(productId){
 				"translationType": "product",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": decodeURIComponent(value.name),
-				"keywords": decodeURIComponent(value.keywords),
-				"description":decodeURIComponent( value.description)
+				"name": value.name,
+				"keywords": value.keywords,
+				"description": value.description
 			}
 		}
 		tourismTranslationGrid = translationGetGrid("tourismTranslationGrid", productId, fields, columns, data);

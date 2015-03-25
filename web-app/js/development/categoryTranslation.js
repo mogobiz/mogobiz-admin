@@ -21,8 +21,8 @@ function categoryTranslationDrawAll(){
 				"translationType": "categories",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": decodeURIComponent(value.name),
-				"description": decodeURIComponent(value.description)
+				"name": value.name,
+				"description": value.description
 			}
 		}
 		var tabVisible = $("#categoryTranslationTabInfo").is(":visible");

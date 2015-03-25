@@ -11,10 +11,6 @@ function companyCouponsDrawAll(){
         cache : false,
         async : true,
         success : function(response, status) {
-            for ( var i = 0; i < response.list.length; i++) {
-                try{response.list[i].name = decodeURIComponent(response.list[i].name);} catch(e){};
-                try{response.list[i].pastille = decodeURIComponent(response.list[i].pastille);} catch(e){};
-            }
             var gridColumns = [{
                 id : "name",
                 name : companyCouponsNameLabel,
@@ -658,8 +654,8 @@ function companyCouponsTranslationDrawAll(couponId){
                 "translationType": "companyCoupons",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "pastille": decodeURIComponent(value.pastille)
+                "name": value.name,
+                "pastille": value.pastille
             }
         }
         var tabVisible = $("#companyCouponsTranslationDiv").is(":visible");

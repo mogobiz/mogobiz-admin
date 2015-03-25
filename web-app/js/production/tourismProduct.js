@@ -41,7 +41,6 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
             async : true,
             success : function(response, status) {
                 var productName = response.data.name;
-                try{productName = decodeURIComponent(response.data.name);} catch(e){};
                 if (productName.length > 100) {
                     productName = productName.substring(0, 100) + "...";
                 }
@@ -65,9 +64,6 @@ function productAttachEditForm(productId) {
         cache : false,
         async : true,
         success : function(response, status) {
-            try{response.name = decodeURIComponent(response.name);} catch(e){};
-            try{response.keywords = decodeURIComponent(response.keywords);} catch(e){};
-            try{response.description = decodeURIComponent(response.description);} catch(e){};
             var product = response;
             tourismSuggestionsFirstVisit = true;
             openedResourceForm = productId;

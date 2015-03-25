@@ -17,11 +17,6 @@ function categoryVariationsDrawAll(){
         cache : false,
         async : true,
         success : function(response, status) {
-            for(var i = 0; i < response.length; i++) {
-                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
-                for(var j = 0; j < response[i].variationValues.length; j++)
-                    try{response[i].variationValues[j].value = decodeURIComponent(response[i].variationValues[j].value);} catch(e){};
-            }
             var gridColumns = [{
                 id : "#",
                 name : "",
@@ -540,7 +535,6 @@ function categoryVariationGetValuesTranslation(variationId){
         success : function(response, status) {
             for (var i = 0; i < response.length; i++) {
                 var value = eval( "(" + response[i].value + ")" );
-                try{value.value = decodeURIComponent(value.value);} catch(e){}
                 if(!categoryVariationsTranslationValues[response[i].lang]){
                     categoryVariationsTranslationValues[response[i].lang] = [];
                 }
@@ -597,7 +591,7 @@ function categoryVariationTranslationDrawAll(variationId){
                 "translationType": "categoryVariation",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
+                "name": value.name,
                 "values": values
             }
         }

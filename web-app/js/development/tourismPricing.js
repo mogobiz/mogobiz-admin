@@ -11,9 +11,6 @@ function tourismPricingLoadPricings(productId) {
         cache : false,
         async : true,
         success : function(response, status) {
-            for (var i = 0; i < response.length; i++) {
-                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
-            }
             $("#tourismPriceAddLink").unbind();
             $("#tourismPriceAddLink").click(function() {
                 tourismPricingLoadTicketTypes(productId, null, true);
@@ -785,7 +782,7 @@ function tourismPricingTranslationDrawAll(ticketId){
                 "translationType": "ticketType",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name)
+                "name": value.name
             }
         }
         var tabVisible = $("#tourismPricingTranslationDiv").is(":visible");

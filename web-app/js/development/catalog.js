@@ -221,8 +221,6 @@ function catalogGeneralGetInfo() {
         cache: false,
         async: true,
         success: function (response, status) {
-            try{response.name = decodeURIComponent(response.name);} catch(e){};
-            try{response.description = decodeURIComponent(response.description);} catch(e){};
             catalogGeneralInitControls(false);
             catalogGeneralInitFields(response);
             $.ajax({
@@ -600,8 +598,8 @@ function catalogTranslationDrawAll() {
                 "translationType": "catalog",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "description": decodeURIComponent(value.description)
+                "name": value.name,
+                "description": value.description
             }
         }
         var tabVisible = $("#catalogTranslationDiv").is(":visible");

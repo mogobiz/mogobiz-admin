@@ -10,8 +10,6 @@ function categoryGeneralGetInfo() {
         cache : false,
         async : true,
         success : function(response, status) {
-            try{response.name = decodeURIComponent(response.name);} catch(e){};
-            try{response.description = decodeURIComponent(response.description);} catch(e){};
             $("#categoryEditHide").prop("checked", false);
             var cleditor_description = $("#categoryEditDescription").cleditor({
                 width: $(".category-general-full").width() * 0.99,

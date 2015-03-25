@@ -10,10 +10,6 @@ function tourismPropertiesReload(productId) {
         cache: false,
         async: true,
         success: function (response, status) {
-            for (var i = 0; i < response.properties.length; i++) {
-                try{response.properties[i].name = decodeURIComponent(response.properties[i].name);} catch(e){};
-                try{response.properties[i].value = decodeURIComponent(response.properties[i].value);} catch(e){};
-            }
             var product = response;
             tourismPropertiesInit(product);
         }
@@ -275,8 +271,8 @@ function tourismPropertiesTranslationDrawAll(propertyId){
                 "translationType": "productProperties",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "value": decodeURIComponent(value.value)
+                "name": value.name,
+                "value": value.value
             }
         }
         var tabVisible = $("#tourismPropertiesTranslationDiv").is(":visible");

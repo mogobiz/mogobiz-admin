@@ -784,8 +784,6 @@ function poiTranslationDrawAll(poiId){
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
 			var value = eval( "(" + response[i].value + ")" );
-            try{value.name = decodeURIComponent(value.name)} catch(e){};
-            try{value.description = decodeURIComponent(value.description)} catch(e){};
 			data[data.length] = {
 				"id" : response[i].id,
 				"targetId": poiId,

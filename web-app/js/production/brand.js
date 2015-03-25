@@ -182,8 +182,7 @@ function productBrandsListLoadAll(){
         async : true,
         success : function(response, status) {
             for ( var i = 0; i < response.length; i++) {
-                try{response[i].name = decodeURIComponent(response[i].name);} catch(e){};
-                try{response[i].website = (response[i].website != null) ? decodeURIComponent(response[i].website) : "";} catch(e){response[i].website = (response[i].website != null) ? response[i].website : "";};
+                response[i].website = (response[i].website != null) ? response[i].website : "";
             }
             var gridData = [];
             var brands = response;
@@ -577,8 +576,8 @@ function productBrandsTranslationDrawAll(brandId){
                 "translationType": "productBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "website": decodeURIComponent(value.website)
+                "name": value.name,
+                "website": value.website
             }
         }
         var tabVisible = $("#productBrandsTranslationDiv").is(":visible");

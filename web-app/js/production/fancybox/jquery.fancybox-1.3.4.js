@@ -56,7 +56,7 @@
 			selectedOpts.width = 'auto';
 			selectedOpts.height = 'auto';
 
-            tmp.html( '<p id="fancybox-error">' + fancyBoxErrorMessage_1 + '<br />' + fancyBoxErrorMessage_2 + '</p>' );
+			tmp.html( '<p id="fancybox-error">' + fancyBoxErrorMessage_1 + '<br />' + fancyBoxErrorMessage_2 + '</p>' );
 
 			_process_inline();
             _process_title();
