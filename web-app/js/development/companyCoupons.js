@@ -654,8 +654,8 @@ function companyCouponsTranslationDrawAll(couponId){
                 "translationType": "companyCoupons",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "pastille": decodeURIComponent(value.pastille)
+                "name": value.name,
+                "pastille": value.pastille
             }
         }
         var tabVisible = $("#companyCouponsTranslationDiv").is(":visible");

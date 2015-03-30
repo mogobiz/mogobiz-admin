@@ -89,7 +89,8 @@
 			</div>
 		</div>
 		<div class="spacer"></div>
-        <div id="catalogLastPublicationSatus"></div>
+        <div id="catalogPublicationError"></div>
+        <div id="catalogLastPublicationStatus"></div>
 		<div class="spacer"></div>
 	</div>
 	<div id="catalogTranslationDiv" style="display:none;">

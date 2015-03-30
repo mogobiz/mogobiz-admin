@@ -130,6 +130,11 @@ div.pricing-small {
 	width:170px;
 }
 
+div.pricing-full {
+	float:left;
+	width:680px;
+}
+
 div.pricing-large {
 	float:left;
 	width:340px;

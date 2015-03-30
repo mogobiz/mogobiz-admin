@@ -782,7 +782,7 @@ function tourismPricingTranslationDrawAll(ticketId){
                 "translationType": "ticketType",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name)
+                "name": value.name
             }
         }
         var tabVisible = $("#tourismPricingTranslationDiv").is(":visible");

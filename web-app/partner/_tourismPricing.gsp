@@ -30,6 +30,11 @@
 					<g:message code="tabs.general.label" />
 				</a>
 			</li>
+            <!-- <li id="downloadLi">
+                <a id="tourismPricingDownloadTab">
+                    <g:message code="tabs.download.label" />
+                </a>
+            </li> -->
 			<li>
 				<a id="tourismPricingTranslationTab">
 					<g:message code="tabs.translation.label" />
@@ -136,7 +141,7 @@
 					<input id="tourismPricingEndDate" type="text" name="ticketType.stopDate" placeholder="<g:message code="calendar.datePlaceholder.label"/>" pattern="\d{2}\/\d{2}/\d{4}"/>
 				</div>
 			</div>
-			<div class="spacer"></div>				
+			<div class="spacer"></div>
 			<div class="newline">
 					<input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
 					<label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
@@ -147,6 +152,20 @@
 			</div>
 		</form>
 	</div>
+    <!-- <div id="tourismPricingDownloadDiv">
+        <div id="tourismPricingUpload">
+            <div class="pricing-full">
+                <form id="tourismPricingUploadForm" onsubmit="return false;" method="POST" enctype="multipart/form-data">
+                    <input id="tourismPricingDownloadId" type="hidden" name="id"/>
+                    <input id="tourismPricingDownloadFile" type="file" name="file"/>
+                </form>
+            </div>
+            <iframe id="tourismPricingDownloadHiddenFrame" name="tourismPricingDownloadHiddenFrame" style="display: none"></iframe>
+        </div>
+        <div id="tourismPricingDownloadForm">
+
+        </div>
+    </div> -->
 	<div id="tourismPricingTranslationDiv" >
 		<div style="padding: 10px;">
 			<a id="tourismPricingTranslationAddLink"><g:message code="translation.add.label" /></a>

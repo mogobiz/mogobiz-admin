@@ -167,7 +167,7 @@ function tourismPropertiesInitFields(create, propertyId) {
         var data = tourismPropertiesGetDataRowByPropertyId(propertyId);
         $("#tourismPropertyName").val(data.propertyName);
         $("#tourismPropertyValue").val(data.propertyValue);
-//        tourismPropertiesTranslationDrawAll(propertyId);
+        tourismPropertiesTranslationDrawAll(propertyId);
     }
 }
 
@@ -252,14 +252,14 @@ function tourismPropertiesDeleteProperty(productId, propertyId) {
 
 var tourismPropertiesTranslationGrid = null;
 
-function tourismPropertiesTranslationDrawAll(featureId){
+function tourismPropertiesTranslationDrawAll(propertyId){
     tourismPropertiesTranslationGrid = null;
     var successCallback = function (response){
         var fields = ["name", "value"];
         $("#tourismPropertiesTranslationAddLink").unbind();
         $("#tourismPropertiesTranslationAddLink").bind("click", function(){
-            var defaultsData = {name: $("#tourismFeatureName").val(), value: $("#tourismFeatureValue").val()};
-            translationGetCreatePage("productFeatures", featureId, fields, defaultsData);
+            var defaultsData = {name: $("#tourismPropertyName").val(), value: $("#tourismPropertyValue").val()};
+            translationGetCreatePage("productProperties", propertyId, fields, defaultsData);
         });
         var columns = [{field: "name", title: translationNameGridLabel},{field: "value", title: translationValueGridLabel}];
         var data = [];
@@ -267,23 +267,23 @@ function tourismPropertiesTranslationDrawAll(featureId){
             var value = eval( "(" + response[i].value + ")" );
             data[data.length] = {
                 "id" : response[i].id,
-                "targetId": featureId,
-                "translationType": "productFeatures",
+                "targetId": propertyId,
+                "translationType": "productProperties",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "value": decodeURIComponent(value.value)
+                "name": value.name,
+                "value": value.value
             }
         }
         var tabVisible = $("#tourismPropertiesTranslationDiv").is(":visible");
         if(! tabVisible)
             $("#tourismPropertiesTranslationDiv").show();
 
-        tourismPropertiesTranslationGrid = translationGetGrid("tourismPropertiesTranslationGrid", featureId, fields, columns, data);
+        tourismPropertiesTranslationGrid = translationGetGrid("tourismPropertiesTranslationGrid", propertyId, fields, columns, data);
 
         if(! tabVisible)
             $("#tourismPropertiesTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
     }
-    translationGetAllData(featureId, successCallback);
+    translationGetAllData(propertyId, successCallback);
 }

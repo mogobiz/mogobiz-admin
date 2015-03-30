@@ -527,7 +527,7 @@ function categoryVariationGetValuesTranslation(variationId){
     var dataToSend = "target=" + categoryVariationsValues[categoryVariationsTranslationIndex].id;
     $.ajax({
         url : listTranslationUrl,
-        type : "POST",
+        type : "GET",
         data : dataToSend,
         dataType : "json",
         cache : false,
@@ -591,7 +591,7 @@ function categoryVariationTranslationDrawAll(variationId){
                 "translationType": "categoryVariation",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
+                "name": value.name,
                 "values": values
             }
         }
@@ -629,7 +629,7 @@ function categoryVariationUpdateTranslationValues(values){
     for(var i = 0; i < values.length; i++){
         var targetId = "";
         for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i){
+            if(categoryVariationsValues[j].position == i + 1){
                 targetId = categoryVariationsValues[j].id;
                 break;
             }
@@ -667,7 +667,7 @@ function categoryVariationCreateTranslationValues(language, variationId){
     for(var i = 0; i < categoryVariationsValues.length; i++){
         var targetId = "";
         for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i){
+            if(categoryVariationsValues[j].position == i + 1){
                 targetId = categoryVariationsValues[j].id;
                 break;
             }

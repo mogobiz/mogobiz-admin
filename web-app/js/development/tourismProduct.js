@@ -39,14 +39,14 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
             dataType : "json",
             cache : false,
             async : true,
-            success : function(response, status) {console.log(response.data)
+            success : function(response, status) {
                 var productName = response.data.name;
                 if (productName.length > 100) {
                     productName = productName.substring(0, 100) + "...";
                 }
                 var productType = "";
                 if(response.data.xtype){
-                    productType = " (" + response.data.xtype.substring(0, 1).toUpperCase() + response.data.xtype.substring(1).toLowerCase() + ")";
+                    productType = " (" + response.data.xtype.name.substring(0, 1).toUpperCase() + response.data.xtype.name.substring(1).toLowerCase() + ")";
                 }
                 $("#productLabel").text(productName + productType);
             }

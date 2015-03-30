@@ -181,6 +181,9 @@ function productBrandsListLoadAll(){
         cache : false,
         async : true,
         success : function(response, status) {
+            for ( var i = 0; i < response.length; i++) {
+                response[i].website = (response[i].website != null) ? response[i].website : "";
+            }
             var gridData = [];
             var brands = response;
             if(brands){
@@ -492,7 +495,7 @@ function productBrandsUpdateBrand(){
 }
 
 function productBrandsDeleteBrand(){
-    var dataToSend = "brand.id=" + $("#productBrandsId").val();
+    var dataToSend = "brand.id=" + $("#productBrandsId").val() + "&format=json";
     $.ajax({
         url : deleteBrandUrl,
         type : "POST",
@@ -573,8 +576,8 @@ function productBrandsTranslationDrawAll(brandId){
                 "translationType": "productBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "website": decodeURIComponent(value.website)
+                "name": value.name,
+                "website": value.website
             }
         }
         var tabVisible = $("#productBrandsTranslationDiv").is(":visible");

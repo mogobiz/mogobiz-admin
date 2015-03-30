@@ -292,7 +292,7 @@ function catalogGeneralInitControls(isCreate) {
         if (catalogValidateForm())catalogUpdate();
     });
     $("#catalogPublishBtn").click(function () {
-        catalogPublish()
+        catalogPublish();
     });
 }
 
@@ -416,7 +416,8 @@ function catalogDelete() {
 }
 
 function catalogPublish() {
-    $("#catalogLastPublicationSatus").html("");
+    $("#catalogLastPublicationStatus").show().html("");
+    $("#catalogPublicationError").hide()
     $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
@@ -428,7 +429,12 @@ function catalogPublish() {
         cache: false,
         async: true,
         success: function (response, status) {},
-        error: function (response, status) {}
+        error: function (response, status) {
+            if(response.status == "403"){
+                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
+                $("#catalogLastPublicationStatus").hide();
+            }
+        }
     });
 }
 
@@ -479,6 +485,7 @@ function catalogImportPageInitControls() {
 }
 
 function catalogValidateImportForm() {
+    $("#catalogImportError").html("");
     if ($("#catalogImportFile").val() == "") {
         jQuery.noticeAdd({
             stayTime: 2000,
@@ -496,11 +503,22 @@ function catalogImport() {
     document.getElementById("catalogImportForm").action = importCatalogUrl;
     document.getElementById("catalogImportForm").submit();
     document.getElementById("catalogImportHiddenFrame").onload = function () {
-        var cat = JSON.parse(document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText);
-        catalogSelectedId = cat.id;
-        catalogImported = true;
-        catalogueLoadList();
-        $("#catalogCreateDialog").dialog("close");
+        var responseText = document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText;
+        try {
+            var cat = JSON.parse(responseText);
+            catalogSelectedId = cat.id;
+            catalogImported = true;
+            catalogueLoadList();
+            $("#catalogCreateDialog").dialog("close");
+        }
+        catch(e){
+            if(responseText.toLowerCase().indexOf("error:") == 0){
+                $("#catalogImportError").html(responseText.substring(6));
+            }
+            else{
+                $("#catalogImportError").html(catalogImportFailureLabel);
+            }
+        }
     }
 }
 
@@ -539,7 +557,7 @@ function catalogCheckEsEnvRunning() {
                 html = catalogPublicationRunningLabel;
             }
             else {
-                $("#catalogPublishBtn").bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
                 html = catalogLastPublicationLabel + " : ";
                 if (response[0].success)
                     html += catalogPublicationSuccessLabel;
@@ -548,7 +566,7 @@ function catalogCheckEsEnvRunning() {
                 if (response[0].extra != null && response[0].extra != "")
                     html += " (" + response[0].extra + ")"
             }
-            $("#catalogLastPublicationSatus").html(html);
+            $("#catalogLastPublicationStatus").html(html);
         },
         error: function (response, status) {}
     });
@@ -580,8 +598,8 @@ function catalogTranslationDrawAll() {
                 "translationType": "catalog",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "description": decodeURIComponent(value.description)
+                "name": value.name,
+                "description": value.description
             }
         }
         var tabVisible = $("#catalogTranslationDiv").is(":visible");

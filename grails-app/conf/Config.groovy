@@ -187,7 +187,7 @@ log4j = {
 demo = false
 
 // Do not minimize resources
-grails.resources.debug = false
+grails.resources.debug = true
 grails.resources.mappers.yuicssminify.disable = true
 grails.resources.mappers.yuijsminify.disable = true
 

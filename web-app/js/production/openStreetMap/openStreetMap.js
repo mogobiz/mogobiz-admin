@@ -790,8 +790,8 @@ function poiTranslationDrawAll(poiId){
 				"translationType": "poi",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": decodeURIComponent(value.name),
-				"description": decodeURIComponent(value.description)
+				"name": value.name,
+				"description": value.description
 			}
 		}
 		var tabVisible = $("#poiTranslationDiv").is(":visible");

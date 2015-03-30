@@ -7,10 +7,10 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
-/*
-grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
-*/
+
+//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+
 
 grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required

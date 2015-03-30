@@ -380,8 +380,8 @@ function categoryFeaturesTranslationDrawAll(featureId){
 				"translationType": "categoryFeatures",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": decodeURIComponent(value.name),
-				"value": decodeURIComponent(value.value)
+				"name": value.name,
+				"value": value.value
 			}
 		}
 		var tabVisible = $("#categoryFeaturesTranslationDiv").is(":visible");

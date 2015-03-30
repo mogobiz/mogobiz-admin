@@ -38,10 +38,15 @@ class ElasticsearchController {
         long catalogId = params.long('catalog.id')
         EsEnv env = envId ? EsEnv.get(envId) : null
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
-        elasticsearchService.publish(company, env, catalog, true)
-        withFormat {
-            xml { render [:] as XML }
-            json { render [:] as JSON }
+        if (catalog?.name == "impex") {
+            render status:403, text: "Impex Catalog cannot be published"
+        }
+        else {
+            elasticsearchService.publish(company, env, catalog, true)
+            withFormat {
+                xml { render [:] as XML }
+                json { render [:] as JSON }
+            }
         }
     }
 

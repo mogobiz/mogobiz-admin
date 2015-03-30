@@ -13,6 +13,9 @@ function companyBrandsDrawAll(){
         cache : false,
         async : true,
         success : function(response, status) {
+            for ( var i = 0; i < response.length; i++) {
+                response[i].website = (response[i].website != null) ? response[i].website : "";
+            }
             var gridColumns = [{
                 id : "name",
                 name : companyBrandsNameLabel,
@@ -496,8 +499,8 @@ function companyBrandsTranslationDrawAll(brandId){
                 "translationType": "companyBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": decodeURIComponent(value.name),
-                "website": decodeURIComponent(value.website)
+                "name": value.name,
+                "website": value.website
             }
         }
         var tabVisible = $("#companyBrandsTranslationDiv").is(":visible");

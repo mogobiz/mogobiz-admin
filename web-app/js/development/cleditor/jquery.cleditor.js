@@ -1064,7 +1064,9 @@
 
   // updateFrame - updates the iframe with the textarea contents
   function updateFrame(editor, checkForChange) {
-    
+    if(!editor.doc)
+        return;
+
     var code = editor.$area.val(),
       options = editor.options,
       updateFrameCallback = options.updateFrame,

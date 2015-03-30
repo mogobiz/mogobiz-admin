@@ -9,7 +9,7 @@ function tourismTranslationDrawAll(productId){
             var defaultsData = {name: $("#productName").val(), keywords: $("#productKeywords").val(), description: $("#productDescription").val()};
             translationGetCreatePage("product", productId, fields, defaultsData);
         });
-		var columns = [{field: "name", title: translationNameGridLabel}, {field: "keywords", title: translationKeywordsGridLabel}, {field: "description", title: translationDescriptionGridLabel}];
+		var columns = [{field: "name", title: translationNameGridLabel}, {field: "keywords", title: translationKeywordsGridLabel}, {field: "descriptionEditor", title: translationDescriptionGridLabel}];
 		var data = [];
 		for (var i = 0; i < response.length; i++) {
 			var value = eval( "(" + response[i].value + ")" );
@@ -19,9 +19,9 @@ function tourismTranslationDrawAll(productId){
 				"translationType": "product",
 				"lang": response[i].lang,
 				"type": response[i].type,
-				"name": decodeURIComponent(value.name),
-				"keywords": decodeURIComponent(value.keywords),
-				"description": decodeURIComponent(value.description)
+				"name": value.name,
+				"keywords": value.keywords,
+				"description": value.description
 			}
 		}
 		tourismTranslationGrid = translationGetGrid("tourismTranslationGrid", productId, fields, columns, data);
