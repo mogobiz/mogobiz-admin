@@ -27,6 +27,13 @@ class UrlMappings {
 			action = [GET:'show', POST:'save', PUT:'update', DELETE:'delete']
 		}
         /**
+         * Downloadable url mappings
+         */
+        "/downloadable/$id"(controller:"downloadable", parseRequest:true) {
+            action = [GET:'display', POST:'save', PUT:'save', DELETE:'delete']
+        }
+
+        /**
          * Google
          */
         "/google/env/$id?"(controller:"googleEnv", parseRequest:true) {
