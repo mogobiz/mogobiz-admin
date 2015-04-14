@@ -1,5 +1,6 @@
 var companyAvailableTags = [];
 var firstTimeMap = true;
+var tourismDescriptionVariationsValues = [];
 
 function productAutoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     $(objId).unbind();
@@ -122,6 +123,65 @@ function productAttachEditForm(productId) {
                 $('#productFree').text(productFreePriceLabel);
 
 // Fill Description Tab Fields
+            $.ajax({
+                url : showVariationsUrl,
+                type : "GET",
+                data : "category.id=" + categorySelectedId + "&format=json",
+                dataType : "json",
+                cache : false,
+                async : true,
+                success : function(ticketTypes, status) {
+                    tourismDescriptionVariationsValues = [];
+                    for ( var i = 0; i < ticketTypes.length; i++) {
+                        var html = "<div class='spacer-small pricing-small'>" +
+                                        "<label for='tourismDescriptionVariation" +  ticketTypes[i].position + "' id='tourismDescriptionVariation" + ticketTypes[i].position + "Label'>&nbsp;</label>" +
+                                    "</div>" +
+                                    "<div class='spacer-small pricing-small'>" +
+                                        "<select id='tourismDescriptionVariation" +  ticketTypes[i].position + "' multiple='multiple' style='width:234px;'></select>" +
+                                   "</div>";
+                        $("#tourismDescriptionVariations").append(html);
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).attr("position", ticketTypes[i].position);
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect({
+                            header: false,
+                            multiple: false,
+                            selectedList : 1
+                        });
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position + "Label").html(ticketTypes[i].name);
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect("uncheckAll");
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect("enable");
+                        var options = document.getElementById("tourismDescriptionVariation" + ticketTypes[i].position).options;
+                        options.length = 0;
+                        options[options.length] = new Option("ALL", "ALL", "selected");
+                        for ( var j = 0; j < ticketTypes[i].variationValues.length; j++) {
+                            tourismDescriptionVariationsValues[ticketTypes[i].variationValues[j].id] = ticketTypes[i].variationValues[j].value;
+                            options[options.length] = new Option(
+                                ticketTypes[i].variationValues[j].value,
+                                ticketTypes[i].variationValues[j].id);
+                        }
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect("refresh");
+                        $("#tourismDescriptionVariations .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_tourismDescriptionVariation" + ticketTypes[i].position + "']")
+                            .each(function() {
+                                if (this.value == "ALL") {
+                                    this.click();
+                                }
+                            });
+
+                        var input = "<input id='tourismDescriptionVariationValue" + ticketTypes[i].position + "' type='hidden'>";
+                        $("#uploadInput").append(input);
+
+                        $("#tourismDescriptionVariation" + ticketTypes[i].position).bind("multiselectclick", function(event, ui) {
+                            if(ui.value != "ALL") {
+                                $("#tourismDescriptionVariationValue" + $(this).attr("position")).attr("value", ui.value);
+                                $("#tourismDescriptionVariationValue" + $(this).attr("position")).attr("name", "variation" + $(this).attr("position") + ".id");
+                            }
+                            else{
+                                $("#tourismDescriptionVariationValue" + $(this).attr("position")).removeAttr("value");
+                                $("#tourismDescriptionVariationValue" + $(this).attr("position")).removeAttr("name");
+                            }
+                        });
+                    }
+                }
+            });
             var availabilityDate = "";
             if(product.availabilityDate != null)
                 availabilityDate = product.availabilityDate.split(" ")[0];
@@ -703,27 +763,38 @@ function tourismProductRefreshGeneralCaroussel(productId, resources) {
             var res = new Object();
             var resource = resources[i];
             res.id = resource.resId;
+            var title = resource.name;
+            if(title.indexOf("__") == 0 && title.lastIndexOf("__") == title.length - 2){
+                var idsStr = title.substring(2, title.length - 2)
+                var ids = [];
+                if(idsStr.indexOf("_") > 0)
+                    var ids = idsStr.split("_");
+                else
+                    ids[0] = idsStr;
+                for(var j = 0; j < ids.length; j++)
+                    title = title + ", " + tourismDescriptionVariationsValues[ids[j]];
+            }
             switch(resource.xtype){
                 case 'picture':
                     res.content = "<div class='slide_inner'>" +
-                        "<a rel='fancyboxpackres' type = 'image' class='photo_link' title='" + resource.name + "' href='" + resource.url + "'>" +
-                        "<img title='" + resource.name + "' src='" + resource.url + "/SMALL" + "' class='photo'/>" +
+                        "<a rel='fancyboxpackres' type = 'image' class='photo_link' title='" + title + "' href='" + resource.url + "'>" +
+                        "<img title='" + title + "' src='" + resource.url + "/SMALL" + "' class='photo'/>" +
                         "</a>" +
                         "</div>";
                     res.content_button = "<div class='thumb'><a class='photo_link'><img src='" + resource.url + "' alt=''/></a></div>";
                     break;
                 case 'video':
                     res.content = "<div class='slide_inner'>" +
-                        "<a rel='fancyboxpackres' type = 'video' class='photo_link' title='" + resource.name + "' href='" + resource.url + "'>" +
-                        "<img src='../images/fancybox-video-240x180.png' title='" + resource.name + "'/></a>" +
+                        "<a rel='fancyboxpackres' type = 'video' class='photo_link' title='" + title + "' href='" + resource.url + "'>" +
+                        "<img src='../images/fancybox-video-240x180.png' title='" + title + "'/></a>" +
                         "</a>" +
                         "</div>";
                     res.content_button = "<div class='thumb'><a class='photo_link'><img src='" + resource.url + "' alt=''/></a></div>";
                     break;
                 case 'audio':
                     res.content = "<div class='slide_inner'>" +
-                        "<a rel='fancyboxpackres' type = 'audio' class='photo_link' title='" + resource.name + "' href='" + resource.url + "'>" +
-                        "<img src='../images/fancybox-audio-240x180.png' title='" + resource.name + "'/></a>" +
+                        "<a rel='fancyboxpackres' type = 'audio' class='photo_link' title='" + title + "' href='" + resource.url + "'>" +
+                        "<img src='../images/fancybox-audio-240x180.png' title='" + title + "'/></a>" +
                         "</a>" +
                         "</div>";
                     res.content_button = "<div class='thumb'><a class='photo_link'><img src='" + resource.url + "' alt=''/></a></div>";
@@ -811,7 +882,7 @@ function productUploadFileSetup(productId) {
         document.getElementById('formCreerProd').submit();
         document.getElementById('hidden-upload-frame').onload = function() {
             tourismProductLoadAllPictureForCaroussel(productId);
-            document.getElementById('hidden-upload-frame').onload = function() {}
+            document.getElementById('hidden-upload-frame').onload = function() {};
             $('#uploadSuccess')[0].style.display='block';$('#uploading')[0].style.display='none';
         }
     }, false);

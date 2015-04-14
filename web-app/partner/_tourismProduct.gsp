@@ -115,45 +115,45 @@ function uploadAnotherFile() {
 				</div>
 				<div class="spacer"></div>
 
-				<div class="newline">
-					<div class="general-large">
-						<label for="productDescription"><g:message code="product.description.label" /></label>
-					</div>
-					<div class="general-small">
-						<label><g:message code="product.picture.label" /></label>
-					</div>
-				</div>
-				<div class="spacer-small"></div>
-				<div class="newline">
-					<div class="general-large">
-						<div id="productDescriptionTextDiv"></div>
-						<textarea name="product.description" id="productDescription" style="display:none; visibility:hidden;"></textarea>
-						<div class="spacer"></div>
-						<div class="newline">
-							<input type="checkbox" id="tourismCalendarValidityPeriod" />
-							<label for="tourismCalendarValidityPeriod"><g:message code="calendar.publication.active"/></label>
-						</div>
-					</div>
-					<div class="general-small">
-						<div id="carousselDiv">
-							<div class="flavor_2" id="flavor_div"></div>
-						</div>
-						<div id="drop-area">
-							<div align="center"><g:message code="product.uploadMedia.label" /></div>
-							<div class="spacer"></div>
-							<div class="spacer"></div>
-							<div align="center" id="uploadInput" style="display:block;">
-								<input id="files-upload" type="file" name="file">
-							</div>
-							<div align="center" id="uploading" style="display:none"><g:message code="product.uploadLoading.label" /></div>
-							<div align="center" id="uploadSuccess" style="display:none">
-								<g:message code="product.uploadSuccess.label" />
-								<div class="spacer-small"></div>
-								<a href="javascript:void(0)" onclick="uploadAnotherFile();"><g:message code="product.uploadAnother.label" /></a>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="newline">
+                    <div class="general-large">
+                        <label for="productDescription"><g:message code="product.description.label" /></label>
+                    </div>
+                    <div class="general-small">
+                        <label><g:message code="product.picture.label" /></label>
+                    </div>
+                </div>
+                <div class="spacer-small"></div>
+                <div class="newline">
+                    <div class="general-large">
+                        <div id="productDescriptionTextDiv"></div>
+                        <textarea name="product.description" id="productDescription" style="display:none; visibility:hidden;"></textarea>
+                        <div class="spacer"></div>
+                        <div class="newline">
+                            <input type="checkbox" id="tourismCalendarValidityPeriod" />
+                            <label for="tourismCalendarValidityPeriod"><g:message code="calendar.publication.active"/></label>
+                        </div>
+                    </div>
+                    <div class="general-small">
+                        <div id="carousselDiv">
+                            <div class="flavor_2" id="flavor_div"></div>
+                        </div>
+                        <div id="drop-area">
+                            <div align="center"><g:message code="product.uploadMedia.label" /></div>
+                            <div class="spacer"></div>
+                            <div align="center" id="uploadInput" style="display:block;">
+                                <input id="files-upload" type="file" name="file">
+                            </div>
+                            <div align="center" id="uploading" style="display:none"><g:message code="product.uploadLoading.label" /></div>
+                            <div align="center" id="uploadSuccess" style="display:none">
+                                <g:message code="product.uploadSuccess.label" />
+                                <div class="spacer-small"></div>
+                                <a href="javascript:void(0)" onclick="uploadAnotherFile();"><g:message code="product.uploadAnother.label" /></a>
+                            </div>
+                        </div>
+                        <div id="tourismDescriptionVariations"></div>
+                    </div>
+                </div>
  				<div class="spacer"></div>
  			</form>
 		</div>

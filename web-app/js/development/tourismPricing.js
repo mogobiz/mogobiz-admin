@@ -186,7 +186,6 @@ function tourismPricingUpdateProductPrice(productId, price) {
 }
 
 function tourismPricingLoadTicketTypes(productId, ticketId, create) {
-    existantVariations = [];
     var dataToSend = "category.id=" + categorySelectedId + "&format=json";
     $.ajax({
         url : showVariationsUrl,
@@ -414,7 +413,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes) {
             options.length = 0;
             options[options.length] = new Option('NONE', 'NONE', 'selected');
             for ( var j = 0; j < ticketTypes[i].variationValues.length; j++) {
-                options[ticketTypes[i].variationValues[j].position] = new Option(
+                options[options.length] = new Option(
                     ticketTypes[i].variationValues[j].value,
                     ticketTypes[i].variationValues[j].id);
             }
