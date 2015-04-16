@@ -810,6 +810,7 @@ function tourismPricingInitUploadForm(ticketId, hasResource) {
             $("#tourismPricingUploading").hide();
             $("#tourismPricingDownloadForm").show();
             $("#tourismPricingUploadForm").show();
+            document.getElementById("tourismPricingUploadForm").reset();
         }
     }, false);
 }
