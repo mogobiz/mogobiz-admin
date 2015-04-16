@@ -781,7 +781,10 @@ function tourismPricingCheckTicketResource(productId, ticketId){
         async : true,
         success : function(response, status) {
             var hasResource = (response == true);
-            tourismPricingLoadTicketTypes(productId, ticketId, false, hasResource)
+            tourismPricingLoadTicketTypes(productId, ticketId, false, hasResource);
+        },
+        error : function(response, status) {
+            tourismPricingLoadTicketTypes(productId, ticketId, false, false);
         }
     });
 }
@@ -807,9 +810,22 @@ function tourismPricingInitUploadForm(ticketId, hasResource) {
         document.getElementById('tourismPricingUploadForm').submit();
         document.getElementById('tourismPricingDownloadHiddenFrame').onload = function() {
             document.getElementById('tourismPricingDownloadHiddenFrame').onload = function() {};
-            $("#tourismPricingUploading").hide();
-            $("#tourismPricingDownloadForm").show();
-            $("#tourismPricingUploadForm").show();
+            if(document.getElementById('tourismPricingDownloadHiddenFrame').contentWindow.document.body.innerHTML == "success"){
+                $("#tourismPricingUploading").hide();
+                $("#tourismPricingDownloadForm").show();
+                $("#tourismPricingUploadForm").show();
+            }
+            else{
+                $("#tourismPricingUploading").hide();
+                $("#tourismPricingDownloadForm").hide();
+                $("#tourismPricingUploadForm").show();
+                jQuery.noticeAdd({
+                    stayTime : 2000,
+                    text : tourismPricingResourceUnauthorizedError,
+                    stay : false,
+                    type : 'error'
+                });
+            }
             document.getElementById("tourismPricingUploadForm").reset();
         }
     }, false);
