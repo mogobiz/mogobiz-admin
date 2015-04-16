@@ -337,6 +337,14 @@
             var updateTicketTypeURL = '${createLink(controller: 'ticketType', action:'update')}';
             var deleteTicketTypeURL = '${createLink(controller: 'ticketType', action:'delete')}';
 
+            var tourismPricingSaveResourceUrl = "${createLink(controller: 'downloadable', action:'save')}";
+            var tourismPricingDeleteResourceUrl = "${createLink(controller: 'downloadable', action:'delete')}";
+            var tourismPricingGetResourceUrl = "${createLink(controller: 'downloadable', action:'display')}";
+            var tourismPricingHasResourceUrl = "${createLink(controller: 'downloadable', action:'hasResource')}";
+
+            var tourismPricingResourceUnauthorizedError = "${message(code:'tourismPricing.errors.resourceUnauthorized.label')}";
+            var tourismPricingResourceNotFoundError = "${message(code:'tourismPricing.errors.resourceNotFound.label')}";
+
             var tourismPricingPageUrl = "${resource(dir: 'partner', file: '_tourismPricing.gsp')}";
 
             //Brands

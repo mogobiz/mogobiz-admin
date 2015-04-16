@@ -13,7 +13,7 @@ function tourismPricingLoadPricings(productId) {
         success : function(response, status) {
             $("#tourismPriceAddLink").unbind();
             $("#tourismPriceAddLink").click(function() {
-                tourismPricingLoadTicketTypes(productId, null, true);
+                tourismPricingLoadTicketTypes(productId, null, true, false);
             });
             // grid setup
             var columns = [{
@@ -157,7 +157,7 @@ function tourismPricingLoadPricings(productId) {
 }
 
 function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataContext) {
-    return "<a href='javascript:void(0)' onclick='tourismPricingLoadTicketTypes(" + dataContext.productId + "," + dataContext.ticketId + ", false)'>" + value + "</a>";
+    return "<a href='javascript:void(0)' onclick='tourismPricingCheckTicketResource(" + dataContext.productId + "," + dataContext.ticketId + ")'>" + value + "</a>";
 }
 
 /**
@@ -185,7 +185,7 @@ function tourismPricingUpdateProductPrice(productId, price) {
     });
 }
 
-function tourismPricingLoadTicketTypes(productId, ticketId, create) {
+function tourismPricingLoadTicketTypes(productId, ticketId, create, hasResource) {
     var dataToSend = "category.id=" + categorySelectedId + "&format=json";
     $.ajax({
         url : showVariationsUrl,
@@ -198,13 +198,13 @@ function tourismPricingLoadTicketTypes(productId, ticketId, create) {
             $.get(tourismPricingPageUrl, {}, function(htmlresponse) {
                 htmlresponse = jQuery.trim(htmlresponse);
                 tourismPricingCreatePageSetup(htmlresponse, productId, ticketId,
-                    create, ticketTypes);
+                    create, ticketTypes, hasResource);
             }, "html");
         }
     });
 }
 
-function tourismPricingCreatePageSetup(htmlresponse, productId, ticketId, create, ticketTypes){
+function tourismPricingCreatePageSetup(htmlresponse, productId, ticketId, create, ticketTypes, hasResource){
     if ($('#tourismPricingCreateDialog').dialog("isOpen") !== true) {
         $('#tourismPricingCreateDialog').empty();
         $('#tourismPricingCreateDialog').html(htmlresponse);
@@ -217,7 +217,7 @@ function tourismPricingCreatePageSetup(htmlresponse, productId, ticketId, create
             height : 'auto',
             open : function(event) {
                 tourismPricingInitControls(create);
-                tourismPricingInitFields(create, ticketId,ticketTypes);
+                tourismPricingInitFields(create, ticketId, ticketTypes, hasResource);
             },
             buttons : {
                 deleteLabel : function() {
@@ -356,11 +356,14 @@ function tourismPricingInitControls(create) {
         }
     });
     $("#tourismPricingTabs .tabs a").unbind();
+    $("#tourismPricingDownloadTab").removeClass("disabled");
     $("#tourismPricingTranslationTab").removeClass("disabled");
+    $("#tourismPricingDownloadDiv").hide();
     $("#tourismPricingTranslationDiv").hide();
     $("#tourismPricingGeneralTab").addClass("selected");
 
     if (create) {
+        $("#tourismPricingDownloadTab").addClass("disabled");
         $("#tourismPricingTranslationTab").addClass("disabled");
         $('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').hide();
         $('.ui-dialog-buttonpane').find('button:contains("updateLabel")').hide();
@@ -374,11 +377,18 @@ function tourismPricingInitControls(create) {
             $(this).addClass("selected");
             switch($(this).attr("id")){
                 case "tourismPricingGeneralTab":
+                    $("#tourismPricingDownloadDiv").hide();
                     $("#tourismPricingTranslationDiv").hide();
                     $("#tourismPricingAddDiv").show();
                     break;
+                case "tourismPricingDownloadTab":
+                    $("#tourismPricingAddDiv").hide();
+                    $("#tourismPricingTranslationDiv").hide();
+                    $("#tourismPricingDownloadDiv").show();
+                    break;
                 case "tourismPricingTranslationTab":
                     $("#tourismPricingAddDiv").hide();
+                    $("#tourismPricingDownloadDiv").hide();
                     $("#tourismPricingTranslationDiv").show();
                     break;
                 default:
@@ -395,7 +405,7 @@ function tourismPricingInitControls(create) {
     }
 }
 
-function tourismPricingInitFields(create, ticketId, ticketTypes) {
+function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
     $("#tourismPricingId,#tourismPricingTicketType,#tourismPricingAvailabilityDate,#tourismPricingTicketPrice,#tourismPricingTicketStock,#tourismPricingMaxOrder,#tourismPricingStartDate,#tourismPricingEndDate").val("");
     $("#tourismPricingTicketStock").val("1");
     $("#tourismPricingMinOrder").val("0");
@@ -481,6 +491,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes) {
         if(data.stockOutSelling){
             $("#tourismPricingStockOutSelling").prop('checked', true);
         }
+        tourismPricingInitUploadForm(ticketId, hasResource);
         tourismPricingTranslationDrawAll(ticketId);
     }
 }
@@ -756,6 +767,81 @@ function tourismPricingUpdateFreeProductLabel() {
         $('#productFree').text(productFreePriceLabel);
     else
         $('#productFree').text("");
+}
+
+// Resources
+
+function tourismPricingCheckTicketResource(productId, ticketId){
+    $.ajax({
+        url : tourismPricingHasResourceUrl + "/" + ticketId,
+        type : "GET",
+        data : "",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            var hasResource = (response == true);
+            tourismPricingLoadTicketTypes(productId, ticketId, false, hasResource)
+        }
+    });
+}
+
+function tourismPricingInitUploadForm(ticketId, hasResource) {
+    $("#tourismPricingUploading").hide();
+    if(hasResource){
+        $("#tourismPricingDownloadForm").show();
+    }
+    else{
+        $("#tourismPricingDownloadForm").hide();
+    }
+    $("#tourismPricingDownloadResource").unbind().bind("click", function(){tourismPricingDisplayResource(ticketId)});
+    $("#tourismPricingDeleteResource").unbind().bind("click", function(){tourismPricingDeleteResource(ticketId)});
+
+    var filesUpload = document.getElementById("tourismPricingDownloadFile");
+    filesUpload.addEventListener("change", function() {
+        document.getElementById('tourismPricingUploadForm').target = "tourismPricingDownloadHiddenFrame";
+        document.getElementById('tourismPricingUploadForm').action = tourismPricingSaveResourceUrl + "/" + ticketId;
+        $("#tourismPricingDownloadForm").hide();
+        $("#tourismPricingUploadForm").hide();
+        $("#tourismPricingUploading").show();
+        document.getElementById('tourismPricingUploadForm').submit();
+        document.getElementById('tourismPricingDownloadHiddenFrame').onload = function() {
+            document.getElementById('tourismPricingDownloadHiddenFrame').onload = function() {};
+            $("#tourismPricingUploading").hide();
+            $("#tourismPricingDownloadForm").show();
+            $("#tourismPricingUploadForm").show();
+        }
+    }, false);
+}
+
+function tourismPricingDisplayResource(ticketId){
+    window.open(tourismPricingGetResourceUrl + "/" + ticketId, "_blank");
+}
+
+function tourismPricingDeleteResource(ticketId){
+    $.ajax({
+        url : tourismPricingDeleteResourceUrl + "/" + ticketId,
+        type : "DELETE",
+        noticeType : "DELETE",
+        data : "",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            $("#tourismPricingDownloadForm").hide();
+            $("#tourismPricingUploading").hide();
+        },
+        error : function(response, status) {
+            var message = tourismPricingResourceUnauthorizedError;
+            if(response.status == "404")
+                message = tourismPricingResourceNotFoundError;
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : message,
+                stay : false,
+                type : 'error'
+            });
+        }
+    });
 }
 
 //TRANSLATION

@@ -1,5 +1,5 @@
 <style type="text/css">
-	#categoryVariationsCreateDiv, #categoryVariationsTranslationDiv, #categoryVariationsResourcesDiv{
+	#categoryVariationsCreateDiv, #categoryVariationsTranslationDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
 		font-size: 11px;
 		color: #888;
@@ -7,7 +7,7 @@
 		direction: ltr;
 		width: 500px;
 	}
-	#categoryVariationsDialog/*, #categoryVariationsResourcesDialog */{
+	#categoryVariationsDialog{
 		color: #888;
 		text-align: left;
 		direction: ltr;
@@ -29,11 +29,6 @@
 					<g:message code="tabs.general.label" />
 				</a>
 			</li>
-            <!--<li>
-                <a id="categoryVariationsResourcesTab">
-                    <g:message code="tabs.resource.label" />
-                </a>
-            </li>-->
 			<li>
 				<a id="categoryVariationsTranslationTab">
 					<g:message code="tabs.translation.label" />
@@ -95,24 +90,6 @@
 			<div class="spacer"></div>
 		</form>
 	</div>
-    <!--<div id="categoryVariationsResourcesDiv" >
-        <div class="spacer"></div>
-        <div class="newline">
-            <div class="variations-full" id="categoryVariationsResources">
-                <div class="flavor_2" id="categoryVariationsResourcesCaroussel"></div>
-            </div>
-        </div>
-        <div class="spacer"></div>
-        <div class="newLine">
-            <div class="variations-full">
-                <form id="categoryVariationResourceForm" onsubmit="return false;" method="POST" enctype="multipart/form-data">
-                    <input id="categoryVariationId" type="hidden" name="id"/>
-                    <input id="categoryVariationResource" type="file" name="file"/>
-                </form>
-            </div>
-        </div>
-        <div class="spacer"></div>
-    </div>-->
 	<div id="categoryVariationsTranslationDiv" >
 		<div style="padding: 10px;">
 			<a id="categoryVariationsTranslationAddLink"><g:message code="translation.add.label" /></a>
@@ -121,5 +98,4 @@
 			<div id="categoryVariationsTranslationGrid" style="height: 144px;"></div>
 		</div>
 	</div>
-    <iframe id="categoryVariationsHiddenFrame" name="categoryVariationsHiddenFrame" style="display: none"></iframe>
 </div>
