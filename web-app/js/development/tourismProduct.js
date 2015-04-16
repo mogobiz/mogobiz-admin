@@ -1,6 +1,5 @@
 var companyAvailableTags = [];
 var firstTimeMap = true;
-var tourismDescriptionVariationsValues = [];
 
 function productAutoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     $(objId).unbind();
@@ -131,7 +130,6 @@ function productAttachEditForm(productId) {
                 cache : false,
                 async : true,
                 success : function(ticketTypes, status) {
-                    tourismDescriptionVariationsValues = [];
                     for ( var i = 0; i < ticketTypes.length; i++) {
                         var html = "<div class='spacer-small pricing-small'>" +
                                         "<label for='tourismDescriptionVariation" +  ticketTypes[i].position + "' id='tourismDescriptionVariation" + ticketTypes[i].position + "Label'>&nbsp;</label>" +
@@ -153,7 +151,6 @@ function productAttachEditForm(productId) {
                         options.length = 0;
                         options[options.length] = new Option("ALL", "ALL", "selected");
                         for ( var j = 0; j < ticketTypes[i].variationValues.length; j++) {
-                            tourismDescriptionVariationsValues[ticketTypes[i].variationValues[j].id] = ticketTypes[i].variationValues[j].value;
                             options[options.length] = new Option(
                                 ticketTypes[i].variationValues[j].value,
                                 ticketTypes[i].variationValues[j].id);
@@ -765,14 +762,15 @@ function tourismProductRefreshGeneralCaroussel(productId, resources) {
             res.id = resource.resId;
             var title = resource.name;
             if(title.indexOf("__") == 0 && title.lastIndexOf("__") == title.length - 2){
-                var idsStr = title.substring(2, title.length - 2)
+                var idsStr = title.substring(2, title.length - 2);
+
                 var ids = [];
                 if(idsStr.indexOf("_") > 0)
                     var ids = idsStr.split("_");
                 else
                     ids[0] = idsStr;
                 for(var j = 0; j < ids.length; j++)
-                    title = title + ", " + tourismDescriptionVariationsValues[ids[j]];
+                    title = title + ", " + ids[j];
             }
             switch(resource.xtype){
                 case 'picture':
@@ -850,7 +848,7 @@ function tourismProductRefreshGeneralCaroussel(productId, resources) {
         'titleFormat' : function(title, currentArray, currentIndex, currentOpts) {
             var resId = carouselPics[currentIndex].id;
             return '<span id="fancybox-title-inside">Image ' + (currentIndex + 1) + ' / ' + currentArray.length
-                + (title.length ? ' &nbsp; ' + title : '') + '</span>[<a style="float:right" href="javascript:void(0);" onclick="javascript:productDeleteResource('+productId+','+resId+')">Delete</a>]';
+                + (title.length ? ' &nbsp; ' + title : '') + '</span><span style="float:right">[<a href="javascript:void(0);" onclick="javascript:productDeleteResource('+productId+','+resId+')">Delete</a>]</span>';
         }
     });
 
