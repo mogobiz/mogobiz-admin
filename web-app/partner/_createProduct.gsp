@@ -35,7 +35,7 @@
 					<input id="createProductNameField" autofocus required placeholder="(Enter Product Name here)" type="text" name="product.name" class="textInput" /> <br />
 				</div>
                 <div class="createProduct-small">
-                    <select id="createProductTypeField">
+                    <select id="createProductTypeField" multiple="multiple">
                         <option value="PRODUCT"><g:message code="product.xtype.physical.label" /></option>
                         <option value="DOWNLOADABLE"><g:message code="product.xtype.downloadable.label" /></option>
                         <option value="SERVICE"><g:message code="product.xtype.service.label" /></option>
