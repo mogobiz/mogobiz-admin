@@ -131,18 +131,19 @@ function productAttachEditForm(productId) {
                 async : true,
                 success : function(ticketTypes, status) {
                     for ( var i = 0; i < ticketTypes.length; i++) {
-                        var html = "<div class='spacer-small pricing-small'>" +
+                        var html = "<div class='spacer-small'>" +
                                         "<label for='tourismDescriptionVariation" +  ticketTypes[i].position + "' id='tourismDescriptionVariation" + ticketTypes[i].position + "Label'>&nbsp;</label>" +
                                     "</div>" +
-                                    "<div class='spacer-small pricing-small'>" +
-                                        "<select id='tourismDescriptionVariation" +  ticketTypes[i].position + "' multiple='multiple' style='width:234px;'></select>" +
+                                    "<div class='spacer-small'>" +
+                                        "<select id='tourismDescriptionVariation" +  ticketTypes[i].position + "' multiple='multiple' style='width: 100px;'></select>" +
                                    "</div>";
                         $("#tourismDescriptionVariations").append(html);
                         $("#tourismDescriptionVariation" + ticketTypes[i].position).attr("position", ticketTypes[i].position);
                         $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect({
                             header: false,
                             multiple: false,
-                            selectedList : 1
+                            selectedList : 1,
+                            minWidth: 215
                         });
                         $("#tourismDescriptionVariation" + ticketTypes[i].position + "Label").html(ticketTypes[i].name);
                         $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect("uncheckAll");

@@ -150,8 +150,9 @@ function uploadAnotherFile() {
                                 <div class="spacer-small"></div>
                                 <a href="javascript:void(0)" onclick="uploadAnotherFile();"><g:message code="product.uploadAnother.label" /></a>
                             </div>
+                            <div id="tourismDescriptionVariations" stle="padding-top: 7px;"></div>
+                            <div class="clear"></div>
                         </div>
-                        <div id="tourismDescriptionVariations"></div>
                     </div>
                 </div>
  				<div class="spacer"></div>
