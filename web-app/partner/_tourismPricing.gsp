@@ -1,5 +1,5 @@
 <style type="text/css">
-	#tourismPricingAddDiv, #tourismPricingTranslationDiv{
+	#tourismPricingAddDiv, #tourismPricingTranslationDiv, #tourismPricingDownloadDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
 		font-size: 11px;
 		color: #888;
@@ -30,11 +30,11 @@
 					<g:message code="tabs.general.label" />
 				</a>
 			</li>
-            <!-- <li id="downloadLi">
+            <li id="downloadLi">
                 <a id="tourismPricingDownloadTab">
                     <g:message code="tabs.download.label" />
                 </a>
-            </li> -->
+            </li>
 			<li>
 				<a id="tourismPricingTranslationTab">
 					<g:message code="tabs.translation.label" />
@@ -143,29 +143,37 @@
 			</div>
 			<div class="spacer"></div>
 			<div class="newline">
-					<input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
-					<label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
-					<input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
-					<label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
-					<input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
-					<label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
+                <input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
+                <label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
+                <input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
+                <label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
+                <input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
+                <label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
 			</div>
 		</form>
 	</div>
-    <!-- <div id="tourismPricingDownloadDiv">
+    <div id="tourismPricingDownloadDiv">
+        <div class="spacer"></div>
+        <div id="tourismPricingDownloadForm" align="center">
+            <img src="../images/download_file.png" width="128px" height="128px" style="cursor:pointer;"/>
+            <br/>
+            <a href="javascript:void(0);" id="tourismPricingDownloadResource"><g:message code="tourismPricing.download.label" /></a>
+            &nbsp;<g:message code="tourismPricing.or.label" />
+            &nbsp;<a href="javascript:void(0);" id="tourismPricingDeleteResource"><g:message code="tourismPricing.delete.label" /></a>
+            &nbsp;<g:message code="tourismPricing.file.label" />
+            <div class="spacer"></div>
+        </div>
         <div id="tourismPricingUpload">
             <div class="pricing-full">
                 <form id="tourismPricingUploadForm" onsubmit="return false;" method="POST" enctype="multipart/form-data">
-                    <input id="tourismPricingDownloadId" type="hidden" name="id"/>
                     <input id="tourismPricingDownloadFile" type="file" name="file"/>
                 </form>
             </div>
+            <div class="spacer"></div>
             <iframe id="tourismPricingDownloadHiddenFrame" name="tourismPricingDownloadHiddenFrame" style="display: none"></iframe>
         </div>
-        <div id="tourismPricingDownloadForm">
-
-        </div>
-    </div> -->
+        <div align="center" id="tourismPricingUploading" style="display:none"><g:message code="tourismPricing.uploadingResource.label" /></div>
+    </div>
 	<div id="tourismPricingTranslationDiv" >
 		<div style="padding: 10px;">
 			<a id="tourismPricingTranslationAddLink"><g:message code="translation.add.label" /></a>
