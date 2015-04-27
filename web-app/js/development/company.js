@@ -282,7 +282,27 @@ function createCompany(){
  * Edit a company
  */
 
-function compObjGetEditCompanyPage(compId, companyCode, partnerId) {
+function compGetUserPermission(compId, companyCode, partnerId){
+    $.ajax({
+        url: getUserPermissions,
+        type: "GET",
+        data: "format=json",
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            var profileAccess = false;
+            for(var i = 0; i < response.length; i++){
+                if(response[i].key == "updateProfiles" && (response[i].target == "profiles:*:admin" || response[i].target == "profiles:" + compId + ":admin")){
+                    profileAccess = true;
+                }
+            }
+            compObjGetEditCompanyPage(compId, companyCode, partnerId, true); // FIXME
+        }
+    });
+}
+
+function compObjGetEditCompanyPage(compId, companyCode, partnerId, profileAccess) {
 	$.get(companyPageUrl, {}, function(responseText) {
 		responseText = jQuery.trim(responseText);
 		$(responseText).appendTo(document.body);
@@ -306,6 +326,10 @@ function compObjGetEditCompanyPage(compId, companyCode, partnerId) {
             $("#tagsLi").hide().remove();
             $("#tags").hide().remove();
 		}
+        if(!profileAccess){
+            $("#profilesLi").hide().remove();
+            $("#profiles").hide().remove();
+        }
 		compObjAttachEditForm(compId, companyCode, partnerId);
 	}, "html");
 }
@@ -362,6 +386,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 				$(this).addClass('selected');
 				var selectedTabId = $(this).attr('id');
 				if (selectedTabId == 'generalTab') {
+                    $('#profiles').hide();
 					$('#description').hide();
 					$('#design').hide();
 					$('#shipping').hide();
@@ -402,8 +427,67 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyGeneralMultiSelectAutoUpdate(compId, "#generalCountry", "company.location.countryCode");
 					}
 				}
+                else if (selectedTabId == 'profilesTab'){
+                    $('#generalInfo').hide();
+                    $('#sellers').hide();
+                    $('#description').hide();
+                    $('#design').hide();
+                    $('#shipping').hide();
+                    $('#payment').hide();
+                    $('#tax').hide();
+                    $('#brands').hide();
+                    $('#coupons').hide();
+                    $('#publishing').hide();
+                    $('#apiKeys').hide();
+                    $('#iBeacon').hide();
+                    $('#tags').hide();
+                    $('#profiles').show();
+
+                    $('#addNewProfile, #applySystemProfile').unbind();
+                    $('#addNewProfile').click(function() {
+                        companyProfilesGetDetails(null, true, compId);
+                    });
+                    $('#applySystemProfile').click(function() {
+                        companyProfilesGetSystemProfiles(compId);
+                    });
+                    companyProfilesDrawAll(compId);
+                }
+                else if (selectedTabId == 'sellersTab'){
+                    $('#generalInfo').hide();
+                    $('#profiles').hide();
+                    $('#description').hide();
+                    $('#design').hide();
+                    $('#shipping').hide();
+                    $('#payment').hide();
+                    $('#tax').hide();
+                    $('#brands').hide();
+                    $('#coupons').hide();
+                    $('#publishing').hide();
+                    $('#apiKeys').hide();
+                    $('#iBeacon').hide();
+                    $('#tags').hide();
+                    $('#sellers').show();
+
+                    if (!companyHashTable['seller']) {
+                        companyHashTable['seller'] = new Object();
+                    }
+                    // Check if tab is visited before
+                    if (!companyHashTable['seller'].visited) {
+                        companyHashTable['seller'].visited = true;
+                    }
+
+                    $('#addNewSeller').unbind();
+                    $('#addNewSeller').click(function() {
+                        getSellerDialogPage(compId,"-1");
+                    });
+                    sellersGridSetup(partnerId);
+                    companyGetSellerOnLineValidation(compId);
+                    sellersShowAll(compId);
+                    companySellerAutoUpdateCheckbox(compId, "#paymentOnLineValidation", "company.onlineValidation");
+                }
 				else if (selectedTabId == 'shippingTab') {
 					$('#generalInfo').hide();
+                    $('#profiles').hide();
 					$('#description').hide();
 					$('#design').hide();
 					$('#tax').hide();
@@ -466,6 +550,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 				}
 				else if (selectedTabId == 'taxTab') {
 					$('#generalInfo').hide();
+                    $('#profiles').hide();
 					$('#description').hide();
 					$('#design').hide();
 					$('#shipping').hide();
@@ -492,6 +577,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 				}
 				else if (selectedTabId == 'paymentTab') {
 					$('#generalInfo').hide();
+                    $('#profiles').hide();
 					$('#description').hide();
 					$('#design').hide();
 					$('#shipping').hide();
@@ -521,41 +607,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyPaymentMultiSelectAutoUpdate(compId, "#paymentCurrencyCombo", "company.currencyCode");
 					}
 				}
-				else if (selectedTabId == 'sellersTab'){
-					$('#generalInfo').hide();
-					$('#description').hide();
-					$('#design').hide();
-					$('#shipping').hide();
-					$('#payment').hide();
-					$('#tax').hide();
-                    $('#brands').hide();
-                    $('#coupons').hide();
-                    $('#publishing').hide();
-                    $('#apiKeys').hide();
-                    $('#iBeacon').hide();
-                    $('#tags').hide();
-					$('#sellers').show();
-					$('#sellersForm .errors').hide();
-
-                    if (!companyHashTable['seller']) {
-                        companyHashTable['seller'] = new Object();
-                    }
-                    // Check if tab is visited before
-                    if (!companyHashTable['seller'].visited) {
-                        companyHashTable['seller'].visited = true;
-                    }
-					
-					$('#addNewSeller').unbind();
-					$('#addNewSeller').click(function() {
-						getSellerDialogPage(compId,"-1");
-					});
-					sellersGridSetup(partnerId);
-                    companyGetSellerOnLineValidation(compId);
-					sellersShowAll(compId);
-                    companySellerAutoUpdateCheckbox(compId, "#paymentOnLineValidation", "company.onlineValidation");
-				}
                 else if (selectedTabId == 'brandsTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();
@@ -578,6 +632,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                 }
                 else if (selectedTabId == 'couponsTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();
@@ -600,6 +655,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                 }
                 else if (selectedTabId == 'publishingTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();
@@ -622,6 +678,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                 }
                 else if (selectedTabId == 'apiKeysTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();
@@ -672,6 +729,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                 }
                 else if (selectedTabId == 'iBeaconTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();
@@ -694,6 +752,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                 }
                 else if (selectedTabId == 'tagsTab'){
                     $('#generalInfo').hide();
+                    $('#profiles').hide();
                     $('#description').hide();
                     $('#design').hide();
                     $('#shipping').hide();

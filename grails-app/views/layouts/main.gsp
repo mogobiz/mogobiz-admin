@@ -10,6 +10,7 @@
 <r:script>
 
 var companyCountriesUrl = "${createLink(controller: 'country', action:'countries')}";
+var getUserPermissions = "${createLink(controller: 'profile', action:'showUserPermissions')}";
 
 //----------------------- messages.properties Labels -----------------------//
 //default
@@ -21,6 +22,7 @@ var cancelLabel = "${message(code:'default.button.cancel.label')}";
 var closeLabel = "${message(code:'default.button.close.label')}";
 var importLabel = "${message(code:'default.button.import.label')}";
 var okLabel = "${message(code:'default.button.ok.label')}";
+var validateLabel = "${message(code:'default.button.validate.label')}";
 var resetPasswordLabel = "${message(code:'default.button.resetPassword.label')}";
 var defaultSearchLabel = "${message(code:'default.search.label')}";
 var defaultNameLabel = "${message(code:'default.name.label')}";

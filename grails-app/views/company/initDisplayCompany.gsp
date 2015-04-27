@@ -10,6 +10,11 @@
 						<span><g:message code="tabs.general.label" /></span>
 					</a>
 				</li>
+				<li id ="profilesLi">
+					<a href="javascript:void(0)" id="profilesTab">
+						<span><g:message code="tabs.profiles.label" /></span>
+					</a>
+				</li>
                 <li id ="sellersLi">
                     <a href="javascript:void(0)" id="sellersTab">
                         <span><g:message code="tabs.sellers.label" /></span>
@@ -166,27 +171,39 @@
 			</form>
 		</div>
 
-        <!-- Sellers Tab -->
-        <div id="sellers" class="fk_content_area">
-            <form id="formSellers" name="form_sellers_comp" onsubmit="return false;">
-                <div id="sellersForm">
-                    <div class="errors"></div>
-                    <div id="sellersContent">
-                        <p style="font-weight: bold;"><g:message code="company.sellers.header.label" /> <a href="javascript:void(0)" id="addNewSeller"><g:message code="company.sellers.addNewSeller.label" /></a></p>
-                        <div id="sellersGridDiv">
-                            <div id="sellersGrid"></div>
-                        </div>
-                        <div class="spacer"></div>
-                        <div class="newline">
-                            <div class="payment_left">
-                                <input type="checkbox" id="paymentOnLineValidation" />
-                                <label for="paymentOnLineValidation"><g:message code="company.payment.online.validation.label" /></label>
-                            </div>
-                        </div>
+        <!-- Profiles Tab -->
+        <div id="profiles" class="fk_content_area">
+            <form id="formProfiles" name="form_profiles_comp" onsubmit="return false;">
+                <div id="profilesContent">
+                    <p style="font-weight: bold;"><a href="javascript:void(0)" id="addNewProfile"><g:message code="company.profiles.header.new" /></a> <g:message code="company.profiles.header.or" /> <a href="javascript:void(0)" id="applySystemProfile"><g:message code="company.profiles.header.system" /></a></p>
+                    <div id="profilesGridDiv">
+                        <div id="profilesGrid"></div>
                     </div>
+                    <div class="spacer"></div>
                 </div>
             </form>
         </div>
+
+    <!-- Sellers Tab -->
+    <div id="sellers" class="fk_content_area">
+        <form id="formSellers" name="form_sellers_comp" onsubmit="return false;">
+            <div id="sellersForm">
+                <div id="sellersContent">
+                    <p style="font-weight: bold;"><g:message code="company.sellers.header.label" /> <a href="javascript:void(0)" id="addNewSeller"><g:message code="company.sellers.addNewSeller.label" /></a></p>
+                    <div id="sellersGridDiv">
+                        <div id="sellersGrid"></div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="newline">
+                        <div class="payment_left">
+                            <input type="checkbox" id="paymentOnLineValidation" />
+                            <label for="paymentOnLineValidation"><g:message code="company.payment.online.validation.label" /></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
 		<!-- Shipping Tab -->
 		<div id="shipping" class="fk_content_area">

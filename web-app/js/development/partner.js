@@ -83,7 +83,7 @@ function partnerGetAdminPage(partnerId) {
     companyHashTable = [];
     companyTagsPageOffset = 0;
     companyIBeaconPageOffset = 0;
-    compObjGetEditCompanyPage(sellerCompanyId, sellerCompanyCode, partnerId);
+    compGetUserPermission(sellerCompanyId, sellerCompanyCode, partnerId);
 }
 
 function partnerGetAllUserCompanies(){

@@ -127,6 +127,7 @@
         <!-- company javascript -->
         <g:javascript src="${env}/company.js"/>
         <g:javascript src="${env}/companyGeneral.js"/>
+        <g:javascript src="${env}/companyProfiles.js"/>
         <g:javascript src="${env}/companyVariations.js"/>
         <g:javascript src="${env}/companyShipping.js"/>
         <g:javascript src="${env}/companyTax.js"/>
@@ -365,6 +366,25 @@
             // General
             var showCompanyUrl = "${createLink(controller: 'company', action:'show')}";
             var updateCompanyUrl = "${createLink(controller: 'company', action:'update')}";
+
+            //Profiles
+            var companyShowProfilesUrl = "${createLink(controller: 'profile', action:'index')}";
+            var companyApplyProfileUrl = "${createLink(controller: 'profile', action:'apply')}";
+            var companySaveProfileUrl = "${createLink(controller: 'profile', action:'save')}";
+            var companyCopyProfileUrl = "${createLink(controller: 'profile', action:'copy')}";
+            var companyDeleteProfileUrl = "${createLink(controller: 'profile', action:'delete')}";
+            var companyUnbindProfileUrl = "${createLink(controller: 'profile', action:'unbind')}";
+
+            var companyProfilesPageUrl = "${resource(dir: 'admin', file: '_createCompanyProfile.gsp')}";
+            var companySystemProfilePageUrl = "${resource(dir: 'admin', file: '_applySystemProfile.gsp')}";
+
+            var companyProfilesTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
+            var companyProfilesTitleApplyLabel = "${message(code: 'company.profiles.apply.title')}";
+            var companyProfilesTitleUnbindLabel = "${message(code: 'company.profiles.unbind.title')}";
+            var companyProfilesNameLabel = "${message(code: 'company.profiles.name.label')}";
+            var companyProfilesSystemProfileLabel = "${message(code: 'company.profiles.systemProfile.label')}";
+            var companyProfilesUnbindMessage = "${message(code: 'company.profiles.unbind.message')}";
+            var companyProfilesUnauthorizedMessage = "${message(code: 'company.profiles.unauthorized.message')}";
 
             // Seller
             var sellerShowUrl = "${createLink(controller: 'seller', action: 'show')}";
@@ -646,6 +666,7 @@
         <div id="taxRateDialog"></div>
         <div id="shippingRuleDialog"></div>
         <div id="companyBrandsDialog"></div>
+        <div id="companyProfilesDialog"></div>
         <div id="companyCouponsDialog"></div>
         <div id="companyCouponsRulesDialog"></div>
         <div id="companyPublishingDialog"></div>
