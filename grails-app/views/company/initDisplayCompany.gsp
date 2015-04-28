@@ -1,3 +1,5 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
+<%@ page import="com.mogobiz.utils.ProfileUtils"%>
 
 <div id="editCompanyTabs" style="display: none">
 	<div>
@@ -5,16 +7,20 @@
 		<div  id="editTabs" style='display: none'>
 			<ul class="tabs" id="ulTabs">
 				<!-- Tabs -->
+<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_COMPANY, params.long("companyId"))}">
 				<li id ="generalLi">
 					<a href="javascript:void(0)" id="generalTab">
 						<span><g:message code="tabs.general.label" /></span>
 					</a>
 				</li>
+</shiro:hasPermission>
+<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_PROFILES, params.long("companyId"))}">
 				<li id ="profilesLi">
 					<a href="javascript:void(0)" id="profilesTab">
 						<span><g:message code="tabs.profiles.label" /></span>
 					</a>
 				</li>
+</shiro:hasPermission>
                 <li id ="sellersLi">
                     <a href="javascript:void(0)" id="sellersTab">
                         <span><g:message code="tabs.sellers.label" /></span>
