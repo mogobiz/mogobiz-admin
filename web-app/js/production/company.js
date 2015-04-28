@@ -443,13 +443,12 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#tags').hide();
                     $('#profiles').show();
 
-                    $('#addNewProfile, #applySystemProfile').unbind();
-                    $('#addNewProfile').click(function() {
-                        companyProfilesGetDetails(null, true, compId);
+                    $("#addNewProfile").unbind().click(function() {
+                        companyProfilesGetAllPermissions(null, compId, true, false);
                     });
-                    $('#applySystemProfile').click(function() {
-                        companyProfilesGetSystemProfiles(compId);
-                    });
+//                    $("#applySystemProfile").unbind().click(function() {
+//                        companyProfilesGetSystemProfiles(compId);
+//                    });
                     companyProfilesDrawAll(compId);
                 }
                 else if (selectedTabId == 'sellersTab'){
@@ -476,14 +475,12 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyHashTable['seller'].visited = true;
                     }
 
-                    $('#addNewSeller').unbind();
-                    $('#addNewSeller').click(function() {
-                        getSellerDialogPage(compId,"-1");
+                    $('#addNewSeller').unbind().click(function() {
+                        companySellersGetDetails(compId, null ,true);
                     });
-                    sellersGridSetup(partnerId);
-                    companyGetSellerOnLineValidation(compId);
-                    sellersShowAll(compId);
-                    companySellerAutoUpdateCheckbox(compId, "#paymentOnLineValidation", "company.onlineValidation");
+                    companySellersGetOnLineValidation(compId);
+                    companySellersAutoUpdateOnLineValidation(compId);
+                    companySellersGetAllSellers(compId, partnerId);
                 }
 				else if (selectedTabId == 'shippingTab') {
 					$('#generalInfo').hide();

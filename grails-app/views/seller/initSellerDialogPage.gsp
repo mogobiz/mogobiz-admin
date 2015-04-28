@@ -2,7 +2,6 @@
 
 <div id="sellerDialog">
     <form id="formSeller" name="formSeller" onsubmit="return false;">
-        <div class="errors"></div>
         <div id="sellerContent">
             <div class="newline">
                 <div class="sellerDialog-medium">
@@ -12,7 +11,7 @@
             <div class="spacer-small"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="text" name="seller.firstName" id="sellerFirstName"/>
+                    <input type="text" id="sellerFirstName"/>
                 </div>
             </div>
             <div class="spacer"></div>
@@ -24,7 +23,7 @@
             <div class="spacer-small"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="text" name="seller.lastName" id="sellerLastName"/>
+                    <input type="text" id="sellerLastName"/>
                 </div>
             </div>
             <div class="spacer"></div>
@@ -36,10 +35,10 @@
             <div class="spacer-small"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="email" name="seller.email" id="sellerEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"/>
+                    <input type="email" id="sellerEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"/>
                 </div>
             </div>
-            <div class="sellerConfirmEmailDiv">
+            <div id="sellerConfirmEmailDiv">
                 <div class="spacer"></div>
                 <div class="newline">
                     <div class="sellerDialog-medium">
@@ -53,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sellerCompaniesDiv">
+            <div id="sellerCompaniesDiv">
                 <div class="spacer"></div>
                 <div class="newline">
                     <div class="sellerDialog-medium">
@@ -67,31 +66,45 @@
                     </div>
                 </div>
             </div>
+            <div id="sellerProfilesDiv">
+                <div class="spacer"></div>
+                <div class="newline">
+                    <div class="sellerDialog-medium">
+                        <label for="sellerProfiles"><g:message code="company.sellers.profiles.label" /></label>
+                    </div>
+                </div>
+                <div class="spacer-small"></div>
+                <div class="newline">
+                    <div class="sellerDialog-medium">
+                        <select id="sellerProfiles" multiple="multiple"/>
+                    </div>
+                </div>
+            </div>
             <div class="spacer"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="checkbox" name="seller.admin" id="sellerAdmin" value="true" />
+                    <input type="checkbox" id="sellerAdmin" value="true" />
                     <label for="sellerAdmin"><g:message code="company.sellers.isAdmin.label" /></label>
                 </div>
             </div>
             <div class="spacer"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="checkbox" name="seller.sell" id="sellerSell" value="true"  />
+                    <input type="checkbox" id="sellerSell" value="true"  />
                     <label for="sellerSell"><g:message code="company.sellers.isSeller.label" /></label>
                 </div>
             </div>
             <div class="spacer"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="checkbox" name="seller.validator" id="sellerValidator" value="true"  />
+                    <input type="checkbox" id="sellerValidator" value="true"  />
                     <label for="sellerValidator"><g:message code="company.sellers.isValidator.label" /></label>
                 </div>
             </div>
             <div class="spacer"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="checkbox" name="seller.active" id="sellerActive" value="true" />
+                    <input type="checkbox" id="sellerActive" value="true" />
                     <label for="sellerActive"><g:message code="company.sellers.isActive.label" /></label>
                 </div>
             </div>

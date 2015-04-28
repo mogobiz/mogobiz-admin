@@ -61,97 +61,113 @@ function companyProfilesDrawAll(companyId){
 
 function companyProfilesGridNameFormatter (row, cell, value, columnDef, dataContext){
     if(!dataContext.system)
-        return "<a href='javascript:void(0);' onclick='companyProfilesGetDetails(" + dataContext.profileId + ", " + false + ", " + dataContext.companyId + ")'>" + value + "</a>";
-    return value;
+        return "<a href='javascript:void(0);' onclick='companyProfilesGetAllPermissions(" + dataContext.profileId + ", " + dataContext.companyId + ", " + false + ", " + true + ")'>" + value + "</a>";
+    return "<a href='javascript:void(0);' onclick='companyProfilesGetAllPermissions(" + dataContext.profileId + ", " + dataContext.companyId + ", " + false + ", " + false + ")'>" + value + "</a>";
 }
 
 function companyProfilesGridSystemFormatter(row, cell, value, columnDef, dataContext){
     var checkBox = "<input type='checkbox' style='margin-top:4px;'";
-    checkBox += (!value) ? "disabled='disabled'" : "onclick='companyProfilesUnbindProfileConfirm(" + dataContext.profileId + ", \"" + dataContext.name + "\", " + dataContext.companyId + ");event.preventDefault();'";
+//    checkBox += (!value) ? "disabled='disabled'" : "onclick='companyProfilesUnbindProfileConfirm(" + dataContext.profileId + ", \"" + dataContext.name + "\", " + dataContext.companyId + ");event.preventDefault();'";
+    checkBox += "disabled='disabled'";
     checkBox += (value) ? "checked='checked'/>" : "/>";
    return checkBox;
 }
 
-function companyProfilesUnbindProfileConfirm(profileId, profileName, companyId){
-    if ($("#companyProfilesDialog").dialog("isOpen") !== true) {
-        $("#companyProfilesDialog").empty();
-        $("#companyProfilesDialog").html(companyProfilesUnbindMessage);
-        $("#companyProfilesDialog").dialog({
-            title : profileName,
-            modal : true,
-            resizable : false,
-            width : "auto",
-            height : "auto",
-            open : function(event) {
-                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-                $(".ui-dialog-buttonpane").find("button:contains('okLabel')").addClass("ui-create-button").html("<span class='ui-button-text'>" + okLabel + "</span>");
-            },
-            buttons : {
-                okLabel : function() {
-                    companyProfilesUnbindProfile(profileId, companyId)
-                },
-                cancelLabel : function() {
-                    $(this).attr("checked", "checked")
-                    $("#companyProfilesDialog").dialog("close");
-                }
-            }
-        });
-    }
-}
+//function companyProfilesUnbindProfileConfirm(profileId, profileName, companyId){
+//    if ($("#companyProfilesDialog").dialog("isOpen") !== true) {
+//        $("#companyProfilesDialog").empty();
+//        $("#companyProfilesDialog").html(companyProfilesUnbindMessage);
+//        $("#companyProfilesDialog").dialog({
+//            title : profileName,
+//            modal : true,
+//            resizable : false,
+//            width : "auto",
+//            height : "auto",
+//            open : function(event) {
+//                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+//                $(".ui-dialog-buttonpane").find("button:contains('okLabel')").addClass("ui-create-button").html("<span class='ui-button-text'>" + okLabel + "</span>");
+//            },
+//            buttons : {
+//                okLabel : function() {
+//                    companyProfilesUnbindProfile(profileId, companyId)
+//                },
+//                cancelLabel : function() {
+//                    $(this).attr("checked", "checked")
+//                    $("#companyProfilesDialog").dialog("close");
+//                }
+//            }
+//        });
+//    }
+//}
 
-function companyProfilesUnbindProfile(profileId, companyId){
-    var dataToSend = "idProfile=" + profileId + "&format=json";
-    $.ajax({
-        url : companyUnbindProfileUrl,
-        type : "POST",
-        noticeType : "POST",
-        data : dataToSend,
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            $("#companyProfilesDialog").dialog("close");
-            companyProfilesDrawAll(companyId);
-        },
-        error : function(response, status) {
-            if(response.status == 403){
-                jQuery.noticeAdd({
-                    stayTime : 2000,
-                    text : companyProfilesUnauthorizedMessage,
-                    stay : false,
-                    type : "error"
-                });
-            }
-        }
-    });
-}
+//function companyProfilesUnbindProfile(profileId, companyId){
+//    var dataToSend = "idProfile=" + profileId + "&format=json";
+//    $.ajax({
+//        url : companyUnbindProfileUrl,
+//        type : "POST",
+//        noticeType : "POST",
+//        data : dataToSend,
+//        cache : false,
+//        async : true,
+//        success : function(response, status) {
+//            $("#companyProfilesDialog").dialog("close");
+//            companyProfilesDrawAll(companyId);
+//        },
+//        error : function(response, status) {
+//            if(response.status == 403){
+//                jQuery.noticeAdd({
+//                    stayTime : 2000,
+//                    text : companyProfilesUnauthorizedMessage,
+//                    stay : false,
+//                    type : "error"
+//                });
+//            }
+//        }
+//    });
+//}
 
 // Company profiles function
 
-function companyProfilesGetDetails(profileId, isCreate, companyId){
+function companyProfilesGetAllPermissions(profileId, companyId, isCreate, canEdit){
+    $.ajax({
+        url : companyGetProfilePermissionsUrl,
+        type : "GET",
+        data : "format=html",
+        cache : false,
+        async : true,
+        success : function(permissionsHtml, status) {
+            permissionsHtml = jQuery.trim(permissionsHtml);
+            companyProfilesGetDetails(permissionsHtml, profileId, companyId, isCreate, canEdit);
+        },
+        error : function(response, status) {}
+    });
+}
+
+function companyProfilesGetDetails(permissionsHtml, profileId, companyId, isCreate, canEdit){
     $.get(
         companyProfilesPageUrl,
         {},
-        function(htmlresponse) {
-            htmlresponse = jQuery.trim(htmlresponse);
-            companyProfilesPageSetup(htmlresponse, profileId, isCreate, companyId);
+        function(htmlResponse) {
+            htmlResponse = jQuery.trim(htmlResponse);
+            companyProfilesPageSetup(htmlResponse, permissionsHtml, profileId, companyId, isCreate, canEdit);
         },
         "html"
     );
 }
 
-function companyProfilesPageSetup(htmlresponse, profileId, isCreate, companyId){
+function companyProfilesPageSetup(htmlResponse, permissionsHtml, profileId, companyId, isCreate, canEdit){
     if ($("#companyProfilesDialog").dialog("isOpen") !== true) {
         $("#companyProfilesDialog").empty();
-        $("#companyProfilesDialog").html(htmlresponse);
+        $("#companyProfilesDialog").html(htmlResponse);
         $("#companyProfilesDialog").dialog({
-            title : companyProfilesTitleAddLabel,
+            title : isCreate ? companyProfilesTitleAddLabel : companyProfilesTitleEditLabel,
             modal : true,
             resizable : false,
             width : "auto",
             height : "auto",
             open : function(event) {
-                companyProfilesPageInitControls(profileId, isCreate);
-                companyProfilesPageInitFields(profileId, isCreate);
+                companyProfilesPageInitControls(permissionsHtml, isCreate, canEdit);
+                companyProfilesPageInitFields(profileId, isCreate, canEdit);
             },
             buttons : {
                 deleteLabel : function() {
@@ -172,7 +188,8 @@ function companyProfilesPageSetup(htmlresponse, profileId, isCreate, companyId){
     }
 }
 
-function companyProfilesPageInitControls(profileId, isCreate) {
+function companyProfilesPageInitControls(permissionsHtml, isCreate, canEdit) {
+    $("#companyProfilesPermissions").html(permissionsHtml);
     $("#companyProfilesPermissions").multiselectSlides({
         right: "#companyProfilesPermissions_to",
         rightAll: "#companyProfilesPermissions_right_All",
@@ -195,7 +212,7 @@ function companyProfilesPageInitControls(profileId, isCreate) {
         height: 80,
         selectedList: 1
     });
-    $("#companyProfilesCopyCheckDiv").show();
+    $("#companyProfilesCopyCheckDiv, #companyProfilesPermissionsDiv .left, #companyProfilesPermissionsDiv .center").show();
     $("#companyProfilesCopyDiv").hide();
     $("#companyProfilesCopyCheck").unbind().bind("click", function(){
         if($("#companyProfilesCopyCheck").is(":checked")){
@@ -207,6 +224,8 @@ function companyProfilesPageInitControls(profileId, isCreate) {
             $("#companyProfilesPermissionsDiv").show();
         }
     });
+    if(!canEdit && !isCreate)
+        $("#companyProfilesPermissionsDiv .left, #companyProfilesPermissionsDiv .center").hide();
     if (isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
@@ -218,18 +237,26 @@ function companyProfilesPageInitControls(profileId, isCreate) {
     else {
         $("#companyProfilesCopyCheckDiv").hide();
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
-        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
-        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
-        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
-        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
-        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+        if(canEdit){
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+        }
+        else{
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+        }
     }
 }
 
-function companyProfilesPageInitFields(profileId, isCreate){
+function companyProfilesPageInitFields(profileId, isCreate, canEdit){
     $("#companyProfilesId,#companyProfilesName").val("");
-    $("#companyProfilesName").removeAttr("disabled");
+    $("#companyProfilesName, #companyProfilesPermissions_to").removeAttr("disabled");
     $("#companyProfilesCopyCheck").prop("checked", false);
     if (!isCreate){
         var profile = null;
@@ -242,13 +269,17 @@ function companyProfilesPageInitFields(profileId, isCreate){
         }
         if(profile){
             $("#companyProfilesId").val(profileId);
-            $("#companyProfilesName").val(profile.name).attr("disabled", "disabled");
+            $("#companyProfilesName").val(profile.name);
             if(profile.permissions) {
                 var permissions = profile.permissions;
                 for (var i = 0; i < permissions.length; i++) {
                     $("#companyProfilesPermissions option[value='" + permissions[i].key + "']").appendTo($("#companyProfilesPermissions_to"));
                 }
             }
+        }
+        if(!canEdit){
+            $("#companyProfilesName").attr("disabled", "disabled");
+            $("#companyProfilesPermissions_to").attr("disabled", "disabled");
         }
     }
 }
@@ -363,7 +394,7 @@ function companyProfilesUpdateProfile(companyId){
 function companyProfilesDeleteProfile(companyId){
     var dataToSend = "id=" + $("#companyProfilesId").val();
     $.ajax({
-        url : companyDeleteBrandsUrl,
+        url : companyDeleteProfileUrl,
         type : "POST",
         noticeType : "DELETE",
         data : dataToSend,
@@ -406,18 +437,18 @@ function companyProfilesGetSystemDetails(profiles, companyId){
     $.get(
         companySystemProfilePageUrl,
         {},
-        function(htmlresponse) {
-            htmlresponse = jQuery.trim(htmlresponse);
-            companyProfilesSystemPageSetup(htmlresponse, profiles, companyId);
+        function(htmlResponse) {
+            htmlResponse = jQuery.trim(htmlResponse);
+            companyProfilesSystemPageSetup(htmlResponse, profiles, companyId);
         },
         "html"
     );
 }
 
-function companyProfilesSystemPageSetup(htmlresponse, profiles, companyId){
+function companyProfilesSystemPageSetup(htmlResponse, profiles, companyId){
     if ($("#companyProfilesDialog").dialog("isOpen") !== true) {
         $("#companyProfilesDialog").empty();
-        $("#companyProfilesDialog").html(htmlresponse);
+        $("#companyProfilesDialog").html(htmlResponse);
         $("#companyProfilesDialog").dialog({
             title : companyProfilesTitleApplyLabel,
             modal : true,

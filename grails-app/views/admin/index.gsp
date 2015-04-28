@@ -149,11 +149,13 @@
             var companyCopyProfileUrl = "${createLink(controller: 'profile', action:'copy')}";
             var companyDeleteProfileUrl = "${createLink(controller: 'profile', action:'delete')}";
             var companyUnbindProfileUrl = "${createLink(controller: 'profile', action:'unbind')}";
+            var companyGetProfilePermissionsUrl = "${createLink(controller: 'profile', action:'permissions')}";
 
             var companyProfilesPageUrl = "${resource(dir: 'admin', file: '_createCompanyProfile.gsp')}";
             var companySystemProfilePageUrl = "${resource(dir: 'admin', file: '_applySystemProfile.gsp')}";
 
             var companyProfilesTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
+            var companyProfilesTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
             var companyProfilesTitleApplyLabel = "${message(code: 'company.profiles.apply.title')}";
             var companyProfilesTitleUnbindLabel = "${message(code: 'company.profiles.unbind.title')}";
             var companyProfilesNameLabel = "${message(code: 'company.profiles.name.label')}";
@@ -170,6 +172,11 @@
             var existSellerEmailUrl = "${createLink(controller: 'seller', action: 'isEmailNew')}";
             var sellerDialogPageUrl = "${createLink(controller: 'seller', action:'initSellerDialogPage')}";
             var sellerPasswordUrl = "${createLink(controller: 'sellerPassword', action:'resetPassword')}";
+            var sellerAddProfileUrl = "${createLink(controller: 'profile', action:'addUserProfile')}";
+            var sellerRemoveProfileUrl = "${createLink(controller: 'profile', action:'removeUserProfile')}";
+
+            var companySellersTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
+            var companySellersTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
 
             // Shipping
             var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
@@ -253,7 +260,7 @@
         <div id="companyProfilesDialog"></div>
         <div id="items"></div>
         <div id="dialog"></div>
-        <div id="sellerForm"></div>
+        <div id="companySellersDialog"></div>
         <div id="taxRateDialog"></div>
         <div id="shippingRuleDialog"></div>
         <content tag="footer">

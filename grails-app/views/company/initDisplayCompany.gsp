@@ -175,7 +175,7 @@
         <div id="profiles" class="fk_content_area">
             <form id="formProfiles" name="form_profiles_comp" onsubmit="return false;">
                 <div id="profilesContent">
-                    <p style="font-weight: bold;"><a href="javascript:void(0)" id="addNewProfile"><g:message code="company.profiles.header.new" /></a> <g:message code="company.profiles.header.or" /> <a href="javascript:void(0)" id="applySystemProfile"><g:message code="company.profiles.header.system" /></a></p>
+                    <p style="font-weight: bold;"><a href="javascript:void(0)" id="addNewProfile"><g:message code="company.profiles.header.new" /></a>%{-- <g:message code="company.profiles.header.or" /> <a href="javascript:void(0);" id="applySystemProfile"><g:message code="company.profiles.header.system" /></a>--}%</p>
                     <div id="profilesGridDiv">
                         <div id="profilesGrid"></div>
                     </div>

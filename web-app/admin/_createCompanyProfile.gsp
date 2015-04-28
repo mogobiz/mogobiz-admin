@@ -19,26 +19,7 @@
         <label><g:message code="company.profiles.permissions.label"/>&nbsp;<sup>*</sup></label>
         <div class="spacer-small"></div>
         <div class="left">
-            <select name="from" id="companyProfilesPermissions" size="14" multiple="multiple">
-                <option value="updateCompany">Update company</option>
-                <option value="updateProfiles">Update profiles</option>
-                <option value="updateUsers">Update users</option>
-                <option value="updateShipping">Update shipping</option>
-                <option value="updateTaxes">Update taxes</option>
-                <option value="updatePayment">Update payment</option>
-                <option value="updateBrands">Update brands</option>
-                <option value="updateCoupons">Update coupons</option>
-                <option value="updateKeys">Update api keys</option>
-                <option value="updateBeacons">Update beacons</option>
-                <option value="updateTags">Update tags</option>
-                <option value="updateNetworks">Update social networks</option>
-                <option value="showBo">Access back office</option>
-                <option value="updateBoOperations">Return product / refund customer</option>
-                <option value="createCatalogs">Create catalogs</option>
-                <option value="deleteCatalogs">Delete catalogs</option>
-                <option value="importCatalogs">Import catalogs</option>
-                <option value="exportCatalogs">Export catalogs</option>
-            </select>
+            <select name="from" id="companyProfilesPermissions" size="14" multiple="multiple"></select>
         </div>
         <div class="center">
             <button type="button" id="companyProfilesPermissions_right_All"><i class="icon icon-forward-all"></i></button>
