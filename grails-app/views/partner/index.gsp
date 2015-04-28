@@ -379,6 +379,7 @@
             var companyProfilesPageUrl = "${resource(dir: 'admin', file: '_createCompanyProfile.gsp')}";
             var companySystemProfilePageUrl = "${resource(dir: 'admin', file: '_applySystemProfile.gsp')}";
 
+            var companyProfilesTitleLabel = "${message(code: 'company.profiles.title')}";
             var companyProfilesTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
             var companyProfilesTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
             var companyProfilesTitleApplyLabel = "${message(code: 'company.profiles.apply.title')}";
@@ -400,8 +401,8 @@
             var sellerAddProfileUrl = "${createLink(controller: 'profile', action:'addUserProfile')}";
             var sellerRemoveProfileUrl = "${createLink(controller: 'profile', action:'removeUserProfile')}";
 
-            var companySellersTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
-            var companySellersTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
+            var companySellersTitleAddLabel = "${message(code: 'company.sellers.add.title')}";
+            var companySellersTitleEditLabel = "${message(code: 'company.sellers.edit.title')}";
 
             // Shipping
             var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
