@@ -6,6 +6,9 @@ import com.mogobiz.store.domain.RoleName
 import com.mogobiz.store.domain.Seller
 import com.mogobiz.store.domain.User
 
+import com.mogobiz.utils.PermissionType
+import static com.mogobiz.utils.ProfileUtils.*
+
 /**
  * @version $Id $
  *
@@ -20,7 +23,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.admin = User.findByLogin(subject.principal)
+                    request.admin = User.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -32,34 +35,23 @@ class SecurityFilters {
         /**
          * Company acl
          */
-        saveCompany(controller: "company", action: "save") {
-            before = {
-                accessControl(auth: true) {
-                    role(RoleName.ADMINISTRATOR.name())
-                }
-            }
-            after = { model ->
-            }
-            afterView = {
-            }
-        }
-
-        showCompany(controller: "company", action: "show") {
-            before = {
-                accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name()))
-                }
-            }
-            after = { model ->
-            }
-            afterView = {
-            }
-        }
-        updateCompany(controller: "company", action: "update") {
+        company(controller: "company", action: "show|save|update|delete") {
             before = {
                 def idCompany = params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code)?.id)
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_COMPANY, idCompany))
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+        companyProperties(controller: "company", action: "saveProperty|updateProperty|deleteProperty") {
+            before = {
+                def idCompany = params.long("company_id")
+                accessControl(auth: true) {
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_COMPANY, idCompany))
                 }
             }
             after = { model ->
@@ -71,7 +63,7 @@ class SecurityFilters {
             before = {
                 def idCompany = params.id ? params.id : params['company']?.id
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_SHIPPING, idCompany))
                 }
             }
             after = { model ->
@@ -83,7 +75,19 @@ class SecurityFilters {
             before = {
                 def idCompany = (params['taxRate']?.company?.id) ? params['taxRate']?.company?.id : params['company']?.id
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_TAXES, idCompany))
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+        taxRate(controller: "taxRate") {
+            before = {
+                def idCompany = params.long("companyId")
+                accessControl(auth: true) {
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_TAXES, idCompany))
                 }
             }
             after = { model ->
@@ -95,7 +99,7 @@ class SecurityFilters {
             before = {
                 def idCompany = params['company']?.id
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_PAYMENT, idCompany))
                 }
             }
             after = { model ->
@@ -107,7 +111,7 @@ class SecurityFilters {
             before = {
                 def idCompany = params['company']?.id
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_KEYS, idCompany))
                 }
             }
             after = { model ->
@@ -137,7 +141,7 @@ class SecurityFilters {
             before = {
                 def idCompany = (params['company']?.id) ? params['company']?.id : params['seller']?.company?.id
                 accessControl(auth: true) {
-                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission("company:${idCompany}:admin")
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_USERS, idCompany))
                 }
             }
             after = { model ->
@@ -172,7 +176,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -187,7 +191,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -202,7 +206,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -217,7 +221,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -232,7 +236,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -247,7 +251,7 @@ class SecurityFilters {
                 }
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.seller = Seller.findByLogin(subject.principal)
+                    request.seller = Seller.findByLogin(subject.principal as String)
                 }
             }
             after = { model ->
@@ -301,7 +305,7 @@ class SecurityFilters {
             before = {
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
-                    request.user = User.findByLogin(subject.principal)
+                    request.user = User.findByLogin(subject.principal as String)
                 }
             }
         }
