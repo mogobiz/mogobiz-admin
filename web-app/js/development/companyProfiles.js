@@ -156,11 +156,18 @@ function companyProfilesGetDetails(permissionsHtml, profileId, companyId, isCrea
 }
 
 function companyProfilesPageSetup(htmlResponse, permissionsHtml, profileId, companyId, isCreate, canEdit){
+    var title = "";
+    if(isCreate)
+        title = companyProfilesTitleAddLabel;
+    else if(canEdit)
+        title = companyProfilesTitleEditLabel;
+    else
+        title = companyProfilesTitleLabel;
     if ($("#companyProfilesDialog").dialog("isOpen") !== true) {
         $("#companyProfilesDialog").empty();
         $("#companyProfilesDialog").html(htmlResponse);
         $("#companyProfilesDialog").dialog({
-            title : isCreate ? companyProfilesTitleAddLabel : companyProfilesTitleEditLabel,
+            title : title,
             modal : true,
             resizable : false,
             width : "auto",
