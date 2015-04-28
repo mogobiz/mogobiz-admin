@@ -1,4 +1,3 @@
-
 <div id="editCompanyTabs" style="display: none">
 	<div>
 		<div id="companyTitle" style="display: none"></div>

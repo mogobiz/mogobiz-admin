@@ -303,35 +303,39 @@ function compGetUserPermission(compId, companyCode, partnerId){
 }
 
 function compObjGetEditCompanyPage(compId, companyCode, partnerId, profileAccess) {
-	$.get(companyPageUrl, {}, function(responseText) {
-		responseText = jQuery.trim(responseText);
-		$(responseText).appendTo(document.body);
-		if(!partnerId){
-            $("#shippingLi").hide().remove();
-            $("#shipping").hide().remove();
-            $("#taxLi").hide().remove();
-            $("#tax").hide().remove();
-            $("#paymentLi").hide().remove();
-            $("#payment").hide().remove();
-            $("#brandsLi").hide().remove();
-            $("#brands").hide().remove();
-            $("#couponsLi").hide().remove();
-            $("#coupons").hide().remove();
-            $("#publishingLi").hide().remove();
-            $("#publishing").hide().remove();
-            $("#apiKeysLi").hide().remove();
-            $("#apiKeys").hide().remove();
-            $("#iBeaconLi").hide().remove();
-            $("#iBeacon").hide().remove();
-            $("#tagsLi").hide().remove();
-            $("#tags").hide().remove();
-		}
-        if(!profileAccess){
-            $("#profilesLi").hide().remove();
-            $("#profiles").hide().remove();
-        }
-		compObjAttachEditForm(compId, companyCode, partnerId);
-	}, "html");
+    $.get(
+        companyPageUrl,
+        "companyId=" + compId,
+        function(responseText) {
+            responseText = jQuery.trim(responseText);
+            $(responseText).appendTo(document.body);
+            if(!partnerId){
+                $("#shippingLi").hide().remove();
+                $("#shipping").hide().remove();
+                $("#taxLi").hide().remove();
+                $("#tax").hide().remove();
+                $("#paymentLi").hide().remove();
+                $("#payment").hide().remove();
+                $("#brandsLi").hide().remove();
+                $("#brands").hide().remove();
+                $("#couponsLi").hide().remove();
+                $("#coupons").hide().remove();
+                $("#publishingLi").hide().remove();
+                $("#publishing").hide().remove();
+                $("#apiKeysLi").hide().remove();
+                $("#apiKeys").hide().remove();
+                $("#iBeaconLi").hide().remove();
+                $("#iBeacon").hide().remove();
+                $("#tagsLi").hide().remove();
+                $("#tags").hide().remove();
+            }
+            if(!profileAccess){
+                $("#profilesLi").hide().remove();
+                $("#profiles").hide().remove();
+            }
+            compObjAttachEditForm(compId, companyCode, partnerId);
+        }, "html"
+    );
 }
 
 function compObjAttachEditForm(compId, companyCode, partnerId) {
