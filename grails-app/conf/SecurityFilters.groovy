@@ -37,7 +37,7 @@ class SecurityFilters {
          */
         company(controller: "company", action: "show|save|update|delete") {
             before = {
-                def idCompany = params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code)?.id)
+                def idCompany = (params.id ? params.id : (params['company']?.id ? params['company'].id : Company.findByCode(params.code)?.id)) as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_COMPANY, idCompany))
                 }
@@ -61,7 +61,7 @@ class SecurityFilters {
         }
         companyShippingPolicy(controller: "companyShippingPolicy", action: "show|update") {
             before = {
-                def idCompany = params.id ? params.id : params['company']?.id
+                def idCompany = (params.id ? params.id : params['company']?.id) as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_SHIPPING, idCompany))
                 }
@@ -73,7 +73,7 @@ class SecurityFilters {
         }
         companyTaxPolicy(controller: "companyTaxPolicy", action: "show|save|update|delete") {
             before = {
-                def idCompany = (params['taxRate']?.company?.id) ? params['taxRate']?.company?.id : params['company']?.id
+                def idCompany = ((params['taxRate']?.company?.id) ? params['taxRate']?.company?.id : params['company']?.id) as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_TAXES, idCompany))
                 }
@@ -97,7 +97,7 @@ class SecurityFilters {
         }
         companyPaymentPolicy(controller: "companyPaymentPolicy", action: "show|update") {
             before = {
-                def idCompany = params['company']?.id
+                def idCompany = params['company']?.id as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_PAYMENT, idCompany))
                 }
@@ -109,7 +109,7 @@ class SecurityFilters {
         }
         keyGen(controller: "keyGen", action: "generateAPIKey") {
             before = {
-                def idCompany = params['company']?.id
+                def idCompany = params['company']?.id as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_KEYS, idCompany))
                 }
@@ -139,7 +139,7 @@ class SecurityFilters {
          */
         modifySeller(controller: "seller", action: "save|update|delete") {
             before = {
-                def idCompany = (params['company']?.id) ? params['company']?.id : params['seller']?.company?.id
+                def idCompany = ((params['company']?.id) ? params['company']?.id : params['seller']?.company?.id) as Long
                 accessControl(auth: true) {
                     (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name())) && permission(computeStorePermission(PermissionType.ADMIN_STORE_USERS, idCompany))
                 }
