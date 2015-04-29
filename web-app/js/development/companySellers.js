@@ -238,7 +238,7 @@ function companySellersPageSetup(htmlResponse, profiles, compId, sellerId, isCre
 					}
 				},
 				resetPasswordLabel : function() {
-					companySellersResetPassword(sellerId);
+					companySellersResetPassword(compId, sellerId);
 				}
 			}
 		});
@@ -377,7 +377,7 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 
 	$("#sellerCompanies").bind("multiselectclick", function(event, ui) {
 		if(ui.checked)
-			companySellersAddCompany(sellerId, ui.value);
+			companySellersAddCompany(compId, sellerId, ui.value);
 		else {
 			var checkedValues = $("#sellerCompanies").multiselect("getChecked").map(function(){
 				return this.value;
@@ -393,15 +393,15 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 				});
 			}
 			else
-				companySellersRemoveCompany(sellerId, ui.value);
+				companySellersRemoveCompany(compId, sellerId, ui.value);
 		}
 	});
 
-	$("#sellerProfiles").bind("multiselectclick", function(event, ui) {console.log(ui);
+	$("#sellerProfiles").bind("multiselectclick", function(event, ui) {
 		if(ui.checked)
-			companySellersAddProfile(sellerId, ui.value);
+			companySellersAddProfile(compId, sellerId, ui.value);
 		else {
-			companySellersRemoveProfile(sellerId, ui.value);
+			companySellersRemoveProfile(compId, sellerId, ui.value);
 		}
 	});
 
@@ -532,7 +532,7 @@ function companySellersUpdateSeller(compId, sellerId, property, value) {
 		cache : false,
 		async : true,
 		success : function(response, status) {
-			if (!response.errors) {
+			if (!response.success) {
 				jQuery.noticeAdd({
 					stayTime : 2000,
 					text : response.errors,
@@ -540,12 +540,13 @@ function companySellersUpdateSeller(compId, sellerId, property, value) {
 					type : "error"
 				});
 			}
-			companySellersGetAllSellers(compId);
+            else
+                companySellersGetAllSellers(compId);
 		}
 	});
 }
 
-function companySellersAddCompany(sellerId, companyCode){
+function companySellersAddCompany(compId, sellerId, companyCode){
 	var dataToSend = "company.code=" + companyCode + "&seller.id=" + sellerId + "&format=json";
 	$.ajax({
 		url : sellerAddCompanyUrl,
@@ -564,11 +565,13 @@ function companySellersAddCompany(sellerId, companyCode){
 					type : "error"
 				});
 			}
+            else
+                companySellersGetAllSellers(compId);
 		}
 	});
 }
 
-function companySellersRemoveCompany(sellerId, companyCode){
+function companySellersRemoveCompany(compId, sellerId, companyCode){
 	var dataToSend = "company.code=" + companyCode + "&seller.id=" + sellerId + "&format=json";
 	$.ajax({
 		url : sellerRemoveCompanyUrl,
@@ -587,11 +590,13 @@ function companySellersRemoveCompany(sellerId, companyCode){
 					type : "error"
 				});
 			}
+            else
+                companySellersGetAllSellers(compId);
 		}
 	});
 }
 
-function companySellersAddProfile(sellerId, profileId){
+function companySellersAddProfile(compId, sellerId, profileId){
 	var dataToSend = "idProfile=" + profileId + "&idUser=" + sellerId + "&format=json";
 	$.ajax({
 		url : sellerAddProfileUrl,
@@ -610,11 +615,13 @@ function companySellersAddProfile(sellerId, profileId){
 					type : "error"
 				});
 			}
+            else
+                companySellersGetAllSellers(compId);
 		}
 	});
 }
 
-function companySellersRemoveProfile(sellerId, profileId){
+function companySellersRemoveProfile(compId, sellerId, profileId){
 	var dataToSend = "idProfile=" + profileId + "&idUser=" + sellerId + "&format=json";
 	$.ajax({
 		url : sellerRemoveProfileUrl,
@@ -633,11 +640,13 @@ function companySellersRemoveProfile(sellerId, profileId){
 					type : "error"
 				});
 			}
+            else
+                companySellersGetAllSellers(compId);
 		}
 	});
 }
 
-function companySellersResetPassword(sellerId) {
+function companySellersResetPassword(compId, sellerId) {
 	$("#companySellersDialog").parent().showLoading({"addClass": "loading-indicator-SquaresCircleBig"});
 	var dataToSend = "id=" + sellerId + "&format=json";
 	$.ajax({

@@ -231,8 +231,6 @@ function companyProfilesPageInitControls(permissionsHtml, isCreate, canEdit) {
             $("#companyProfilesPermissionsDiv").show();
         }
     });
-    if(!canEdit && !isCreate)
-        $("#companyProfilesPermissionsDiv .left, #companyProfilesPermissionsDiv .center").hide();
     if (isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
@@ -286,7 +284,7 @@ function companyProfilesPageInitFields(profileId, isCreate, canEdit){
         }
         if(!canEdit){
             $("#companyProfilesName").attr("disabled", "disabled");
-            $("#companyProfilesPermissions_to").attr("disabled", "disabled");
+            $("#companyProfilesPermissions, #companyProfilesPermissionsDiv .center button, #companyProfilesPermissions_to").attr("disabled", "disabled");
         }
     }
 }
