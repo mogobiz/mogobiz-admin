@@ -303,7 +303,7 @@ function compGetUserPermission(compId, companyCode, partnerId){
 }
 
 function compObjGetEditCompanyPage(compId, companyCode, partnerId, profileAccess) {
-    $.get(
+	$.get(
         companyPageUrl,
         "companyId=" + compId,
         function(responseText) {

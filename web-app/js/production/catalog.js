@@ -226,16 +226,11 @@ function catalogGeneralGetInfo() {
             $.ajax({
                 url: companyShowPublishingUrl,
                 type: "GET",
-                data: "format=json",
-                dataType: "json",
+                data: "format=html",
                 cache: false,
                 async: true,
                 success: function (response, status) {
-                    var options = document.getElementById("catalogListPublication").options;
-                    options.length = 0;
-                    for (var i = 0; i < response.length; i++) {
-                        options[options.length] = new Option(response[i].name, response[i].id);
-                    }
+                    $("#catalogListPublication").html(response);
                     $("#catalogListPublication").multiselect("refresh");
                     $("#categoriesMain").hideLoading();
                 },
