@@ -1,6 +1,7 @@
 var companyPublishingGrid = null;
+var companyPublishingShowSecurity;
 
-function companyPublishingDrawAll(){
+function companyPublishingDrawAll(compId){
     companyPublishingGrid = null;
     $.ajax({
         url : companyShowPublishingUrl,
@@ -59,7 +60,8 @@ function companyPublishingDrawAll(){
                         "name": publishing[i].name,
                         "url": publishing[i].url,
                         "active": publishing[i].active,
-                        "cronExpr" : publishing[i].cronExpr
+                        "cronExpr" : publishing[i].cronExpr,
+                        "companyId": compId
                     }
                 }
             }
@@ -84,22 +86,22 @@ function companyPublishingGridActiveFormatter(row, cell, value, columnDef, dataC
 }
 
 function companyPublishingGridNameFormatter (row, cell, value, columnDef, dataContext){
-    return "<a href='javascript:companyPublishingGetDetails(" + dataContext.publishingId + ", " + false + ")'>" + value + "</a>";
+    return "<a href='javascript:companyPublishingGetDetails(" + dataContext.companyId + ", " + dataContext.publishingId + ", " + false + ")'>" + value + "</a>";
 }
 
-function companyPublishingGetDetails(publishingId, isCreate){
+function companyPublishingGetDetails(companyId, publishingId, isCreate){
     $.get(
         companyPublishingPageUrl,
         {},
         function(htmlresponse) {
             htmlresponse = jQuery.trim(htmlresponse);
-            companyPublishingPageSetup(htmlresponse, publishingId, isCreate);
+            companyPublishingPageSetup(htmlresponse, companyId, publishingId, isCreate);
         },
         "html"
     );
 }
 
-function companyPublishingPageSetup(htmlresponse, publishingId, isCreate){
+function companyPublishingPageSetup(htmlresponse, companyId, publishingId, isCreate){
     if ($("#companyPublishingDialog").dialog("isOpen") !== true) {
         $("#companyPublishingDialog").empty();
         $("#companyPublishingDialog").html(htmlresponse);
@@ -115,18 +117,18 @@ function companyPublishingPageSetup(htmlresponse, publishingId, isCreate){
             },
             buttons : {
                 deleteLabel : function() {
-                    companyPublishingDeletePublishing();
+                    companyPublishingDeletePublishing(companyId);
                 },
                 cancelLabel : function() {
                     $("#companyPublishingDialog").dialog("close");
                 },
                 updateLabel : function() {
                     if (companyPublishingValidateForm())
-                        companyPublishingUpdatePublishing();
+                        companyPublishingUpdatePublishing(companyId);
                 },
                 createLabel : function() {
                     if (companyPublishingValidateForm())
-                        companyPublishingCreatePublishing();
+                        companyPublishingCreatePublishing(companyId);
                 }
             }
         });
@@ -134,6 +136,16 @@ function companyPublishingPageSetup(htmlresponse, publishingId, isCreate){
 }
 
 function companyPublishingPageInitControls(isCreate) {
+    companyPublishingShowSecurity = ($("#companyPublishingSecurityTab").length > 0);
+    if(companyPublishingShowSecurity){
+        $("#companyPublishingTabs .tabs a").unbind();
+        $("#companyPublishingSecurityTab").removeClass("disabled");
+        $("#companyPublishingSecurityDiv").hide();
+        $("#companyPublishingGeneralTab").addClass("selected");
+    }
+    else{
+        $("#companyPublishingSecurityDiv, #companyPublishingTabs #ulTabs").hide().remove();
+    }
     $("#companyPublishingManual").unbind().bind("click", function(){
         if($(this).is(":checked"))
             $("#companyPublishingCron").hide();
@@ -145,6 +157,7 @@ function companyPublishingPageInitControls(isCreate) {
         //useGentleSelect: true
     });
     if (isCreate) {
+        $("#companyPublishingSecurityTab").addClass("disabled");
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
@@ -153,6 +166,24 @@ function companyPublishingPageInitControls(isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
     }
     else {
+        if(companyPublishingShowSecurity) {
+            $("#companyPublishingTabs .tabs a").click(function () {
+                $("#companyPublishingTabs .tabs .selected").removeClass("selected");
+                $(this).addClass("selected");
+                switch ($(this).attr("id")) {
+                    case "companyPublishingGeneralTab":
+                        $("#companyPublishingSecurityDiv").hide();
+                        $("#companyPublishingCreateDiv").show();
+                        break;
+                    case "companyPublishingSecurityTab":
+                        $("#companyPublishingCreateDiv").hide();
+                        $("#companyPublishingSecurityDiv").show();
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
@@ -189,6 +220,8 @@ function companyPublishingPageInitFields(publishingId, isCreate){
             else{
                 $("#companyPublishingCron").cron("value", publishing.cronExpr)
             }
+            if(companyPublishingShowSecurity)
+                securityGetAllUsers(publishing.companyId, "companyPublishingSecurityUsers", "publishCatalogs", [publishing.companyId, data[i].publishingId]);
         }
     }
 }
@@ -220,7 +253,7 @@ function companyPublishingValidateForm(){
     return true;
 }
 
-function companyPublishingCreatePublishing(){
+function companyPublishingCreatePublishing(companyId){
     var dataToSend = "esenv.name=" + $("#companyPublishingName").val() + "&esenv.url=" + $("#companyPublishingUrl").val();
     if($("#companyPublishingManual").is(":checked"))
         dataToSend += "&esenv.cronExpr=\"\"";
@@ -237,7 +270,7 @@ function companyPublishingCreatePublishing(){
         async : true,
         success : function(response, status) {
             $("#companyPublishingDialog").dialog("close");
-            companyPublishingDrawAll();
+            companyPublishingDrawAll(companyId);
         },
         error : function(response, status) {
             $("#companyPublishingName").focus();
@@ -251,7 +284,7 @@ function companyPublishingCreatePublishing(){
     });
 }
 
-function companyPublishingUpdatePublishing(){
+function companyPublishingUpdatePublishing(companyId){
     var dataToSend = "esenv.id=" + $("#companyPublishingId").val() + "&esenv.name=" + $("#companyPublishingName").val() + "&esenv.url=" + $("#companyPublishingUrl").val();
     if($("#companyPublishingManual").is(":checked"))
         dataToSend += "&esenv.cronExpr=\"\"";
@@ -268,7 +301,7 @@ function companyPublishingUpdatePublishing(){
         async : true,
         success : function(response, status) {
             $("#companyPublishingDialog").dialog("close");
-            companyPublishingDrawAll();
+            companyPublishingDrawAll(companyId);
         },
         error : function(response, status) {
             $("#companyPublishingName").focus();
@@ -282,7 +315,7 @@ function companyPublishingUpdatePublishing(){
     });
 }
 
-function companyPublishingDeletePublishing(){
+function companyPublishingDeletePublishing(companyId){
     var dataToSend = "esenv.id=" + $("#companyPublishingId").val();
     $.ajax({
         url : companyDeletePublishingUrl,
@@ -294,7 +327,7 @@ function companyPublishingDeletePublishing(){
         async : true,
         success : function(response, status) {
             $("#companyPublishingDialog").dialog("close");
-            companyPublishingDrawAll();
+            companyPublishingDrawAll(companyId);
         },
         error : function(response, status) {}
     });

@@ -98,7 +98,7 @@
         <div id="catalogLastPublicationStatus"></div>
 		<div class="spacer"></div>
 	</div>
-	<div id="catalogTranslationDiv" style="display:none;">
+	<div id="catalogTranslationDiv">
 		<div style="padding: 10px;">
 			<a id="catalogTranslationAddLink"><g:message code="translation.add.label" /></a>
 		</div>
@@ -106,7 +106,7 @@
 			<div id="catalogTranslationGrid" style="height: 174px;"></div>
 		</div>
 	</div>
-    <div id="catalogSecurityDiv" style="padding-top: 7px;">
+    <div id="catalogSecurityDiv">
         <div>
             <label for="catalogSecurityUsers"><g:message code="security.users.label" /></label>
         </div>

@@ -2,6 +2,7 @@ var catalogSelectedId = null;
 var catalogImported = false;
 var catalogRunningInterval = null;
 var catalogRunningIntervalTime = 10000;
+var catalogShowSecurity;
 
 function catalogueLoadList() {
     var dataToSend = "format=html";
@@ -183,12 +184,19 @@ function catalogGetTabPage() {
             catalogInitAllTabs();
             catalogGeneralGetInfo();
             catalogTranslationDrawAll();
+            if(catalogShowSecurity)
+                securityGetAllUsers(sellerCompanyId, "catalogSecurityUsers", "updateCatalog", [sellerCompanyId, catalogSelectedId]);
         },
         "html"
     );
 }
 
 function catalogInitAllTabs() {
+    $("#catalogTranslationDiv").hide();
+    $("#catalogSecurityDiv").hide();
+    catalogShowSecurity = ($("#catalogSecurityTab").length > 0);
+    if(!catalogShowSecurity)
+        $("#catalogSecurityDiv").remove();
     $("#catalogTabs .tabs a").unbind();
     $("#catalogTabs .tabs a").click(function () {
         $("#catalogTabs .tabs .selected").removeClass("selected");
@@ -196,12 +204,19 @@ function catalogInitAllTabs() {
         switch ($(this).attr("id")) {
             case "catalogGeneralTab":
                 $("#catalogTranslationDiv").hide();
+                $("#catalogSecurityDiv").hide();
                 $("#catalogGeneralDiv").show();
                 catalogResetRunningInterval();
                 break;
             case "catalogTranslationTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogSecurityDiv").hide();
                 $("#catalogTranslationDiv").show();
+                break;
+            case "catalogSecurityTab":
+                $("#catalogGeneralDiv").hide();
+                $("#catalogTranslationDiv").hide();
+                $("#catalogSecurityDiv").show();
                 break;
             default:
                 break;

@@ -673,9 +673,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 
                     $('#addNewPublishing').unbind();
                     $('#addNewPublishing').click(function() {
-                        companyPublishingGetDetails(null, true);
+                        companyPublishingGetDetails(compId, null, true);
                     });
-                    companyPublishingDrawAll();
+                    companyPublishingDrawAll(compId);
                 }
                 else if (selectedTabId == 'apiKeysTab'){
                     $('#generalInfo').hide();
