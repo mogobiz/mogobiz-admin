@@ -83,27 +83,6 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="sellerDialog-medium">
-                    <input type="checkbox" id="sellerAdmin" value="true" />
-                    <label for="sellerAdmin"><g:message code="company.sellers.isAdmin.label" /></label>
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="sellerDialog-medium">
-                    <input type="checkbox" id="sellerSell" value="true"  />
-                    <label for="sellerSell"><g:message code="company.sellers.isSeller.label" /></label>
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="sellerDialog-medium">
-                    <input type="checkbox" id="sellerValidator" value="true"  />
-                    <label for="sellerValidator"><g:message code="company.sellers.isValidator.label" /></label>
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="sellerDialog-medium">
                     <input type="checkbox" id="sellerActive" value="true" />
                     <label for="sellerActive"><g:message code="company.sellers.isActive.label" /></label>
                 </div>

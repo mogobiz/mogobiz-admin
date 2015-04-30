@@ -48,9 +48,6 @@ $(document).ready(function() {
         });
     });
 
-    if(sellerAdmin){
-        $('#sellerAdmin').show();
-    }
     partnerGetAllUserCompanies();
     catalogueLoadList();
     loadTranslateLanguages();

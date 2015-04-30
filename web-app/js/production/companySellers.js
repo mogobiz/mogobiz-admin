@@ -73,7 +73,7 @@ function companySellersGetAllSellers(compId, partnerId) {
 				id: "name",
 				name: companySellers_nameLabel,
 				field: "id",
-				width: 20,
+				width: 40,
 				resizable: true,
 				formatter: companySellersNameCellFormatter,
 				sortable: false
@@ -81,34 +81,13 @@ function companySellersGetAllSellers(compId, partnerId) {
 				id: "email",
 				name: companySellers_emailLabel,
 				field: "email",
-				width: 32,
+				width: 40,
 				resizable: true
-			},{
-				id: "admin",
-				name: companySellers_adminLabel,
-				field: "admin",
-				width: 12,
-				resizable: true,
-				formatter: companySellersAdminCellFormatter
-			},{
-				id: "sell",
-				name: companySellers_sellerLabel,
-				field: "sell",
-				width: 12,
-				resizable: true,
-				formatter: companySellersSellerCellFormatter
-			},{
-				id: "validator",
-				name: companySellers_validatorLabel,
-				field: "validator",
-				width: 12,
-				resizable: true,
-				formatter: companySellersValidatorCellFormatter
 			},{
 				id: "active",
 				name: companySellers_activeLabel,
 				field: "active",
-				width: 12,
+				width: 20,
 				resizable: true,
 				formatter: companySellersActiveCellFormatter
 			}
@@ -134,10 +113,6 @@ function companySellersGetAllSellers(compId, partnerId) {
 						lastName: sellers[i].lastName,
 						email: sellers[i].email,
 						active: sellers[i].active,
-						admin: sellers[i].admin,
-						agent: sellers[i].agent,
-						sell: sellers[i].sell,
-						validator: sellers[i].validator,
 						companies: sellers[i].companies,
 						profiles: sellers[i].profiles
 					}
@@ -154,28 +129,6 @@ function companySellersNameCellFormatter(row, cell, value, columnDef, dataContex
 	if (value == null || value === "")
 		return "";
 	return "<a href='javascript:void(0)' onclick='companySellersGetDetails(" + dataContext.companyId + "," + dataContext.sellerId + ", " + false + ");'>" + dataContext.firstName + " " + dataContext.lastName + "</a>";
-}
-
-function companySellersAdminCellFormatter(row, cell, value, columnDef, dataContext) {
-	var checkbox = "<input type='checkbox'";
-	checkbox += (value) ? " checked" : "";
-	checkbox += (sellerFromPartner && (dataContext.sellerId == sellerPartnerId)) ? " disabled" : " onClick='companySellersUpdateSeller(" + dataContext.companyId + "," + dataContext.sellerId + ", \"seller.admin\", " + !value + ")'";
-	checkbox += " />";
-	return checkbox;
-}
-
-function companySellersSellerCellFormatter(row, cell, value, columnDef, dataContext) {
-	var checkbox = "<input type='checkbox'";
-	checkbox += (value) ? " checked" : "";
-	checkbox += " onClick='companySellersUpdateSeller(" + dataContext.companyId + "," + dataContext.sellerId + ", \"seller.sell\", " + !value + ")' />";
-	return checkbox;
-}
-
-function companySellersValidatorCellFormatter(row, cell, value, columnDef, dataContext) {
-	var checkbox = "<input type='checkbox'";
-	checkbox += (value) ? " checked" : "";
-	checkbox += " onClick='companySellersUpdateSeller(" + dataContext.companyId+ "," + dataContext.sellerId + ", \"seller.validator\", " + !value + ")' />";
-	return checkbox;
 }
 
 function companySellersActiveCellFormatter(row, cell, value, columnDef, dataContext) {
@@ -272,12 +225,11 @@ function companySellersPageInitControls(compId, sellerId, isCreate){
 function companySellersPageInitFields(profiles, compId, sellerId, isCreate){
 	$("#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail, #sellerCompanies, #sellerProfiles").val("");
 	$("#sellerEmail").removeAttr("readonly");
-	$("#sellerAdmin, #sellerActive").removeAttr("disabled");
-	$("#sellerAdmin, #sellerSell, #sellerValidator, #sellerActive").prop("checked", false);
+	$("#sellerActive").removeAttr("disabled").prop("checked", false);
 	if (!isCreate){
 		$("#sellerEmail").attr("readonly", "readonly").addClass("sellerEmailReadOnly");
 		if(sellerFromPartner && (sellerId == sellerPartnerId)){
-			$("#sellerAdmin, #sellerActive").attr("disabled", "disabled");
+			$("#sellerActive").attr("disabled", "disabled");
 		}
 
 		var seller = null;
@@ -292,9 +244,6 @@ function companySellersPageInitFields(profiles, compId, sellerId, isCreate){
 			$("#sellerFirstName").val(seller.firstName);
 			$("#sellerLastName").val(seller.lastName);
 			$("#sellerEmail").val(seller.email);
-			$("#sellerAdmin").prop("checked", seller.admin);
-			$("#sellerSell").prop("checked", seller.sell);
-			$("#sellerValidator").prop("checked", seller.validator);
 			$("#sellerActive").prop("checked", seller.active);
 			var companiesHtml = "";
 			if(sellerFromPartner){
@@ -405,15 +354,6 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 		}
 	});
 
-	$("#sellerAdmin").unbind().change(function() {
-		companySellersUpdateSeller(compId, sellerId, "seller.admin", $("#sellerAdmin").is(":checked"));
-	});
-	$("#sellerSell").unbind().change(function() {
-		companySellersUpdateSeller(compId, sellerId, "seller.sell", $("#sellerSell").is(":checked"));
-	});
-	$("#sellerValidator").unbind().change(function() {
-		companySellersUpdateSeller(compId, sellerId, "seller.validator", $("#sellerValidator").is(":checked"));
-	});
 	$("#sellerActive").unbind().change(function() {
 		companySellersUpdateSeller(compId, sellerId, "seller.active", $("#sellerActive").is(":checked"));
 	});
@@ -484,9 +424,6 @@ function companySellersCreateSeller(compId) {
 	dataToSend += "seller.firstName=" + $("#sellerFirstName").val();
 	dataToSend += "&seller.lastName=" + $("#sellerLastName").val();
 	dataToSend += "&seller.email=" + $("#sellerEmail").val();
-	dataToSend += "&seller.admin=" + $("#sellerAdmin").is(":checked");
-	dataToSend += "&seller.sell=" + $("#sellerSell").is(":checked");
-	dataToSend += "&seller.validator=" + $("#sellerValidator").is(":checked");
 	dataToSend += "&seller.active=" + $("#sellerActive").is(":checked");
 	dataToSend += "&seller.company.id=" + compId;
 	dataToSend += "&format=json";
