@@ -22,8 +22,6 @@
 .jstree-default .jstree-no-dots .jstree-open > ins { background-position:-18px 0; }
 .jstree-default .jstree-no-dots .jstree-closed > ins { background-position:0 0; }
 
-.jstree-default .jstree-no-icons a .jstree-icon { display:none; }
-
 .jstree-default .jstree-search { font-style:italic; }
 
 .jstree-default .jstree-no-icons .jstree-checkbox { display:inline-block; }

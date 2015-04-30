@@ -58,25 +58,13 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                                     categoryGetCreatePage(obj[0].value);
                                 }
                             },
-//                            "CreateVariation": {
-//                                "label": categoryCreateVariationTreeLabel,
-//                                "action": function (obj) {
-//                                    categoryVariationsGetDetails(obj[0].value, null, true);
-//                                }
-//                            },
-//                            "CreateFeature": {
-//                                "label": categoryCreateFeatureTreeLabel,
-//                                "action": function (obj) {
-//                                    categoryFeaturesGetDetails(obj[0].value, null, true);
-//                                }
-//                            },
                             "Delete": {
                                 "label": categoryDeleteTreeLabel,
                                 "action": function (obj) {
                                     categoryDeleteValidation(obj[0].value);
                                 }
                             }
-                        };
+                        }
                     }
                 },
                 "plugins" : [ "themes", "html_data", "ui", "dnd", "crrm", "unique", "contextmenu" ]
@@ -117,6 +105,12 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                             $("#" + oldParentChilds[i].id).attr("pos", (i + 1) * 10);
                     }
                     categoryTreeUpdateParentNode(data.rslt.o[0].value, data.rslt.np[0].value, pos);
+                }).
+                bind("before.jstree", function (e, data) {
+                    $("#categoryTreeList ul > li > a > ins").remove();
+                    $("#categoryTreeList ul > li[hasAccess='false'] > a").each(function () {
+                        $(this).contents().unwrap();
+                    })
                 });
             $("#categoriesMain").hideLoading();
             setTimeout(function () {
