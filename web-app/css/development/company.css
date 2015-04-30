@@ -378,18 +378,63 @@ div.createCompany select {
     background-position: -15px 0px;
 }
 
-/* Company - Brands And Coupons Tab */
-#brandsGridDiv, #couponsGridDiv, #publishingGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+/* Company Publishing Tab */
+#companyPublishingDialog{
+    display: none;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    background:#F2F2F2;
+    border:1px solid #CCCCCC;
+    padding: 10px;
+    margin: 5px 0px 0px 0px;
+    overflow: visible;
+}
+
+#publishingGridDiv{
     border: 1px solid #A6C9E2;
     border-top: 0px;
 }
 
-#brandsGrid, #couponsGrid, #publishingGrid, #iBeaconGrid, #tagsGrid{
+#publishingGrid{
+     height: 396px;
+ }
+
+#companyPublishingCreateDiv, #companyPublishingSecurityDiv{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    width: 500px;
+}
+
+.companyPublishingDialog-large{
+     float: left;
+     width: 245px;
+ }
+
+.companyPublishingDialog-large input[type="text"]{
+       width: 235px;
+}
+
+#companyPublishingTabs ul.tabs{
+    padding-top: 5px;
+    padding-left: 0px;
+}
+
+/* Company - Brands And Coupons Tab */
+#brandsGridDiv, #couponsGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#brandsGrid, #couponsGrid, #iBeaconGrid, #tagsGrid{
     height: 396px;
 }
 
 #companyBrandsCreateDiv, #companyCouponsDescriptionDiv, #companyBrandsTranslationDiv, #companyCouponsCreateDiv, #companyCouponsRulesCreateDiv, #companyCouponsRulesDiv,
-#companyCouponsTranslationDiv, #companyPublishingCreateDiv, #companyIBeaconCreateDiv{
+#companyCouponsTranslationDiv, #companyIBeaconCreateDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
     font-size: 11px;
     color: #888;
@@ -407,6 +452,7 @@ div.createCompany select {
     border:1px solid #CCCCCC;
     padding: 10px;
     margin: 5px 0px 0px 0px;
+    overflow: visible;
 }
 
 #companyBrandsTabs ul.tabs, #companyCouponsTabs ul.tabs{
@@ -430,12 +476,12 @@ div.createCompany select {
     width: 500px;
 }
 
-.companyCouponsDialog-large, .companyPublishingDialog-large, .companyIBeaconDialog-large{
+.companyCouponsDialog-large, .companyIBeaconDialog-large{
     float: left;
     width: 245px;
 }
 
-.companyCouponsDialog-large input[type="text"], .companyPublishingDialog-large input[type="text"], .companyIBeaconDialog-large input[type="text"] {
+.companyCouponsDialog-large input[type="text"], .companyIBeaconDialog-large input[type="text"] {
     width: 235px;
 }
 

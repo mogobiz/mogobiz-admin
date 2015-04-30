@@ -124,7 +124,7 @@ function companySellersGetAllSellers(compId, partnerId) {
 			};
 			var gridData = [];
 			var sellers = response;
-			if(profiles){
+			if(sellers){
 				for ( var i = 0; i < sellers.length; i++) {
 					gridData[gridData.length] = {
 						id: i,

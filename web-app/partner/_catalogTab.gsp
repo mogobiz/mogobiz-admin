@@ -11,6 +11,11 @@
 					<g:message code="tabs.translation.label" />
 				</a>
 			</li>
+            <li>
+                <a id="catalogSecurityTab">
+                    <g:message code="tabs.security.label" />
+                </a>
+            </li>
 		</ul>
 		<hr style="margin-top: 5px;" />
 	</div>
@@ -101,4 +106,13 @@
 			<div id="catalogTranslationGrid" style="height: 174px;"></div>
 		</div>
 	</div>
+    <div id="catalogSecurityDiv" style="padding-top: 7px;">
+        <div>
+            <label for="catalogSecurityUsers"><g:message code="security.users.label" /></label>
+        </div>
+        <div class="spacer-small"/>
+        <div>
+            <select id="catalogSecurityUsers" multiple="multiple"></select>
+        </div>
+    </div>
 </div>

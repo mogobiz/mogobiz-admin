@@ -127,6 +127,9 @@
         <g:javascript src="${env}/application.js"/>
         <g:javascript src="${env}/main.js"/>
 
+        <g:javascript src="${env}/translation.js"/>
+        <g:javascript src="${env}/security.js"/>
+
         <!-- company javascript -->
         <g:javascript src="${env}/company.js"/>
         <g:javascript src="${env}/companyGeneral.js"/>
@@ -174,9 +177,13 @@
         <g:javascript src="${env}/jQueryJSTree/jquery.jstree.js"/>
         <g:javascript src="${env}/jQueryJSTree/script.js"/>
 
-        <g:javascript src="${env}/translation.js"/>
-
         <r:script>
+            //-----Security----//
+            var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
+            var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
+            var securityAddUserPermissionUrl = "${createLink(controller: 'profile', action: 'addUserPermission')}";
+            var securityRemoveUserPermissionUrl = "${createLink(controller: 'profile', action: 'removeUserPermission')}";
+
             //-----Companies----//
             var getAllCompaniesUrl = "${createLink(controller: 'seller', action:'show')}";
             var setActiveCompanyUrl ="${createLink(controller: 'seller', action:'setActiveCompany')}";

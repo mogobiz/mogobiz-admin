@@ -112,6 +112,9 @@
         <g:javascript src="${env}/application.js"/>
         <g:javascript src="${env}/main.js"/>
 
+        <g:javascript src="${env}/translation.js"/>
+        <g:javascript src="${env}/security.js"/>
+
         <!-- company javascript -->
         <g:javascript src="${env}/company.js"/>
         <g:javascript src="${env}/companyGeneral.js"/>
@@ -128,10 +131,15 @@
         <g:javascript src="${env}/companyIBeacon.js"/>
         <g:javascript src="${env}/companyTags.js"/>
 
-        <!-- company javascript -->
         <g:javascript src="${env}/admin.js"/>
 
         <r:script>
+            // Security
+            var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
+            var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
+            var securityAddUserPermissionUrl = "${createLink(controller: 'profile', action: 'addUserPermission')}";
+            var securityRemoveUserPermissionUrl = "${createLink(controller: 'profile', action: 'removeUserPermission')}";
+
             //----- Company -----//
             var companyPageUrl = "${createLink(controller: 'company', action:'initDisplayCompany')}";
             var createCompanyPageUrl = "${createLink(controller: 'company', action:'initCreateCompany')}";
