@@ -1,3 +1,4 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
 <div id="editCategoryTabs">
 	<div id="CategoryTabs">
 		<div id="ulTabs">
@@ -27,11 +28,13 @@
 						<g:message code="tabs.translation.label" />
 					</a>
 				</li>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
                 <li>
                     <a id="categorySecurityTab">
                         <g:message code="tabs.security.label" />
                     </a>
                 </li>
+</store:hasPermission>
 			</ul>
 			<hr style="margin-top: 5px;" />
 		</div>

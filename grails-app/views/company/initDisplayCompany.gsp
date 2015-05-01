@@ -1,5 +1,4 @@
 <%@ page import="com.mogobiz.utils.PermissionType"%>
-<%@ page import="com.mogobiz.utils.ProfileUtils"%>
 
 <div id="editCompanyTabs" style="display: none">
 	<div>
@@ -7,90 +6,90 @@
 		<div  id="editTabs" style='display: none'>
 			<ul class="tabs" id="ulTabs">
 				<!-- Tabs -->
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_COMPANY, params.long("companyId"))}">
+<store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}" id="${params.long("companyId")}">
 				<li id ="generalLi">
 					<a href="javascript:void(0)" id="generalTab">
 						<span><g:message code="tabs.general.label" /></span>
 					</a>
 				</li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_PROFILES, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PROFILES.key}" id="${params.long("companyId")}">
 				<li id ="profilesLi">
 					<a href="javascript:void(0)" id="profilesTab">
 						<span><g:message code="tabs.profiles.label" /></span>
 					</a>
 				</li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_USERS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
                 <li id ="sellersLi">
                     <a href="javascript:void(0)" id="sellersTab">
                         <span><g:message code="tabs.sellers.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_SHIPPING, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_SHIPPING.key}" id="${params.long("companyId")}">
 				<li id ="shippingLi">
 					<a href="javascript:void(0)" id="shippingTab">
 						<span><g:message code="tabs.shipping.label" /></span>
 					</a>
 				</li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_TAXES, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
 				<li id ="taxLi">
 					<a href="javascript:void(0)" id="taxTab">
 						<span><g:message code="tabs.tax.label" /></span>
 					</a>
 				</li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_PAYMENT, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
 				<li id ="paymentLi">
 					<a href="javascript:void(0)" id="paymentTab">
 						<span><g:message code="tabs.payment.label" /></span>
 					</a>
 				</li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_BRANDS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_BRANDS.key}" id="${params.long("companyId")}">
                 <li id ="brandsLi">
                     <a href="javascript:void(0)" id="brandsTab">
                         <span><g:message code="tabs.brands.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_COUPONS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_COUPONS.key}" id="${params.long("companyId")}">
                 <li id ="couponsLi">
                     <a href="javascript:void(0)" id="couponsTab">
                         <span><g:message code="tabs.coupons.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_USERS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
                 <li id ="publishingLi">
                     <a href="javascript:void(0)" id="publishingTab">
                         <span><g:message code="tabs.publishing.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_KEYS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_KEYS.key}" id="${params.long("companyId")}">
                 <li id ="apiKeysLi">
                     <a href="javascript:void(0)" id="apiKeysTab">
                         <span><g:message code="tabs.apiKeys.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_BEACONS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_BEACONS.key}" id="${params.long("companyId")}">
                 <li id ="iBeaconLi">
                     <a href="javascript:void(0)" id="iBeaconTab">
                         <span><g:message code="tabs.iBeacon.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
-<shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_TAGS, params.long("companyId"))}">
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAGS.key}" id="${params.long("companyId")}">
                 <li id ="tagsLi">
                     <a href="javascript:void(0)" id="tagsTab">
                         <span><g:message code="tabs.tags.label" /></span>
                     </a>
                 </li>
-</shiro:hasPermission>
+</store:hasPermission>
 			</ul>
 			<hr style="margin-top:5px;"/>
 		</div>

@@ -1,5 +1,4 @@
 <%@ page import="com.mogobiz.utils.PermissionType"%>
-<%@ page import="com.mogobiz.utils.ProfileUtils"%>
 
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
@@ -590,15 +589,15 @@
                         <li id="user_name_div"><g:message code="default.menu.label" /></li>
                         <li>
                             <ul class="subnav" style="display:none;">
-                                <shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_COMPANY, request.seller.company.id)}">
+                                <store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}">
                                     <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetAdminPage(${request.user?.id});"><g:message code="seller.admin.link"/></a></li>
-                                </shiro:hasPermission>
-                                <shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ACCESS_STORE_BO, request.seller.company.id)}">
+                                </store:hasPermission>
+                                <store:hasPermission permission="${PermissionType.ACCESS_STORE_BO.key}">
                                     <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="getBackOfficePage();"><g:message code="sale.label" /></a></li>
-                                </shiro:hasPermission>
-                                <shiro:hasPermission permission="${ProfileUtils.computeStorePermission(PermissionType.ADMIN_STORE_SOCIAL_NETWORKS, request.seller.company.id)}">
+                                </store:hasPermission>
+                                <store:hasPermission permission="${PermissionType.ADMIN_STORE_SOCIAL_NETWORKS.key}">
                                     <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'social')}"><g:message code="seller.social.link" /></a></li>
-                                </shiro:hasPermission>
+                                </store:hasPermission>
                                 <li onclick="hideUsernameSubnav();"><a href="javascript:void(0);"><g:message code="default.support.label" /></a></li>
                                 <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'auth',action:'signOut')}" id="logout"><g:message code="default.logout.label" /></a></li>
                             </ul>
@@ -667,10 +666,18 @@
                                     </li>
                                     <li>
                                         <ul class="subnav" style="display:none;">
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                            <store:hasPermission permission="${PermissionType.CREATE_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.DELETE_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.EXPORT_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                            </store:hasPermission>
                                         </ul>
                                     </li>
                                 </ul>
