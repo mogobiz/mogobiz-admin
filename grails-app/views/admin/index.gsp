@@ -112,9 +112,13 @@
         <g:javascript src="${env}/application.js"/>
         <g:javascript src="${env}/main.js"/>
 
+        <g:javascript src="${env}/translation.js"/>
+        <g:javascript src="${env}/security.js"/>
+
         <!-- company javascript -->
         <g:javascript src="${env}/company.js"/>
         <g:javascript src="${env}/companyGeneral.js"/>
+        <g:javascript src="${env}/companyProfiles.js"/>
         <g:javascript src="${env}/companyVariations.js"/>
         <g:javascript src="${env}/companyShipping.js"/>
         <g:javascript src="${env}/companyTax.js"/>
@@ -127,10 +131,15 @@
         <g:javascript src="${env}/companyIBeacon.js"/>
         <g:javascript src="${env}/companyTags.js"/>
 
-        <!-- company javascript -->
         <g:javascript src="${env}/admin.js"/>
 
         <r:script>
+            // Security
+            var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
+            var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
+            var securityAddUserPermissionUrl = "${createLink(controller: 'profile', action: 'addUserPermission')}";
+            var securityRemoveUserPermissionUrl = "${createLink(controller: 'profile', action: 'removeUserPermission')}";
+
             //----- Company -----//
             var companyPageUrl = "${createLink(controller: 'company', action:'initDisplayCompany')}";
             var createCompanyPageUrl = "${createLink(controller: 'company', action:'initCreateCompany')}";
@@ -141,6 +150,28 @@
             var createCompanyUrl = "${createLink(controller: 'company', action:'save')}";
             var updateCompanyUrl = "${createLink(controller: 'company', action:'update')}";
 
+            //Profiles
+            var companyShowProfilesUrl = "${createLink(controller: 'profile', action:'index')}";
+            var companyApplyProfileUrl = "${createLink(controller: 'profile', action:'apply')}";
+            var companySaveProfileUrl = "${createLink(controller: 'profile', action:'save')}";
+            var companyCopyProfileUrl = "${createLink(controller: 'profile', action:'copy')}";
+            var companyDeleteProfileUrl = "${createLink(controller: 'profile', action:'delete')}";
+            var companyUnbindProfileUrl = "${createLink(controller: 'profile', action:'unbind')}";
+            var companyGetProfilePermissionsUrl = "${createLink(controller: 'profile', action:'permissions')}";
+
+            var companyProfilesPageUrl = "${resource(dir: 'admin', file: '_createCompanyProfile.gsp')}";
+            var companySystemProfilePageUrl = "${resource(dir: 'admin', file: '_applySystemProfile.gsp')}";
+
+            var companyProfilesTitleLabel = "${message(code: 'company.profiles.title')}";
+            var companyProfilesTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
+            var companyProfilesTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
+            var companyProfilesTitleApplyLabel = "${message(code: 'company.profiles.apply.title')}";
+            var companyProfilesTitleUnbindLabel = "${message(code: 'company.profiles.unbind.title')}";
+            var companyProfilesNameLabel = "${message(code: 'company.profiles.name.label')}";
+            var companyProfilesSystemProfileLabel = "${message(code: 'company.profiles.systemProfile.label')}";
+            var companyProfilesUnbindMessage = "${message(code: 'company.profiles.unbind.message')}";
+            var companyProfilesUnauthorizedMessage = "${message(code: 'company.profiles.unauthorized.message')}";
+
             // Seller
             var sellerShowUrl = "${createLink(controller: 'seller', action: 'show')}";
             var sellerSaveUrl = "${createLink(controller: 'seller', action: 'save')}";
@@ -150,6 +181,11 @@
             var existSellerEmailUrl = "${createLink(controller: 'seller', action: 'isEmailNew')}";
             var sellerDialogPageUrl = "${createLink(controller: 'seller', action:'initSellerDialogPage')}";
             var sellerPasswordUrl = "${createLink(controller: 'sellerPassword', action:'resetPassword')}";
+            var sellerAddProfileUrl = "${createLink(controller: 'profile', action:'addUserProfile')}";
+            var sellerRemoveProfileUrl = "${createLink(controller: 'profile', action:'removeUserProfile')}";
+
+            var companySellersTitleAddLabel = "${message(code: 'company.sellers.add.title')}";
+            var companySellersTitleEditLabel = "${message(code: 'company.sellers.edit.title')}";
 
             // Shipping
             var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
@@ -230,9 +266,10 @@
         <!-- inner-content -->
         <div id="searchForm"></div>
         <div id="createCompanyDialog"></div>
+        <div id="companyProfilesDialog"></div>
         <div id="items"></div>
         <div id="dialog"></div>
-        <div id="sellerForm"></div>
+        <div id="companySellersDialog"></div>
         <div id="taxRateDialog"></div>
         <div id="shippingRuleDialog"></div>
         <content tag="footer">

@@ -193,6 +193,7 @@
 	border: 1px solid #A6C9E2;
 	border-top: 0px;
 	height:340px;
+    margin-top: 10px;
 }
 
 #sellersGrid .slick-header {
@@ -208,7 +209,7 @@
 	width: 100%;
 }
 
-#sellerForm {
+#companySellersDialog {
     display: none;
 	overflow: visible;
 	color: #888;
@@ -220,15 +221,11 @@
 	margin: 5px 0px 0px 0px;
 }
 
-.sellerConfirmEmailDiv, .sellerCompaniesDiv {
-	display: none;
-}
-
 .sellerEmailReadOnly {
 	background-color: #F2F2F2;
 }
 
-#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail, #sellerCompanies {
+#sellerFirstName, #sellerLastName, #sellerEmail, #sellerConfirmEmail, #sellerCompanies, #sellerProfiles {
 	width: 276px;
 }
 
@@ -245,18 +242,199 @@ div.createCompany select {
 	width:234px;
 }
 
-/* Company - Brands And Coupons Tab */
-#brandsGridDiv, #couponsGridDiv, #publishingGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+/* Company - Profiles Tab */
+#profilesGridDiv{
     border: 1px solid #A6C9E2;
     border-top: 0px;
 }
 
-#brandsGrid, #couponsGrid, #publishingGrid, #iBeaconGrid, #tagsGrid{
+#profilesGrid{
+    height: 396px;
+    margin-top: 10px;
+}
+
+#companyProfilesApplyDiv, #companyProfilesCreateDiv{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    width: 500px;
+}
+
+#companyProfilesDialog{
+    overflow: visible;
+    display: none;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    background:#F2F2F2;
+    border:1px solid #CCCCCC;
+    padding: 10px;
+    margin: 5px 0px 0px 0px;
+}
+
+.companyProfilesDialog-full{
+    float: left;
+    width: 490px;
+}
+
+.companyProfilesDialog-full input{
+    float: left;
+    width: 480px;
+}
+
+.companyProfilesDialog-full select{
+    float: left;
+    width: 476px;
+}
+
+.companyProfilesDialog-large{
+    float: left;
+    width: 250px;
+}
+
+.companyProfilesDialog-large input{
+    float: left;
+    width: 240px;
+}
+
+.companyProfilesDialog-large select{
+    float: left;
+    width: 236px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .search{
+    margin : 15px 0px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .search button{
+    width: 35px;
+    text-align: center;
+    position: relative;
+    top: 2px;
+    left: 5px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .search button i{
+    display: inline-block;
+    position: relative;
+    top: 1px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .search input{
+    width: 210px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .left{
+    float: left;
+    width: 220px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center{
+    float: left;
+    width: 55px;
+    padding-top: 50px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .right{
+    float: left;
+    width: 215px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .left select, .right select{
+    width: 210px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center button{
+    display: block;
+    width: 45px;
+    height: 20px;
+    margin-top: 5px;
+    padding: 0px;
+    text-align: center;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center .icon{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-image: url("../../images/multiselectSlidesArrows.png");
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center .icon-forward-all{
+    background-position: -45px 0px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center .icon-forward{
+    background-position: -30px 0px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center .icon-backward-all{
+    background-position: 0px 0px;
+}
+
+#companyProfilesCreateDiv .multiselectSlides .center .icon-backward{
+    background-position: -15px 0px;
+}
+
+/* Company Publishing Tab */
+#companyPublishingDialog{
+    display: none;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    background:#F2F2F2;
+    border:1px solid #CCCCCC;
+    padding: 10px;
+    margin: 5px 0px 0px 0px;
+    overflow: visible;
+}
+
+#publishingGridDiv{
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#publishingGrid{
+     height: 396px;
+ }
+
+#companyPublishingCreateDiv, #companyPublishingSecurityDiv{
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    width: 500px;
+}
+
+.companyPublishingDialog-large{
+     float: left;
+     width: 245px;
+ }
+
+.companyPublishingDialog-large input[type="text"]{
+       width: 235px;
+}
+
+#companyPublishingTabs ul.tabs{
+    padding-top: 5px;
+    padding-left: 0px;
+}
+
+/* Company - Brands And Coupons Tab */
+#brandsGridDiv, #couponsGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#brandsGrid, #couponsGrid, #iBeaconGrid, #tagsGrid{
     height: 396px;
 }
 
 #companyBrandsCreateDiv, #companyCouponsDescriptionDiv, #companyBrandsTranslationDiv, #companyCouponsCreateDiv, #companyCouponsRulesCreateDiv, #companyCouponsRulesDiv,
-#companyCouponsTranslationDiv, #companyPublishingCreateDiv, #companyIBeaconCreateDiv{
+#companyCouponsTranslationDiv, #companyIBeaconCreateDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
     font-size: 11px;
     color: #888;
@@ -274,6 +452,7 @@ div.createCompany select {
     border:1px solid #CCCCCC;
     padding: 10px;
     margin: 5px 0px 0px 0px;
+    overflow: visible;
 }
 
 #companyBrandsTabs ul.tabs, #companyCouponsTabs ul.tabs{
@@ -297,12 +476,12 @@ div.createCompany select {
     width: 500px;
 }
 
-.companyCouponsDialog-large, .companyPublishingDialog-large, .companyIBeaconDialog-large{
+.companyCouponsDialog-large, .companyIBeaconDialog-large{
     float: left;
     width: 245px;
 }
 
-.companyCouponsDialog-large input[type="text"], .companyPublishingDialog-large input[type="text"], .companyIBeaconDialog-large input[type="text"] {
+.companyCouponsDialog-large input[type="text"], .companyIBeaconDialog-large input[type="text"] {
     width: 235px;
 }
 

@@ -1,3 +1,4 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
 <div id="catalogTabs">
 	<div id="ulTabs">
 		<ul class="tabs">
@@ -11,6 +12,13 @@
 					<g:message code="tabs.translation.label" />
 				</a>
 			</li>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
+            <li>
+                <a id="catalogSecurityTab">
+                    <g:message code="tabs.security.label" />
+                </a>
+            </li>
+</store:hasPermission>
 		</ul>
 		<hr style="margin-top: 5px;" />
 	</div>
@@ -93,7 +101,7 @@
         <div id="catalogLastPublicationStatus"></div>
 		<div class="spacer"></div>
 	</div>
-	<div id="catalogTranslationDiv" style="display:none;">
+	<div id="catalogTranslationDiv">
 		<div style="padding: 10px;">
 			<a id="catalogTranslationAddLink"><g:message code="translation.add.label" /></a>
 		</div>
@@ -101,4 +109,13 @@
 			<div id="catalogTranslationGrid" style="height: 174px;"></div>
 		</div>
 	</div>
+    <div id="catalogSecurityDiv">
+        <div>
+            <label for="catalogSecurityUsers"><g:message code="security.users.label" /></label>
+        </div>
+        <div class="spacer-small"/>
+        <div>
+            <select id="catalogSecurityUsers" multiple="multiple"></select>
+        </div>
+    </div>
 </div>

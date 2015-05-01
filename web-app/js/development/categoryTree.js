@@ -1,4 +1,5 @@
 var categorySelectedId = null;
+var categoryShowSecurity;
 function categoryTreeDrawByCatalog(catalogId, catalogName) {
     categorySelectedId = null;
     var dataToSend = "catalog.id=" + catalogId + "&allCategories=false&format=html";
@@ -57,25 +58,13 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                                     categoryGetCreatePage(obj[0].value);
                                 }
                             },
-//                            "CreateVariation": {
-//                                "label": categoryCreateVariationTreeLabel,
-//                                "action": function (obj) {
-//                                    categoryVariationsGetDetails(obj[0].value, null, true);
-//                                }
-//                            },
-//                            "CreateFeature": {
-//                                "label": categoryCreateFeatureTreeLabel,
-//                                "action": function (obj) {
-//                                    categoryFeaturesGetDetails(obj[0].value, null, true);
-//                                }
-//                            },
                             "Delete": {
                                 "label": categoryDeleteTreeLabel,
                                 "action": function (obj) {
                                     categoryDeleteValidation(obj[0].value);
                                 }
                             }
-                        };
+                        }
                     }
                 },
                 "plugins" : [ "themes", "html_data", "ui", "dnd", "crrm", "unique", "contextmenu" ]
@@ -116,6 +105,12 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                             $("#" + oldParentChilds[i].id).attr("pos", (i + 1) * 10);
                     }
                     categoryTreeUpdateParentNode(data.rslt.o[0].value, data.rslt.np[0].value, pos);
+                }).
+                bind("before.jstree", function (e, data) {
+                    $("#categoryTreeList ul > li > a > ins").remove();
+                    $("#categoryTreeList ul > li[hasAccess='false'] > a").each(function () {
+                        $(this).contents().unwrap();
+                    })
                 });
             $("#categoriesMain").hideLoading();
             setTimeout(function () {
@@ -196,12 +191,23 @@ function categoryGetTabPage(){
             categoryFeaturesDrawAll();
             categoryGetProducts();
             categoryTranslationDrawAll();
+            if(categoryShowSecurity)
+                securityGetAllUsers(sellerCompanyId, "categorySecurityUsers", "updateCatalogCategory", [sellerCompanyId, catalogSelectedId, categorySelectedId]);
         },
         "html"
     );
 }
 
 function categoryInitAllTabs(){
+    $("#categoryVariationsTabInfo").hide();
+    $("#categoryFeaturesTabInfo").hide();
+    $("#categoryProductsTabInfo").hide();
+    $("#categoryTranslationTabInfo").hide();
+    $("#categorySecurityTabInfo").hide();
+    categoryShowSecurity = ($("#categorySecurityTab").length > 0);
+    if(!categoryShowSecurity)
+        $("#categorySecurityTabInfo").remove();
+
     $("#editCategoryTabs .tabs a").click(function() {
         $("#editCategoryTabs .tabs .selected").removeClass("selected");
         $(this).addClass("selected");
@@ -213,6 +219,7 @@ function categoryInitAllTabs(){
                 $("#categoryFeaturesTabInfo").hide();
                 $("#categoryProductsTabInfo").hide();
                 $("#categoryTranslationTabInfo").hide();
+                $("#categorySecurityTabInfo").hide();
                 break;
             case "categoryVariationsTab":
                 $("#categoryGeneralTabInfo").hide();
@@ -220,6 +227,7 @@ function categoryInitAllTabs(){
                 $("#categoryFeaturesTabInfo").hide();
                 $("#categoryProductsTabInfo").hide();
                 $("#categoryTranslationTabInfo").hide();
+                $("#categorySecurityTabInfo").hide();
                 break;
             case "categoryFeaturesTab":
                 $("#categoryGeneralTabInfo").hide();
@@ -227,6 +235,7 @@ function categoryInitAllTabs(){
                 $("#categoryFeaturesTabInfo").show();
                 $("#categoryProductsTabInfo").hide();
                 $("#categoryTranslationTabInfo").hide();
+                $("#categorySecurityTabInfo").hide();
                 break;
             case "categoryProductsTab":
                 $("#categoryGeneralTabInfo").hide();
@@ -234,6 +243,7 @@ function categoryInitAllTabs(){
                 $("#categoryFeaturesTabInfo").hide();
                 $("#categoryProductsTabInfo").show();
                 $("#categoryTranslationTabInfo").hide();
+                $("#categorySecurityTabInfo").hide();
                 break;
             case "categoryTranslationTab":
                 $("#categoryGeneralTabInfo").hide();
@@ -241,6 +251,15 @@ function categoryInitAllTabs(){
                 $("#categoryFeaturesTabInfo").hide();
                 $("#categoryProductsTabInfo").hide();
                 $("#categoryTranslationTabInfo").show();
+                $("#categorySecurityTabInfo").hide();
+                break;
+            case "categorySecurityTab":
+                $("#categoryGeneralTabInfo").hide();
+                $("#categoryVariationsTabInfo").hide();
+                $("#categoryFeaturesTabInfo").hide();
+                $("#categoryProductsTabInfo").hide();
+                $("#categoryTranslationTabInfo").hide();
+                $("#categorySecurityTabInfo").show();
                 break;
             default:
                 break;

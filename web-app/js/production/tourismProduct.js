@@ -136,7 +136,7 @@ function productAttachEditForm(productId) {
                                     "</div>" +
                                     "<div class='spacer-small'>" +
                                         "<select id='tourismDescriptionVariation" +  ticketTypes[i].position + "' multiple='multiple' style='width: 100px;'></select>" +
-                                    "</div>";
+                                   "</div>";
                         $("#tourismDescriptionVariations").append(html);
                         $("#tourismDescriptionVariation" + ticketTypes[i].position).attr("position", ticketTypes[i].position);
                         $("#tourismDescriptionVariation" + ticketTypes[i].position).multiselect({
@@ -382,7 +382,7 @@ function productAttachEditForm(productId) {
                     var option = this.id == "productStartDatefeatured" ? "minDate" : "maxDate",
                         instance = $(this).data("datepicker"),
                         Date = $.datepicker.parseDate(
-                                instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                            instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                     datesFeature.not(this).datepicker("option", option, selectedDate);
                 }
             }).keydown(function(){
@@ -597,7 +597,7 @@ function productAttachEditForm(productId) {
                 $("#shippingTab").unbind().hide();
             }
         }
-    });
+   });
 }
 
 function selectValidityPeriodFeatured() {

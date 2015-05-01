@@ -48,9 +48,6 @@ $(document).ready(function() {
         });
     });
 
-    if(sellerAdmin){
-        $('#sellerAdmin').show();
-    }
     partnerGetAllUserCompanies();
     catalogueLoadList();
     loadTranslateLanguages();
@@ -83,7 +80,7 @@ function partnerGetAdminPage(partnerId) {
     companyHashTable = [];
     companyTagsPageOffset = 0;
     companyIBeaconPageOffset = 0;
-    compObjGetEditCompanyPage(sellerCompanyId, sellerCompanyCode, partnerId);
+    compGetUserPermission(sellerCompanyId, sellerCompanyCode, partnerId);
 }
 
 function partnerGetAllUserCompanies(){

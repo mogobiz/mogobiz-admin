@@ -1,3 +1,5 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
     <head>
@@ -124,9 +126,13 @@
         <g:javascript src="${env}/application.js"/>
         <g:javascript src="${env}/main.js"/>
 
+        <g:javascript src="${env}/translation.js"/>
+        <g:javascript src="${env}/security.js"/>
+
         <!-- company javascript -->
         <g:javascript src="${env}/company.js"/>
         <g:javascript src="${env}/companyGeneral.js"/>
+        <g:javascript src="${env}/companyProfiles.js"/>
         <g:javascript src="${env}/companyVariations.js"/>
         <g:javascript src="${env}/companyShipping.js"/>
         <g:javascript src="${env}/companyTax.js"/>
@@ -170,9 +176,13 @@
         <g:javascript src="${env}/jQueryJSTree/jquery.jstree.js"/>
         <g:javascript src="${env}/jQueryJSTree/script.js"/>
 
-        <g:javascript src="${env}/translation.js"/>
-
         <r:script>
+            //-----Security----//
+            var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
+            var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
+            var securityAddUserPermissionUrl = "${createLink(controller: 'profile', action: 'addUserPermission')}";
+            var securityRemoveUserPermissionUrl = "${createLink(controller: 'profile', action: 'removeUserPermission')}";
+
             //-----Companies----//
             var getAllCompaniesUrl = "${createLink(controller: 'seller', action:'show')}";
             var setActiveCompanyUrl ="${createLink(controller: 'seller', action:'setActiveCompany')}";
@@ -366,6 +376,28 @@
             var showCompanyUrl = "${createLink(controller: 'company', action:'show')}";
             var updateCompanyUrl = "${createLink(controller: 'company', action:'update')}";
 
+            //Profiles
+            var companyShowProfilesUrl = "${createLink(controller: 'profile', action:'index')}";
+            var companyApplyProfileUrl = "${createLink(controller: 'profile', action:'apply')}";
+            var companySaveProfileUrl = "${createLink(controller: 'profile', action:'save')}";
+            var companyCopyProfileUrl = "${createLink(controller: 'profile', action:'copy')}";
+            var companyDeleteProfileUrl = "${createLink(controller: 'profile', action:'delete')}";
+            var companyUnbindProfileUrl = "${createLink(controller: 'profile', action:'unbind')}";
+            var companyGetProfilePermissionsUrl = "${createLink(controller: 'profile', action:'permissions')}";
+
+            var companyProfilesPageUrl = "${resource(dir: 'admin', file: '_createCompanyProfile.gsp')}";
+            var companySystemProfilePageUrl = "${resource(dir: 'admin', file: '_applySystemProfile.gsp')}";
+
+            var companyProfilesTitleLabel = "${message(code: 'company.profiles.title')}";
+            var companyProfilesTitleAddLabel = "${message(code: 'company.profiles.add.title')}";
+            var companyProfilesTitleEditLabel = "${message(code: 'company.profiles.edit.title')}";
+            var companyProfilesTitleApplyLabel = "${message(code: 'company.profiles.apply.title')}";
+            var companyProfilesTitleUnbindLabel = "${message(code: 'company.profiles.unbind.title')}";
+            var companyProfilesNameLabel = "${message(code: 'company.profiles.name.label')}";
+            var companyProfilesSystemProfileLabel = "${message(code: 'company.profiles.systemProfile.label')}";
+            var companyProfilesUnbindMessage = "${message(code: 'company.profiles.unbind.message')}";
+            var companyProfilesUnauthorizedMessage = "${message(code: 'company.profiles.unauthorized.message')}";
+
             // Seller
             var sellerShowUrl = "${createLink(controller: 'seller', action: 'show')}";
             var sellerSaveUrl = "${createLink(controller: 'seller', action: 'save')}";
@@ -375,6 +407,11 @@
             var existSellerEmailUrl = "${createLink(controller: 'seller', action: 'isEmailNew')}";
             var sellerDialogPageUrl = "${createLink(controller: 'seller', action:'initSellerDialogPage')}";
             var sellerPasswordUrl = "${createLink(controller: 'sellerPassword', action:'resetPassword')}";
+            var sellerAddProfileUrl = "${createLink(controller: 'profile', action:'addUserProfile')}";
+            var sellerRemoveProfileUrl = "${createLink(controller: 'profile', action:'removeUserProfile')}";
+
+            var companySellersTitleAddLabel = "${message(code: 'company.sellers.add.title')}";
+            var companySellersTitleEditLabel = "${message(code: 'company.sellers.edit.title')}";
 
             // Shipping
             var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
@@ -552,9 +589,15 @@
                         <li id="user_name_div"><g:message code="default.menu.label" /></li>
                         <li>
                             <ul class="subnav" style="display:none;">
-                                <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetAdminPage(${request.user?.id});"><g:message code="seller.admin.link"/></a></li>
-                                <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="getBackOfficePage();"><g:message code="sale.label" /></a></li>
-                                <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'social')}"><g:message code="seller.social.link" /></a></li>
+                                <store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}">
+                                    <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetAdminPage(${request.user?.id});"><g:message code="seller.admin.link"/></a></li>
+                                </store:hasPermission>
+                                <store:hasPermission permission="${PermissionType.ACCESS_STORE_BO.key}">
+                                    <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="getBackOfficePage();"><g:message code="sale.label" /></a></li>
+                                </store:hasPermission>
+                                <store:hasPermission permission="${PermissionType.ADMIN_STORE_SOCIAL_NETWORKS.key}">
+                                    <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'social')}"><g:message code="seller.social.link" /></a></li>
+                                </store:hasPermission>
                                 <li onclick="hideUsernameSubnav();"><a href="javascript:void(0);"><g:message code="default.support.label" /></a></li>
                                 <li onclick="hideUsernameSubnav();"><a href="${createLink(controller:'auth',action:'signOut')}" id="logout"><g:message code="default.logout.label" /></a></li>
                             </ul>
@@ -623,10 +666,18 @@
                                     </li>
                                     <li>
                                         <ul class="subnav" style="display:none;">
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
-                                            <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                            <store:hasPermission permission="${PermissionType.CREATE_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetCreatePage();"><g:message code="catalog.create.label"/></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.DELETE_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="deleteCatalogLink" class="disabled"><g:message code="catalog.delete.label" /></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.EXPORT_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" id="exportCatalogLink" class="disabled"><g:message code="catalog.export.label" /></a></li>
+                                            </store:hasPermission>
+                                            <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
+                                                <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);" onclick="catalogGetImportPage();"><g:message code="catalog.import.label" /></a></li>
+                                            </store:hasPermission>
                                         </ul>
                                     </li>
                                 </ul>
@@ -642,10 +693,11 @@
                 </td>
             </tr>
         </table>
-        <div id="sellerForm"></div>
+        <div id="companySellersDialog"></div>
         <div id="taxRateDialog"></div>
         <div id="shippingRuleDialog"></div>
         <div id="companyBrandsDialog"></div>
+        <div id="companyProfilesDialog"></div>
         <div id="companyCouponsDialog"></div>
         <div id="companyCouponsRulesDialog"></div>
         <div id="companyPublishingDialog"></div>

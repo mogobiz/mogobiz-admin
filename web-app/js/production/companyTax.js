@@ -130,7 +130,7 @@ function companyTaxPageSetup(htmlresponse, companyId, taxRate, isCreate){
 				createLabel : function() {
 					if (companyTaxValidateForm())
 						companyTaxAddNew();
-				},
+				}
 			}
 		});
 	}

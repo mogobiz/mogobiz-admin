@@ -1,3 +1,4 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
 <div id="editCategoryTabs">
 	<div id="CategoryTabs">
 		<div id="ulTabs">
@@ -27,6 +28,13 @@
 						<g:message code="tabs.translation.label" />
 					</a>
 				</li>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
+                <li>
+                    <a id="categorySecurityTab">
+                        <g:message code="tabs.security.label" />
+                    </a>
+                </li>
+</store:hasPermission>
 			</ul>
 			<hr style="margin-top: 5px;" />
 		</div>
@@ -89,23 +97,23 @@
 				<div class="spacer"></div>
 			</form>
 		</div>
-		<div id="categoryVariationsTabInfo" style="display:none;">
+		<div id="categoryVariationsTabInfo">
             <p style="font-weight: bold; padding: 5px;"><g:message code="category.variations.header.label" /> <a href="javascript:void(0)" id="categoryAddNewVariation"><g:message code="category.variations.add.label" /></a></p>
 			<div id="categoryVariationsGridDiv">
 				<div id="categoryVariationsGrid" style="height: 335px;"></div>
 			</div>
 		</div>
-		<div id="categoryFeaturesTabInfo" style="display:none;">
+		<div id="categoryFeaturesTabInfo">
             <p style="font-weight: bold; padding: 5px;"><g:message code="category.features.header.label" /> <a href="javascript:void(0)" id="categoryAddNewFeature"><g:message code="category.features.add.label" /></a></p>
 			<div id="categoryFeaturesGridDiv">
 				<div id="categoryFeaturesGrid" style="height: 335px;"></div>
 			</div>
 		</div>
-		<div id="categoryProductsTabInfo" style="display:none;">
+		<div id="categoryProductsTabInfo"">
 			<div id="categoryProductSearchForm"></div>
 			<div id="categoryProductsList"></div>
 		</div>
-		<div id="categoryTranslationTabInfo" style="display:none;">
+		<div id="categoryTranslationTabInfo"">
 			<div style="padding: 10px;">
 				<a id="categoryTranslationAddLink"><g:message code="translation.add.label" /></a>
 			</div>
@@ -113,5 +121,14 @@
 				<div id="categoryTranslationGrid" style="height: 335px;"></div>
 			</div>
 		</div>
+        <div id="categorySecurityTabInfo">
+            <div>
+                <label for="categorySecurityUsers"><g:message code="security.users.label" /></label>
+            </div>
+            <div class="spacer-small"/>
+            <div>
+                <select id="categorySecurityUsers" multiple="multiple"></select>
+            </div>
+        </div>
 	</div>
 </div>

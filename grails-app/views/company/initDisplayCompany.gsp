@@ -1,3 +1,4 @@
+<%@ page import="com.mogobiz.utils.PermissionType"%>
 
 <div id="editCompanyTabs" style="display: none">
 	<div>
@@ -5,61 +6,90 @@
 		<div  id="editTabs" style='display: none'>
 			<ul class="tabs" id="ulTabs">
 				<!-- Tabs -->
+<store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}" id="${params.long("companyId")}">
 				<li id ="generalLi">
 					<a href="javascript:void(0)" id="generalTab">
 						<span><g:message code="tabs.general.label" /></span>
 					</a>
 				</li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PROFILES.key}" id="${params.long("companyId")}">
+				<li id ="profilesLi">
+					<a href="javascript:void(0)" id="profilesTab">
+						<span><g:message code="tabs.profiles.label" /></span>
+					</a>
+				</li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
                 <li id ="sellersLi">
                     <a href="javascript:void(0)" id="sellersTab">
                         <span><g:message code="tabs.sellers.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_SHIPPING.key}" id="${params.long("companyId")}">
 				<li id ="shippingLi">
 					<a href="javascript:void(0)" id="shippingTab">
 						<span><g:message code="tabs.shipping.label" /></span>
 					</a>
 				</li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
 				<li id ="taxLi">
 					<a href="javascript:void(0)" id="taxTab">
 						<span><g:message code="tabs.tax.label" /></span>
 					</a>
 				</li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
 				<li id ="paymentLi">
 					<a href="javascript:void(0)" id="paymentTab">
 						<span><g:message code="tabs.payment.label" /></span>
 					</a>
 				</li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_BRANDS.key}" id="${params.long("companyId")}">
                 <li id ="brandsLi">
                     <a href="javascript:void(0)" id="brandsTab">
                         <span><g:message code="tabs.brands.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_COUPONS.key}" id="${params.long("companyId")}">
                 <li id ="couponsLi">
                     <a href="javascript:void(0)" id="couponsTab">
                         <span><g:message code="tabs.coupons.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
                 <li id ="publishingLi">
                     <a href="javascript:void(0)" id="publishingTab">
                         <span><g:message code="tabs.publishing.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_KEYS.key}" id="${params.long("companyId")}">
                 <li id ="apiKeysLi">
                     <a href="javascript:void(0)" id="apiKeysTab">
                         <span><g:message code="tabs.apiKeys.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_BEACONS.key}" id="${params.long("companyId")}">
                 <li id ="iBeaconLi">
                     <a href="javascript:void(0)" id="iBeaconTab">
                         <span><g:message code="tabs.iBeacon.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAGS.key}" id="${params.long("companyId")}">
                 <li id ="tagsLi">
                     <a href="javascript:void(0)" id="tagsTab">
                         <span><g:message code="tabs.tags.label" /></span>
                     </a>
                 </li>
+</store:hasPermission>
 			</ul>
 			<hr style="margin-top:5px;"/>
 		</div>
@@ -166,27 +196,39 @@
 			</form>
 		</div>
 
-        <!-- Sellers Tab -->
-        <div id="sellers" class="fk_content_area">
-            <form id="formSellers" name="form_sellers_comp" onsubmit="return false;">
-                <div id="sellersForm">
-                    <div class="errors"></div>
-                    <div id="sellersContent">
-                        <p style="font-weight: bold;"><g:message code="company.sellers.header.label" /> <a href="javascript:void(0)" id="addNewSeller"><g:message code="company.sellers.addNewSeller.label" /></a></p>
-                        <div id="sellersGridDiv">
-                            <div id="sellersGrid"></div>
-                        </div>
-                        <div class="spacer"></div>
-                        <div class="newline">
-                            <div class="payment_left">
-                                <input type="checkbox" id="paymentOnLineValidation" />
-                                <label for="paymentOnLineValidation"><g:message code="company.payment.online.validation.label" /></label>
-                            </div>
-                        </div>
+        <!-- Profiles Tab -->
+        <div id="profiles" class="fk_content_area">
+            <form id="formProfiles" name="form_profiles_comp" onsubmit="return false;">
+                <div id="profilesContent">
+                    <p style="font-weight: bold;"><a href="javascript:void(0)" id="addNewProfile"><g:message code="company.profiles.header.new" /></a>%{-- <g:message code="company.profiles.header.or" /> <a href="javascript:void(0);" id="applySystemProfile"><g:message code="company.profiles.header.system" /></a>--}%</p>
+                    <div id="profilesGridDiv">
+                        <div id="profilesGrid"></div>
                     </div>
+                    <div class="spacer"></div>
                 </div>
             </form>
         </div>
+
+    <!-- Sellers Tab -->
+    <div id="sellers" class="fk_content_area">
+        <form id="formSellers" name="form_sellers_comp" onsubmit="return false;">
+            <div id="sellersForm">
+                <div id="sellersContent">
+                    <p style="font-weight: bold;"><g:message code="company.sellers.header.label" /> <a href="javascript:void(0)" id="addNewSeller"><g:message code="company.sellers.addNewSeller.label" /></a></p>
+                    <div id="sellersGridDiv">
+                        <div id="sellersGrid"></div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="newline">
+                        <div class="payment_left">
+                            <input type="checkbox" id="paymentOnLineValidation" />
+                            <label for="paymentOnLineValidation"><g:message code="company.payment.online.validation.label" /></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
 		<!-- Shipping Tab -->
 		<div id="shipping" class="fk_content_area">
