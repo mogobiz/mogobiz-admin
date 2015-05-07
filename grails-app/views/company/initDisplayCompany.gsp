@@ -369,11 +369,11 @@
                     <label for="companyTaxDropDownList"><g:message code="company.tax.taxRate.label"/></label>
                 </div>
 </store:hasPermission>
-<store:lacksPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
                 <div class="taxRate-large">
                     <label for="paymentCurrencyCombo"><g:message code="company.payment.currency.label" />&nbsp;<sup>*</sup></label>
                 </div>
-</store:lacksPermission>
+</store:hasPermission>
             </div>
             <div class="spacer-small"></div>
             <div class="newline">
@@ -382,14 +382,14 @@
                     <select id="companyTaxDropDownList" multiple="multiple"></select>
                 </div>
 </store:hasPermission>
-<store:lacksPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
                 <div class="taxRate-large">
                     <select name="company.currencyCode" id="paymentCurrencyCombo" multiple="multiple" style="width: 290px;">
                         <option value="USD">USD $</option>
                         <option value="EUR">EUR &euro;</option>
                     </select>
                 </div>
-</store:lacksPermission>
+</store:hasPermission>
             </div>
 <store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
             <div class="spacer"></div>
