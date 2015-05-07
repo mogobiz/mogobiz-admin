@@ -34,20 +34,20 @@
 					</a>
 				</li>
 </store:hasPermission>
-<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
+<store:hasPermission in="${PermissionType.ADMIN_STORE_TAXES.key}, ${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
 				<li id ="taxLi">
 					<a href="javascript:void(0)" id="taxTab">
 						<span><g:message code="tabs.tax.label" /></span>
 					</a>
 				</li>
 </store:hasPermission>
-<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
-				<li id ="paymentLi">
-					<a href="javascript:void(0)" id="paymentTab">
-						<span><g:message code="tabs.payment.label" /></span>
-					</a>
-				</li>
-</store:hasPermission>
+%{--<store:hasPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">--}%
+				%{--<li id ="paymentLi">--}%
+					%{--<a href="javascript:void(0)" id="paymentTab">--}%
+						%{--<span><g:message code="tabs.payment.label" /></span>--}%
+					%{--</a>--}%
+				%{--</li>--}%
+%{--</store:hasPermission>--}%
 <store:hasPermission permission="${PermissionType.ADMIN_STORE_BRANDS.key}" id="${params.long("companyId")}">
                 <li id ="brandsLi">
                     <a href="javascript:void(0)" id="brandsTab">
@@ -363,43 +363,72 @@
 
 		<!-- Tax Tab -->
 		<div id="tax" class="fk_content_area">
-			<select id="companyTaxDropDownList" multiple="multiple"></select>
-			<div id="taxForm" style="margin-top: 8px;">
-				<div class="errors"></div>
-				<div id="taxContent">
+            <div class="newline">
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
+                <div class="taxRate-large">
+                    <label for="companyTaxDropDownList"><g:message code="company.tax.taxRate.label"/></label>
+                </div>
+</store:hasPermission>
+<store:lacksPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
+                <div class="taxRate-large">
+                    <label for="paymentCurrencyCombo"><g:message code="company.payment.currency.label" />&nbsp;<sup>*</sup></label>
+                </div>
+</store:lacksPermission>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
+                <div class="taxRate-large">
+                    <select id="companyTaxDropDownList" multiple="multiple"></select>
+                </div>
+</store:hasPermission>
+<store:lacksPermission permission="${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
+                <div class="taxRate-large">
+                    <select name="company.currencyCode" id="paymentCurrencyCombo" multiple="multiple" style="width: 290px;">
+                        <option value="USD">USD $</option>
+                        <option value="EUR">EUR &euro;</option>
+                    </select>
+                </div>
+</store:lacksPermission>
+            </div>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_TAXES.key}" id="${params.long("companyId")}">
+            <div class="spacer"></div>
+            <div id="taxForm">
+                <div id="taxContent">
 					<p style="font-weight: bold;"><g:message code="company.tax.header.label" /> <a href="javascript:void(0)" id="addNewTaxRate"><g:message code="company.tax.addNewTaxRate.label" /></a></p>
 					<div id="taxGridDiv">
 						<div id="taxGrid"></div>
 					</div>
 				</div>
 			</div>
+</store:hasPermission>
 		</div>
 
 		<!-- Payment Tab -->
-		<div id="payment" class="fk_content_area">
-			<form id="formPayment" name="form_payment_comp" onsubmit="return false;">
-				<div id="paymentForm">
-					<div class="errors"></div>
-					<div id="paymentContent">
-						<div class="newline">
-							<div class="payment_left">
-								<label for="paymentCurrencyCombo"><g:message code="company.payment.currency.label" />&nbsp;<sup>*</sup></label>
-							</div>
-						</div>
-						<div class="spacer-small"></div>
-						<div class="newline">
-							<div class="payment_left">
-								<select name="company.currencyCode" id="paymentCurrencyCombo" multiple="multiple">
-									<option value="USD">USD $</option>
-									<option value="EUR">EUR &euro;</option>
-								</select>
-							</div>
-						</div>
-						<div class="spacer"></div>
-					</div>
-				</div>
-			</form>
-		</div>
+		%{--<div id="payment" class="fk_content_area">--}%
+			%{--<form id="formPayment" name="form_payment_comp" onsubmit="return false;">--}%
+				%{--<div id="paymentForm">--}%
+					%{--<div class="errors"></div>--}%
+					%{--<div id="paymentContent">--}%
+						%{--<div class="newline">--}%
+							%{--<div class="payment_left">--}%
+								%{--<label for="paymentCurrencyCombo"><g:message code="company.payment.currency.label" />&nbsp;<sup>*</sup></label>--}%
+							%{--</div>--}%
+						%{--</div>--}%
+						%{--<div class="spacer-small"></div>--}%
+						%{--<div class="newline">--}%
+							%{--<div class="payment_left">--}%
+								%{--<select name="company.currencyCode" id="paymentCurrencyCombo" multiple="multiple">--}%
+									%{--<option value="USD">USD $</option>--}%
+									%{--<option value="EUR">EUR &euro;</option>--}%
+								%{--</select>--}%
+							%{--</div>--}%
+						%{--</div>--}%
+						%{--<div class="spacer"></div>--}%
+					%{--</div>--}%
+				%{--</div>--}%
+			%{--</form>--}%
+		%{--</div>--}%
 
         <!-- Brands Tab -->
         <div id="brands" class="fk_content_area">
@@ -530,7 +559,7 @@
     </div>
 
 
-	<!-- Create/Edit submit buttons  -->
+	<!-- buttons  -->
 	<br style="clear:both;"/>
 	<div align="right" id="editCompDivBtn" class="fk_button_area">
 		<button type="reset" id="cancelEditCompBtn" class="fk_ok_btn"><g:message code="default.button.close.label" /></button>

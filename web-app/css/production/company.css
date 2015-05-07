@@ -119,6 +119,14 @@
     height: 200px;
 }
 
+#shippingRulePrice, #shippingRuleMinAmount, #shippingRuleMaxAmount{
+    width: 238px;
+}
+
+#shippingRuleCountry{
+    width: 236px;
+}
+
 /* Company - Tax Tab */
 #taxRateDialog{
     display: none;
@@ -144,43 +152,11 @@
 
 .taxRate-large {
 	float: left;
-	width: 240px;
+	width: 50%;
 }
 
 .taxRate-large input[type="text"] {
-	width: 235px;
-}
-
-/* Company - Payment Tab */
-
-.payment_left {
-	float: left;
-	width: 369px;
-	padding-right: 4px;
-}
-
-.payment_right {
-	float: right;
-	width: 360px;
-}
-
-.payment_left_small{
-	float: left;
-	width: 105px;
-}
-
-.payment_left_large{
-	float: left;
-	left: 105px;
-	width: 259px;
-}
-
-.payment_left select {
-	width: 314px;
-}
-
-.payment_left_small select {
-	width: 100px;
+	width: 238px;
 }
 
 /* Company - Seller Tab */

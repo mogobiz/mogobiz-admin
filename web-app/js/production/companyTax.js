@@ -21,7 +21,7 @@ function companyTaxLoadList(companyId){
 				header : false,
 				multiple : false,
 				noneSelectedText : multiselectNoneSelectedTextLabel,
-				minWidth : 180,
+				minWidth : 290,
 				selectedList : 1
 			}).bind("multiselectclick", function(event, ui) {
 				setTimeout(function(){

@@ -6,6 +6,7 @@
     text-align: left;
     direction: ltr;
     height: 100px;
+    width: 500px;
 }
 #shippingRuleDialog {
     color: #888;
@@ -22,37 +23,37 @@
         <input id="shippingRuleCompanyId" type="hidden"/>
         <input id="shippingRuleId" type="hidden"/>
         <div class="newline">
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <label for="shippingRuleCountry"><g:message code="company.shipping.rules.countryCode.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <label for="shippingRulePrice"><g:message code="company.shipping.rules.price.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
         <div class="newline">
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <select id="shippingRuleCountry" multiple="multiple"></select>
             </div>
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <input type="text" id="shippingRulePrice" pattern="([+-])?(\d+)(\.\d+)?\%?"/>
             </div>
         </div>
         <div class="spacer"></div>
         <div class="newline">
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <label for="shippingRuleMinAmount"><g:message code="company.shipping.rules.minAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <label for="shippingRuleMaxAmount"><g:message code="company.shipping.rules.maxAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
         <div class="newline">
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <input type="text" id="shippingRuleMinAmount" pattern="(\d+).?(\d+)?"/>
             </div>
-            <div class="taxRate-large">
+            <div class="shipping_medium">
                 <input type="text" id="shippingRuleMaxAmount" pattern="(\d+).?(\d+)?"/>
             </div>
         </div>

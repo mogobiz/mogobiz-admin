@@ -6,6 +6,7 @@
 		text-align: left;
 		direction: ltr;
 		height: 100px;
+        width: 500px;
 	}
 	#taxRateDialog {
 		color: #888;

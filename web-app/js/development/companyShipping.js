@@ -480,7 +480,7 @@ function companyShippingRulesInitFields(companyId, ruleId, isCreate){
     $("#shippingRuleCountry").empty();
 
     if(isCreate){
-        $("#localTaxRateCountry").empty();
+        $("#shippingRuleCountry").empty();
         for(var i = 0; i < countries.length; i++){
             $("#shippingRuleCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
         }
