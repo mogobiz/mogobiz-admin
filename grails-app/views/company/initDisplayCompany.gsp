@@ -34,7 +34,7 @@
 					</a>
 				</li>
 </store:hasPermission>
-<store:hasPermission in="${PermissionType.ADMIN_STORE_TAXES.key}, ${PermissionType.ADMIN_STORE_PAYMENT.key}" id="${params.long("companyId")}">
+<store:hasPermission in="${[PermissionType.ADMIN_STORE_TAXES.key, PermissionType.ADMIN_STORE_PAYMENT.key]}" id="${params.long("companyId")}">
 				<li id ="taxLi">
 					<a href="javascript:void(0)" id="taxTab">
 						<span><g:message code="tabs.tax.label" /></span>
