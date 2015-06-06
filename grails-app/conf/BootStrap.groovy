@@ -22,13 +22,7 @@ class BootStrap {
     PerfCommerceService perfCommerceService
     EmbeddedElasticSearchService embeddedElasticSearchService
 
-    // This one is here to handle circular reference between profileService and authenticationService
-    AuthenticationService authenticationService
-
     def init = { servletContext ->
-        // Manually attach circular reference
-        authenticationService.profileService.setCircularDependency()
-
         commonService.init()
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
