@@ -144,7 +144,7 @@ impex {
 
 external {
     authPath = 'http://mogobiz.ebiznext.com/auth'
-    jahiaClearCache = "http://jahiacommerce.ebiznext.com/DigitalFactory/cms/sites/systemsite/home.clearAllCache.do"
+    jahiaClearCache = "http://acmesport.jahiacf.com/cms/sites/systemsite/home.clearAllCache.do"
 }
 
 superadmin {
