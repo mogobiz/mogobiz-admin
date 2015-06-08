@@ -43,12 +43,6 @@ class ElasticsearchController {
         }
         else {
             elasticsearchService.publish(company, env, catalog, true)
-            try {
-                new URL(grailsApplication.config.external.jahiaClearCache).content
-            }
-            catch (Exception ex) {
-                log.warn("Unable to clear Jahia cache", ex)
-            }
             withFormat {
                 xml { render [:] as XML }
                 json { render [:] as JSON }
