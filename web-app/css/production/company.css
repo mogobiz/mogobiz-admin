@@ -500,7 +500,7 @@ div.createCompany select {
     margin : 15px 0px;
 }
 
-#companyCouponsTabs .multiselectSlides .search button{
+#companyCouponsTabs .multiselectSlides .search .searchButton{
     width: 35px;
     text-align: center;
     position: relative;
@@ -508,7 +508,7 @@ div.createCompany select {
     left: 5px;
 }
 
-#companyCouponsTabs .multiselectSlides .search button i{
+#companyCouponsTabs .multiselectSlides .search .searchButton i{
     display: inline-block;
     position: relative;
     top: 1px;

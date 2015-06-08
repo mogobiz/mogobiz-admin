@@ -222,6 +222,9 @@
 
             // API KEY
             var apiKeyGeneratorUrl = "${createLink(controller: 'keyGen', action: "generateAPIKey")}";
+
+            //-----CATALOG----//
+            var showCatalogUrl = "${createLink(controller: 'catalog', action:'show')}";
             //--------------------------------------------------//
 
             // hide username subnav menu after clicking an option

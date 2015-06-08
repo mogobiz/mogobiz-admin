@@ -39,6 +39,7 @@
         </ul>
         <hr style="margin-top: 5px;" />
     </div>
+
     <div id="companyCouponsCreateDiv">
         <form id="companyCouponsForm" onsubmit="return false;">
             <input id="companyCouponsId" type="hidden"/>
@@ -107,6 +108,7 @@
             <div class="spacer"></div>
         </form>
     </div>
+
     <div id="companyCouponsDescriptionDiv">
         <div class="newline">
             <div class="companyCouponsDialog-large">
@@ -121,6 +123,7 @@
         </div>
         <div class="spacer"></div>
     </div>
+
     <div id="companyCouponsRulesDiv">
         <div style="padding: 10px;">
             <g:message code="company.coupons.rules.header.label" /> <a id="companyCouponsRulesAddLink"><g:message code="company.coupons.rules.add.label" /></a>
@@ -129,8 +132,13 @@
             <div id="companyCouponsRulesGrid" style="height: 220px;"></div>
         </div>
     </div>
+
     <div id="companyCouponsCategoriesDiv" class="multiselectSlides">
-        <div class="search"><input type="text" id="companyCouponsCategoriesSearch"/><button type="button" id="companyCouponsCategoriesSearchBtn"><i class="ui-icon ui-icon-search"></i></button></div>
+        <div class="search">
+            <select id="companyCouponsCategoriesCatalog" multiple="multiple"></select>
+            <input type="text" id="companyCouponsCategoriesSearch"/>
+            <button type="button" class="searchButton" id="companyCouponsCategoriesSearchBtn"><i class="ui-icon ui-icon-search"></i></button>
+        </div>
         <div class="left">
             <select name="from" id="companyCouponsCategories" size="14" multiple="multiple"></select>
         </div>
@@ -143,9 +151,15 @@
         <div class="right">
             <select name="to" id="companyCouponsCategories_to" size="14" multiple="multiple"></select>
         </div>
+        <div class="clear"></div>
     </div>
+
     <div id="companyCouponsProductDiv" class="multiselectSlides">
-        <div class="search"><input type="text" id="companyCouponsProductSearch"/><button type="button" id="companyCouponsProductSearchBtn"><i class="ui-icon ui-icon-search"></i></button></div>
+        <div class="search">
+            <select id="companyCouponsProductCatalog" multiple="multiple"></select>
+            <input type="text" id="companyCouponsProductSearch"/>
+            <button type="button" class="searchButton" id="companyCouponsProductSearchBtn"><i class="ui-icon ui-icon-search"></i></button>
+        </div>
         <div class="left">
             <select name="from" id="companyCouponsProduct" size="14" multiple="multiple"></select>
         </div>
@@ -158,7 +172,9 @@
         <div class="right">
             <select name="to" id="companyCouponsProduct_to" size="14" multiple="multiple"></select>
         </div>
+        <div class="clear"></div>
     </div>
+
     <div id="companyCouponsSkuDiv" class="multiselectSlides">
         <div class="search"><input type="text" id="companyCouponsSkuSearch"/><button type="button" id="companyCouponsSkuSearchBtn"><i class="ui-icon ui-icon-search"></i></button></div>
         <div class="left">
@@ -173,7 +189,9 @@
         <div class="right">
             <select name="to" id="companyCouponsSku_to" size="14" multiple="multiple"></select>
         </div>
+        <div class="clear"></div>
     </div>
+
     <div id="companyCouponsTranslationDiv">
         <div style="padding: 10px;">
             <a id="companyCouponsTranslationAddLink"><g:message code="translation.add.label" /></a>

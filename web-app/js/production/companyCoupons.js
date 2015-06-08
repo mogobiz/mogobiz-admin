@@ -1,4 +1,5 @@
 var companyCouponsGrid = null;
+var companyCouponsCatalogsHtml = null;
 var companyCouponsDescriptionCkeditor = null;
 
 function companyCouponsDrawAll(){
@@ -107,7 +108,7 @@ function companyCouponsDrawAll(){
 }
 
 function companyCouponsGridNameFormatter (row, cell, value, columnDef, dataContext){
-    return "<a href='javascript:companyCouponsGetDetails(" + dataContext.couponId + ", " + false + ")'>" + value + "</a>";
+    return "<a href='javascript:companyCouponsGetAllCatalogs(" + dataContext.couponId + ", " + false + ")'>" + value + "</a>";
 }
 
 function companyCouponsGridActiveFormatter(row, cell, value, columnDef, dataContext){
@@ -120,6 +121,25 @@ function companyCouponsGridCatalogWiseFormatter(row, cell, value, columnDef, dat
     var checkBox = "<input type='checkbox' disabled='disabled' style='margin-top:4px;'";
     checkBox += (value) ? "checked='checked'/>" : "/>";
     return checkBox;
+}
+
+function companyCouponsGetAllCatalogs(couponId, isCreate){
+    $.ajax({
+        url : showCatalogUrl,
+        type : "GET",
+        data : "format=json",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            companyCouponsCatalogsHtml = "<option value='none'>None</option>";
+            for(var i = 0; i < response.length; i++){
+                companyCouponsCatalogsHtml += "<option value='" + response[i].id + "'>" + response[i].name + "</option>";
+            }
+            companyCouponsGetDetails(couponId, isCreate);
+        },
+        error : function(response, status) {}
+    });
 }
 
 function companyCouponsGetDetails(couponId, isCreate){
@@ -352,8 +372,47 @@ function companyCouponsPageInitControls(isCreate) {
 
 function companyCouponsPageInitFields(couponId, isCreate){
     $("#companyCouponsId").val(couponId);
-    $("#companyCouponsName,#companyCouponsCode,#companyCouponsStartDate,#companyCouponsEndDate,#companyCouponsNumberOfUse").val("");
+    $("#companyCouponsName,#companyCouponsCode,#companyCouponsStartDate,#companyCouponsEndDate,#companyCouponsNumberOfUse,#companyCouponsCatalog,#companyCouponsPastille").val("");
     $("#companyCouponsActive").prop("checked", false);
+    $("#companyCouponsCategoriesCatalog, #companyCouponsProductCatalog").empty().html(companyCouponsCatalogsHtml);
+    $("#companyCouponsCategoriesCatalog, #companyCouponsProductCatalog").multiselect("destroy");
+    $("#companyCouponsCategoriesCatalog, #companyCouponsProductCatalog").multiselect({
+        header : false,
+        multiple : false,
+        noneSelectedText : multiselectNoneSelectedTextLabel,
+        minWidth : 190,
+        selectedList : 1
+    });
+    $("#companyCouponsCategoriesCatalog, #companyCouponsProductCatalog").multiselect("uncheckAll");
+    if(catalogSelectedId != null){
+        $("#companyCouponsCategoriesCatalog option").each(function() {
+            if(this.value == catalogSelectedId)
+                $(this).attr("selected", "selected");
+            else
+                $(this).removeAttr("selected");
+        });
+        $("#companyCouponsCategoriesCatalog").multiselect("refresh");
+        $("#companyCouponsDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyCouponsCategoriesCatalog']").each(function() {
+            if (this.value == catalogSelectedId) {
+                this.click();
+            }
+        });
+        $("#companyCouponsCategoriesCatalog").val(catalogSelectedId);
+        $("#companyCouponsProductCatalog option").each(function() {
+            if(this.value == catalogSelectedId)
+                $(this).attr("selected", "selected");
+            else
+                $(this).removeAttr("selected");
+        });
+        $("#companyCouponsProductCatalog").multiselect("refresh");
+        $("#companyCouponsDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyCouponsProductCatalog']").each(function() {
+            if (this.value == catalogSelectedId) {
+                this.click();
+            }
+        });
+        $("#companyCouponsProductCatalog").val(catalogSelectedId);
+    }
+
     if (!isCreate){
         var coupon = null;
         var data = companyCouponsGrid.getData();
@@ -564,7 +623,10 @@ function companyCouponsUpdateCoupon(){
 function companyCouponsSearchCategories(){
     if($("#companyCouponsCategoriesSearch").val() == "")
         return;
-    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsCategoriesSearch").val()) + "&format=json";
+    var dataToSend = "";
+    if($("#companyCouponsCategoriesCatalog").val() != null && $("#companyCouponsCategoriesCatalog").val() != "none")
+        dataToSend += "catalog.id=" +  $("#companyCouponsCategoriesCatalog").val() + "&";
+    dataToSend += "name=" + encodeURIComponent($("#companyCouponsCategoriesSearch").val()) + "&format=json";
     $.ajax({
         url : companyCouponsSearchCategoriesUrl,
         type : "GET",
@@ -587,7 +649,10 @@ function companyCouponsSearchCategories(){
 function companyCouponsSearchProducts(){
     if($("#companyCouponsProductSearch").val() == "")
         return;
-    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsProductSearch").val()) + "&format=json";
+    var dataToSend = "";
+    if($("#companyCouponsProductCatalog").val() != null && $("#companyCouponsProductCatalog").val() != "none")
+        dataToSend += "catalog.id=" +  $("#companyCouponsProductCatalog").val() + "&";
+    dataToSend += "name=" + encodeURIComponent($("#companyCouponsProductSearch").val()) + "&format=json";
     $.ajax({
         url : companyCouponsSearchProductsUrl,
         type : "GET",

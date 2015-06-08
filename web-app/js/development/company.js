@@ -660,7 +660,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 
                     $('#addNewCoupon').unbind();
                     $('#addNewCoupon').click(function() {
-                        companyCouponsGetDetails(null, true);
+                        companyCouponsGetAllCatalogs(null, true);
                     });
                     companyCouponsDrawAll();
                 }
