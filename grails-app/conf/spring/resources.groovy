@@ -406,6 +406,9 @@ beans = {
     profilePermissionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ProfilePermission){
         excludes = ['class']
     }
+    bOTransactionLogRenderCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOTransactionLogRender){
+        excludes = ['class']
+    }
 
     loadBeans("classpath:*defaultResources.groovy")
 /*
@@ -581,6 +584,8 @@ beans = {
     profileRender (com.mogobiz.store.domain.ProfileRender)
     profilePermissionValidation (com.mogobiz.store.domain.ProfilePermissionValidation)
     profilePermissionRender (com.mogobiz.store.domain.ProfilePermissionRender)
+    BOTransactionLogRender (com.mogobiz.store.domain.BOTransactionLogRender)
+    BOTransactionLogValidation (com.mogobiz.store.domain.BOTransactionLogValidation)
 
     BODeliveryValidation (com.mogobiz.store.domain.BODeliveryValidation)
     BODeliveryRender (com.mogobiz.store.domain.BODeliveryRender)
