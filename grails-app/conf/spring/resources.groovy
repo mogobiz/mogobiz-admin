@@ -406,7 +406,11 @@ beans = {
     profilePermissionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ProfilePermission) {
         excludes = ['class']
     }
-    bOTransactionLogRenderCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOTransactionLogRender) {
+
+    bOTransactionLogRenderer(JsonRenderer, com.mogobiz.pay.domain.BOTransactionLog) {
+        excludes = ['class']
+    }
+    bOTransactionLogRenderCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOTransactionLog) {
         excludes = ['class']
     }
 
