@@ -8,8 +8,8 @@ grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 
 
-//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
 
 
 grails.project.fork = [
@@ -18,9 +18,9 @@ grails.project.fork = [
         // configure settings for the test-app JVM, uses the daemon by default
         test: [maxMemory: 1500, minMemory: 64, debug: false, maxPerm: 1024, daemon:true],
         // configure settings for the run-app JVM
-        run: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
+        run: [maxMemory: 8048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
         // configure settings for the run-war JVM
-        war: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
+        war: [maxMemory: 8048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
         // configure settings for the Console UI JVM
         console: [maxMemory: 2048, minMemory: 2048, debug: true, maxPerm: 1024]
 ]
@@ -32,7 +32,7 @@ grails{
                 "-XX:MaxNewSize=256m",
                 "-XX:NewSize=256m",
                 "-Xms2048m",
-                "-Xmx2048m",
+                "-Xmx8048m",
                 "-XX:SurvivorRatio=128",
                 "-XX:MaxTenuringThreshold=0",
                 "-XX:+UseTLAB",
@@ -88,15 +88,14 @@ grails.project.dependency.resolution = {
 
     plugins {
         // plugins for the build system only
-        build ':tomcat:7.0.50'
+        build ':tomcat:7.0.52'
 
 
 // plugins needed at runtime but not for compilation
-        // runtime ':hibernate4:4.3.5.2' // or
-        runtime ':hibernate:3.6.10.15' // ':hibernate4:4.3.5.3' for Hibernate 4
-//        runtime ':hibernate:3.6.10.14'
+        //runtime ':hibernate4:4.3.5.3'
+        runtime ':hibernate:3.6.10.15'
         runtime ':database-migration:1.4.0'
-//        runtime ':jquery:1.11.0.2'
+        runtime ':jquery:1.11.0.2'
         compile ":facebook-graph:0.14"
         compile ':platform-core:1.0.0'
         compile ":google-data:0.1.3"
@@ -104,24 +103,24 @@ grails.project.dependency.resolution = {
         compile (":email-confirmation:2.0.8") {
             excludes 'quartz'
         }
-        compile ":jquery:1.9.1"
-        compile ":jquery-ui:1.8.24"
+        compile ":jquery:1.11.1"
+        compile ":jquery-ui:1.10.4"
         compile (":shiro:1.2.1") {
             excludes 'shiro-quartz'
         }
         compile ":mail:1.0.5"
         compile ":quartz:1.0.1"
-        compile ':recaptcha:0.6.8'
+        compile ':recaptcha:1.2.0'
         compile ":cache-headers:1.1.6"
         compile ":cached-resources:1.0"
 //		compile ":zipped-resources:1.0"
 //		runtime ":yui-minify-resources:0.1.5"
         compile ":rest:0.8"
-        compile ":joda-time:1.4"
+        compile ":joda-time:1.5"
         test ':spock:0.7'
         compile ":standalone:1.2.3"
 
-        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
+//        compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -169,7 +168,7 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"0.1-SNAPSHOT")  {excludes "groovy-all"}
 
-        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+//        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"0.1-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 

@@ -56,7 +56,7 @@ dataSource {
 
 //    dialect = "org.hibernate.dialect.DerbyDialect"
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
-//    url = "jdbc:derby://localhost:1527//data/derby/mogobiz;create=true"
+//    url = "jdbc:derby://localhost:1528/mogobiz;user=mogobiz;password=mogobiz;create=true"
 
 //    username = "jahiaCommerce"
 //    password = "jahiaCommerce"
@@ -100,7 +100,7 @@ importCatalog {
     flushsize = 100
 }
 grails {
-    serverURL = "http://mogobiz.ebiznext.com/mogobiz"
+    serverURL = "http://localhost:8090/mogobiz"
     mail {
         from = 'mogobiz@gmail.com'
         host = 'smtp.gmail.com'
@@ -155,7 +155,8 @@ superadmin {
 
 elasticsearch {
     export.cron = '0 0 0 * * ?'
-    serverURL = 'http://localhost:9200'
+//    serverURL = 'http://193.248.38.15:9200'
+    serverURL = 'http://127.0.0.1:9200'
     shards = 1
     replicas = 1
 }
@@ -258,7 +259,7 @@ environments {
         dataSource {
             dialect = "org.hibernate.dialect.DerbyDialect"
             driverClassName = "org.apache.derby.jdbc.ClientDriver"
-            url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
+            url = "jdbc:derby://localhost:1528/mogobiz;create=true"
         }
     }
 
