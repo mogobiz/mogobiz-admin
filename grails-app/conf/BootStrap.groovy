@@ -1,9 +1,7 @@
+import bootstrap.CommerceService
 import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
-import bootstrap.CommerceService
 import bootstrap.PerfCommerceService
-import com.mogobiz.authentication.AuthenticationService
-import com.mogobiz.store.domain.Company
 
 class BootStrap {
     // Nombre de catégories principales
@@ -13,7 +11,7 @@ class BootStrap {
     public static final int LEVEL_TWO_CATEGORY = 5
 
     // Nombre de produits par sous catégorie
-    public static final int MAX_PRODUCTS_PER_CATEGORY = 2000
+    public static final int MAX_PRODUCTS_PER_CATEGORY = 200
     // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 100 = 5000)
 
     def grailsApplication
