@@ -319,7 +319,7 @@ function catalogGeneralInitFields(catalog) {
     $("#catalogChannels").multiselect("refresh");
     var channels = (catalog.channels) ? catalog.channels.split(",") : [];
     for (var i = 0; i < channels.length; i++) {
-        $("#catalogEditForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogChannels']").each(function () {
+        $("#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_catalogChannels']").each(function () {
             if (this.value == channels[i]) {
                 this.click();
             }

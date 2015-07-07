@@ -117,8 +117,8 @@ function categoryProductsUpdateStatus(productId, status){
 		cache : false,
 		async : true,
 		success : function(response, status) {
-			// Do nothing
-		}
+            setTimeout(function(){$("li#" + productId).hide();}, 500);
+        }
 	});
 }
 

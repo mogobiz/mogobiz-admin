@@ -445,6 +445,7 @@ function productBrandsCreateBrand(){
             else{
                 productBrandsListPageInitControls();
                 productBrandsListLoadAll();
+                brandLoad();
             }
         },
         error : function(response, status) {
@@ -480,6 +481,7 @@ function productBrandsUpdateBrand(){
             else{
                 productBrandsListPageInitControls();
                 productBrandsListLoadAll();
+                brandLoad();
             }
         },
         error : function(response, status) {
@@ -507,6 +509,7 @@ function productBrandsDeleteBrand(){
         success : function(response, status) {
             productBrandsListPageInitControls();
             productBrandsListLoadAll();
+            brandLoad();
         },
         error : function(response, status) {}
     });
@@ -519,6 +522,7 @@ function productBrandsUploadLogo() {
     document.getElementById("productBrandsHiddenFrame").onload = function() {
         productBrandsListPageInitControls();
         productBrandsListLoadAll();
+        brandLoad();
     }
 }
 
@@ -545,6 +549,7 @@ function productBrandsDeleteLogo() {
                         else{
                             productBrandsListPageInitControls();
                             productBrandsListLoadAll();
+                            brandLoad();
                         }
                     }
                 });

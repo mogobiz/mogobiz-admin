@@ -240,7 +240,7 @@ function productAttachEditForm(productId) {
 
             $('#brandLink').unbind();
             $("#brandLink").click(function() {
-                brandPageDisplay()
+                brandPageDisplay();
             });
             $("#productBrand").bind("multiselectclick", function(event, ui) {
                 if(brandClickFromBrandLoad)

@@ -30,7 +30,7 @@ function securityGetUsersPermissions(users, companyId, selectId, permissionType,
             var usersHtml = "";
             for (var i = 0; i < users.length; i++) {
                 usersHtml += "<option value=" + users[i].id;
-                for (var j = 0; j < response.length; j++) {console.log("users[" + i + " ].id = " + users[i].id);console.log("response[" + j + " ].id = " + response[j].id);
+                for (var j = 0; j < response.length; j++) {
                     if (users[i].id == response[j].id) {
                         usersHtml += " selected";
                         break;
