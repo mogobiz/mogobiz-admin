@@ -1,4 +1,5 @@
 var tourismPropertiesGridObject = null;
+var tourismPropertiesFirstVisit = null;
 
 function tourismPropertiesReload(productId) {
     var dataToSend = "id=" + productId + "&format=json";

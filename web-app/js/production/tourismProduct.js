@@ -66,7 +66,8 @@ function productAttachEditForm(productId) {
         success : function(response, status) {
             var product = response;
             tourismSuggestionsFirstVisit = true;
-            openedResourceForm = productId;
+            tourismPropertiesFirstVisit = true;
+
 // Main Controls
             clear_form_elements("#formCreerProd");
             clear_form_elements("#poiLocationForm");
@@ -497,7 +498,10 @@ function productAttachEditForm(productId) {
                         $('#tourismSuggestions').hide();
                         $('#tourismShipping').hide();
                         $('#tourismTranslation').hide();
-                        tourismPropertiesInit(product);
+                        if(tourismPropertiesFirstVisit) {
+                            tourismPropertiesFirstVisit = false;
+                            tourismPropertiesInit(product);
+                        }
                         break;
                     case 'featuresTab':
                         $('#generalInfo').hide();

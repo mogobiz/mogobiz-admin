@@ -616,8 +616,8 @@ function tourismPricingCreateTicketCombinaison(productId) {
     var variation3 = ($("#tourismPricingVariation3").val() && $("#tourismPricingVariation3").val() != 'NONE') ? $("#tourismPricingVariation3").val() : '';
     var price = ($("#tourismPricingTicketPrice").val() != "") ? $("#tourismPricingTicketPrice").val(): $("#productMontant").val();
     var dataToSend = 'product.id=' + productId;
-    dataToSend += '&ticketType.sku=' + $('#tourismPricingSKU').val();
-    dataToSend += '&ticketType.name=' + $('#tourismPricingTicketType').val();
+    dataToSend += '&ticketType.sku=' + encodeURIComponent($('#tourismPricingSKU').val());
+    dataToSend += '&ticketType.name=' + encodeURIComponent($('#tourismPricingTicketType').val());
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
@@ -671,8 +671,8 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
     var price = ($("#tourismPricingTicketPrice").val() != "") ? $("#tourismPricingTicketPrice").val(): $("#productMontant").val();
     var dataToSend = 'product.id=' + productId;
     dataToSend += '&ticketType.id=' + ticketId;
-    dataToSend += '&ticketType.sku=' + $('#tourismPricingSKU').val();
-    dataToSend += '&ticketType.name=' + $('#tourismPricingTicketType').val();
+    dataToSend += '&ticketType.sku=' + encodeURIComponent($('#tourismPricingSKU').val());
+    dataToSend += '&ticketType.name=' + encodeURIComponent($('#tourismPricingTicketType').val());
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;

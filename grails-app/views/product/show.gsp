@@ -71,19 +71,15 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 	<div id="page_navigation_parent">
 		<div id="page_navigation"></div>
 		<input type="hidden" id="pageOffset" value="${prodList?.pageOffset + 1}"/>
+        <input type="hidden" id="pageCount" value="${prodList?.pageCount}"/>
 	</div>
 </g:if>
 
 <script type="text/javascript">
 $(function() {
-	var totalCount = ${prodList?.totalCount};
-	var maxItemsPerPage = ${prodList?.maxItemsPerPage};
 	var pageOffset = ${prodList?.pageOffset} + 1;
 	var pageCount = ${prodList?.pageCount};
-	var hasNext = ${prodList?.hasNext};
-	var hasPrevious = ${prodList?.hasPrevious};
-	var pageSize = ${prodList?.pageSize};
-	
+
 	$("#page_navigation").paginate({
 		count: pageCount,						//The total number of pages
 		start: pageOffset,						//With which number the visible pages should start
@@ -103,7 +99,7 @@ $(function() {
 			categoryProductsDrawAll(page - 1);
 		}
 	});
-	
+
 	var margin = ($('#page_navigation').parent().width() / 2) - (($('.jPag-control-back').width() + $('.jPag-control-center').width() + $('.jPag-control-front').width() + 8) / 2);
 	$('#page_navigation_parent').css('margin-left', margin);
 });

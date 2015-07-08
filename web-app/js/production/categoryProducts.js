@@ -117,7 +117,10 @@ function categoryProductsUpdateStatus(productId, status){
 		cache : false,
 		async : true,
 		success : function(response, status) {
-            setTimeout(function(){$("li#" + productId).hide();}, 500);
+            if($("#productList > li").length == 1 && $("#pageOffset").val() == $("#pageCount").val())
+                categoryProductsDrawAll($("#pageCount").val() - 1);
+            else
+                categoryProductsDrawAll();
         }
 	});
 }

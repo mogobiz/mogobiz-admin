@@ -54,11 +54,8 @@
 	<div id="creatPoiDiv">
 		<div id="poiAddress" align="left">
 			<form id="poiPrdLocationForm" name="form_poiPrdLocation">
-				<input type="hidden" name="poi.country.name" id="poiCountryName"/>
 				<input type="hidden" name="poi.country.code" id="poiCountryCode"/>
-				<input type="hidden" name="poi.city" id="poiCity"/>	
-				<input type="hidden" name="poi.region.name" id="poiRegionName"/>
-				<input type="hidden" name="poi.region.code" id="poiRegionCode"/>
+				<input type="hidden" name="poi.city" id="poiCity"/>
 				<input type="hidden" name="poi.latitude" id="poiLat"/>
 				<input type="hidden" name="poi.longitude" id="poiLng"/>
 			</form>

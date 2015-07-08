@@ -311,6 +311,7 @@ function fillPoiEditForm(response) {
 		var poiJson = eval(poiFormValues);
 		poiTranslationDrawAll(poiJson.id);
 		var newPoiJson = new Object();
+        console.log(poiJson)
 		for(var key in poiJson){
 			var newKey;
 			newKey = "poi."+key;
@@ -319,9 +320,9 @@ function fillPoiEditForm(response) {
 					newPoiJson[newKey] = poiJson[key].code;
 				}
 			}
-			else if(key=='country'){
+			else if(key=='countryCode'){
 				if(poiJson[key]){
-					newPoiJson[newKey] = poiJson[key].name;
+					newPoiJson["poi.country.code"] = poiJson[key];
 				}
 			}
 			else if(key=='visibility'){
@@ -342,7 +343,6 @@ function fillPoiEditForm(response) {
 	$(poiLocForm).populate(newPoiJson, {debug:1});
 	var poiInfoForm = document.forms['form_poiPrdInfos'];
 	$(poiInfoForm).populate(newPoiJson, {debug:1});
-	$('#poiAdress').val(response.road1);
 	$('#poiAdress').val(response.road1);
 	$('#poiMain').prop('checked', newPoiJson["poi.isMain"]);
 	$('#pictureTypeList').val(newPoiJson["poi.picture"]);
