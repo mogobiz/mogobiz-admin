@@ -1,66 +1,66 @@
 .categoriesMain{
-	width: 100%;
+    width: 100%;
 }
 
 .categoriesMain td{
-	vertical-align: top;
+    vertical-align: top;
 }
 
 .categoriesMain .treeCol{
-	border-right: 1px solid rgb(166, 201, 226);
+    border-right: 1px solid #eaeaea;
 }
 
 .categoriesMain .tree{
-	padding: 5px;
-	width: 190px;
-	min-height: 200px;
+    padding: 5px;
+    width: 190px;
+    min-height: 200px;
 }
 
 .categoriesMain .categoryDetails{
-	padding: 5px;
-	width: 547px;
-	min-height: 320px;
+    padding: 5px;
+    width: 547px;
+    min-height: 320px;
 }
 
 .categoriesMain .categoryTree{
-    padding-top: 10px;
-	max-height: 800px;
-	overflow: auto;
+    margin-top: 10px;
+    max-height: 800px;
+    overflow: auto;
 }
 
 .categoriesMain .categoryTree::-webkit-scrollbar {
-	width: 6px;
-	height: 6px;
+    width: 6px;
+    height: 6px;
 }
- 
+
 .categoriesMain .categoryTree::-webkit-scrollbar-track {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
- 
+
 .categoriesMain .categoryTree::-webkit-scrollbar-thumb {
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	background: rgba(72, 75, 79, 0.4);
-	-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(72, 75, 79, 0.4);
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 div.category-general-full{
-	width: 100%;
+    width: 100%;
 }
 
 div.category-general-full input, div.category-general-full select, div.category-general-full textarea{
-	width: 98%
+    width: 98%
 }
 
 div.category-general-medium{
-	float: left;
-	width: 50%;
+    float: left;
+    width: 50%;
 }
 
 div.category-general-medium input, div.category-general-medium select, div.category-general-medium textarea{
-	width: 96%
+    width: 96%
 }
 
 div.category-general-medium select{
@@ -70,25 +70,25 @@ div.category-general-medium select{
 }
 
 div.category-general-large{
-	float: left;
-	width: 60%;
+    float: left;
+    width: 60%;
 }
 
 div.category-general-small{
-	float: left;
-	width: 40%;
+    float: left;
+    width: 40%;
 }
 
 div.category-general-large input[type="text"], div.category-general-large select, div.category-general-large textarea,
 div.category-general-small input[type="text"], div.category-general-small select, div.category-general-small textarea{
-	width: 95%
+    width: 95%
 }
 
 div.general-full input[type ="checkbox"], div.general-large input[type ="checkbox"], div.general-small input[type ="checkbox"] {
-	width:15px;
+    width:15px;
 }
 
 div.category-general-full textarea, div.category-general-large textarea, div.category-general-small textarea{
-	padding: 3px;
-	resize: none;
+    padding: 3px;
+    resize: none;
 }

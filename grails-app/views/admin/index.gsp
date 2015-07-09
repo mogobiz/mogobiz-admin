@@ -5,12 +5,9 @@
         <title><g:message code="default.admin.label" /></title>
 
         %{--<r:require modules="core, admin, company"/>--}%
-        <g:if env="development">
-            <g:set var="env" value="development"/>
-        </g:if>
-        <g:else>
-            <g:set var="env" value="release"/>
-        </g:else>
+        <%
+            String env = grails.util.Environment.current.name
+        %>
 
         <!-- core stylesheet -->
         <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-ui/themes/facebook-theme/jquery-ui-1.8.10.custom.css")}' />
