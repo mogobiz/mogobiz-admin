@@ -7,12 +7,9 @@
 	href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 </head>
 <body>
-    <g:if env="development">
-        <g:set var="env" value="development"/>
-    </g:if>
-    <g:else>
-        <g:set var="env" value="release"/>
-    </g:else>
+<%
+	String env = grails.util.Environment.current.name
+%>
 
     <!-- stylesheet -->
     <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-ui/themes/facebook-theme/jquery-ui-1.8.10.custom.css")}' />
