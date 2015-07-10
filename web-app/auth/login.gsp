@@ -27,67 +27,67 @@
 
 
 	<div id="signInDiv" align="center">
-		<div id="main" class="page">
-			<table>
+		<div id="main" class="page" style="width: 460px;">
+			<table width="100%">
 				<tr>
-					<td width="55%">
+					<td %{--width="55%"--}%>
 						<div id="signinSection" class="extraPadded">
 							<div class="sIHeader">
 								<h1>
-									<g:message code="logIn.title.label" />
+									<g:message code="logIn.title" />
 								</h1>
 							</div>
 							<div class="sIBody">
 								<div class="signInListBorder">
-									<div class="signInList">
-										<div class="signInPartner">
-											<a
-												href="${createLink(controller: 'externalAuth', action:'facebook')}?targetUri=${params.targetUri}">
-												<img alt="<g:message code="logIn.altFacebook.label" />"
-												src="${resource(dir:'images/icons',file:'facebook.png')}"
-												title="<g:message code="logIn.TitleFacebook.label" />"></img>
-												<div class="partnerName">
-													<g:message code="logIn.Facebook.label" />
-												</div>
-											</a>
-										</div>
-										<div class="signInPartner">
-											<a
-												href="${createLink(controller: 'externalAuth', action:'google')}?targetUri=${params.targetUri}">
-												<img alt="<g:message code="logIn.altGoogle.label" />"
-												src="${resource(dir:'images/icons',file:'google.png')}"
-												title="<g:message code="logIn.titleGoogle.label" />"></img>
-												<div class="partnerName">
-													<g:message code="logIn.Google.label" />
-												</div>
-											</a>
-										</div>
-										<div class="signInPartner">
-											<a> <img alt="<g:message code="logIn.altYahoo.label" />"
-												src="${resource(dir:'images/icons',file:'yahoo.png')}"
-												title="<g:message code="logIn.titleYahoo.label" />"></img>
-												<div class="partnerName">
-													<g:message code="logIn.Yahoo.label" />
-												</div>
-											</a>
-										</div>
-										<div class="signInPartner signInPartnerLast">
-											<a> <img alt="<g:message code="logIn.altOpenID.label" />"
-												src="${resource(dir:'images/icons',file:'openid.png')}"
-												title="<g:message code="logIn.titleOpenID.label" />"></img>
-												<div class="partnerName">
-													<g:message code="logIn.OpenID.label" />
-												</div>
-											</a>
-										</div>
-										<div style="clear: both"></div>
-									</div>
+									%{--<div class="signInList">--}%
+										%{--<div class="signInPartner">--}%
+											%{--<a--}%
+												%{--href="${createLink(controller: 'externalAuth', action:'facebook')}?targetUri=${params.targetUri}">--}%
+												%{--<img alt="<g:message code="logIn.altFacebook.label" />"--}%
+												%{--src="${resource(dir:'images/icons',file:'facebook.png')}"--}%
+												%{--title="<g:message code="logIn.TitleFacebook.label" />"></img>--}%
+												%{--<div class="partnerName">--}%
+													%{--<g:message code="logIn.Facebook.label" />--}%
+												%{--</div>--}%
+											%{--</a>--}%
+										%{--</div>--}%
+										%{--<div class="signInPartner">--}%
+											%{--<a--}%
+												%{--href="${createLink(controller: 'externalAuth', action:'google')}?targetUri=${params.targetUri}">--}%
+												%{--<img alt="<g:message code="logIn.altGoogle.label" />"--}%
+												%{--src="${resource(dir:'images/icons',file:'google.png')}"--}%
+												%{--title="<g:message code="logIn.titleGoogle.label" />"></img>--}%
+												%{--<div class="partnerName">--}%
+													%{--<g:message code="logIn.Google.label" />--}%
+												%{--</div>--}%
+											%{--</a>--}%
+										%{--</div>--}%
+										%{--<div class="signInPartner">--}%
+											%{--<a> <img alt="<g:message code="logIn.altYahoo.label" />"--}%
+												%{--src="${resource(dir:'images/icons',file:'yahoo.png')}"--}%
+												%{--title="<g:message code="logIn.titleYahoo.label" />"></img>--}%
+												%{--<div class="partnerName">--}%
+													%{--<g:message code="logIn.Yahoo.label" />--}%
+												%{--</div>--}%
+											%{--</a>--}%
+										%{--</div>--}%
+										%{--<div class="signInPartner signInPartnerLast">--}%
+											%{--<a> <img alt="<g:message code="logIn.altOpenID.label" />"--}%
+												%{--src="${resource(dir:'images/icons',file:'openid.png')}"--}%
+												%{--title="<g:message code="logIn.titleOpenID.label" />"></img>--}%
+												%{--<div class="partnerName">--}%
+													%{--<g:message code="logIn.OpenID.label" />--}%
+												%{--</div>--}%
+											%{--</a>--}%
+										%{--</div>--}%
+										%{--<div style="clear: both"></div>--}%
+									%{--</div>--}%
 								</div>
 								<br>
 									<div class="sIHeader">
-										<h1>
-											<g:message code="logIn.headerForm.label" />
-										</h1>
+										%{--<h1>--}%
+											%{--<g:message code="logIn.headerForm.label" />--}%
+										%{--</h1>--}%
 									</div>
 									<div>
 										<g:form controller="auth" action="signIn" name="login-form">
@@ -115,32 +115,32 @@
 							</div>
 						</div>
 					</td>
-					<td>
-						<div id="signupSection" class="extraPadded">
-							<div class="sUContent">
-								<div class="sUHeader">
-									<div class="sUImage">
-										<a><img id="logoIperPic"
-											alt="<g:message code="logIn.altcommencementMaintenant.label" />"
-											src="${resource(dir: 'images', file: 'icon.png')}"
-											title="<g:message code="logIn.titlecommencementMaintenant.label" />"></a>
-									</div>
-									<h1>
-										<g:message code="logIn.sUHeader.label" />
-									</h1>
-								</div>
-								<div id="commencerDiv" class="sUBody">
-									<p>
-										<g:message code="logIn.sUBody.label" />
-									</p>
-									<button class="orangeButton" id="inscriptionLink">
-										<span><g:message code="logIn.Buttoncommencement.label" /></span>
-									</button>
-									<div class="buttonClear"></div>
-								</div>
-							</div>
-						</div>
-					</td>
+					%{--<td>--}%
+						%{--<div id="signupSection" class="extraPadded">--}%
+							%{--<div class="sUContent">--}%
+								%{--<div class="sUHeader">--}%
+									%{--<div class="sUImage">--}%
+										%{--<a><img id="logoIperPic"--}%
+											%{--alt="<g:message code="logIn.altcommencementMaintenant.label" />"--}%
+											%{--src="${resource(dir: 'images', file: 'icon.png')}"--}%
+											%{--title="<g:message code="logIn.titlecommencementMaintenant.label" />"></a>--}%
+									%{--</div>--}%
+									%{--<h1>--}%
+										%{--<g:message code="logIn.sUHeader.label" />--}%
+									%{--</h1>--}%
+								%{--</div>--}%
+								%{--<div id="commencerDiv" class="sUBody">--}%
+									%{--<p>--}%
+										%{--<g:message code="logIn.sUBody.label" />--}%
+									%{--</p>--}%
+									%{--<button class="orangeButton" id="inscriptionLink">--}%
+										%{--<span><g:message code="logIn.Buttoncommencement.label" /></span>--}%
+									%{--</button>--}%
+									%{--<div class="buttonClear"></div>--}%
+								%{--</div>--}%
+							%{--</div>--}%
+						%{--</div>--}%
+					%{--</td>--}%
 				</tr>
 			</table>
 		</div>

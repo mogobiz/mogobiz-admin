@@ -128,6 +128,10 @@ function categoriesResolveTree(productId){
             $.jstree._reference("#productCategoriesTreeList").select_node("#productCategoriesTreeNode-0");
             categoriesClickFromCategoriesLoad = false;
         }
+        else if(categoriesNestedNodes.length == 1) {
+            $.jstree._reference("#productCategoriesTreeList").select_node("#productCategoriesTreeNode-" + categoriesNestedNodes[0].id);
+            categoriesClickFromCategoriesLoad = false;
+        }
         else {
             categoriesNestedNodesIndex = 0;
             categoriesTreeDrawNestedChilds();

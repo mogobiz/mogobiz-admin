@@ -289,11 +289,11 @@ table.form td {
 }
 
 #signinSection {
-    border-right: 2px dashed #F1F1F1;
+    /*border-right: 2px dashed #F1F1F1;*/
     color: #333333;
     padding-left: 60px;
     padding-right: 10px;
-    width: 400px;
+    /*width: 400px;*/
 }
 
 #signinSection #login-form input{
