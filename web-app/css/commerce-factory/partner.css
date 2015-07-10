@@ -115,6 +115,29 @@ div.general-small input {
     overflow: auto;
 }
 
+.productCategoriesComboTree{
+    max-height: 250px;
+    overflow: auto;
+}
+
+.productCategoriesComboTree::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.productCategoriesComboTree::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.productCategoriesComboTree::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(72, 75, 79, 0.4);
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
 /*--------------------------------------------------*/
 
 div.properties-large {

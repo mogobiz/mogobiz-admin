@@ -253,3 +253,21 @@ function shortTheString(string, numberShortTo) {
     }
     return newString;
 }
+
+/**
+ * replaceAll
+ * replace all occurrence of a part of string
+ * by another
+ * @param stringToFind
+ * @param stringToReplace
+ * @returns {String}
+ */
+String.prototype.replaceAll = function(stringToFind, stringToReplace) {
+    var temp = this.toString();
+    var index = temp.indexOf(stringToFind);
+    while (index != -1) {
+        temp = temp.substring(0, index) + stringToReplace + temp.substring(index + stringToFind.length);
+        index = temp.indexOf(stringToFind);
+    }
+    return temp;
+};

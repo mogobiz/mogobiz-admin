@@ -494,6 +494,9 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         tourismPricingInitUploadForm(ticketId, hasResource);
         tourismPricingTranslationDrawAll(ticketId);
     }
+    else if(tourismPricingGridObject.getData().length == 0){
+        $('#tourismPricingTicketType').val($("#productName").val());
+    }
 }
 
 function tourismPricingGetDataRowByTicketId(ticketId) {
