@@ -90,8 +90,7 @@ dataSource {
 // importCountries.cron='59 59 23 31 12 ? 2099' // never fire
 
 importCountries {
-    cron = '0 0 0 * * ?' // every day
-    codes = 'FR,GB,SN'
+    codes = 'DE,ES,FR,GB,US'
     dir = "/data/mogopay/import/countries"
 }
 
