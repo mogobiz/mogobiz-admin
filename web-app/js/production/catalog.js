@@ -1,4 +1,5 @@
 var catalogSelectedId = null;
+var catalogSelectedName = null;
 var catalogImported = false;
 var catalogRunningInterval = null;
 var catalogRunningIntervalTime = 10000;
@@ -32,7 +33,8 @@ function catalogueLoadList() {
                     $("#createProductMenu").detach().prependTo(document.body).hide();
                     $("#categoryDetails").empty();
                     catalogSelectedId = ui.value;
-                    categoryTreeDrawByCatalog(catalogSelectedId, ui.text);
+                    catalogSelectedName = ui.text;
+                    categoryTreeDrawByCatalog(catalogSelectedId, catalogSelectedName);
                 }, 10);
             });
             if (catalogSelectedId != null) {

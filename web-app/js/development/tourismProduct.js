@@ -404,20 +404,18 @@ function productAttachEditForm(productId) {
                 var height = (shipping.height && shipping.height != "0") ? shipping.height : "";
                 var depth = (shipping.depth && shipping.depth != "0") ? shipping.depth : "";
                 var amount = (shipping.amount && shipping.amount != "0") ? shipping.amount : "";
-                var returnMaxDelay = (shipping.returnMaxDelay && shipping.returnMaxDelay >= "0") ? shipping.returnMaxDelay : "";
 
                 $("#tourismShippingWeight").val(weight);
                 $("#tourismShippingWidth").val(width);
                 $("#tourismShippingHeight").val(height);
                 $("#tourismShippingDepth").val(depth);
                 $("#tourismShippingAmount").val(amount);
-                $("#tourismShippingReturnMaxDelay").val(returnMaxDelay);
                 $("#tourismShippingWeightUnit").val(shipping.weightUnit.name);
                 $("#tourismShippingLinearUnit").val(shipping.linearUnit.name);
                 $("#tourismShippingFree").prop("checked", shipping.free);
             }
 // Init Shipping Tab Events
-            $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingReturnMaxDelay, #tourismShippingFree").unbind();
+            $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingFree").unbind();
             $("#tourismShippingWeightUnit, #tourismShippingLinearUnit").unbind().multiselect("destroy");
             $("#tourismShippingWeightUnit").multiselect({
                 header : false,
@@ -436,7 +434,7 @@ function productAttachEditForm(productId) {
             });
 
             if(product.xtype.name == "PRODUCT"){
-                $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingReturnMaxDelay, #tourismShippingFree").change(function(){
+                $("#tourismShippingWeight, #tourismShippingWidth, #tourismShippingHeight, #tourismShippingDepth, #tourismShippingAmount, #tourismShippingFree").change(function(){
                     if(tourismProductValidateShipping())
                         tourismProductUpdateShipping(productId, "", "");
                 });
@@ -1083,16 +1081,6 @@ function tourismProductValidateShipping(){
         });
         return false;
     }
-    if (!$('input#tourismShippingReturnMaxDelay')[0].checkValidity()) {
-        $('#tourismShippingReturnMaxDelay').focus();
-        jQuery.noticeAdd({
-            stayTime: 2000,
-            text: fieldsInvalidMessageLabel,
-            stay: false,
-            type: 'error'
-        });
-        return false;
-    }
     return true;
 }
 
@@ -1102,7 +1090,6 @@ function tourismProductUpdateShipping(productId, param, value){
     var height = ($("#tourismShippingHeight").val() != "") ? $("#tourismShippingHeight").val() : 0;
     var depth = ($("#tourismShippingDepth").val() != "") ? $("#tourismShippingDepth").val() : 0;
     var amount = ($("#tourismShippingAmount").val() != "") ? $("#tourismShippingAmount").val() : 0;
-    var returnMaxDelay = $("#tourismShippingReturnMaxDelay").val();
 
     var dataToSend = "product.id=" + productId;
     dataToSend += "&product.shipping.weight=" + weight;
@@ -1118,7 +1105,6 @@ function tourismProductUpdateShipping(productId, param, value){
     else
         dataToSend += "&product.shipping.linearUnit=" + $("#tourismShippingLinearUnit").val();
     dataToSend += "&product.shipping.amount=" + amount;
-    dataToSend += "&product.shipping.returnMaxDelay=" + returnMaxDelay;
     dataToSend += "&product.shipping.free=" + $("#tourismShippingFree").is(':checked');
     dataToSend += "&format=json";
     $.ajax( {
