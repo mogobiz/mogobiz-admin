@@ -6,7 +6,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
-
+grails.project.plugin.includeSource = false
 
 //grails.plugin.location."mogobiz-core" = "../mogobiz-core"
 //grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
@@ -24,6 +24,7 @@ grails.project.fork = [
         // configure settings for the Console UI JVM
         console: [maxMemory: 2048, minMemory: 2048, debug: true, maxPerm: 1024]
 ]
+
 grails{
     tomcat{
         jvmArgs = [
@@ -119,7 +120,7 @@ grails.project.dependency.resolution = {
         compile ":rest:0.8"
         compile ":joda-time:1.4"
         test ':spock:0.7'
-        compile ":standalone:1.2.3"
+        compile ":standalone:1.3"
 
         compile "com.mogobiz:mogobiz-core:0.1-SNAPSHOT"
     }

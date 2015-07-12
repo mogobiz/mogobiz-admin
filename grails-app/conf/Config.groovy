@@ -64,6 +64,9 @@ dataSource {
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
 //    url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
 
+//    dialect = "org.hibernate.dialect.DerbyDialect"
+//    driverClassName = "org.apache.derby.jdbc.ClientDriver"
+//    url = "jdbc:derby://localhost:12500/mogobiz;user=mogobiz;password=mogobiz"
 
     logSql = false
     properties {
@@ -95,7 +98,7 @@ importCountries {
 }
 
 importCatalog {
-    nbthreads = 4
+    nbthreads = 1
     flushsize = 100
 }
 grails {
@@ -200,30 +203,16 @@ environments {
     production {
     }
 
-    development {
-        elasticsearch {
-            embedded {
-                active = false
-                settings {
-                    path_data = System.getProperty("java.io.tmpdir") + '/data'
-                }
+    elasticsearch {
+        embedded {
+            active = false
+            settings {
+                path_data = System.getProperty("java.io.tmpdir") + '/data'
             }
         }
     }
 
-    test {
-        elasticsearch {
-            embedded {
-                active = true
-                settings {
-                    path_data = System.getProperty("java.io.tmpdir") + '/data'
-                }
-            }
-
-        }
-    }
-
-//    grails -Dgrails.env=postgresql schema-export
+//    grails -Dgrails.env=/postgresql schema-export
     postgresql {
         dataSource {
             dialect = "org.hibernate.dialect.PostgreSQLDialect"
