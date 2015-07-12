@@ -604,8 +604,6 @@ beans = {
     BOAccountRender(com.mogobiz.pay.domain.BOAccountRender)
     BOTransactionValidation(com.mogobiz.pay.domain.BOTransactionValidation)
     BOTransactionRender(com.mogobiz.pay.domain.BOTransactionRender)
-    BOTransactionLogValidation(com.mogobiz.pay.domain.BOTransactionLogValidation)
-    BOTransactionLogRender(com.mogobiz.pay.domain.BOTransactionLogRender)
 
     permissionTypeConverter(com.mogobiz.utils.PermissionTypeConverter)
 }
