@@ -122,6 +122,11 @@ emailConfirmation {
 
 mogopay {
     url = 'http://jahiacommerce.ebiznext.com/pay/'
+    elasticsearch{
+        serverURL = 'http://localhost:9200'
+        shards = 1
+        replicas = 1
+    }
 }
 
 application {

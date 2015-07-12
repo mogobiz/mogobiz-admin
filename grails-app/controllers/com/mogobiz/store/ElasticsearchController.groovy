@@ -1,12 +1,16 @@
 package com.mogobiz.store
 
 import com.mogobiz.store.domain.Catalog
+import com.mogobiz.store.domain.Company
 import com.mogobiz.store.domain.EsEnv
+import com.mogobiz.utils.PermissionType
 import grails.converters.JSON
 import grails.converters.XML
 
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+
+import static com.mogobiz.utils.ProfileUtils.*
 
 class ElasticsearchController {
 
@@ -47,6 +51,32 @@ class ElasticsearchController {
                 xml { render [:] as XML }
                 json { render [:] as JSON }
             }
+        }
+    }
+
+    def mogopay(Long esEnvId) {
+        if(authenticationService.isAdministrator()){
+            Company all = Company.findByCode(ALL)
+            EsEnv env = esEnvId ? EsEnv.get(esEnvId) : EsEnv.findByCompanyAndName(all, "mogopay")
+            if(authenticationService.isPermitted(
+                    computePermission(
+                            PermissionType.PUBLISH_BO_TO_MOGOPAY,
+                            ALL,
+                            env.id?.toString()
+                    )
+            )){
+                elasticsearchService.mogopay(env)
+                withFormat {
+                    xml { render [:] as XML }
+                    json { render [:] as JSON }
+                }
+            }
+            else{
+                response.sendError(403)
+            }
+        }
+        else{
+            response.sendError(403)
         }
     }
 
