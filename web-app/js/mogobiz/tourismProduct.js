@@ -1,5 +1,6 @@
 var companyAvailableTags = [];
 var firstTimeMap = true;
+var selectedProductCategoryId = null;
 
 function productAutoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     $(objId).unbind();
@@ -54,7 +55,7 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
     }
 }
 
-function productAttachEditForm(productId) {
+function productAttachEditForm(productId, fromPage) {
     var dataToSend = "id=" + productId + "&format=json";
     $.ajax({
         url : showProductUrl + "?" + dataToSend,
@@ -65,6 +66,7 @@ function productAttachEditForm(productId) {
         async : true,
         success : function(response, status) {
             var product = response;
+            selectedProductCategoryId = product.category.id;
             tourismSuggestionsFirstVisit = true;
             tourismPropertiesFirstVisit = true;
 
@@ -76,18 +78,21 @@ function productAttachEditForm(productId) {
             $("#editProductTabs").detach().appendTo('#items');
 
             $('#closeBtn').click(function() {
-                if(productId){
-                    $('#editProductTabs').remove();
+                firstTimeMap = true;
+                $('#editProductTabs').remove();
+                if(fromPage == "category"){
                     $('#items').hide();
                     $('#categoriesMain').show();
                     $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-                    $("#categoryProductsTab").addClass("selected");
-                    firstTimeMap = true;
+                    setTimeout(function(){
+                        categoryProductsDrawAll(0);
+                    }, 150);
                 }
-
-                setTimeout(function(){
-                    categoryProductsDrawAll(0);
-                }, 150);
+                else if(fromPage == "catalog"){
+                    $("#catalogProductsDiv").show();
+                    $("#items").showLoading({"addClass": "loading-indicator-FacebookBig"});
+                    catalogProductsSearchProducts();
+                }
             });
 
             $('#deleteBtn').click(function() {
@@ -102,7 +107,7 @@ function productAttachEditForm(productId) {
             $('#tourismSuggestions').hide();
             $('#tourismShipping').hide();
             $('#tourismTranslation').hide();
-            $('.tabs .selected').removeClass('selected');
+            $('#productTabs .tabs .selected').removeClass('selected');
             $('#infoTab').addClass('selected');
             $('#editProductTabs').show();
 
@@ -126,7 +131,7 @@ function productAttachEditForm(productId) {
             $.ajax({
                 url : showVariationsUrl,
                 type : "GET",
-                data : "category.id=" + categorySelectedId + "&format=json",
+                data : "category.id=" + selectedProductCategoryId + "&format=json",
                 dataType : "json",
                 cache : false,
                 async : true,
@@ -470,8 +475,8 @@ function productAttachEditForm(productId) {
 
 // Init Tabs Events
             $('#ulTabs').show();
-            $('.tabs a').click(function() {
-                $('.tabs .selected').removeClass('selected');
+            $('#productTabs .tabs a').click(function() {
+                $('#productTabs .tabs .selected').removeClass('selected');
                 $(this).addClass('selected');
                 var selectedTabId = $(this).attr('id');
                 switch(selectedTabId){
@@ -1133,7 +1138,6 @@ function tourismProductMarkAsDeleted(productId){
             $('#items').hide();
             $('#categoriesMain').show();
             $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-            $("#categoryProductsTab").addClass("selected");
             firstTimeMap = true;
             setTimeout(function(){
                 categoryProductsDrawAll(0);

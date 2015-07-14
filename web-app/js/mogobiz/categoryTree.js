@@ -79,6 +79,9 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                     if(data.rslt.obj[0].value == 0){
                         categorySelectedId = null;
                         catalogGetTabPage();
+                        $("#searchHeaderIcon img").show().unbind().bind("click", function(){
+                            catalogProductsGetSearchPage();
+                        });
                         return;
                     }
                     categorySelectedId = data.rslt.obj[0].value;

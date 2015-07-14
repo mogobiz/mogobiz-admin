@@ -20,6 +20,7 @@ function catalogueLoadList() {
             $("#item").hide();
             $("#categoriesMain").show();
             $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
+            $("#searchHeaderIcon img").hide();
             $("#catalogList").empty();
             $("#catalogList").append(pageContent);
             $("#catalogDropDownList").multiselect({

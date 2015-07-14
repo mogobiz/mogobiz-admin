@@ -186,7 +186,7 @@ function tourismPricingUpdateProductPrice(productId, price) {
 }
 
 function tourismPricingLoadTicketTypes(productId, ticketId, create, hasResource) {
-    var dataToSend = "category.id=" + categorySelectedId + "&format=json";
+    var dataToSend = "category.id=" + selectedProductCategoryId + "&format=json";
     $.ajax({
         url : showVariationsUrl,
         type : "GET",

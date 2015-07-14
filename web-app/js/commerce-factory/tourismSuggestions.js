@@ -435,7 +435,7 @@ function tourismSuggestionsDeleteRecord(productId){
 }
 
 function tourismSuggestionsUpdatePosition(data){
-//    var dataToSend = "category.id=" + categorySelectedId + "&format=json&tagids=";
+//    var dataToSend = "category.id=" + selectedProductCategoryId + "&format=json&tagids=";
 //    for(var i = 0; i < data.length; i++){
 //        dataToSend += data[i].featureId + ",";
 //    }

@@ -53,13 +53,15 @@ $(document).ready(function() {
     loadTranslateLanguages();
     countriesLoad();
     companiesLoad();
+    addUserMenuList();
+    addCatalogMenuList();
 });
 
 var StateType = {
     ACTIF : 'actif',
     INACTIF : 'inactif',
     DELETED : 'deleted'
-}
+};
 
 function loadTranslateLanguages(){
     $.ajax({
@@ -114,6 +116,8 @@ function partnerChangeActiveCompany(companyCode){
         cache : false,
         async : true,
         success : function(response, status) {
+            addUserMenuList();
+            addCatalogMenuList();
             sellerCompanyCode = companyCode;
             categorySelectedId = null;
             catalogSelectedId = null;
@@ -128,9 +132,32 @@ function partnerChangeActiveCompany(companyCode){
                 $("#items").empty().hide();
                 $("#categoryTree").empty();
                 $("#categoryDetails").empty();
-                $("#categoriesMain").show();
                 catalogueLoadList();
             }
         }
     });
+}
+
+function addUserMenuList(){
+    $.get(
+        userMenuListPageUrl,
+        "partnerId=" + partnerUserId,
+        function (htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            $("#userMenuList").empty().html(htmlresponse);
+        },
+        "html"
+    );
+}
+
+function addCatalogMenuList(){
+    $.get(
+        catalogMenuListPageUrl,
+        {},
+        function (htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            $("#catalogMenuList").empty().html(htmlresponse);
+        },
+        "html"
+    );
 }

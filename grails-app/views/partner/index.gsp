@@ -1,5 +1,3 @@
-<%@ page import="com.mogobiz.utils.PermissionType" %>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -165,6 +163,8 @@
     <g:javascript src="${env}/partner.js"/>
     <g:javascript src="${env}/brand.js"/>
 
+    <g:javascript src="${env}/catalogProducts.js"/>
+
     <g:javascript src="${env}/tourismDescription.js"/>
     <g:javascript src="${env}/tourismFeatures.js"/>
     <g:javascript src="${env}/tourismPricing.js"/>
@@ -186,6 +186,10 @@
     <g:javascript src="${env}/jQueryJSTree/script.js"/>
 
     <r:script>
+            //-----MENUS----//
+            var userMenuListPageUrl = "${resource(dir: 'menus', file:'_userMenu.gsp')}";
+            var catalogMenuListPageUrl = "${resource(dir: 'menus', file:'_catalogMenu.gsp')}";
+
             //-----Security----//
             var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
             var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
@@ -206,7 +210,6 @@
             var importCatalogUrl = "${createLink(controller: 'impex', action: 'ximport')}";
             var exportCatalogUrl = "${createLink(controller: 'impex', action: 'export')}";
 
-
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
             var catalogImportPageUrl = "${resource(dir: 'partner', file: '_importCatalog.gsp')}";
@@ -222,6 +225,10 @@
             var catalogPublicationSuccessLabel = "${message(code: 'catalog.publicationSuccess.label')}";
             var catalogPublicationFailureLabel = "${message(code: 'catalog.publicationFailure.label')}";
             var catalogImportFailureLabel = "${message(code: 'catalog.importFailure.label')}";
+
+            //-----CATALOG PRODUCTS----//
+            var catalogProductsSearchPageUrl = "${resource(dir: 'partner', file: '_catalogProducts.gsp')}";
+            var catalogProductsSearchUrl = "${createLink(controller: 'product', action: 'search')}";
 
             //-----CATEGORY----//
             var showCategoryUrl = "${createLink(controller: 'category', action: 'show')}";
@@ -572,6 +579,7 @@
             var sellerCompanyCode = "${request.seller.company.code}";
             var sellerCompanyMapProvider = "${request.seller.company.mapProvider}";
             var partnerSellerId = "${request.seller.id}";
+            var partnerUserId = "${request.user?.id}";
 
             // hide username subnav menu after clicking an option
             function hideUsernameSubnav() {
@@ -594,32 +602,16 @@
         <img src="${resource(dir: 'images', file: 'ebiznext_logo.png')}"/>
     </div>
     <jsec:isLoggedIn>
+        <div id="searchHeaderDiv" align="right">
+            <ul class="topnav">
+                <li id="searchHeaderIcon"><img src="../images/search.png"/></li>
+            </ul>
+        </div>
+
         <div id="user" align="right">
             <ul class="topnav">
                 <li id="user_name_div"><g:message code="default.menu.label"/></li>
-                <li>
-                    <ul class="subnav" style="display:none;">
-                        <store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}">
-                            <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)"
-                                                                   onclick="partnerGetAdminPage(${request.user?.id});"><g:message
-                                        code="seller.admin.link"/></a></li>
-                        </store:hasPermission>
-                        <store:hasPermission permission="${PermissionType.ACCESS_STORE_BO.key}">
-                            <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)"
-                                                                   onclick="getBackOfficePage();"><g:message
-                                        code="sale.label"/></a></li>
-                        </store:hasPermission>
-                        <store:hasPermission permission="${PermissionType.ADMIN_STORE_SOCIAL_NETWORKS.key}">
-                            <li onclick="hideUsernameSubnav();"><a href="${createLink(controller: 'social')}"><g:message
-                                    code="seller.social.link"/></a></li>
-                        </store:hasPermission>
-                        <li onclick="hideUsernameSubnav();"><a href="javascript:void(0);"><g:message
-                                code="default.support.label"/></a></li>
-                        <li onclick="hideUsernameSubnav();"><a
-                                href="${createLink(controller: 'auth', action: 'signOut')}" id="logout"><g:message
-                                    code="default.logout.label"/></a></li>
-                    </ul>
-                </li>
+                <li id="userMenuList"></li>
             </ul>
         </div>
 
@@ -694,6 +686,7 @@
 <div id="categoryVariationsResourcesDialog"></div>
 
 <div id="translationDialog"></div>
+
 <table id="categoriesMain" class="categoriesMain">
     <tr>
         <td class="treeCol">
@@ -708,32 +701,7 @@
                                 <span class="catalog-menu-icon-bar"></span>
                                 <span class="catalog-menu-icon-bar"></span>
                             </li>
-                            <li>
-                                <ul class="subnav" style="display:none;">
-                                    <store:hasPermission permission="${PermissionType.CREATE_STORE_CATALOGS.key}">
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
-                                                                                  onclick="catalogGetCreatePage();"><g:message
-                                                    code="catalog.create.label"/></a></li>
-                                    </store:hasPermission>
-                                    <store:hasPermission permission="${PermissionType.DELETE_STORE_CATALOGS.key}">
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
-                                                                                  id="deleteCatalogLink"
-                                                                                  class="disabled"><g:message
-                                                    code="catalog.delete.label"/></a></li>
-                                    </store:hasPermission>
-                                    <store:hasPermission permission="${PermissionType.EXPORT_STORE_CATALOGS.key}">
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
-                                                                                  id="exportCatalogLink"
-                                                                                  class="disabled"><g:message
-                                                    code="catalog.export.label"/></a></li>
-                                    </store:hasPermission>
-                                    <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
-                                        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
-                                                                                  onclick="catalogGetImportPage();"><g:message
-                                                    code="catalog.import.label"/></a></li>
-                                    </store:hasPermission>
-                                </ul>
-                            </li>
+                            <li id="catalogMenuList"></li>
                         </ul>
                     </div>
                 </div>

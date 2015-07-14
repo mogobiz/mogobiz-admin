@@ -291,18 +291,12 @@ function compGetUserPermission(compId, companyCode, partnerId){
         cache: false,
         async: true,
         success: function (response, status) {
-            var profileAccess = false;
-            for(var i = 0; i < response.length; i++){
-                if(response[i].key == "updateProfiles" && (response[i].target == "profiles:*:admin" || response[i].target == "profiles:" + compId + ":admin")){
-                    profileAccess = true;
-                }
-            }
-            compObjGetEditCompanyPage(compId, companyCode, partnerId, true); // FIXME
+           compObjGetEditCompanyPage(compId, companyCode, partnerId);
         }
     });
 }
 
-function compObjGetEditCompanyPage(compId, companyCode, partnerId, profileAccess) {
+function compObjGetEditCompanyPage(compId, companyCode, partnerId) {
 	$.get(
         companyPageUrl,
         "companyId=" + compId,
@@ -328,10 +322,6 @@ function compObjGetEditCompanyPage(compId, companyCode, partnerId, profileAccess
                 $("#iBeacon").hide().remove();
                 $("#tagsLi").hide().remove();
                 $("#tags").hide().remove();
-            }
-            if(!profileAccess){
-                $("#profilesLi").hide().remove();
-                $("#profiles").hide().remove();
             }
             compObjAttachEditForm(compId, companyCode, partnerId);
         }, "html"

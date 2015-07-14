@@ -377,7 +377,7 @@ table.form td {
 
 input {
     height: 16px;
-	padding: 2px 0px;
+	padding: 2px;
 	
 }
 input[type="checkbox"]{

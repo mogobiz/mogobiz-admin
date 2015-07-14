@@ -27,7 +27,7 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 					</g:else>
 				</div>
 				<div style="margin-left: 150px">
-					<a onclick="categoryProductsGetEditPage(${it.id}, '${it.xtype?.toString().toLowerCase()}');"><label>${it.name?.length() > 35 ?it.name?.substring(0, 35)+" ... ":it.name}</label></a>
+					<a onclick="categoryProductsGetEditPage(${it.id}, 'category');"><label>${it.name?.length() > 35 ?it.name?.substring(0, 35)+" ... ":it.name}</label></a>
                     <g:if test="${it.brand && it.brand.name != ""}">
                         <strong>&nbsp;|&nbsp;</strong>${it.brand.name}
                     </g:if>

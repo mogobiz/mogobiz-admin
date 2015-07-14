@@ -192,16 +192,17 @@ function categoryProductsFilterByProductName(){
 	}
 }
 
-function categoryProductsGetEditPage(productId) {
+function categoryProductsGetEditPage(productId, fromPage) {
 	$.get(
         productTourismPageUrl,
 		{id: productId},
 		function(responseText){
+            $("#catalogProductsDiv").hide();
 			$("#items").show();
 			$("#categoriesMain").hide();
 			responseText = jQuery.trim(responseText);
 			$(responseText).appendTo(document.body);
-			productAttachEditForm(productId);
+			productAttachEditForm(productId, fromPage);
 		},
 		"html"
 	);

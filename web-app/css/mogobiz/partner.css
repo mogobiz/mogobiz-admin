@@ -483,3 +483,20 @@ hr.spacer {
 	border: 0px;
 	width: 100%;
 }
+
+/* Partner Header*/
+#searchHeaderIcon{
+    float:right;
+    padding: 0px 0px 0px 5px;
+    height: 31px;
+    width: 31px;
+    top: 8px;
+    text-align: right;
+}
+
+#searchHeaderIcon img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: none;
+}
