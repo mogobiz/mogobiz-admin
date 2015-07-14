@@ -58,6 +58,16 @@ function catalogProductsSearchProducts(){
             $("#catalogProductsSearchResults").hideLoading();
             $("#items").hideLoading();
             $("#catalogProductsSearchResults").empty().html(htmlresponse);
+            $("#catalogProductsSearchResults .pic a").fancybox({
+                'overlayShow'	: true,
+                'transitionIn'	: 'elastic',
+                'titlePosition' : 'inside',
+                'transitionOut'	: 'elastic',
+                'type'			: 'image',
+                'titleFormat' : function(title, currentArray, currentIndex, currentOpts) {
+                    return "";
+                }
+            });
         }
     });
 }

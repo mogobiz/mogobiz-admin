@@ -165,7 +165,7 @@ function categoryProductsDrawAll(pageOffset) {
 			$('#categoryProductsList').html(pageContent);
 			if(! tabVisible)
 				$("#categoryProductsTabInfo").hide();
-			$('.pic a').fancybox({
+			$('#categoryProductsList .pic a').fancybox({
 				'overlayShow'	: true,
 				'transitionIn'	: 'elastic',
 				'titlePosition' : 'inside',
