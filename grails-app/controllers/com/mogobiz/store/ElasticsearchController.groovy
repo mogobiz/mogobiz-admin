@@ -31,6 +31,54 @@ class ElasticsearchController {
         }
     }
 
+    def retrievePreviousIndices(long envId){
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        EsEnv env = envId ? EsEnv.get(envId) : null
+        if(company != env?.company){
+            response.sendError 401
+            return
+        }
+        def permission = computePermission(PermissionType.PUBLISH_STORE_CATALOGS_TO_ENV, "${company.id}", "$envId")
+        if(!authenticationService.isPermitted(permission)){
+            response.sendError 401
+            return
+        }
+        def ret = [:] << [previousIndices: elasticsearchService.retrievePreviousIndices(env)]
+        withFormat {
+            xml { render ret as XML }
+            json { render ret as JSON }
+        }
+    }
+
+    def activateIndex(String index, long envId){
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        EsEnv env = envId ? EsEnv.get(envId) : null
+        if(company != env?.company){
+            response.sendError 401
+            return
+        }
+        def permission = computePermission(PermissionType.PUBLISH_STORE_CATALOGS_TO_ENV, "${company.id}", "$envId")
+        if(!authenticationService.isPermitted(permission)){
+            response.sendError 401
+            return
+        }
+        def ret = [:] << [success: elasticsearchService.activateIndex(index, env)]
+        withFormat {
+            xml { render ret as XML }
+            json { render ret as JSON }
+        }
+    }
+
     def publish = {
         def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
         if(!seller){
@@ -39,8 +87,17 @@ class ElasticsearchController {
         }
         def company = seller.company
         long envId = params.long('esenv.id')
-        long catalogId = params.long('catalog.id')
         EsEnv env = envId ? EsEnv.get(envId) : null
+        if(company != env?.company){
+            response.sendError 401
+            return
+        }
+        def permission = computePermission(PermissionType.PUBLISH_STORE_CATALOGS_TO_ENV, "${company.id}", "$envId")
+        if(!authenticationService.isPermitted(permission)){
+            response.sendError 401
+            return
+        }
+        long catalogId = params.long('catalog.id')
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
         if (catalog?.name == "impex") {
             render status:403, text: "Impex Catalog cannot be published"

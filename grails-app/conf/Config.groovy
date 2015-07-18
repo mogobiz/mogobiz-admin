@@ -164,7 +164,8 @@ elasticsearch {
     export.cron = '0 0 0 * * ?'
     serverURL = 'http://localhost:9200'
     shards = 1
-    replicas = 1
+    replicas = 0
+    previous = 3
 }
 
 google {
