@@ -31,9 +31,9 @@ dataSource {
     username = "mogobiz"
     password = "mogobiz"
 
-    dialect = "org.hibernate.dialect.PostgreSQLDialect"
-    driverClassName = "org.postgresql.Driver"
-    url = "jdbc:postgresql://localhost/mogobiz"
+//    dialect = "org.hibernate.dialect.PostgreSQLDialect"
+//    driverClassName = "org.postgresql.Driver"
+//    url = "jdbc:postgresql://localhost/mogobiz"
 
     pooled = true
     dbCreate = "update"
@@ -64,9 +64,9 @@ dataSource {
 //    driverClassName = "org.apache.derby.jdbc.ClientDriver"
 //    url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
 
-//    dialect = "org.hibernate.dialect.DerbyDialect"
-//    driverClassName = "org.apache.derby.jdbc.ClientDriver"
-//    url = "jdbc:derby://localhost:12500/mogobiz;user=mogobiz;password=mogobiz"
+    dialect = "org.hibernate.dialect.DerbyDialect"
+    driverClassName = "org.apache.derby.jdbc.ClientDriver"
+    url = "jdbc:derby://localhost:12500/mogobiz;user=mogobiz;password=mogobiz"
 
     logSql = false
     properties {
