@@ -428,6 +428,13 @@ beans = {
         excludes = ['class']
     }
 
+    wishlistRenderer(JsonRenderer, com.mogobiz.store.domain.Wishlist) {
+        excludes = ['class']
+    }
+    wishlistCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Wishlist) {
+        excludes = ['class']
+    }
+
     loadBeans("classpath:*defaultResources.groovy")
 /*
 	messageSource(com.mogobiz.i18n.SiteMessageSource)
@@ -624,6 +631,9 @@ beans = {
 
     notationValidation(com.mogobiz.store.domain.NotationValidation)
     notationRender(com.mogobiz.store.domain.NotationRender)
+
+    wishlistValidation(com.mogobiz.store.domain.WishlistValidation)
+    wishlistRender(com.mogobiz.store.domain.WishlistRender)
 
     permissionTypeConverter(com.mogobiz.utils.PermissionTypeConverter)
 }
