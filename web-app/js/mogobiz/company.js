@@ -787,9 +787,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 			else {
 				$('#cancelEditCompBtn').unbind();
 				$('#cancelEditCompBtn').click(function() {
-                   if(categorySelectedId){
-                       categoryGeneralGetInfo();
-                   }
+                    if(categorySelectedId){
+                        categoryGeneralGetInfo();
+                    }
                     if(partnerActiveCompanyChanged){
                         partnerActiveCompanyChanged = false;
                         $("#createProductMenu").detach().prependTo(document.body).hide();
@@ -800,6 +800,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 					$("#items").empty().hide(); // show catalog tree
 					$("#categoriesMain").show();
 
+                    if($("#catalogTabs").is(":visible")){
+                        catalogGetEsEnvList();
+                    }
                     if($("#catalogGeneralDiv").is(":visible")){
                         catalogResetRunningInterval();
                     }

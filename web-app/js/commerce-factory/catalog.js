@@ -4,6 +4,8 @@ var catalogImported = false;
 var catalogRunningInterval = null;
 var catalogRunningIntervalTime = 10000;
 var catalogShowSecurity;
+var catalogActiveEsEnv;
+var catalogActiveIndex;
 
 function catalogueLoadList() {
     var dataToSend = "format=html";
@@ -183,7 +185,6 @@ function catalogGetTabPage() {
         {},
         function (pageContent) {
             $("#categoryDetails").empty().html(pageContent);
-            catalogResetRunningInterval();
             catalogInitAllTabs();
             catalogGeneralGetInfo();
             catalogTranslationDrawAll();
@@ -241,19 +242,35 @@ function catalogGeneralGetInfo() {
         success: function (response, status) {
             catalogGeneralInitControls(false);
             catalogGeneralInitFields(response);
-            $.ajax({
-                url: companyShowPublishingUrl,
-                type: "GET",
-                data: "format=html",
-                cache: false,
-                async: true,
-                success: function (response, status) {
-                    $("#catalogListPublication").html(response);
-                    $("#catalogListPublication").multiselect("refresh");
-                    $("#categoriesMain").hideLoading();
-                },
-                error: function (response, status) {}
+            catalogGetEsEnvList();
+        },
+        error: function (response, status) {}
+    });
+}
+
+function catalogGetEsEnvList(){
+    $.ajax({
+        url: companyShowPublishingUrl,
+        type: "GET",
+        data: "format=html",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            $("#catalogListPublication").html(response);
+            $("#catalogListPublication").multiselect("refresh");
+            $('#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogListPublication"]').each(function() {
+                if(this.value == $("#catalogListPublication").val()) {
+                    catalogActiveEsEnv = this.value;
+                    this.click();
+                }
             });
+            if(response.indexOf("<option") >= 0) {
+                catalogResetRunningInterval();
+                catalogGetEsEnvPreviousIndices();
+            }
+            else{
+                $("#categoriesMain").hideLoading();
+            }
         },
         error: function (response, status) {}
     });
@@ -291,9 +308,31 @@ function catalogGeneralInitControls(isCreate) {
         noneSelectedText: multiselectNoneSelectedTextLabel,
         selectedList: 1,
         height: 100,
-        minWidth: 239
-    }).bind("multiselectclick", function (event, ui) {
-        catalogResetRunningInterval();
+        minWidth: 170
+    }).unbind().bind("multiselectclick", function (event, ui) {
+        if(catalogActiveEsEnv == ui.value)
+            return;
+        catalogActiveEsEnv = ui.value;
+        setTimeout(function(){
+            catalogResetRunningInterval();
+            catalogGetEsEnvPreviousIndices();
+        }, 100);
+    });
+    $("#catalogListIndices").multiselect("destroy");
+    $("#catalogListIndices").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        selectedList: 1,
+        height: 100,
+        minWidth: 170
+    }).unbind().bind("multiselectclick", function (event, ui) {
+        if(catalogActiveIndex == ui.value)
+            return;
+        catalogActiveIndex = ui.value;
+        setTimeout(function(){
+            catalogChangeActiveIndex();
+        }, 100);
     });
     $("#catalogName, #catalogExternalCode, #catalogDescription").change(function () {
         if (catalogValidateForm())catalogUpdate();
@@ -310,7 +349,7 @@ function catalogGeneralInitControls(isCreate) {
 }
 
 function catalogGeneralInitFields(catalog) {
-    $("#catalogName, #catalogExternalCode, #catalogDescription, #catalogActivationDate, #catalogChannels, #catalogListPublication").val("");
+    $("#catalogName, #catalogExternalCode, #catalogDescription, #catalogActivationDate, #catalogChannels, #catalogListPublication, #catalogListIndices").val("");
     $("#catalogName").val(catalog.name);
     $("#catalogExternalCode").val(catalog.externalCode);
     $("#catalogDescription").val(catalog.description);
@@ -430,7 +469,7 @@ function catalogDelete() {
 
 function catalogPublish() {
     $("#catalogLastPublicationStatus").show().html("");
-    $("#catalogPublicationError").hide()
+    $("#catalogPublicationError").hide();
     $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
@@ -441,7 +480,11 @@ function catalogPublish() {
         dataType: "json",
         cache: false,
         async: true,
-        success: function (response, status) {},
+        success: function (response, status) {
+            setTimeout(function() {
+                catalogGetEsEnvPreviousIndices();
+            }, 2000);
+        },
         error: function (response, status) {
             if(response.status == "403"){
                 $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
@@ -555,7 +598,9 @@ function catalogResetRunningInterval() {
 }
 
 function catalogCheckEsEnvRunning() {
-    var dataToSend = "id=" + $("#catalogListPublication").val() + "&format=json";
+    if($("#catalogListPublication").val() == null)
+        return;
+    var dataToSend = "esenv.id=" + $("#catalogListPublication").val() + "&format=json";
     $.ajax({
         url: companyShowPublishingUrl,
         type: "GET",
@@ -564,23 +609,94 @@ function catalogCheckEsEnvRunning() {
         cache: false,
         async: true,
         success: function (response, status) {
-            var html = ""
-            if (response[0].running) {
+            var html = "";
+            if (response.running) {
                 $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
                 html = catalogPublicationRunningLabel;
             }
             else {
                 $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
                 html = catalogLastPublicationLabel + " : ";
-                if (response[0].success)
+                if (response.success)
                     html += catalogPublicationSuccessLabel;
                 else
                     html += catalogPublicationFailureLabel;
-                if (response[0].extra != null && response[0].extra != "")
-                    html += " (" + response[0].extra + ")"
+                if (response.extra != null && response.extra != "")
+                    html += " (" + response.extra + ")"
             }
             $("#catalogLastPublicationStatus").html(html);
         },
+        error: function (response, status) {}
+    });
+}
+
+function catalogGetEsEnvPreviousIndices(){
+    $.ajax({
+         url: companyShowPublishingPreviousIndicesUrl,
+        type: "GET",
+        data: "envId=" + $("#catalogListPublication").val() + "&format=json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            $.ajax({
+                url: companyShowPublishingUrl,
+                type: "GET",
+                data: "esenv.id=" + $("#catalogListPublication").val() + "&format=json",
+                dataType: "json",
+                cache: false,
+                async: true,
+                success: function (resp, status) {
+                    var founded = false;
+                    var html = "";
+                    var indices = response.previousIndices;
+                    catalogActiveIndex = null;
+                    for(var i = 0; i < indices.length; i++){
+                        if(indices[i] == resp.activeIndex)
+                            founded = true;
+                        html += "<option value='" + indices[i] + "'>" + indices[i] + "</option>";
+                    }
+                    if(resp.activeIndex != null && resp.activeIndex != "") {
+                        catalogActiveIndex = resp.activeIndex;
+                        if(!founded)
+                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
+                    }
+                    else if(resp.idx != null && resp.idx != "") {
+                        catalogActiveIndex = resp.idx;
+                        if(!founded)
+                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
+                    }
+                    else{
+                        html = "<option></option>" + html;
+                    }
+
+                    $("#catalogListIndices").empty().html(html);
+                    $("#catalogListIndices").multiselect("refresh");
+                    $('#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogListIndices"]').each(function () {
+                        if (this.value == catalogActiveIndex) {
+                            $(this.parentNode).addClass("ui-state-active");
+                            this.click();
+                        }
+                    });
+                    $("#categoriesMain").hideLoading();
+                },
+                error: function (response, status) {}
+            });
+        },
+        error: function (response, status) {}
+    });
+}
+
+function catalogChangeActiveIndex() {
+    var dataToSend = "envId=" + $("#catalogListPublication").val() + "&index=" + $("#catalogListIndices").val() + "&format=json";
+    $.ajax({
+        url: companyUpdatePublishingIndicesUrl,
+        type: "POST",
+        noticeType: "PUT",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {},
         error: function (response, status) {}
     });
 }

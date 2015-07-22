@@ -145,7 +145,7 @@ function companyGetShippingPolicy(compId) {
 					}
 				}
 				catch(err)	{
-                    console.log('That appears to be invalid JSON!')
+                    console.log('That appears to be invalid JSON!');
 					return false;
 				}
 				var shippingForm = document.forms['formShipping'];
@@ -300,7 +300,7 @@ function getStoreAddress(compId) {
 	}
 
 	$('#formShipping #shippingCity').val($('#formGeneral #generalCity').val());
-    $('#formShipping #shippingState').val($('#formGeneral #generalState').val());
+	$('#formShipping #shippingState').val($('#formGeneral #generalState').val());
 	$('#formShipping #shippingPostalCode').val($('#formGeneral #generalPostalCode').val());
 	$('#formShipping #shippingAddress1').val($('#formGeneral #generalAddress1').val());
 	$('#formShipping #shippingAddress2').val($('#formGeneral #generalAddress2').val());
