@@ -414,6 +414,20 @@ beans = {
         excludes = ['class']
     }
 
+    commentRenderer(JsonRenderer, com.mogobiz.store.domain.Comment) {
+        excludes = ['class']
+    }
+    commentCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Comment) {
+        excludes = ['class']
+    }
+
+    notationRenderer(JsonRenderer, com.mogobiz.store.domain.Notation) {
+        excludes = ['class']
+    }
+    notationCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Notation) {
+        excludes = ['class']
+    }
+
     loadBeans("classpath:*defaultResources.groovy")
 /*
 	messageSource(com.mogobiz.i18n.SiteMessageSource)
@@ -604,6 +618,12 @@ beans = {
     BOAccountRender(com.mogobiz.pay.domain.BOAccountRender)
     BOTransactionValidation(com.mogobiz.pay.domain.BOTransactionValidation)
     BOTransactionRender(com.mogobiz.pay.domain.BOTransactionRender)
+
+    commentValidation(com.mogobiz.store.domain.CommentValidation)
+    commentRender(com.mogobiz.store.domain.CommentRender)
+
+    notationValidation(com.mogobiz.store.domain.NotationValidation)
+    notationRender(com.mogobiz.store.domain.NotationRender)
 
     permissionTypeConverter(com.mogobiz.utils.PermissionTypeConverter)
 }
