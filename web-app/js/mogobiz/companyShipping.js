@@ -148,7 +148,7 @@ function companyGetShippingPolicy(compId) {
                     console.log('That appears to be invalid JSON!');
 					return false;
 				}
-				var shippingForm = document.forms['formShipping'];console.log(newJson);
+				var shippingForm = document.forms['formShipping'];
 				$(shippingForm).populate(newJson, {debug:1});
 
 				// set multicheck combos values

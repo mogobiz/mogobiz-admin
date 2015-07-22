@@ -175,8 +175,9 @@ $.widget("ech.multiselect", {
 					.attr({ id:inputID, checked:this.selected, title:title, disabled:isDisabled, 'aria-disabled':isDisabled, 'aria-selected':this.selected })
 					.val( value )
 					.appendTo( label )
-//					.after('<span>&nbsp;'+title+'</span>'); //Ahmad Ibrahim
-					.after(liOption); //Ahmad Ibrahim
+//					.after('<span>&nbsp;'+title+'</span>') //Ahmad Ibrahim
+					.after(liOption) //Ahmad Ibrahim
+                    .prop('selected', this.selected);//Ahmad Ibrahim
 			}
 		});
 		
@@ -345,14 +346,16 @@ $.widget("ech.multiselect", {
 				// set the original option tag to selected
 				tags.filter(function(){
 					return this.value === val;
-				}).attr('selected', (checked ? 'selected' : ''));
+				}).attr('selected', (checked ? 'selected' : ''))
+                    .prop('selected', checked); // Ahmad Ibrahim
 				
 				// make sure the original option tags are unselected first 
 				// in a single select
 				if( !self.options.multiple ){
 					tags.not(function(){
 						return this.value === val;
-					}).removeAttr('selected');
+					}).removeAttr('selected')
+                        .prop('selected', false); // Ahmad Ibrahim
 					
 					self.labels.removeClass('ui-state-active');
 					$this.closest('label').toggleClass('ui-state-active', checked );
