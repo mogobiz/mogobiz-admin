@@ -414,7 +414,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyGeneralAutoUpdateField(compId, "#generalCity", "company.location.city", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalState", "company.location.state", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalPostalCode", "company.location.postalCode", true, false);
-                        companyGeneralAutoUpdateField(compId, "#generalPhoneNumber", "company.phone", true, true);
+                        companyGeneralAutoUpdateField(compId, "#generalPhoneNumber", "company.phone", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalAddress1", "company.location.road1", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalAddress2", "company.location.road2", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalWebsite", "company.website", true, true);

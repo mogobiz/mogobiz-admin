@@ -151,7 +151,7 @@
 								<input type="text" name="company.location.postalCode" id="generalPostalCode" />
 							</div>
 							<div class="general_small">
-								<input type="text" name="company.phone" id="generalPhoneNumber" pattern="[0-9]+" />
+								<input type="text" name="company.phone" id="generalPhoneNumber"/>
 							</div>
 						</div>
 						<div class="spacer"></div>
