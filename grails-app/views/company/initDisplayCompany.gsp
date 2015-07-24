@@ -123,6 +123,9 @@
 							<div class="general_small">
 								<label for="generalCountry"><g:message code="company.general.country.label" />&nbsp;<sup>*</sup></label>
 							</div>
+                            <div class="general_small">
+                                <label for="generalState"><g:message code="company.general.state.label" /></label>
+                            </div>
 							<div class="general_small">
 								<label for="generalCity"><g:message code="company.general.city.label" /></label>
 							</div>
@@ -138,6 +141,9 @@
 							<div class="general_small">
 								<select name="company.location.countryCode" id="generalCountry" multiple="multiple"></select>
 							</div>
+                            <div class="general_small">
+                                <input type="text" name="company.location.state" id="generalState" />
+                            </div>
 							<div class="general_small">
 								<input type="text" name="company.location.city" id="generalCity" />
 							</div>
@@ -145,7 +151,7 @@
 								<input type="text" name="company.location.postalCode" id="generalPostalCode" />
 							</div>
 							<div class="general_small">
-								<input type="text" name="company.phone" id="generalPhoneNumber" pattern="[0-9]+" />
+								<input type="text" name="company.phone" id="generalPhoneNumber"/>
 							</div>
 						</div>
 						<div class="spacer"></div>
@@ -246,7 +252,10 @@
 							<div class="shipping_small">
 								<label for="shippingCountry"><g:message code="company.shipping.country.label" />&nbsp;<sup>*</sup></label>
 							</div>
-							<div class="shipping_medium">
+                            <div class="shipping_small">
+                                <label for="shippingState" class="spacer"><g:message code="company.shipping.state.label" /></label>
+                            </div>
+							<div class="shipping_small">
 								<label for="shippingCity" class="spacer"><g:message code="company.shipping.city.label" /></label>
 							</div>
 							<div class="shipping_small">
@@ -258,7 +267,10 @@
 							<div class="shipping_small">
 								<select name="company.shipFrom.countryCode" id="shippingCountry" multiple="multiple"></select>
 							</div>
-							<div class="shipping_medium">
+                            <div class="shipping_small">
+                                <input type="text" name="company.shipFrom.state" id="shippingState" />
+                            </div>
+							<div class="shipping_small">
 								<input type="text" name="company.shipFrom.city" id="shippingCity" />
 							</div>
 							<div class="shipping_small">

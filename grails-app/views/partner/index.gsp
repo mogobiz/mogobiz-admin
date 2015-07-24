@@ -524,6 +524,9 @@
             var companyUpdatePublishingUrl = '${createLink(controller: 'esEnv', action: 'update')}';
             var companyDeletePublishingUrl = '${createLink(controller: 'esEnv', action: 'delete')}';
 
+            var companyShowPublishingPreviousIndicesUrl = "${createLink(controller: 'elasticsearch', action: 'retrievePreviousIndices')}";
+            var companyUpdatePublishingIndicesUrl = "${createLink(controller: 'elasticsearch', action: 'activateIndex')}";
+
             var companyPublishingPageUrl = "${resource(dir: 'admin', file: '_createCompanyPublishing.gsp')}";
 
             var companyPublishingTitleLabel = "${message(code: 'company.publishing.title.label')}";

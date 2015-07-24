@@ -10,8 +10,8 @@
 /* Company - General Tab */
 
 .general_small {
-	float: left;
-	width: 25%;
+    float: left;
+    width: 20%;
 }
 
 .general_medium {
@@ -29,10 +29,10 @@
 }
 
 #generalCountry{
-	width: 166px;
+	width: 136px;
 }
 
-#generalCity, #generalPostalCode {
+#generalCity, #generalState, #generalPostalCode {
 	width: 91.5%;
 }
 
@@ -81,17 +81,16 @@
 	width: 100%;
 }
 
-#shippingCountry, #shippingCarriers, #shippingRefundPolicy, #shippingWeightUnit {
+#shippingCountry {
+    width: 172px;
+}
+
+#shippingCarriers, #shippingRefundPolicy, #shippingWeightUnit {
 	width: 149px;
 }
 
-#shippingCity{
-	margin-left: 25%;
-	width: 50%;
-}
-
-#shippingPostalCode {
-	width: 91.5%;
+#shippingPostalCode, #shippingState, #shippingCity {
+    width: 91.5%;
 }
 
 #shippingAddress1 {

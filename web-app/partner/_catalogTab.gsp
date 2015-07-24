@@ -82,18 +82,25 @@
 		<div class="spacer"></div>
 		<div id="catalogPublicationDiv">
 			<div class="newline">
-				<div class="catalog-large">
+				<div class="catalog-medium">
 					<label for="catalogListPublication"><g:message code="catalog.publish.label"/></label>
 				</div>
+                <div class="catalog-medium">&nbsp;</div>
+                <div class="catalog-medium">
+                    <label for="catalogListIndices"><g:message code="catalog.indices.label"/></label>
+                </div>
 			</div>
 			<div class="spacer-small"></div>
 			<div class="newline">
-				<div class="catalog-large">
+				<div class="catalog-medium">
 					<select id="catalogListPublication"></select>
 				</div>
-				<div class="catalog-large">
+				<div class="catalog-medium">
 					<button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message code="catalog.publishBtn.label" /></button>
 				</div>
+                <div class="catalog-medium">
+                    <select id="catalogListIndices" style="width:170px;"></select>
+                </div>
 			</div>
 		</div>
 		<div class="spacer"></div>

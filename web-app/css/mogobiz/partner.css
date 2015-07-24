@@ -262,6 +262,11 @@ div.variations-full textarea {
 	height: 161px;
 }
 
+div.catalog-medium {
+    float: left;
+    width: 33%;
+}
+
 div.catalog-large {
 	float: left;
 	width: 50%;
@@ -271,7 +276,7 @@ div.catalog-large input[type=text] {
 	width: 96%;
 }
 
-div.catalog-large button {
+div.catalog-medium button{
     float: left;
 }
 

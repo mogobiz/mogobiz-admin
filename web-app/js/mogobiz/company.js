@@ -412,8 +412,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 
                         //Set auto update control
                         companyGeneralAutoUpdateField(compId, "#generalCity", "company.location.city", true, false);
+                        companyGeneralAutoUpdateField(compId, "#generalState", "company.location.state", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalPostalCode", "company.location.postalCode", true, false);
-                        companyGeneralAutoUpdateField(compId, "#generalPhoneNumber", "company.phone", true, true);
+                        companyGeneralAutoUpdateField(compId, "#generalPhoneNumber", "company.phone", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalAddress1", "company.location.road1", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalAddress2", "company.location.road2", true, false);
                         companyGeneralAutoUpdateField(compId, "#generalWebsite", "company.website", true, true);
@@ -514,6 +515,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 
                         //Set auto update control
                         companyShippingAutoUpdateField(compId, "#shippingCity", "company.shipFrom.city", true, false);
+                        companyShippingAutoUpdateField(compId, "#shippingState", "company.shipFrom.state", true, false);
                         companyShippingAutoUpdateField(compId, "#shippingPostalCode", "company.shipFrom.postalCode", true, false);
                         companyShippingAutoUpdateField(compId, "#shippingAddress1", "company.shipFrom.road1", true, false);
                         companyShippingAutoUpdateField(compId, "#shippingAddress2", "company.shipFrom.road2", true, false);
@@ -785,9 +787,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 			else {
 				$('#cancelEditCompBtn').unbind();
 				$('#cancelEditCompBtn').click(function() {
-                   if(categorySelectedId){
-                       categoryGeneralGetInfo();
-                   }
+                    if(categorySelectedId){
+                        categoryGeneralGetInfo();
+                    }
                     if(partnerActiveCompanyChanged){
                         partnerActiveCompanyChanged = false;
                         $("#createProductMenu").detach().prependTo(document.body).hide();
@@ -798,6 +800,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 					$("#items").empty().hide(); // show catalog tree
 					$("#categoriesMain").show();
 
+                    if($("#catalogTabs").is(":visible")){
+                        catalogGetEsEnvList();
+                    }
                     if($("#catalogGeneralDiv").is(":visible")){
                         catalogResetRunningInterval();
                     }
