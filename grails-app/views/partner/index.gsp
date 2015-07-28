@@ -48,8 +48,6 @@
     <link rel="stylesheet" type="text/css"
           href='${resource(dir: "css", file: "${env}/jQueryFileUpload/jquery.fileupload-ui.css")}'/>
 
-    <link rel="stylesheet" type="text/css" href='${resource(dir: "css", file: "${env}/jquery-cron/jquery-cron.css")}'/>
-
     <link rel="stylesheet" type="text/css"
           href='${resource(dir: "css", file: "${env}/jquery-gentleSelect/jquery-gentleSelect.css")}'/>
 
@@ -125,8 +123,6 @@
 
     <g:javascript src="${env}/jQueryFileUpload/jquery.fileupload.js"/>
     <g:javascript src="${env}/jQueryFileUpload/jquery.fileupload-ui.js"/>
-
-    <g:javascript src="${env}/jquery-cron/jquery-cron.js"/>
 
     <g:javascript src="${env}/jquery-gentleSelect/jquery-gentleSelect.js"/>
 
@@ -536,6 +532,7 @@
             var companyPublishingManualLabel = "${message(code: 'company.publishing.manual.label')}";
             var companyPublishingUniqueErrorLabel = "${message(code: 'company.publishing.unique.label')}";
             var companyPublishingUrlErrorLabel = "${message(code: 'company.publishing.invalidUrl.label')}";
+            var companyPublishingCronErrorLabel = "${message(code: 'company.publishing.invalidCron.label')}";
 
             //IBeacon
             var companyShowIBeaconUrl = '${createLink(controller: 'ibeacon', action: 'list')}';
