@@ -43,10 +43,10 @@ table {
  - links
  - titles
  body {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size: 0.9em;
-	text-align: center; /*hack IE6*/ /*color: #444;
-	color: #888;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 0.9em;
+    text-align: center; /*hack IE6*/ /*color: #444;
+    color: #888;
     background-color: #E2E2E2;
 }
 
@@ -434,7 +434,7 @@ select option {
 #chekDiv .extraWideButton {
     padding-left: 10px !important;
     padding-right: 10px !important;
-    background-color:	#39f;
+    background-color:   #39f;
     border: 1px solid #0073e5;
     border-color: #3399ff #3399ff #0073e5;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
@@ -528,7 +528,7 @@ table.form label {
     font-weight: bold;
 }
 .blueColor {
-    background-color: 	#3399FF ;
+    background-color:   #3399FF ;
     background-image: none;
     border: 1px solid #679ED8 ;
     border-color: #3399ff #3399ff #0073e5;
@@ -1770,4 +1770,9 @@ ul.topnav li ul.subnav {
     font-weight: bold;
     height: 23px;
     min-width: 110px;
+}
+
+/*--Fix for CF-191--*/
+ul.jPag-pages li span, ul.jPag-pages li a{
+    font-size: 12px;
 }
