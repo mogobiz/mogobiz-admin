@@ -176,7 +176,11 @@
     </div>
 
     <div id="companyCouponsSkuDiv" class="multiselectSlides">
-        <div class="search"><input type="text" id="companyCouponsSkuSearch"/><button type="button" id="companyCouponsSkuSearchBtn"><i class="ui-icon ui-icon-search"></i></button></div>
+        <div class="search">
+            <select id="companyCouponsSkuCatalog" multiple="multiple"></select>
+            <input type="text" id="companyCouponsSkuSearch"/>
+            <button type="button" id="companyCouponsSkuSearchBtn"><i class="ui-icon ui-icon-search"></i></button>
+        </div>
         <div class="left">
             <select name="from" id="companyCouponsSku" size="14" multiple="multiple"></select>
         </div>
