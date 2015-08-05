@@ -128,11 +128,6 @@ function uploadAnotherFile() {
                     <div class="general-large">
                         <div id="productDescriptionTextDiv"></div>
                         <textarea name="product.description" id="productDescription" style="display:none; visibility:hidden;"></textarea>
-                        <div class="spacer"></div>
-                        <div class="newline">
-                            <input type="checkbox" id="tourismCalendarValidityPeriod" />
-                            <label for="tourismCalendarValidityPeriod"><g:message code="calendar.publication.active"/></label>
-                        </div>
                     </div>
                     <div class="general-small">
                         <div id="carousselDiv">
@@ -153,6 +148,12 @@ function uploadAnotherFile() {
                             <div id="tourismDescriptionVariations" stle="padding-top: 7px;"></div>
                             <div class="clear"></div>
                         </div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="newline">
+                        <input type="checkbox" id="tourismCalendarValidityPeriod" />
+                        <label for="tourismCalendarValidityPeriod"><g:message code="calendar.publication.active"/></label>
+                        <label style="float: right; font-weight: bold;margin-right: 26px;" id="productNbOfSales"><span></span>&nbsp;<g:message code="product.sales.label"/></label>
                     </div>
                 </div>
  				<div class="spacer"></div>

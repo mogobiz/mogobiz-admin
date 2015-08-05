@@ -46,6 +46,7 @@
 	<div id="tourismPricingAddDiv" >
 		<form id="tourismPricingAddForm" onsubmit="return false;">
 			<input type="hidden" name="price.id" id="tourismPricingId"/>
+            <div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-large">
 					<label for="tourismPricingSKU"><g:message code="tourismPricing.SKU.label"/>&nbsp;<sup>*</sup></label>
@@ -142,14 +143,21 @@
 				</div>
 			</div>
 			<div class="spacer"></div>
-			<div class="newline">
+			<div class="newline" id="tourismPricingNumberOfSalesLabel">
+                <div class="pricing-small">
+                    <label for="tourismPricingNumberOfSales"><g:message code="pricing.numberOfSales.label"/></label>
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
                 <input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
                 <label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
                 <input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
                 <label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
                 <input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
                 <label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
-			</div>
+                <span style="float: right; font-weight: bold;" id="tourismPricingNumberOfSales"><span></span>&nbsp;<g:message code="pricing.numberOfSales.label"/></span>
+            </div>
 		</form>
 	</div>
     <div id="tourismPricingDownloadDiv">
