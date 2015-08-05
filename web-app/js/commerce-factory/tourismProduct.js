@@ -121,6 +121,7 @@ function productAttachEditForm(productId, fromPage) {
                 productType = " (" + product.xtype.name.substring(0, 1).toUpperCase() + product.xtype.name.substring(1).toLowerCase() + ")";
             }
             $('#productLabel').text(productName + productType);
+            $("#productNbOfSales span").text(product.nbSales);
 
             if(product.price != 0)
                 $('#productFree').empty();

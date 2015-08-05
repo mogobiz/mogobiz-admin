@@ -86,6 +86,7 @@ function tourismPricingLoadPricings(productId) {
                     'availabilityDate' : (response[i].availabilityDate ? response[i].availabilityDate.split(' ')[0]: ""),
                     'xprivate' : response[i].xprivate,
                     'sku' : response[i].sku,
+                    'nbSales': response[i].nbSales,
                     'productId' : productId
                 }
             }
@@ -406,7 +407,8 @@ function tourismPricingInitControls(create) {
 }
 
 function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
-    $("#tourismPricingId,#tourismPricingTicketType,#tourismPricingAvailabilityDate,#tourismPricingTicketPrice,#tourismPricingTicketStock,#tourismPricingMaxOrder,#tourismPricingStartDate,#tourismPricingEndDate").val("");
+    $("#tourismPricingId,#tourismPricingTicketType,#tourismPricingAvailabilityDate,#tourismPricingTicketPrice,#tourismPricingTicketStock,#tourismPricingMaxOrder,#tourismPricingStartDate,#tourismPricingEndDate, #tourismPricingNumberOfSales").val("");
+    $("#tourismPricingNumberOfSales").hide();
     $("#tourismPricingTicketStock").val("1");
     $("#tourismPricingMinOrder").val("0");
     $("#tourismPricingPrivate").prop("checked", false);
@@ -432,6 +434,8 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
     }
     if (!create) {
         var data = tourismPricingGetDataRowByTicketId(ticketId);
+        $("#tourismPricingNumberOfSales").show();
+        $("#tourismPricingNumberOfSales span").html(data.nbSales);
         $("#tourismPricingId").val(data.ticketId);
         $("#tourismPricingSKU").val(data.sku);
         $("#tourismPricingAvailabilityDate").val(data.availabilityDate);
