@@ -143,11 +143,6 @@
 				</div>
 			</div>
 			<div class="spacer"></div>
-			<div class="newline" id="tourismPricingNumberOfSalesLabel">
-                <div class="pricing-small">
-                    <label for="tourismPricingNumberOfSales"><g:message code="pricing.numberOfSales.label"/></label>
-                </div>
-            </div>
             <div class="spacer-small"></div>
             <div class="newline">
                 <input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
