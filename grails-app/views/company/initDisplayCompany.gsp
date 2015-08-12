@@ -197,7 +197,19 @@
 							</div>
 						</div>
 						<div class="spacer"></div>
-					</div>
+                        <div class="newline">
+                            <div class="general_medium">
+                                <label for="generalDefaultLanguage"><g:message code="company.general.defaultLanguage.label" /></label>
+                            </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="newline">
+                            <div class="general_medium">
+                                <select id="generalDefaultLanguage" multiple="multiple"></select>
+                            </div>
+                        </div>
+                        <div class="spacer"></div>
+                    </div>
 				</div>
 			</form>
 		</div>

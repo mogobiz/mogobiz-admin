@@ -1,5 +1,6 @@
 var countries = [];
 var companies = [];
+var translateLanguage = [];
 
 var CivilityType = {
 	MR : 'MR',
@@ -71,6 +72,26 @@ function companiesLoad() {
         async : true,
         success : function(data, status) {
             companies = data;
+        }
+    });
+}
+
+/**
+ * load companies
+ *
+ * @return the languages list from db
+ */
+
+function loadTranslateLanguages(){
+    $.ajax({
+        url : languagesListUrl,
+        type : "GET",
+        data : "",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(data, status) {
+            translateLanguage = data;
         }
     });
 }

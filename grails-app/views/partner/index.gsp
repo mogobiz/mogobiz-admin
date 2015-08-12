@@ -250,7 +250,6 @@
             var createTranslationPageUrl = "${resource(dir: 'partner', file: '_createTranslation.gsp')}";
             var deleteTranslationPageUrl = "${resource(dir: 'partner', file: '_deleteTranslation.gsp')}";
 
-            var languagesTranslationUrl = "${createLink(controller: 'translation', action: 'languages')}";
             var listTranslationUrl = "${createLink(controller: 'translation', action: 'list')}";
             var updateTranslationUrl = "${createLink(controller: 'translation', action: 'update')}";
             var deleteTranslationUrl = "${createLink(controller: 'translation', action: 'delete')}";

@@ -98,4 +98,13 @@ function companyGetGeneralInfo(response) {
 			}
 		});
 	}
+
+    if(newJson["company.defaultLanguage"] && newJson["company.defaultLanguage"] != ""){
+		$('#generalDefaultLanguage').find('option:contains(' + newJson["company.defaultLanguage"] + ')').attr('selected','selected');
+		$('#formGeneral .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_generalDefaultLanguage"]').each(function() {
+			if(this.value == newJson["company.defaultLanguage"]) {
+				this.click();
+			}
+		});
+	}
 }

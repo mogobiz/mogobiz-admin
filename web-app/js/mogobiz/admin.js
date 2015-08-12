@@ -32,4 +32,5 @@ $(document).ready(function() {
 	$('#items').show();
 	countriesLoad();
     companiesLoad();
+    loadTranslateLanguages();
 });

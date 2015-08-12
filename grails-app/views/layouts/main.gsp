@@ -10,6 +10,7 @@
 <r:script>
 
 var companyCountriesUrl = "${createLink(controller: 'country', action:'countries')}";
+var languagesListUrl = "${createLink(controller: 'translation', action: 'languages')}";
 var getUserPermissions = "${createLink(controller: 'profile', action:'showUserPermissions')}";
 
 //----------------------- messages.properties Labels -----------------------//

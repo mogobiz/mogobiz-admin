@@ -1,4 +1,3 @@
-var translateLanguage = [];
 var menu;
 var partnerActiveCompanyChanged = false;
 
@@ -62,20 +61,6 @@ var StateType = {
     INACTIF : 'inactif',
     DELETED : 'deleted'
 };
-
-function loadTranslateLanguages(){
-    $.ajax({
-        url : languagesTranslationUrl,
-        type : "GET",
-        data : "",
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(data, status) {
-            translateLanguage = data;
-        }
-    });
-}
 
 function partnerGetAdminPage(partnerId) {
     $('#editCompanyTabs').remove();

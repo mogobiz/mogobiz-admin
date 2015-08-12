@@ -373,7 +373,21 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 
 			$('#editTabs').attr('style', 'display:block;');
 			$('#generalTab').addClass('selected');
-			
+
+			//Fill languages combo
+            var output = "";
+            for(var i = 0; i < translateLanguage.length; i++){
+                output += "<option " + "value='" + translateLanguage[i] + "'>" + translateLanguage[i] + "</option>";
+            }
+            $("#generalDefaultLanguage").empty().html(output);
+            $('#generalDefaultLanguage').multiselect({
+                header : false,
+                multiple : false,
+                noneSelectedText : multiselectNoneSelectedTextLabel,
+                minWidth : 354,
+                selectedList : 1
+            });
+
 			// Tabs click action
 			$('#editCompanyTabs .tabs a').click(function() {
 				$('#editCompanyTabs .tabs .selected').removeClass('selected');
@@ -420,6 +434,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyGeneralAutoUpdateField(compId, "#generalWebsite", "company.website", true, true);
                         companyGeneralAutoUpdateField(compId, "#generalEmail", "company.email", true, true);
                         companyGeneralMultiSelectAutoUpdate(compId, "#generalCountry", "company.location.countryCode");
+                        companyGeneralMultiSelectAutoUpdate(compId, "#generalDefaultLanguage", "company.defaultLanguage");
 					}
 				}
                 else if (selectedTabId == 'profilesTab'){
