@@ -53,6 +53,7 @@ $.widget("ech.multiselect", {
 				.addClass('ui-multiselect ui-widget ui-state-default ui-corner-all')
 				.addClass( o.classes )
 				.attr({ 'title':el.attr('title'), 'aria-haspopup':true })
+				.attr({ 'id': (el.attr('id') && el.attr('id') != "") ? el.attr('id')+ "_multiselectButton" : "" })
 				.insertAfter( el ),
 			
 			buttonlabel = (this.buttonlabel = $('<span />'))
@@ -62,6 +63,7 @@ $.widget("ech.multiselect", {
 			menu = (this.menu = $('<div />'))
 				.addClass('ui-multiselect-menu ui-widget ui-widget-content ui-corner-all')
 				.addClass( o.classes )
+                .attr({ 'id': (el.attr('id') && el.attr('id') != "") ? el.attr('id')+ "_multiselectMenu" : "" })
 				.insertAfter( button ),
 				
 			header = (this.header = $('<div />'))

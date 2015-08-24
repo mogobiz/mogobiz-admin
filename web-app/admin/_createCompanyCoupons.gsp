@@ -100,10 +100,11 @@
             <div>
                 <input type="checkbox" id="companyCouponsActive" value="true"/>&nbsp;
                 <label for="companyCouponsActive"><g:message code="company.coupons.active.label" /></label>&nbsp;&nbsp;
+                <input type="checkbox" id="companyCouponsAnonymous" value="false"/>&nbsp;
+                <label for="companyCouponsAnonymous"><g:message code="company.coupons.anonymous.label" /></label>&nbsp;&nbsp;
                 <input type="checkbox" id="companyCouponsCatalogWise" value="false"/>&nbsp;
                 <label for="companyCouponsCatalogWise"><g:message code="company.coupons.catalogWise.label" /></label>&nbsp;&nbsp;
-                <input type="checkbox" id="companyCouponsAnonymous" value="false"/>&nbsp;
-                <label for="companyCouponsAnonymous"><g:message code="company.coupons.anonymous.label" /></label>
+                <select id="companyCouponsGeneralCatalog" multiple="multiple"></select>
             </div>
             <div class="spacer"></div>
         </form>
