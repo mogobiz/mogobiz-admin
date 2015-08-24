@@ -504,6 +504,7 @@
             var companyCouponsNumberErrorLabel = "${message(code: 'company.coupons.invalidNumber.label')}";
             var companyCouponsUniqueNameErrorLabel = "${message(code: 'company.coupons.uniqueName.label')}";
             var companyCouponsUniqueCodeErrorLabel = "${message(code: 'company.coupons.uniqueCode.label')}";
+            var companyCouponsCatalogErrorLabel = "${message(code: 'company.coupons.catalog.label')}";
 
             var companyCouponsRulesTitleLabel = "${message(code: 'company.coupons.rules.title.label')}";
             var companyCouponsRulesTypeLabel = "${message(code: 'company.coupons.rules.type.label')}";
