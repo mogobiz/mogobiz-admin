@@ -80,13 +80,13 @@
 		    	<div style="float: left; width: 200px;">
 		    		<input type="text" name="buyerLogin" id="buyerLogin" value="buyer@iper2010.com" size="25"/>
 		    	</div>
-		    	<div style="float: left; width: 150px;">
+		    	<div style="float: left; width: 170px;">
 		    		<input type="text" name="saleCode" id="saleCode" value="sale1"/>
 	 			</div>
-	 			<div style="float: left; width: 150px;">
+	 			<div style="float: left; width: 170px;">
 	 				<input type="text" name="saleDate" id="saleDate"/>
 	 			</div>
-	 			<div style="float: left; width: 136px;">
+	 			<div style="float: left; width: 120px;">
 	 				<button type="submit" id="searchByBuyerBtn" class="fk_ok_btn"><g:message code="sale.searchByBuyer" /></button>
 	 			</div>
 		    </div>
