@@ -57,7 +57,10 @@ function getBackOfficePage() {
 			changeMonth : true,
 			changeYear : true,
 			firstDay : 1
-		}).keydown(function(){
+		}).keydown(function(e){
+            var key = 'which' in e ? e.which : e.keyCode;
+            if(key)
+                $(this).val("");
 			return false;
 		});
 		$("#mainSalesDiv #startDate").datepicker({

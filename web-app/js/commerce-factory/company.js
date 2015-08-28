@@ -516,15 +516,10 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 					if (!companyHashTable['shipping'].visited) {
 						companyHashTable['shipping'].visited = true;
 						loadComboData('#shippingCountry', countries);
-						
-						// draw Shipping Carriers MultiSelectList
-						drawShippingCarriersMultiSelectList();
-						
+
 						// draw select combo boxes
 						drawSelectComboBox('#shippingCountry');
-						drawSelectComboBox('#shippingRefundPolicy');
-						drawSelectComboBox('#shippingWeightUnit');
-						
+
 						//Fill Shipping Tab
 						companyGetShippingPolicy(compId);
 
@@ -534,16 +529,10 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyShippingAutoUpdateField(compId, "#shippingPostalCode", "company.shipFrom.postalCode", true, false);
                         companyShippingAutoUpdateField(compId, "#shippingAddress1", "company.shipFrom.road1", true, false);
                         companyShippingAutoUpdateField(compId, "#shippingAddress2", "company.shipFrom.road2", true, false);
-                        companyShippingAutoUpdateField(compId, "#shippingHandlingTime", "company.handlingTime", true, true);
-                        companyShippingAutoUpdateField(compId, "#shippingReturnPolicy", "company.returnPolicy", true, true);
 
                         companyShippingAutoUpdateCheckbox(compId, "#shippingAllowInternational", "company.shippingInternational");
 
                         companyShippingMultiSelectAutoUpdate(compId, "#shippingCountry", "company.shipFrom.countryCode");
-                        companyShippingMultiSelectAutoUpdate(compId, "#shippingWeightUnit", "company.weightUnit");
-                        companyShippingMultiSelectAutoUpdate(compId, "#shippingRefundPolicy", "company.refundPolicy");
-
-                        companyShippingAutoUpdateCarriers(compId);
 					}
 					
 					$('#useStoreAddress').unbind();

@@ -85,10 +85,6 @@
     width: 172px;
 }
 
-#shippingCarriers, #shippingRefundPolicy, #shippingWeightUnit {
-	width: 149px;
-}
-
 #shippingPostalCode, #shippingState, #shippingCity {
     width: 91.5%;
 }
@@ -103,10 +99,6 @@
 
 .shipping_medium label.spacer {
 	margin-left: 25%;
-}
-
-#shippingHandlingTime, #shippingReturnPolicy {
-	width: 30%;
 }
 
 #shippingRulesGridDiv{

@@ -308,65 +308,6 @@
                             </div>
 						</div>
 						<div class="spacer"></div>
-						<div class="newline">
-							<div class="shipping_small">
-								<label for="shippingCarriers"><g:message code="company.shipping.shippingCarriers.label" /></label>
-							</div>
-							<div class="shipping_medium">
-								<label for="shippingHandlingTime" class="spacer"><g:message code="company.shipping.handlingTime.label" /></label>
-							</div>
-							<div class="shipping_small">
-								<label for="shippingWeightUnit"><g:message code="company.shipping.weightUnit.label" /></label>
-							</div>
-						</div>
-						<div class="spacer-small"></div>
-						<div class="newline">
-							<div class="shipping_small">
-								<select name="shipping.CarriersMultiSelectList" id="shippingCarriers" multiple="multiple">
-									<option id="company.shippingCarriers.ups" value="UPS">&nbsp;UPS</option>
-									<option id="company.shippingCarriers.fedex" value="FedEx">&nbsp;FedEx</option>
-								</select>
-							</div>
-							<div class="shipping_medium">
-								<label style="white-space: nowrap;" class="spacer">
-									<input type="number" min="0" max="999999999" name="company.handlingTime" id="shippingHandlingTime" pattern="\d+"/>
-									&nbsp;<g:message code="company.shipping.businessdays.label" />
-								</label>
-							</div>
-							<div class="shipping_small">
-								<select name="company.weightUnit" id="shippingWeightUnit" multiple="multiple">
-									<option value="KG"><g:message code="shipping.kilogram.label" /></option>
-									<option value="G"><g:message code="shipping.gram.label" /></option>
-									<option value="LB"><g:message code="shipping.pound.label" /></option>
-								</select>
-							</div>
-						</div>
-						<div class="spacer"></div>
-						<div class="newline">
-							<div class="shipping_small">
-								<label for="shippingRefundPolicy"><g:message code="company.shipping.refundPolicy.label" /></label>
-							</div>
-							<div class="shipping_medium">
-								<label for="shippingReturnPolicy" class="spacer"><g:message code="company.shipping.returnPolicy.label" /></label>
-							</div>
-						</div>
-						<div class="spacer-small"></div>
-						<div class="newline">
-							<div class="shipping_small">
-								<select name="company.refundPolicy" id="shippingRefundPolicy" multiple="multiple">
-									<option value="NO_REFUND">NO_REFUND</option>
-									<option value="MONEYBACK">MONEYBACK</option>
-									<option value="EXCHANGE">EXCHANGE</option>
-								</select>
-							</div>
-							<div class="shipping_medium">
-								<label style="white-space: nowrap;" class="spacer">
-									<input type="number" min="0" max="999999999" name="company.returnPolicy" id="shippingReturnPolicy" pattern="\d+" />
-									&nbsp;<g:message code="company.shipping.businessdays.label" />
-								</label>
-							</div>
-						</div>
-						<div class="spacer"></div>
                         <div class="newline">
                             <p style="font-weight: bold;"><g:message code="company.shipping.rules.header.label" /> <a href="javascript:void(0)" id="addNewShippingRule"><g:message code="company.shipping.rules.add.label" /></a></p>
                             <div id="shippingRulesGridDiv">

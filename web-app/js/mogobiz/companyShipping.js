@@ -84,23 +84,6 @@ function companyShippingMultiSelectAutoUpdate(compId, objId, objProperty){
     });
 }
 
-function companyShippingAutoUpdateCarriers(compId){
-    $("#shippingCarriers").bind("multiselectclick", function(event, ui) {
-        var dataToSend = "company.id=" + compId;
-        dataToSend += getShippingCarriersDataToSend();
-        dataToSend += "&format=json";
-        $.ajax({
-            url : shippingPolicyUpdateUrl,
-            type : "POST",
-            noticeType : "PUT",
-            data : dataToSend,
-            dataType : "json",
-            cache : false,
-            async : true
-        });
-    })
-}
-
 function companyGetShippingPolicy(compId) {
 	var dataToSend = "company.id="+compId;
 	dataToSend += "&format=json";
@@ -155,15 +138,6 @@ function companyGetShippingPolicy(compId) {
 				$("#shippingCountry").multiselect('uncheckAll');
 				$('#shippingCountry').multiselect('refresh');
 
-				$("#shippingCarriers").multiselect('uncheckAll');
-				$("#shippingCarriers").multiselect('refresh');
-
-				$("#shippingWeightUnit").multiselect('uncheckAll');
-				$("#shippingWeightUnit").multiselect('refresh');
-
-				$("#shippingRefundPolicy").multiselect('uncheckAll');
-				$("#shippingRefundPolicy").multiselect('refresh');
-
 				if(newJson["company.shipFrom.countryCode"] && newJson["company.shipFrom.countryCode"] != ""){
 					$('#shippingCountry').find('option:contains(' + newJson["company.shipFrom.countryCode"] + ')').attr('selected','selected');
 					$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCountry"]').each(function() {
@@ -171,40 +145,6 @@ function companyGetShippingPolicy(compId) {
                             $("#shippingCountry").unbind("multiselectclick");
 							this.click();
                             companyShippingMultiSelectAutoUpdate(compId, "#shippingCountry", "company.shipFrom.countryCode");
-						}
-					});
-				}
-
-				for(var key in newJson["company.shippingCarriers"]){
-					if (newJson["company.shippingCarriers"][key]) {
-						$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCarriers"]').each(function() {
-							if(this.value.toLowerCase().trim() == key) {
-                                $("#shippingCarriers").unbind("multiselectclick");
-								 this.click();
-                                companyShippingAutoUpdateCarriers(compId)
-							}
-						});
-					}
-				}
-
-				if (newJson["company.weightUnit.name"] && newJson["company.weightUnit.name"] != "") {
-					$('#shippingWeightUnit').find('option:contains(' + newJson["company.weightUnit.name"] +')').attr('selected','selected');
-					$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingWeightUnit"]').each(function() {
-						if(this.value == newJson["company.weightUnit.name"]) {
-                            $("#shippingWeightUnit").unbind("multiselectclick");
-							this.click();
-                            companyShippingMultiSelectAutoUpdate(compId, "#shippingWeightUnit", "company.weightUnit");
-						}
-					});
-				}
-
-				if (newJson["company.refundPolicy.name"] && newJson["company.refundPolicy.name"] != "") {
-					$('#shippingRefundPolicy').find('option:contains(' + newJson["company.refundPolicy.name"] +')').attr('selected','selected');
-					$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingRefundPolicy"]').each(function() {
-						if(this.title == newJson["company.refundPolicy.name"]) {
-                            $("#shippingRefundPolicy").unbind("multiselectclick");
-							this.click();
-                            companyShippingMultiSelectAutoUpdate(compId, "#shippingRefundPolicy", "company.refundPolicy");
 						}
 					});
 				}
@@ -219,65 +159,6 @@ function companyGetShippingPolicy(compId) {
 			}
 		}
 	});
-}
-
-function drawShippingCarriersMultiSelectList() {
-	$("#shippingCarriers").multiselect({
-		header: false,
-		noneSelectedText: multiselectNoneSelectedTextLabel,
-		minWidth: 100,
-		selectedList: 4
-	});
-}
-
-function getShippingCarriersDataToSend() {
-    // Array of all list items
-    var array_of_all_values = ["UPS","FedEx"] ;
-
-    // Array of checked list items
-    var array_of_checked_values = $("#shippingCarriers").multiselect("getChecked").map(function(){
-        return this.value;
-    }).get();
-
-    // Array of unchecked list items
-    var array_of_unchecked_values = [];
-    var k = 0;
-    $.each(array_of_all_values, function(i, tempvalue) {
-        var flag = 0;
-        $.each(array_of_checked_values, function(j, value) {
-            if (value == tempvalue) {
-                flag = 1;
-            }
-        });
-        if (flag == 0) {
-            array_of_unchecked_values[k] = tempvalue;
-            k++;
-        }
-    });
-
-    // Fill data to send
-    var data = "";
-    $.each(array_of_checked_values, function(i, value) {
-        switch (value) {
-            case "UPS":
-                data += "&company.shippingCarriers.ups=true";
-                break;
-            case "FedEx":
-                data += "&company.shippingCarriers.fedex=true";
-                break;
-        }
-    });
-    $.each(array_of_unchecked_values, function(i, value) {
-        switch (value) {
-            case "UPS":
-                data += "&company.shippingCarriers.ups=false";
-                break;
-            case "FedEx":
-                data += "&company.shippingCarriers.fedex=false";
-                break;
-        }
-    });
-    return data;
 }
 
 function getStoreAddress(compId) {
