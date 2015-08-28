@@ -7,9 +7,16 @@
 
 <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
 
+<script>
+    var multiselectCheckAllLabel = "${message(code:'multiselect.checkall.label')}";
+    var multiselectUncheckAllLabel = "${message(code:'multiselect.uncheckall.label')}";
+    var multiselectSelectedLabel = "${message(code:'multiselect.selected.label')}";
+    var multiselectSelectOptionsLabel = "${message(code:'multiselect.selectOptions.label')}";
+</script>
 <r:script>
 
 var companyCountriesUrl = "${createLink(controller: 'country', action:'countries')}";
+var companyCountryStatesUrl = "${createLink(controller: 'country', action:'countryStates')}";
 var languagesListUrl = "${createLink(controller: 'translation', action: 'languages')}";
 var getUserPermissions = "${createLink(controller: 'profile', action:'showUserPermissions')}";
 
@@ -34,7 +41,6 @@ var fieldsTooLongMessageLabel = "${message(code:'default.message.fields.tooLong.
 var multiselectNoneSelectedTextLabel = "${message(code:'multiselect.noneSelectedText.label')}";
 var multiselectNoneSelectedTextDisabledLabel = "${message(code:'multiselect.noneSelectedText.disabled.label')}";
 var fancyBoxErrorMessage_1 = "${message(code:'default.fancybox.error1.message')}";
-var fancyBoxErrorMessage_2 = "${message(code:'default.fancybox.error2.message')}";
 
 //company labels
 var createCompanyLabel = "${message(code:'company.new.label')}";
@@ -66,9 +72,12 @@ var companyShippingRuleErrors_invalidMinAmountMaxAmount = "${message(code:'compa
 //company Tax 
 var companyTax_createLabel = "${message(code:'company.tax.create.label')}";
 var companyTax_countryLabel = "${message(code:'company.tax.country.label')}";
+var companyTax_stateLabel = "${message(code:'company.tax.state.label')}";
 var companyTax_taxRateLabel = "${message(code:'company.tax.taxRate.label')}";
 var companyTax_activeLabel = "${message(code:'company.tax.active.label')}";
+
 var companyTaxErrors_requiredCountryLabel = "${message(code:'company.tax.errors.requiredCountry.label')}";
+var companyTaxErrors_requiredStateLabel = "${message(code:'company.tax.errors.requiredState.label')}";
 var companyTaxErrors_requiredTaxRateLabel = "${message(code:'company.tax.errors.requiredTaxRate.label')}";
 var companyTaxErrors_invalidTaxRateLabel = "${message(code:'company.tax.errors.invalidTaxRate.label')}";
 

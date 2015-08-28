@@ -85,6 +85,10 @@
     width: 172px;
 }
 
+#shippingCarriers, #shippingRefundPolicy, #shippingWeightUnit {
+    width: 149px;
+}
+
 #shippingPostalCode, #shippingState, #shippingCity {
     width: 91.5%;
 }
@@ -95,6 +99,10 @@
 
 .shipping_medium label {
     margin-left: 25%;
+}
+
+#shippingHandlingTime, #shippingReturnPolicy {
+    width: 30%;
 }
 
 #shippingRulesGridDiv{
@@ -140,12 +148,6 @@
 .taxRate-large {
 	float: left;
 	width: 50%;
-}
-
-.taxRate-large input[type="text"] {
-	width: 238px;
-    float: left;
-    width: 240px;
 }
 
 .taxRate-large input[type="text"] {

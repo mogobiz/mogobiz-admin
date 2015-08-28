@@ -26,8 +26,8 @@
 			<div class="taxRate-large">
 				<label for="localTaxRateCountry"><g:message code="company.tax.country.label"></g:message>&nbsp;<sup>*</sup></label><br />
 			</div>
-			<div class="taxRate-large">
-				<label for="localTaxRateRate"><g:message code="company.tax.taxRate.label"></g:message>&nbsp;<sup>*</sup></label><br />
+            <div class="taxRate-large">
+				<label for="localTaxRateState"><g:message code="company.tax.state.label"></g:message>&nbsp;<sup>*</sup></label><br />
 			</div>
 		</div>
 		<div class="spacer-small"></div>
@@ -35,14 +35,25 @@
 			<div class="taxRate-large">
 				<select id="localTaxRateCountry" multiple="multiple"></select>
 			</div>
-			<div class="taxRate-large">
-				 <input type="text" id="localTaxRateRate" pattern="\d{0,6}\.?\d{0,2}"/>
-			</div>
+            <div class="taxRate-large">
+                <select id="localTaxRateState" multiple="multiple" style="width:229px;"></select>
+            </div>
 		</div>
 		<div class="spacer"></div>
-		<div class="taxRateDialog-small">
-			<input type="checkbox" id="localTaxRateActive" value="true" checked="checked"/>&nbsp;
-			<label for="localTaxRateActive"><g:message code="company.tax.active.label" /></label>
+        <div class="newline">
+            <div class="taxRate-large">
+                <label for="localTaxRateRate"><g:message code="company.tax.taxRate.label"></g:message>&nbsp;<sup>*</sup></label><br />
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="taxRate-large">
+                <input type="text" id="localTaxRateRate" pattern="\d{0,6}\.?\d{0,2}"/>
+            </div>
+            <div class="taxRateDialog-small">
+                <input type="checkbox" id="localTaxRateActive" value="true" checked="checked"/>&nbsp;
+                <label for="localTaxRateActive"><g:message code="company.tax.active.label" /></label>
+            </div>
 		</div>
 		<div class="spacer"></div>
 	</form>

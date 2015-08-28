@@ -1,6 +1,7 @@
 var companyTaxFirstVisit = true;
 var companyTaxSelectedId = null;
 var companyTaxEditClicked = false;
+
 function companyTaxLoadList(companyId){
 	var dataToSend = "companyId=" + companyId + "&format=json";
 	$.ajax({
@@ -241,6 +242,8 @@ function companyTaxDelete(){
 
 //Tax Local
 var companyTaxLocalGrid = null;
+var taxRateLocalCountryStates = [];
+
 function companyTaxLocalLoadList(companyId){
 	var dataToSend = "companyId=" + companyId + "&taxRateId=" + companyTaxSelectedId + "&format=json";
 	$.ajax({
@@ -251,59 +254,118 @@ function companyTaxLocalLoadList(companyId){
 		cache : false,
 		async : true,
 		success : function(response, status) {
-			companyTaxLocalGrid = null;
-			$("#taxGrid").empty();
-			$("#taxForm").show();
-			var gridColumns = [{
-				id : "countryCode",
-				name : companyTax_countryLabel,
-				field : "countryCode",
-				width : 34,
-				formatter : companyTaxGridCountryFormatter,
-				cssClass : "cell-title"
-			},{
-				id : "rate",
-				name : companyTax_taxRateLabel,
-				field : "rate",
-				width : 33,
-				cssClass : ""
-			},{
-				id : "active",
-				name : companyTax_activeLabel,
-				field : "active",
-				width : 33,
-				formatter : companyTaxGridActiveFormatter,
-				cssClass : ""
-			}];
-
-			var gridOptions = {
-				editable : false,
-				enableAddRow : false,
-				asyncEditorLoading : false,
-				forceFitColumns : true,
-				enableCellNavigation : false,
-				enableColumnReorder : false,
-				rowHeight : 25
-			};
-
-			var gridData = [];
-			for ( var i = 0; i < response.length; i++) {
-				gridData[gridData.length] = {
-					"id" : i,
-					"companyId": companyId,
-					"taxRateId": companyTaxSelectedId,
-					"localTaxRateId": response[i].id,
-					"countryCode": response[i].countryCode,
-					"rate" : response[i].rate,
-					"active": response[i].active
-				}
-			}
-			companyTaxLocalGrid = new Slick.Grid($("#taxGrid"), gridData, gridColumns, gridOptions);
-			companyTaxLocalGrid.setSelectionModel(new Slick.RowSelectionModel());
-			companyTaxLocalGrid.invalidate();
+            if(response.length == 0){
+                drawLocalTaxRateGrid(companyId, response);
+            }
+            else {
+                var taxRateCountries = [];
+                for (var i = 0; i < response.length; i++) {
+                    taxRateCountries[taxRateCountries.length] = response[i].countryCode;
+                }
+                for (var i = 0; i < response.length; i++) {
+                    companyTaxLocalGetAllCountriesStates(companyId, response, taxRateCountries, response[i].countryCode);
+                }
+            }
 		},
 		error: function(response, status){}
 	});
+}
+
+function companyTaxLocalGetAllCountriesStates(companyId, taxRate, countries, countryCode) {
+    var success = function(response, status) {
+        if(!taxRateLocalCountryStates[countryCode])
+            taxRateLocalCountryStates[countryCode] = response;
+        for(var i = 0; i < countries.length; i++){
+            if(!taxRateLocalCountryStates[countryCode]){
+                return;
+            }
+        }
+        drawLocalTaxRateGrid(companyId, taxRate);
+    };
+    if(taxRateLocalCountryStates[countryCode]){
+        success();
+        return;
+    }
+    $.ajax({
+        url : companyCountryStatesUrl,
+        type : "GET",
+        data : "countryCode=" + countryCode,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : success,
+        error: function(response, status){}
+    });
+}
+
+function drawLocalTaxRateGrid(companyId, taxRate){
+    companyTaxLocalGrid = null;
+    $("#taxGrid").empty();
+    $("#taxForm").show();
+    var gridColumns = [{
+        id : "countryCode",
+        name : companyTax_countryLabel,
+        field : "countryCode",
+        width : 30,
+        formatter : companyTaxGridCountryFormatter,
+        cssClass : "cell-title"
+    },{
+        id : "stateCode",
+        name : companyTax_stateLabel,
+        field : "stateCode",
+        width : 30,
+        formatter : companyTaxGridStateFormatter,
+        cssClass : "cell-title"
+    },{
+        id : "rate",
+        name : companyTax_taxRateLabel,
+        field : "rate",
+        width : 30,
+        cssClass : ""
+    },{
+        id : "active",
+        name : companyTax_activeLabel,
+        field : "active",
+        width : 10,
+        formatter : companyTaxGridActiveFormatter,
+        cssClass : ""
+    }];
+
+    var gridOptions = {
+        editable : false,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : false,
+        enableColumnReorder : false,
+        rowHeight : 25
+    };
+
+    var gridData = [];
+    for ( var i = 0; i < taxRate.length; i++) {
+        gridData[gridData.length] = {
+            "id" : i,
+            "companyId": companyId,
+            "taxRateId": companyTaxSelectedId,
+            "localTaxRateId": taxRate[i].id,
+            "countryCode": taxRate[i].countryCode,
+            "stateCode": taxRate[i].stateCode,
+            "rate" : taxRate[i].rate,
+            "active": taxRate[i].active
+        }
+    }
+    companyTaxLocalGrid = new Slick.Grid($("#taxGrid"), gridData, gridColumns, gridOptions);
+    companyTaxLocalGrid.setSelectionModel(new Slick.RowSelectionModel());
+    companyTaxLocalGrid.invalidate();
+}
+
+function companyTaxGridStateFormatter(row, cell, value, columnDef, dataContext){
+    var states = taxRateLocalCountryStates[dataContext.countryCode];
+    for (var i = 0; i < states.length; i++) {
+        if (value == states[i].code) {
+            return states[i].name;
+        }
+    }
 }
 
 function companyTaxGridActiveFormatter(row, cell, value, columnDef, dataContext){
@@ -345,10 +407,11 @@ function companyTaxLocalPageSetup(htmlresponse, companyId, localTaxRateId, isCre
 			modal : true,
 			resizable : false,
 			width : "auto",
-			height : "auto",
+			height : "300",
 			open : function(event) {
 				companyTaxLocalInitControls(isCreate);
 				companyTaxLocalInitFields(companyId, localTaxRateId, isCreate);
+                $("#items").hideLoading();
 			},
 			buttons : {
 				deleteLabel : function() {
@@ -362,8 +425,10 @@ function companyTaxLocalPageSetup(htmlresponse, companyId, localTaxRateId, isCre
 						companyTaxLocalUpdate();
 				},
 				createLabel : function() {
-					if (companyTaxLocalValidateForm())
-						companyTaxLocalAddNew();
+					if (companyTaxLocalValidateForm()){
+                        companyTaxLocalCreateIndex = 0;
+                        companyTaxLocalAddNew();
+                    }
 				}
 			}
 		});
@@ -394,24 +459,38 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
 	$("#localTaxRateCompanyId").val(companyId);
 	$("#localTaxRateRate").val(0);
 	$("#localTaxRateActive").attr("checked", "checked");
+
+    $("#localTaxRateState")
+        .multiselect("destroy")
+        .multiselect({
+            header : true,
+            multiple : true,
+            noneSelectedText : multiselectNoneSelectedTextLabel,
+            minWidth : 229,
+            height: 150,
+            selectedList : 3
+        })
+        .multiselect("disable");
+    $("#localTaxRateCountry")
+    .empty()
+    .multiselect("destroy")
+    .multiselect({
+        header : false,
+        multiple : false,
+        noneSelectedText : multiselectNoneSelectedTextLabel,
+        minWidth : 229,
+        height: 150,
+        selectedList : 1
+    });
+
 	if(isCreate){
 		$("#localTaxRateCountry").empty();
 		for(var i = 0; i < countries.length; i++){
-			if(!companyTaxLocalExistCountryInGrid(countries[i].code)){
-				$("#localTaxRateCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
-			}
+			$("#localTaxRateCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
 		}
-		$("#localTaxRateCountry").multiselect("destroy");
-		$("#localTaxRateCountry").multiselect({
-			header : false,
-			multiple : false,
-			noneSelectedText : multiselectNoneSelectedTextLabel,
-			minWidth : 229,
-			height: 60,
-			selectedList : 1
-		});
+        $("#localTaxRateCountry").multiselect("refresh").unbind().bind("multiselectclick", function(event, ui){companyTaxLocalGetCountryStates(ui.value)})
 	}
-	if (!isCreate){
+	else{
 		var localTaxRate = null;
 		var data = companyTaxLocalGrid.getData();
 		for (var i = 0; i < data.length; i++) {
@@ -428,12 +507,21 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
 				}
 			}
 			$("#localTaxRateCountry").empty().html(html);
-			$("#localTaxRateCountry").multiselect("destroy");
-			$("#localTaxRateCountry").multiselect({header : false, multiple : false, selectedList : 1});
-			$('#taxRateDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_localTaxRateCountry"]')[0].click();
 			$("#localTaxRateCountry").multiselect("refresh");
-			$("#localTaxRateCountry").multiselect("disable");
-			$("#localTaxRateCountry").val(localTaxRate.countryCode);
+            $('#taxRateDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_localTaxRateCountry"]')[0].click();
+            $("#localTaxRateCountry").multiselect("refresh").multiselect("disable").val(localTaxRate.countryCode);
+
+            html = "";
+            var states = taxRateLocalCountryStates[localTaxRate.countryCode];
+            for (var i = 0; i < states.length; i++) {
+                if (localTaxRate.stateCode == states[i].code) {
+                    html = "<option value='" + states[i].code + "'>" + states[i].name + "</option>";
+                }
+            }
+            $("#localTaxRateState").empty().html(html);
+            $("#localTaxRateState").multiselect("refresh");
+            $('#taxRateDialog .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_localTaxRateState"]')[0].click();
+            $("#localTaxRateState").multiselect("refresh").multiselect("disable").val(localTaxRate.stateCode);
 
 			$("#localTaxRateId").val(localTaxRate.localTaxRateId);
 			$("#localTaxRateRate").val(localTaxRate.rate);
@@ -444,14 +532,46 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
 	}
 }
 
-function companyTaxLocalExistCountryInGrid(countryCode){
-	var data = companyTaxLocalGrid.getData();
-	for (var i = 0; i < data.length; i++) {
-		if (data[i].countryCode == countryCode){
-			return true;
-		}
-	}
-	return false;
+function companyTaxLocalGetCountryStates(countryCode){
+    if(taxRateLocalCountryStates[countryCode]){
+        companyTaxLocalFillStateCombo(countryCode);
+        return;
+    }
+    $("#items").showLoading();
+    $("#localTaxRateState").empty().multiselect("disable");
+    $.ajax({
+        url : companyCountryStatesUrl,
+        type : "GET",
+        data : "countryCode=" + countryCode,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            taxRateLocalCountryStates[countryCode] = response;
+            companyTaxLocalFillStateCombo(countryCode);
+            $("#items").hideLoading();
+        },
+        error: function(response, status){}
+    });
+}
+
+function companyTaxLocalFillStateCombo(countryCode){
+    var states = taxRateLocalCountryStates[countryCode];
+    for (var i = 0; i < states.length; i++) {
+        if(!companyTaxLocalExistCountryAndStateInGrid(countryCode, states[i].code))
+            $("#localTaxRateState").append("<option value='" + states[i].code + "'>" + states[i].name + "</option>");
+    }
+    $("#localTaxRateState").multiselect("refresh").multiselect("enable");
+}
+
+function companyTaxLocalExistCountryAndStateInGrid(countryCode, stateCode){
+    var data = companyTaxLocalGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].countryCode == countryCode && data[i].stateCode == stateCode){
+            return true;
+        }
+    }
+    return false;
 }
 
 function companyTaxLocalValidateForm(){
@@ -464,6 +584,15 @@ function companyTaxLocalValidateForm(){
 		});
 		return false;
 	}
+    if($("#localTaxRateState").val() == null) {
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyTaxErrors_requiredStateLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
 	if ($("#localTaxRateRate").val() == "") {
 		$("#localTaxRateForm #localTaxRateRate").focus();
 		jQuery.noticeAdd({
@@ -487,31 +616,43 @@ function companyTaxLocalValidateForm(){
 	return true;
 }
 
+var companyTaxLocalCreateIndex;
 function companyTaxLocalAddNew(){
-	var dataToSend = "companyId=" + $("#localTaxRateCompanyId").val();
-	dataToSend += "&taxRateId=" + companyTaxSelectedId;
-	dataToSend += "&country=" + $("#localTaxRateCountry").val();
-	dataToSend += "&rate=" + $("#localTaxRateRate").val();
-	dataToSend += "&active=" + $("#localTaxRateActive").is(":checked");
-	dataToSend += "&format=json";
-	$.ajax({
-		url : taxRateCreateLocalUrl,
-		type : "POST",
-		noticeType : "POST",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			companyTaxLocalLoadList($("#localTaxRateCompanyId").val());
-			$("#taxRateDialog").dialog("close");
-		},
-		error: function(response, status){}
-	});
+    var states = $("#localTaxRateState").multiselect("getChecked").map(function(){
+        return this.value;
+    }).get();
+    for(var i = 0; i < states.length; i++) {
+        var dataToSend = "companyId=" + $("#localTaxRateCompanyId").val();
+        dataToSend += "&taxRateId=" + companyTaxSelectedId;
+        dataToSend += "&country=" + $("#localTaxRateCountry").val();
+        dataToSend += "&state=" + states[i];
+        dataToSend += "&rate=" + $("#localTaxRateRate").val();
+        dataToSend += "&active=" + $("#localTaxRateActive").is(":checked");
+        dataToSend += "&format=json";
+        $.ajax({
+            url: taxRateCreateLocalUrl,
+            type: "POST",
+            noticeType: "POST",
+            data: dataToSend,
+            dataType: "json",
+            cache: false,
+            async: true,
+            success: function (response, status) {
+                companyTaxLocalCreateIndex++;
+                if (companyTaxLocalCreateIndex == states.length){
+                    companyTaxLocalLoadList($("#localTaxRateCompanyId").val());
+                    $("#taxRateDialog").dialog("close");
+                }
+            },
+            error: function (response, status) {
+            }
+        });
+    }
 }
 
 function companyTaxLocalUpdate(){
 	var dataToSend = "companyId=" + $("#localTaxRateCompanyId").val();
+    dataToSend += "&state=" + $("#localTaxRateState").val();
 	dataToSend += "&localTaxRateId=" + $("#localTaxRateId").val();
 	dataToSend += "&rate=" + $("#localTaxRateRate").val();
 	dataToSend += "&active=" + $("#localTaxRateActive").is(":checked");
