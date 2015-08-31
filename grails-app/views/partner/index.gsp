@@ -602,12 +602,6 @@
         <img src="${resource(dir: 'images', file: 'ebiznext_logo.png')}"/>
     </div>
     <jsec:isLoggedIn>
-        <div id="searchHeaderDiv" align="right">
-            <ul class="topnav">
-                <li id="searchHeaderIcon"><img src="../images/search.png"/></li>
-            </ul>
-        </div>
-
         <div id="user" align="right">
             <ul class="topnav">
                 <li id="user_name_div"><g:message code="default.menu.label"/></li>

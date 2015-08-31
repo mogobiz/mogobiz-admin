@@ -21,8 +21,7 @@ function catalogueLoadList() {
             $("#categoriesMain").hideLoading();
             $("#item").hide();
             $("#categoriesMain").show();
-            $("#deleteCatalogLink, #exportCatalogLink").unbind().addClass("disabled");
-            $("#searchHeaderIcon img").hide();
+            $("#deleteCatalogLink, #exportCatalogLink, #searchProductCatalogLink").unbind().addClass("disabled");
             $("#catalogList").empty();
             $("#catalogList").append(pageContent);
             $("#catalogDropDownList").multiselect({

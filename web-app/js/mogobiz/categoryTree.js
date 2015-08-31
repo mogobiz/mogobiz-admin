@@ -14,8 +14,9 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
         success : function(pageContent, status) {
             $("#categoryTree").empty();
             $("#catalogMenu ul.subnav li a.disabled").removeClass("disabled");
-            $("#deleteCatalogLink").click(function(){catalogDelete()});
-            $("#exportCatalogLink").click(function(){catalogExport()});
+            $("#deleteCatalogLink").click(function(){catalogDelete();});
+            $("#exportCatalogLink").click(function(){catalogExport();});
+            $("#searchProductCatalogLink").click(function(){catalogProductsGetSearchPage();});
             var html = "<div id='categoryTreeList' value='-1'><ul><li id='categoryTreeNode-0' value='0' class='loaded'>";
             html += "<a href='javascript:void(0)'>" + catalogName + "</a>";
             html += "<ul id='categoryTreeNode-0-Childs'>" + pageContent + "</ul></li></div>";
@@ -79,9 +80,6 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                     if(data.rslt.obj[0].value == 0){
                         categorySelectedId = null;
                         catalogGetTabPage();
-                        $("#searchHeaderIcon img").show().unbind().bind("click", function(){
-                            catalogProductsGetSearchPage();
-                        });
                         return;
                     }
                     categorySelectedId = data.rslt.obj[0].value;

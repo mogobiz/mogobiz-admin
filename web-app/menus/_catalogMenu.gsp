@@ -23,4 +23,8 @@
                                                   onclick="catalogGetImportPage();"><g:message
                     code="catalog.import.label"/></a></li>
     </store:hasPermission>
+    <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
+                                              id="searchProductCatalogLink"
+                                              class="disabled"><g:message
+                code="catalog.searchProduct.label"/></a></li>
 </ul>

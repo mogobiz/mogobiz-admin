@@ -43,8 +43,8 @@ $('.iphoneSwitchAroundStyle').iphoneSwitch("off",
 						</span>
 					</g:if>
 					<br/>
-					<g:if test="${it.dateCreated}">
-						<span><g:message code="product.creationDate.label" />:&nbsp;${it.dateCreated}</span>
+					<g:if test="${it.lastUpdated}">
+						<span><g:message code="product.lastModified.label" />:&nbsp;${it.lastUpdated}</span>
 					</g:if>
 					<g:if test="${it.descriptionAsText?.length() > 0}">
 						<div id="details${it.id}" style="margin-top: 10px;">
