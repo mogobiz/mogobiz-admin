@@ -243,6 +243,8 @@ function companyTaxDelete(){
 //Tax Local
 var companyTaxLocalGrid = null;
 var taxRateLocalCountryStates = [];
+var companyTaxLocalCreateIndex = 0;
+var companyTaxLocalStatesIndex = 0;
 
 function companyTaxLocalLoadList(companyId){
 	var dataToSend = "companyId=" + companyId + "&taxRateId=" + companyTaxSelectedId + "&format=json";
@@ -254,6 +256,7 @@ function companyTaxLocalLoadList(companyId){
 		cache : false,
 		async : true,
 		success : function(response, status) {
+            companyTaxLocalStatesIndex = 0;
             if(response.length == 0){
                 drawLocalTaxRateGrid(companyId, response);
             }
@@ -262,25 +265,23 @@ function companyTaxLocalLoadList(companyId){
                 for (var i = 0; i < response.length; i++) {
                     taxRateCountries[taxRateCountries.length] = response[i].countryCode;
                 }
-                for (var i = 0; i < response.length; i++) {
-                    companyTaxLocalGetAllCountriesStates(companyId, response, taxRateCountries, response[i].countryCode);
-                }
+                companyTaxLocalGetAllCountriesStates(companyId, response, taxRateCountries);
             }
 		},
 		error: function(response, status){}
 	});
 }
 
-function companyTaxLocalGetAllCountriesStates(companyId, taxRate, countries, countryCode) {
+function companyTaxLocalGetAllCountriesStates(companyId, taxRate, taxRateCountries) {
+    var countryCode = taxRate[companyTaxLocalStatesIndex].countryCode;
     var success = function(response, status) {
         if(!taxRateLocalCountryStates[countryCode])
             taxRateLocalCountryStates[countryCode] = response;
-        for(var i = 0; i < countries.length; i++){
-            if(!taxRateLocalCountryStates[countryCode]){
-                return;
-            }
-        }
-        drawLocalTaxRateGrid(companyId, taxRate);
+        companyTaxLocalStatesIndex++;
+        if(companyTaxLocalStatesIndex == taxRateCountries.length)
+            drawLocalTaxRateGrid(companyId, taxRate);
+        else
+            companyTaxLocalGetAllCountriesStates(companyId, taxRate, taxRateCountries);
     };
     if(taxRateLocalCountryStates[countryCode]){
         success();
@@ -616,7 +617,6 @@ function companyTaxLocalValidateForm(){
 	return true;
 }
 
-var companyTaxLocalCreateIndex;
 function companyTaxLocalAddNew(){
     var states = $("#localTaxRateState").multiselect("getChecked").map(function(){
         return this.value;
@@ -687,8 +687,6 @@ function companyTaxLocalDelete(){
 			if($("#taxRateId").val() == companyTaxSelectedId){
 				companyTaxSelectedId = null;
 			}
-			$("#taxGrid").empty();
-			$("#taxForm").hide();
 			companyTaxLocalLoadList($("#localTaxRateCompanyId").val());
 			$("#taxRateDialog").dialog("close");
 		},
