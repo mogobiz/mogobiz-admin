@@ -151,7 +151,10 @@
                 <label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
                 <input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
                 <label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
-                <span style="float: right; font-weight: bold;" id="tourismPricingNumberOfSales"><span></span>&nbsp;<g:message code="pricing.numberOfSales.label"/></span>
+                <span style="float: right; font-weight: bold;" id="tourismPricingNumberOfSales">
+                    <span id="tourismPricingSold"></span>&nbsp;<g:message code="pricing.numberOfSales.label"/>,&nbsp;
+                    <span id="tourismPricingRemaining"></span>&nbsp;<g:message code="pricing.remaining.label"/>
+                </span>
             </div>
 		</form>
 	</div>

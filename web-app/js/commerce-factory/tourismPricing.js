@@ -41,6 +41,7 @@ function tourismPricingLoadPricings(productId) {
                 name : tourismPricing_ticketStock_label,
                 field : "stock",
                 width : 15,
+                formatter : tourismPricingStockCellFormatter,
                 cssClass : ""
             }, {
                 id : "startDate",
@@ -159,6 +160,10 @@ function tourismPricingLoadPricings(productId) {
 
 function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataContext) {
     return "<a href='javascript:void(0)' onclick='tourismPricingCheckTicketResource(" + dataContext.productId + "," + dataContext.ticketId + ")'>" + value + "</a>";
+}
+
+function tourismPricingStockCellFormatter(row, cell, value, columnDef, dataContext) {
+    return (value - dataContext.nbSales) + " / " + value;
 }
 
 /**
@@ -435,7 +440,9 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
     if (!create) {
         var data = tourismPricingGetDataRowByTicketId(ticketId);
         $("#tourismPricingNumberOfSales").show();
-        $("#tourismPricingNumberOfSales span").html(data.nbSales);
+        $("#tourismPricingSold").html(data.nbSales);
+        $("#tourismPricingRemaining").html(data.stock - data.nbSales);
+        $("#tourismPricingTicketStock").attr("min", data.nbSales);
         $("#tourismPricingId").val(data.ticketId);
         $("#tourismPricingSKU").val(data.sku);
         $("#tourismPricingAvailabilityDate").val(data.availabilityDate);
