@@ -200,7 +200,7 @@ function productAttachEditForm(productId, fromPage) {
             $('#productDescription').val(product.description);
 
 
-            if((product.startDate == null && product.stopDate == null) || product.state.name == "INACTIVE")
+            if(product.state.name == "INACTIVE")
                 $("#tourismCalendarValidityPeriod").prop("checked", false);
             else
                 $("#tourismCalendarValidityPeriod").prop("checked", true);
