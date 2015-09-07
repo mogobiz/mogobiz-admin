@@ -25,12 +25,8 @@
 	</div>
 	<div class="spacer-small"></div>
 	<div class="newline">
-		<div class='suggestions-medium'>
+		<div>
 			<input type="text" id="tourismSuggestionsDiscount" value="0" pattern="([+-])?(\d+)(\.\d+)?\%?" required></input>
-		</div>
-		<div class='suggestions-small'>
-			<input type="checkbox" id="tourismSuggestionsRequired" />
-			<label for="tourismSuggestionsRequired"><g:message code="tourismSuggestions.required.label"/></label>
 		</div>
 	</div>
 </div>

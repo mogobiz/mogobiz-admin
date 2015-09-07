@@ -192,7 +192,6 @@ var poiErrors_longDescription_label = "${message(code:'poi.errors.longDescriptio
 var tourismSuggestionsAddButtonLabel = "${message(code:'tourismSuggestions.addButton.label')}";
 var tourismSuggestionsProductNameLabel = "${message(code:'tourismSuggestions.productName.label')}";
 var tourismSuggestionsDiscountLabel = "${message(code:'tourismSuggestions.discount.label')}";
-var tourismSuggestionsRequiredLabel = "${message(code:'tourismSuggestions.required.label')}";
 
 //Sales Labels
 var saleBuyerLoginLabel= "${message(code:'sale.buyer.login')}";

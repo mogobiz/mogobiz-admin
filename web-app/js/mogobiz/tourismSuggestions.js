@@ -171,9 +171,8 @@ function tourismSuggestionsDrawForm(productId, suggestions) {
 	// grid setup
 	var columns = [
            {id: "#", name: "", width: 5, behavior: "selectAndMove", selectable: false, cssClass: "cell-reorder"},
-           {id: "name", name: tourismSuggestionsProductNameLabel, field: "name", width: 50, formatter: tourismSuggestionsTitleFormatter},
-           {id : "discount", name : tourismSuggestionsDiscountLabel, field : "discount", width : 30},
-           {id : "required", name : tourismSuggestionsRequiredLabel, field : "required", width : 15, cssClass : "cell-centered", formatter: tourismSuggestionsRequiredCellFormatter}
+           {id: "name", name: tourismSuggestionsProductNameLabel, field: "name", width: 60, formatter: tourismSuggestionsTitleFormatter},
+           {id : "discount", name : tourismSuggestionsDiscountLabel, field : "discount", width : 40}
 	];
 	
 	var options = {
@@ -235,11 +234,6 @@ function tourismSuggestionsTitleFormatter(row, cell, value, columnDef, dataConte
 	return '<a href="javascript:void(0)" onclick="tourismSuggestionsEditSuggestedProduct(' + dataContext.productId + ',' + dataContext.id + ')">' + value + "</a>";
 }
 
-function tourismSuggestionsRequiredCellFormatter(row, cell, value, columnDef, dataContext) {
-	var checked = (value)?"checked='checked'":"";
-	return "<input type='checkbox' disabled='disabled' "+checked+"/>";
-}
-
 function showCreateTourismSuggestionsDialog(productId) {
 	$('#tourismSuggestionsCompanySelect').multiselect('close');
 	$('#tourismSuggestionsProductSelect').multiselect('close');
@@ -257,8 +251,7 @@ function showCreateTourismSuggestionsDialog(productId) {
 				modal : true,
 				open: function(event) {
 					$('#tourismSuggestionsDiscount').val('0');
-					$('#tourismSuggestionsRequired').prop("checked", false);
-					
+
 					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
 					$('.ui-dialog-buttonpane').find('button:contains("createLabel")').addClass("ui-create-button");
 					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
@@ -299,13 +292,6 @@ function showEditTourismSuggestionsDialog(productId, id) {
 				open: function(event) {
 					var data = tourismSuggestionsGetDataRowByProductId(id);
 					$('#tourismSuggestionsDiscount').val(data.discount);
-					if(data.required){
-						$('#tourismSuggestionsRequired').prop("checked", true);
-					}
-					else{
-						$('#tourismSuggestionsRequired').prop("checked", false);
-					}
-					
 					$('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').addClass("ui-delete-button");
 					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
 					$('.ui-dialog-buttonpane').find('button:contains("updateLabel")').addClass("ui-update-button");
@@ -366,7 +352,7 @@ function tourismSuggestionsAddRecord(productId) {
                 'productId': productId,
                 'name': selected.text(),
                 'discount': ($('#tourismSuggestionsDiscount').val() == '')?0:$('#tourismSuggestionsDiscount').val(),
-                'required': $('#tourismSuggestionsRequired').is(':checked'),
+                'required': false,
                 'position': ''
             };
             tourismSuggestionsGridObject.setData(tourismSuggestionsProducts);
@@ -401,7 +387,7 @@ function tourismSuggestionsEditRecord(productId) {
     else {
         if($('input#tourismSuggestionsDiscount')[0].checkValidity()){
             tourismSuggestionsProducts[tourismSuggestionsSelectedIndex].discount = ($('#tourismSuggestionsDiscount').val() == '')?0:$('#tourismSuggestionsDiscount').val();
-            tourismSuggestionsProducts[tourismSuggestionsSelectedIndex].required = $('#tourismSuggestionsRequired').is(':checked'),
+            tourismSuggestionsProducts[tourismSuggestionsSelectedIndex].required = false,
                 tourismSuggestionsGridObject.setData(tourismSuggestionsProducts);
             tourismSuggestionsGridObject.render();
             tourismSuggestionsBindProducts(productId);
