@@ -121,7 +121,7 @@
 					<input id="tourismPricingMinOrder" type="number" min="0" name="ticketType.minOrder" max="999999999" pattern="\d+"/>
 				</div>
 				<div class="pricing-small">
-					<input id="tourismPricingMaxOrder" type="number" min="1" name="ticketType.maxOrder" max="999999999" pattern="\d+"/>
+					<input id="tourismPricingMaxOrder" type="number" min="0" name="ticketType.maxOrder" max="999999999" pattern="\d+"/>
 				</div>
 			</div>
 			<div class="spacer"></div>				

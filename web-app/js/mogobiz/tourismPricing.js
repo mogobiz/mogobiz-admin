@@ -81,7 +81,7 @@ function tourismPricingLoadPricings(productId) {
                     'stockUnlimited' : (!response[i].stock) ? true : response[i].stock.stockUnlimited,
                     'stockOutSelling' : (!response[i].stock) ? false : response[i].stock.stockOutSelling,
                     'minOrder' : (response[i].minOrder >= 0) ? response[i].minOrder : 'Unlimited',
-                    'maxOrder' : (response[i].maxOrder > 0) ? response[i].maxOrder : 'Unlimited',
+                    'maxOrder' : (response[i].maxOrder >= 0) ? response[i].maxOrder : 'Unlimited',
                     'startDate' : (response[i].startDate ? response[i].startDate.split(' ')[0] : ""),
                     'stopDate' : (response[i].stopDate ? response[i].stopDate.split(' ')[0]: ""),
                     'availabilityDate' : (response[i].availabilityDate ? response[i].availabilityDate.split(' ')[0]: ""),
@@ -308,8 +308,8 @@ function tourismPricingInitControls(create) {
 
     $("#tourismPricingMaxOrder").change(
         function() {
-            if (parseInt($("#tourismPricingMaxOrder").val()) < 1) {
-                $("#tourismPricingMaxOrder").val(1);
+            if (parseInt($("#tourismPricingMaxOrder").val()) < 0) {
+                $("#tourismPricingMaxOrder").val(0);
             }
             if (($("#tourismPricingMaxOrder").val() != '')
                 && (parseInt($("#tourismPricingMaxOrder").val()) < parseInt($(
