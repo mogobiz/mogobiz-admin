@@ -10,7 +10,6 @@ function uploadAnotherFile() {
 <div id="editProductTabs" style='display: none'>
 	<div style='height:25px;'>
 		<label id="productLabel"></label>
-		<label id="productFree" class="productFreeLabel"></label>
 	</div>
 	<div id="productTabs">
 		<div id="ulTabs">
@@ -184,8 +183,6 @@ function uploadAnotherFile() {
 
 		<div id="tourismPricing" class="fk_content_area">
 			<div id="tourismPricingLabelGlobalStock">
-				<g:message for="productMontant" code="pricing.product.label" />:&nbsp;&nbsp;
-				<input id="productMontant" type="text" pattern="\d{0,6}\.?\d{0,2}" required name="product.price" style="width: 100px;">&nbsp;&nbsp;
 				<g:message for="productTaxRate" code="pricing.taxRate.label" />:&nbsp;&nbsp;
 				<select id="productTaxRate" multiple="multiple"></select>&nbsp;&nbsp;
 				<input id="globalstockDisplay" type="checkbox" name="pricing.stockdisplay">&nbsp;<g:message code="pricing.stockdisplay.label" />

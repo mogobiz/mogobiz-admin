@@ -105,7 +105,6 @@ var companySellers_passwordResetSuccessLabel = "${message(code:'company.sellers.
 //Product labels
 var createProductLabel = "${message(code:'product.create.product.label')}";
 var productCodeExistLabel = "${message(code:'product.productCodeExist.label')}";
-var productFreePriceLabel = "${message(code:'product.free.price.label')}";
 
 var allLabel = "${message(code:'default.all.label')}";
 var priceLabel = "${message(code:'default.price.label')}";

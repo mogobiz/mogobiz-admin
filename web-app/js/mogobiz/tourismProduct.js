@@ -123,11 +123,6 @@ function productAttachEditForm(productId, fromPage) {
             $('#productLabel').text(productName + productType);
             $("#productNbOfSales span").text(product.nbSales);
 
-            if(product.price != 0)
-                $('#productFree').empty();
-            else
-                $('#productFree').text(productFreePriceLabel);
-
 // Fill Description Tab Fields
             $.ajax({
                 url : showVariationsUrl,
@@ -280,7 +275,6 @@ function productAttachEditForm(productId, fromPage) {
             });
 
 // Fill Pricing Tab Fields
-            $('#productMontant').val((product.price / 100));
             tourismProductLoadTaxList(product);
             if (product.stockDisplay) {
                 $('#globalstockDisplay').prop("checked", true);
