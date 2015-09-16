@@ -572,48 +572,9 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 						companyTaxLoadList(compId);
 					}
 
-                    // Payment Section
-                    // draw currency ComboBox
-                    drawSelectComboBox('#paymentCurrencyCombo');
-
-                    //Fill Payment Tab
+                    //Get Online validation
                     companyGetPaymentPolicy(compId);
-
-                    //Set auto update control
-                    companyPaymentMultiSelectAutoUpdate(compId, "#paymentCurrencyCombo", "company.currencyCode");
 				}
-//				else if (selectedTabId == 'paymentTab') {
-//					$('#generalInfo').hide();
-//                    $('#profiles').hide();
-//					$('#description').hide();
-//					$('#design').hide();
-//					$('#shipping').hide();
-//					$('#tax').hide();
-//					$('#sellers').hide();
-//                    $('#brands').hide();
-//                    $('#coupons').hide();
-//                    $('#publishing').hide();
-//                    $('#apiKeys').hide();
-//                    $('#payment').show();
-//					$('#paymentForm .errors').hide();
-//
-//					if (!companyHashTable['payment']) {
-//						companyHashTable['payment'] = new Object();
-//					}
-//					// Check if tab is visited before
-//					if (!companyHashTable['payment'].visited) {
-//						companyHashTable['payment'].visited = true;
-//
-//						// draw currency ComboBox
-//						drawSelectComboBox('#paymentCurrencyCombo');
-//
-//						//Fill Payment Tab
-//						companyGetPaymentPolicy(compId);
-//
-//                        //Set auto update control
-//                        companyPaymentMultiSelectAutoUpdate(compId, "#paymentCurrencyCombo", "company.currencyCode");
-//					}
-//				}
                 else if (selectedTabId == 'brandsTab'){
                     $('#generalInfo').hide();
                     $('#profiles').hide();
