@@ -68,10 +68,10 @@
 			<textarea id="catalogCreateDescription" name="catalog.description" rows="5"></textarea>
 		</div>
 	</div>
-	<div class="spacer"></div>
+	%{--<div class="spacer"></div>
 	<div class="newline">
 		<input type="checkbox" id="catalogCreateSocial" />
 		<label for="catalogCreateSocial"><g:message code="catalog.social.label"/></label>
-	</div>
+	</div>--}%
 	<div class="spacer"></div>
 </div>

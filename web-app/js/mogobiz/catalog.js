@@ -151,7 +151,7 @@ function catalogAddNew() {
     }
     var dataToSend = "catalog.name=" + $("#catalogCreateName").val() + "&catalog.externalCode=" + $("#catalogCreateExternalCode").val();
     dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + $("#catalogCreateDescription").val();
-    dataToSend += "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogCreateSocial").is(":checked");
+    dataToSend += "&catalog.channels=" + channelsStr/* + "&catalog.social=" + $("#catalogCreateSocial").is(":checked")*/;
     dataToSend += "&format=json";
     $.ajax({
         url: createCatalogUrl,
@@ -276,7 +276,7 @@ function catalogGetEsEnvList(){
 }
 
 function catalogGeneralInitControls(isCreate) {
-    $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, #catalogSocial, #catalogChannels, #catalogPublishBtn").unbind();
+    $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, /*#catalogSocial, */#catalogChannels, #catalogPublishBtn").unbind();
     $("#catalogActivationDate").datepicker("destroy");
     $("#catalogActivationDate").datepicker({
         onSelect: function (date) {
@@ -339,9 +339,9 @@ function catalogGeneralInitControls(isCreate) {
     $("#catalogChannels").bind("multiselectbeforeclose", function () {
         if (catalogValidateForm())catalogUpdate();
     });
-    $("#catalogSocial").click(function () {
+    /*$("#catalogSocial").click(function () {
         if (catalogValidateForm())catalogUpdate();
-    });
+    });*/
     $("#catalogPublishBtn").click(function () {
         catalogPublish();
     });
@@ -353,8 +353,8 @@ function catalogGeneralInitFields(catalog) {
     $("#catalogExternalCode").val(catalog.externalCode);
     $("#catalogDescription").val(catalog.description);
     $("#catalogActivationDate").val(catalog.activationDate.substring(0, 10));
-    if (catalog.social)
-        $("#catalogSocial").prop("checked", true);
+    /*if (catalog.social)
+        $("#catalogSocial").prop("checked", true);*/
 
     $("#catalogChannels").multiselect("uncheckAll");
     $("#catalogChannels").multiselect("refresh");
@@ -392,7 +392,7 @@ function catalogUpdate() {
     var date = $("#catalogActivationDate").val();
     var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + $("#catalogName").val() + "&catalog.externalCode=" + $("#catalogExternalCode").val();
     dataToSend += "&catalog.activationDate_year=" + date.substring(0, 4) + "&catalog.activationDate_month=" + date.substring(5, 7) + "&catalog.activationDate_day=" + date.substring(8, 10);
-    dataToSend += "&catalog.description=" + $("#catalogDescription").val() + "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogSocial").is(":checked");
+    dataToSend += "&catalog.description=" + $("#catalogDescription").val() + "&catalog.channels=" + channelsStr/* + "&catalog.social=" + $("#catalogSocial").is(":checked")*/;
     dataToSend += "&format=json";
     $.ajax({
         url: updateCatalogUrl,
