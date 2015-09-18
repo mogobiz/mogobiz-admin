@@ -27,7 +27,7 @@
 				<label for="localTaxRateCountry"><g:message code="company.tax.country.label"></g:message>&nbsp;<sup>*</sup></label><br />
 			</div>
             <div class="taxRate-large">
-				<label for="localTaxRateState"><g:message code="company.tax.state.label"></g:message>&nbsp;<sup>*</sup></label><br />
+				<label for="localTaxRateState"><g:message code="company.tax.state.label"></g:message></label><br />
 			</div>
 		</div>
 		<div class="spacer-small"></div>

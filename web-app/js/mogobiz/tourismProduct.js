@@ -851,7 +851,8 @@ function tourismProductRefreshGeneralCaroussel(productId, resources) {
         'titleFormat' : function(title, currentArray, currentIndex, currentOpts) {
             var resId = carouselPics[currentIndex].id;
             return '<span id="fancybox-title-inside">Image ' + (currentIndex + 1) + ' / ' + currentArray.length
-                + (title.length ? ' &nbsp; ' + title : '') + '</span><span style="float:right">[<a href="javascript:void(0);" onclick="javascript:productDeleteResource('+productId+','+resId+')">Delete</a>]</span>';
+                + (title.length ? ' &nbsp; ' + title : '') + '</span>' +
+                '<span style="float:right">[<a href="javascript:void(0);" onclick="javascript:productDeleteResource('+productId+','+resId+')">Delete</a>]</span>';
         }
     });
 
