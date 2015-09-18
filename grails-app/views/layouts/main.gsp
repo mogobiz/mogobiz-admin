@@ -41,6 +41,7 @@ var fieldsTooLongMessageLabel = "${message(code:'default.message.fields.tooLong.
 var multiselectNoneSelectedTextLabel = "${message(code:'multiselect.noneSelectedText.label')}";
 var multiselectNoneSelectedTextDisabledLabel = "${message(code:'multiselect.noneSelectedText.disabled.label')}";
 var fancyBoxErrorMessage_1 = "${message(code:'default.fancybox.error1.message')}";
+var fancyBoxErrorMessage_2 = "${message(code:'default.fancybox.error2.message')}";
 
 //company labels
 var createCompanyLabel = "${message(code:'company.new.label')}";
