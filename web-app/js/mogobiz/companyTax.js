@@ -668,7 +668,7 @@ function companyTaxLocalAddNew(){
 
 function companyTaxLocalUpdate(){
     var dataToSend = "companyId=" + $("#localTaxRateCompanyId").val();
-    if ($("#localTaxRateState").val())
+    if ($("#localTaxRateState").val() && $("#localTaxRateState").val() != "null")
         dataToSend += "&state=" + $("#localTaxRateState").val();
     dataToSend += "&localTaxRateId=" + $("#localTaxRateId").val();
     dataToSend += "&rate=" + $("#localTaxRateRate").val();
