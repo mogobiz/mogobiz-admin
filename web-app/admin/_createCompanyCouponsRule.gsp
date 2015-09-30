@@ -25,7 +25,7 @@
             <div class="spacer-small"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <input type="text" id="companyCouponsRulesDiscount" required pattern="(\-|\+)?(\d{0,2}\.)?\d{1,2}(\%)?" />
+                    <input type="text" id="companyCouponsRulesDiscount" required pattern="((\-|\+)[1-9](\d+)?)|(([1-9][0-9]?|100)%)" />
                 </div>
             </div>
         </div>
