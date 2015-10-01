@@ -45,22 +45,22 @@
 			<div class="catalog-large">
 				<label for="catalogActivationDate"><g:message code="catalog.activationDate.label"/>&nbsp;<sup>*</sup></label>
 			</div>
-			<div class="catalog-large">
-				<label for="catalogChannels"><g:message code="catalog.channels.label"/></label>
-			</div>
+			%{--<div class="catalog-large">--}%
+				%{--<label for="catalogChannels"><g:message code="catalog.channels.label"/></label>--}%
+			%{--</div>--}%
 		</div>
 		<div class="spacer-small"></div>
 		<div class="newline">
 			<div class="catalog-large">
 				<input id="catalogActivationDate" type="text" required name="catalog.activationDate"/>
 			</div>
-			<div class="catalog-large">
-				<select id="catalogChannels"  multiple="multiple" name="catalog.channels">
-					<option value="web">Web</option>
-					<option value="mobile">Mobile</option>
-					<option value="tablet">Tablet</option>
-				</select>
-			</div>
+			%{--<div class="catalog-large">--}%
+				%{--<select id="catalogChannels"  multiple="multiple" name="catalog.channels">--}%
+					%{--<option value="web">Web</option>--}%
+					%{--<option value="mobile">Mobile</option>--}%
+					%{--<option value="tablet">Tablet</option>--}%
+				%{--</select>--}%
+			%{--</div>--}%
 		</div>
 		<div class="spacer"></div>
 		<div class="newline">
