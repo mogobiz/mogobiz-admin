@@ -425,15 +425,6 @@ function companyShippingRulesValidateForm(isCreate){
         });
         return false;
     }
-    if(companyShippingRulesExistCountryInGrid($("#shippingRuleCountry").val()) && isCreate){
-        jQuery.noticeAdd({
-            stayTime : 2000,
-            text : companyShippingRuleErrors_uniqueCountryCode,
-            stay : false,
-            type : "error"
-        });
-        return false;
-    }
     if (!$("input#shippingRulePrice")[0].checkValidity()) {
         $("#shippingRuleForm #shippingRulePrice").focus();
         jQuery.noticeAdd({
@@ -475,16 +466,6 @@ function companyShippingRulesValidateForm(isCreate){
         return false;
     }
     return true;
-}
-
-function companyShippingRulesExistCountryInGrid(countryCode){
-    var data = companyShippingRulesGrid.getData();
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].countryCode == countryCode){
-            return true;
-        }
-    }
-    return false;
 }
 
 function companyShippingRulesAddNew(){
