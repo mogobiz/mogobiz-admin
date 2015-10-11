@@ -1,5 +1,9 @@
 
 
+/*
+ * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
+ */
+
 import javax.servlet.http.HttpServletResponse
 
 class CacheFilters {

@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
+ */
+
 import com.mogobiz.service.ElasticsearchService
 import com.mogobiz.service.GoogleCategoryService
 import com.mogobiz.service.GoogleService

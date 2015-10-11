@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
+ */
+
 hibernate {
     cache.use_second_level_cache = false
     cache.use_query_cache = false

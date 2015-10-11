@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
+ */
+
 import com.mogobiz.store.domain.Company
 import org.apache.shiro.SecurityUtils
 
