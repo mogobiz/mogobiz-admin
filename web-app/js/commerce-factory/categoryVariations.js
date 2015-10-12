@@ -626,30 +626,26 @@ function categoryVariationCheckTranslationValues(e){
 
 function categoryVariationUpdateTranslationValues(values){
     var language = categoryVariationsTranslationGrid.getDataItem(categoryVariationsTranslationGrid.getSelectedRows()[0]).lang;
-    for(var i = 0; i < values.length; i++){
-        var targetId = "";
-        for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i + 1){
-                targetId = categoryVariationsValues[j].id;
-                break;
-            }
-        }
-        if(targetId != ""){
-            var dataToSend = "target=" + targetId + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + values[i] + "\"}";
+    var tab = categoryVariationsValues.slice();
+    tab.sort(function(a, b) {
+        return a.position > b.position;
+    });
 
-            $.ajax({
-                url : updateTranslationUrl,
-                type : "POST",
-                data : dataToSend,
-                dataType : "json",
-                cache : false,
-                async : true,
-                success : function(response, status) {}
-            });
-        }
+    for(var i = 0; i < values.length; i++){
+        var dataToSend = "target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + values[i] + "\"}";
+
+        $.ajax({
+            url : updateTranslationUrl,
+            type : "POST",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true,
+            success : function(response, status) {}
+        });
     }
-    for(var i = values.length; i < categoryVariationsValues.length; i++){
-        var dataToSend = "target=" + categoryVariationsValues[i].id + "&language=" + language;
+    for(var i = values.length; i < tab.length; i++){
+        var dataToSend = "target=" + tab[i].id + "&language=" + language;
         $.ajax({
             url : deleteTranslationUrl,
             type : "POST",
@@ -664,35 +660,30 @@ function categoryVariationUpdateTranslationValues(values){
 
 function categoryVariationCreateTranslationValues(language, variationId){
     var createdIndex = 0;
-    for(var i = 0; i < categoryVariationsValues.length; i++){
-        var targetId = "";
-        for(var j=0; j < categoryVariationsValues.length; j++){
-            if(categoryVariationsValues[j].position == i + 1){
-                targetId = categoryVariationsValues[j].id;
-                break;
-            }
-        }
-        if(targetId != ""){
-            var dataToSend = "target=" + targetId + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + categoryVariationsValues[i].value + "\"}";
+    var tab = categoryVariationsValues.slice();
+    tab.sort(function(a, b) {
+        return a.position > b.position;
+    });
+    for(var i = 0; i < tab.length; i++){
+        var dataToSend = "target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + tab[i].value + "\"}";
 
-            $.ajax({
-                url : updateTranslationUrl,
-                type : "POST",
-                data : dataToSend,
-                dataType : "json",
-                cache : false,
-                async : true,
-                success : function() {
-                    if(createdIndex == categoryVariationsValues.length - 1){
-                        categoryVariationsTranslationIndex = 0;
-                        categoryVariationsTranslationValues = [];
-                        categoryVariationGetValuesTranslation(variationId);
-                    }
-                    else{
-                        createdIndex++;
-                    }
+        $.ajax({
+            url : updateTranslationUrl,
+            type : "POST",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true,
+            success : function() {
+                if(createdIndex == categoryVariationsValues.length - 1){
+                    categoryVariationsTranslationIndex = 0;
+                    categoryVariationsTranslationValues = [];
+                    categoryVariationGetValuesTranslation(variationId);
                 }
-            });
-        }
+                else{
+                    createdIndex++;
+                }
+            }
+        });
     }
 }
