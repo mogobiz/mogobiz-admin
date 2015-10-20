@@ -570,7 +570,7 @@ function categoryVariationTranslationDrawAll(variationId){
             title: translationValuesGridLabel,
             editorEvents: {
                 "blur": categoryVariationCheckTranslationValues,
-                "keydown": function(e, field){if(e.keyCode === 13){e.stopImmediatePropagation();categoryVariationCheckTranslationValues(e);}}
+                "keydown": function(e, field){if(e.keyCode === 13 || e.keyCode === 9){e.stopImmediatePropagation();categoryVariationCheckTranslationValues(e);}}
             }
         }];
         var data = [];

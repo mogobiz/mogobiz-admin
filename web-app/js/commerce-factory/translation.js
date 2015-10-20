@@ -42,7 +42,7 @@ function translationGetGrid(gridId, targetId, fields, columns, data){
             formatter : translationFieldFormatter,
             editorEvents: (columns[i].editorEvents) ? columns[i].editorEvents : {
                 "blur": (isRich) ? function(){} : function(){grid.getEditorLock().commitCurrentEdit();grid.invalidate();},
-                "keydown": function(e){if(e.keyCode === 13){e.stopImmediatePropagation();grid.getEditorLock().commitCurrentEdit();grid.invalidate();}}
+                "keydown": function(e){if(e.keyCode === 13 || e.keyCode === 9){e.stopImmediatePropagation();grid.getEditorLock().commitCurrentEdit();grid.invalidate();}}
             }
         };
         gridColumns[len].addEditorButtons = "false";
