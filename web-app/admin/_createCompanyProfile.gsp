@@ -1,8 +1,9 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <div id="companyProfilesCreateDiv">
     <input type="hidden" id="companyProfilesId" />
     <div class="newline">
         <div class="companyProfilesDialog-full">
-            <label for="companyProfilesName"><g:message code="company.profiles.name.label"></g:message>&nbsp;<sup>*</sup></label>
+            <label for="companyProfilesName"><g:message locale="${lang}" code="company.profiles.name.label"></g:message>&nbsp;<sup>*</sup></label>
         </div>
         <div class="spacer-small"></div>
         <div class="companyProfilesDialog-full">
@@ -11,12 +12,12 @@
     </div>
     <div id="companyProfilesCopyCheckDiv" class="newline">
         <div class="spacer"></div>
-        <label for="companyProfilesCopyCheck"><g:message code="company.profiles.copy.label"/></label>
+        <label for="companyProfilesCopyCheck"><g:message locale="${lang}" code="company.profiles.copy.label"/></label>
         <input type="checkbox" id="companyProfilesCopyCheck"/>
     </div>
     <div class="spacer"></div>
     <div id="companyProfilesPermissionsDiv" class="newline multiselectSlides">
-        <label><g:message code="company.profiles.permissions.label"/>&nbsp;<sup>*</sup></label>
+        <label><g:message locale="${lang}" code="company.profiles.permissions.label"/>&nbsp;<sup>*</sup></label>
         <div class="spacer-small"></div>
         <div class="left">
             <select name="from" id="companyProfilesPermissions" size="14" multiple="multiple"></select>
@@ -34,7 +35,7 @@
     <div id="companyProfilesCopyDiv" class="newline">
         <div class="newline">
             <div class="companyProfilesDialog-full">
-                <label for="companyProfilesAddCopy"><g:message code="company.profiles.parent.label"></g:message>&nbsp;<sup>*</sup></label>
+                <label for="companyProfilesAddCopy"><g:message locale="${lang}" code="company.profiles.parent.label"></g:message>&nbsp;<sup>*</sup></label>
             </div>
             <div class="spacer-small"></div>
             <div class="companyProfilesDialog-full">

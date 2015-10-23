@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 #tourismPropertiesAddDiv, #tourismPropertiesTranslationDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -27,12 +28,12 @@
         <ul class="tabs">
             <li>
                 <a id="tourismPropertiesGeneralTab">
-                    <g:message code="tabs.general.label" />
+                    <g:message locale="${lang}" code="tabs.general.label" />
                 </a>
             </li>
             <li>
                 <a id="tourismPropertiesTranslationTab">
-                    <g:message code="tabs.translation.label" />
+                    <g:message locale="${lang}" code="tabs.translation.label" />
                 </a>
             </li>
         </ul>
@@ -43,10 +44,10 @@
             <input type="hidden" id="tourismPropertyId"/>
             <div class="newline">
                 <div class="properties-large">
-                    <label for="tourismPropertyName"><g:message code="properties.name.label"/>&nbsp;<sup>*</sup></label>
+                    <label for="tourismPropertyName"><g:message locale="${lang}" code="properties.name.label"/>&nbsp;<sup>*</sup></label>
                 </div>
                 <div class="properties-large">
-                    <label for="tourismPropertyValue"><g:message code="properties.value.label"/></label>
+                    <label for="tourismPropertyValue"><g:message locale="${lang}" code="properties.value.label"/></label>
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -63,7 +64,7 @@
     </div>
     <div id="tourismPropertiesTranslationDiv" >
         <div style="padding: 10px;">
-            <a id="tourismPropertiesTranslationAddLink"><g:message code="translation.add.label" /></a>
+            <a id="tourismPropertiesTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
         </div>
         <div id="tourismPropertiesTranslationGridDiv">
             <div id="tourismPropertiesTranslationGrid" style="height: 144px;"></div>

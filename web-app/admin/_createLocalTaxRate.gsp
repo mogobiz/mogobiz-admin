@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 	#localTaxRateCreateDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -24,10 +25,10 @@
 		<input id="localTaxRateId" type="hidden"/>
 		<div class="newline">
 			<div class="taxRate-large">
-				<label for="localTaxRateCountry"><g:message code="company.tax.country.label"></g:message>&nbsp;<sup>*</sup></label><br />
+				<label for="localTaxRateCountry"><g:message locale="${lang}" code="company.tax.country.label"></g:message>&nbsp;<sup>*</sup></label><br />
 			</div>
             <div class="taxRate-large">
-				<label for="localTaxRateState"><g:message code="company.tax.state.label"></g:message></label><br />
+				<label for="localTaxRateState"><g:message locale="${lang}" code="company.tax.state.label"></g:message></label><br />
 			</div>
 		</div>
 		<div class="spacer-small"></div>
@@ -42,7 +43,7 @@
 		<div class="spacer"></div>
         <div class="newline">
             <div class="taxRate-large">
-                <label for="localTaxRateRate"><g:message code="company.tax.taxRate.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="localTaxRateRate"><g:message locale="${lang}" code="company.tax.taxRate.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
@@ -52,7 +53,7 @@
             </div>
             <div class="taxRateDialog-small">
                 <input type="checkbox" id="localTaxRateActive" value="true" checked="checked"/>&nbsp;
-                <label for="localTaxRateActive"><g:message code="company.tax.active.label" /></label>
+                <label for="localTaxRateActive"><g:message locale="${lang}" code="company.tax.active.label" /></label>
             </div>
 		</div>
 		<div class="spacer"></div>

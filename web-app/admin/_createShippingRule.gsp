@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 #shippingRuleCreateDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -24,10 +25,10 @@
         <input id="shippingRuleId" type="hidden"/>
         <div class="newline">
             <div class="shipping_medium">
-                <label for="shippingRuleCountry"><g:message code="company.shipping.rules.countryCode.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRuleCountry"><g:message locale="${lang}" code="company.shipping.rules.countryCode.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
             <div class="shipping_medium">
-                <label for="shippingRulePrice"><g:message code="company.shipping.rules.price.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRulePrice"><g:message locale="${lang}" code="company.shipping.rules.price.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
@@ -42,10 +43,10 @@
         <div class="spacer"></div>
         <div class="newline">
             <div class="shipping_medium">
-                <label for="shippingRuleMinAmount"><g:message code="company.shipping.rules.minAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRuleMinAmount"><g:message locale="${lang}" code="company.shipping.rules.minAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
             <div class="shipping_medium">
-                <label for="shippingRuleMaxAmount"><g:message code="company.shipping.rules.maxAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRuleMaxAmount"><g:message locale="${lang}" code="company.shipping.rules.maxAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>

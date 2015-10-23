@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#catalogCreateDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -19,10 +20,10 @@
 <div id="catalogCreateDiv" >
 	<div class="newline">
 		<div class="catalog-large">
-			<label for="catalogCreateName"><g:message code="catalog.name.label"/>&nbsp;<sup>*</sup></label>
+			<label for="catalogCreateName"><g:message locale="${lang}" code="catalog.name.label"/>&nbsp;<sup>*</sup></label>
 		</div>
 		<div class="catalog-large">
-			<label for="catalogCreateExternalCode"><g:message code="catalog.externalCode.label"/></label>
+			<label for="catalogCreateExternalCode"><g:message locale="${lang}" code="catalog.externalCode.label"/></label>
 		</div>
 	</div>
 	<div class="spacer-small"></div>
@@ -37,10 +38,10 @@
 	<div class="spacer"></div>
 	<div class="newline">
 		<div class="catalog-large">
-			<label for="catalogCreateActivationDate"><g:message code="catalog.activationDate.label"/>&nbsp;<sup>*</sup></label>
+			<label for="catalogCreateActivationDate"><g:message locale="${lang}" code="catalog.activationDate.label"/>&nbsp;<sup>*</sup></label>
 		</div>
 		%{--<div class="catalog-large">--}%
-			%{--<label for="catalogCreateChannels"><g:message code="catalog.channels.label"/></label>--}%
+			%{--<label for="catalogCreateChannels"><g:message locale="${lang}" code="catalog.channels.label"/></label>--}%
 		%{--</div>--}%
 	</div>
 	<div class="spacer-small"></div>
@@ -59,7 +60,7 @@
 	<div class="spacer"></div>
 	<div class="newline">
 		<div class="catalog-full">
-			<label for="catalogCreateDescription"><g:message code="catalog.description.label" /></label>
+			<label for="catalogCreateDescription"><g:message locale="${lang}" code="catalog.description.label" /></label>
 		</div>
 	</div>
 	<div class="spacer-small"></div>
@@ -71,7 +72,7 @@
 	%{--<div class="spacer"></div>
 	<div class="newline">
 		<input type="checkbox" id="catalogCreateSocial" />
-		<label for="catalogCreateSocial"><g:message code="catalog.social.label"/></label>
+		<label for="catalogCreateSocial"><g:message locale="${lang}" code="catalog.social.label"/></label>
 	</div>--}%
 	<div class="spacer"></div>
 </div>

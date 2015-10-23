@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 #catalogImportDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -21,7 +22,7 @@
         <input type="hidden" name="format" value="html"/>
         <div class="newline">
             <div>
-                <label for="catalogImportFile"><g:message code="catalog.selectFile.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="catalogImportFile"><g:message locale="${lang}" code="catalog.selectFile.label"/>&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>

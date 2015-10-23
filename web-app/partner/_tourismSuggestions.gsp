@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 #tourismSuggestionsAddForm {
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -20,7 +21,7 @@
 <div id="tourismSuggestionsAddForm">
 	<div class="newline">
 		<div class="suggestions-medium">
-			<label for="tourismSuggestionsDiscount"><g:message code="tourismSuggestions.discount.label"/></label>
+			<label for="tourismSuggestionsDiscount"><g:message locale="${lang}" code="tourismSuggestions.discount.label"/></label>
 		</div>
 	</div>
 	<div class="spacer-small"></div>

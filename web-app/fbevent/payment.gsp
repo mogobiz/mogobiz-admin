@@ -1,7 +1,8 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title><g:message code="customer.event.events.label" /></title>
+<title><g:message locale="${lang}" code="customer.event.events.label" /></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <g:javascript library="jquery" />
 <jqui:resources themeCss="${resource(dir:'css/jquery-ui/themes/facebookApps-theme',file:'jquery-ui-1.8.17.custom.css')}" />
@@ -60,9 +61,9 @@
 			<div id="searchForm">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
-						<td style="padding-right:5px;"><input id="searchTextInput" type="text" name="event.fullSearch" class="inputtext" placeholder="<g:message code="customer.event.searchInput.label" />" /></td>
+						<td style="padding-right:5px;"><input id="searchTextInput" type="text" name="event.fullSearch" class="inputtext" placeholder="<g:message locale="${lang}" code="customer.event.searchInput.label" />" /></td>
 						<td style="padding-right:5px;"><select id="selectCategoriesCombo" name="selectCategoriesCombo"></select></td>
-						<td style="padding-right:5px;"><label class="uiButton uiButtonConfirm uiButtonMedium"><input type="submit" id="searchButton" value="<g:message code="customer.event.search.label" />" style="width:55px;"></input></label></td>
+						<td style="padding-right:5px;"><label class="uiButton uiButtonConfirm uiButtonMedium"><input type="submit" id="searchButton" value="<g:message locale="${lang}" code="customer.event.search.label" />" style="width:55px;"></input></label></td>
 					</tr>
 				</table>
 			</div>
@@ -78,7 +79,7 @@
 					<div class="title-logo">
 						<img src="${resource(dir:'images/fbevent_images',file:'register-icon.png')}" />
 					</div>
-					<div class="title"><g:message code="customer.event.completeOrder.label" /></div>
+					<div class="title"><g:message locale="${lang}" code="customer.event.completeOrder.label" /></div>
 				</div>
 				<div class="panel_body">
 					<div id="register" class="padding">
@@ -87,7 +88,7 @@
 							<div id="errorMessage" class="ui-widget">
 								<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
 									<p>
-										<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> <strong><g:message code="customer.event.error.label" />:</strong>&nbsp;&nbsp;&nbsp;${ erreur }
+										<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> <strong><g:message locale="${lang}" code="customer.event.error.label" />:</strong>&nbsp;&nbsp;&nbsp;${ erreur }
 									</p>
 								</div>
 								<br style="clear: both;" />
@@ -96,14 +97,14 @@
 						</g:if>
 						<!-- Payment Type -->
 						<h2>
-							<span class="header_left"><g:message code="customer.event.paymentInfo.label" /> </span><span class="header_right"><g:message code="customer.event.totalBill.label" />: &nbsp; ${request.getParameter('totalPrice')} &nbsp;&euro;</span>
+							<span class="header_left"><g:message locale="${lang}" code="customer.event.paymentInfo.label" /> </span><span class="header_right"><g:message locale="${lang}" code="customer.event.totalBill.label" />: &nbsp; ${request.getParameter('totalPrice')} &nbsp;&euro;</span>
 						</h2>
 						<div id="paymentTypeDiv" class="table">
 							<!-- Paiement par provider -->
 							<%--<g:paymentByCard>
 								<div class="row">
 									<div class="cell title">
-										<g:message code="customer.event.paymentByCart.label" />
+										<g:message locale="${lang}" code="customer.event.paymentByCart.label" />
 									</div>
 									<!-- PAYBOX -->
 									<g:paymentPaybox idFormulaire="formPayBox" idTypeCarte="payboxTypeCarte" callbackController="event" callbackAction="traiterRetourPaiement">
@@ -152,7 +153,7 @@
 							<g:paymentByPartner>
 								<div class="row">
 									<div class="cell title">
-										<g:message code="customer.event.paymentPartner.label" />
+										<g:message locale="${lang}" code="customer.event.paymentPartner.label" />
 									</div>
 									<!-- PAYPAL -->
 									<g:paymentPaypal style="display: inline" idFormulaire="formPayPal" callbackController="store" callbackAction="passnguideTraiterRetourPaiement" target="_top">
@@ -181,7 +182,7 @@
 
 	<!---------------------------------------------------------------------------------------------------->
 	<div id="footer">
-		<p><g:message code="customer.event.copyright.label" /></p>
+		<p><g:message locale="${lang}" code="customer.event.copyright.label" /></p>
 		<div class="clear"></div>
 	</div>
 </body>

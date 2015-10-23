@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#categoryFeaturesCreateDiv, #categoryFeaturesTranslationDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -26,12 +27,12 @@
 		<ul class="tabs">
 			<li>
 				<a id="categoryFeaturesGeneralTab">
-					<g:message code="tabs.general.label" />
+					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
 			<li>
 				<a id="categoryFeaturesTranslationTab">
-					<g:message code="tabs.translation.label" />
+					<g:message locale="${lang}" code="tabs.translation.label" />
 				</a>
 			</li>
 		</ul>
@@ -41,10 +42,10 @@
 		<form id="categoryFeaturesEditForm" onsubmit="return false;">
 			<div class="newline">
 				<div class="features-large">
-					<label for="categoryFeatureName"><g:message code="category.features.name.label"/>&nbsp;<sup>*</sup></label>
+					<label for="categoryFeatureName"><g:message locale="${lang}" code="category.features.name.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="features-large">
-					<label for="categoryFeatureValue"><g:message code="category.features.value.label"/></label>
+					<label for="categoryFeatureValue"><g:message locale="${lang}" code="category.features.value.label"/></label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>				
@@ -60,10 +61,10 @@
 				<div class="spacer"></div>
 				<div class="newline">
 					<div class="features-large">
-						<label for="categoryFeatureExternalCode"><g:message code="category.features.externalCode.label"/>&nbsp;</label>
+						<label for="categoryFeatureExternalCode"><g:message locale="${lang}" code="category.features.externalCode.label"/>&nbsp;</label>
 					</div>
 					<div class="features-large">
-						<label for="categoryFeatureUUID"><g:message code="category.features.uuid.label"/>&nbsp;</label>
+						<label for="categoryFeatureUUID"><g:message locale="${lang}" code="category.features.uuid.label"/>&nbsp;</label>
 					</div>
 				</div>
 				<div class="spacer-small"></div>				
@@ -79,14 +80,14 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<input type="checkbox" id="categoryFeatureHide"/>
-				<label for="categoryFeatureHide"><g:message code="category.features.hide.label"/></label>
+				<label for="categoryFeatureHide"><g:message locale="${lang}" code="category.features.hide.label"/></label>
 			</div>
 			<div class="spacer"></div>
 		</form>
 	</div>
 	<div id="categoryFeaturesTranslationDiv" >
 		<div style="padding: 10px;">
-			<a id="categoryFeaturesTranslationAddLink"><g:message code="translation.add.label" /></a>
+			<a id="categoryFeaturesTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 		</div>
 		<div id="categoryFeaturesTranslationGridDiv">
 			<div id="categoryFeaturesTranslationGrid" style="height: 144px;"></div>

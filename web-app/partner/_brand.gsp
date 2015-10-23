@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 #productBrand {
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -48,7 +49,7 @@
 
 
 <div id="productBrand">
-    <p style="font-weight: bold;" id="productAddNewBrand"><g:message code="brand.textLabelBrand.label" /> <a href="javascript:void(0)" id="productAddNewBrandLink"><g:message code="brand.BrandAdd.label" /></a></p>
+    <p style="font-weight: bold;" id="productAddNewBrand"><g:message locale="${lang}" code="brand.textLabelBrand.label" /> <a href="javascript:void(0)" id="productAddNewBrandLink"><g:message locale="${lang}" code="brand.BrandAdd.label" /></a></p>
     <div id="productBrandGridDiv">
         <div id="productBrandGrid"></div>
     </div>
@@ -57,12 +58,12 @@
             <ul class="tabs">
                 <li>
                     <a id="productBrandsGeneralTab">
-                        <g:message code="tabs.general.label" />
+                        <g:message locale="${lang}" code="tabs.general.label" />
                     </a>
                 </li>
                 <li>
                     <a id="productBrandsTranslationTab">
-                        <g:message code="tabs.translation.label" />
+                        <g:message locale="${lang}" code="tabs.translation.label" />
                     </a>
                 </li>
             </ul>
@@ -77,7 +78,7 @@
                     <div class="companyBrandsDialog-large">
                         <div class="newline">
                             <div class="companyBrandsDialog-large">
-                                <label for="productBrandsName"><g:message code="brand.BrandNameLabel.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                                <label for="productBrandsName"><g:message locale="${lang}" code="brand.BrandNameLabel.label"/>&nbsp;<sup>*</sup></label><br />
                                 <div class="spacer-small"></div>
                                 <input type="text" id="productBrandsName" />
                             </div>
@@ -85,7 +86,7 @@
                         <div class="spacer"></div>
                         <div class="newline">
                             <div class="companyBrandsDialog-large">
-                                <label for="productBrandsWebsite"><g:message code="brand.BrandURLLabel.label"></g:message></label><br />
+                                <label for="productBrandsWebsite"><g:message locale="${lang}" code="brand.BrandURLLabel.label"/></label><br />
                                 <div class="spacer-small"></div>
                                 <input type="text" id="productBrandsWebsite" pattern="https?://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?"/>
                             </div>
@@ -93,7 +94,7 @@
                         <div class="spacer"></div>
                         <div class="newline">
                             <div class="companyBrandsDialog-large">
-                                <label for="productBrandsIBeacon"><g:message code="brand.BrandIBeaconLabel.label" /></label>
+                                <label for="productBrandsIBeacon"><g:message locale="${lang}" code="brand.BrandIBeaconLabel.label" /></label>
                                 <div class="spacer-small"></div>
                                 <select id="productBrandsIBeacon"></select>
                             </div>
@@ -104,13 +105,13 @@
                             <img id="productBrandsLogoImage" src=""/>
                         </div>
                         <input type="file" id="productBrandsLogo" name="file"/>
-                        <a href="javascript:void(0)" id="productBrandsRemoveLogoLink"><g:message code="brand.BrandDeleteLogoLabel.label"/></a>
+                        <a href="javascript:void(0)" id="productBrandsRemoveLogoLink"><g:message locale="${lang}" code="brand.BrandDeleteLogoLabel.label"/></a>
                     </div>
                 </div>
                 <div class="spacer"></div>
                 <div class="newline">
                     <div class="companyBrandsDialog-full">
-                        <label for="productBrandsDescription"><g:message code="brand.BrandDescriptionLabel.label" /></label>
+                        <label for="productBrandsDescription"><g:message locale="${lang}" code="brand.BrandDescriptionLabel.label" /></label>
                     </div>
                 </div>
                 <div class="spacer-small"></div>
@@ -122,14 +123,14 @@
                 <div class="spacer"></div>
                 <div>
                     <input type="checkbox" id="productBrandsHide" value="true"/>&nbsp;
-                    <label for="productBrandsHide"><g:message code="brand.BrandHideLabel.label" /></label>
+                    <label for="productBrandsHide"><g:message locale="${lang}" code="brand.BrandHideLabel.label" /></label>
                 </div>
                 <div class="spacer"></div>
             </form>
         </div>
         <div id="productBrandsTranslationDiv" >
             <div style="padding: 10px;">
-                <a id="productBrandsTranslationAddLink"><g:message code="translation.add.label" /></a>
+                <a id="productBrandsTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
             </div>
             <div id="productBrandsTranslationGridDiv">
                 <div id="productBrandsTranslationGrid" style="height: 144px;"></div>

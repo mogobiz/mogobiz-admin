@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#creatPoiDiv, #poiTranslationDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -40,12 +41,12 @@
 		<ul class="tabs">
 			<li>
 				<a id="poiGeneralTab">
-					<g:message code="tabs.general.label" />
+					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
 			<li>
 				<a id="poiTranslationTab">
-					<g:message code="tabs.translation.label" />
+					<g:message locale="${lang}" code="tabs.translation.label" />
 				</a>
 			</li>
 		</ul>
@@ -64,7 +65,7 @@
 			<form id="poiPrdInfoForm" name="form_poiPrdInfos">
 				<div class="newline">
 					<div style="float: left; margin-right: 15px; padding-top: 15px;">
-						<label for="poiPictureImg" id="poiPictureImgLabel"><g:message code="poi.icon.label" /></label>
+						<label for="poiPictureImg" id="poiPictureImgLabel"><g:message locale="${lang}" code="poi.icon.label" /></label>
 					</div>
 					<div style="float: left;">
 						<a href="javascript:openPoiPictureDialog()"><img id="poiPictureImg" src="../images/markers/tourism/information.png"></a>
@@ -72,7 +73,7 @@
 				</div>
 				<div class="spacer"></div>
 				<div class="newline">
-					<label for="poiName" id="poiNameLabel"><g:message code="poi.name.label" />&nbsp;<sup>*</sup></label>
+					<label for="poiName" id="poiNameLabel"><g:message locale="${lang}" code="poi.name.label" />&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="spacer-small"></div>
 				<div class="newline">
@@ -80,11 +81,11 @@
 				</div>
 				<div class="spacer"></div>
 				<div class="newline">
-					<label for="poiAdress" id="poiAdressLabel"><g:message code="poi.address.label" />&nbsp;<sup>*</sup></label>
+					<label for="poiAdress" id="poiAdressLabel"><g:message locale="${lang}" code="poi.address.label" />&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="spacer-small"></div>
 				<div class="newline">
-					<input type="text" id="poiAdress" placeholder="<g:message code="poi.addressInputPlaceholder.label" />" required/>
+					<input type="text" id="poiAdress" placeholder="<g:message locale="${lang}" code="poi.addressInputPlaceholder.label" />" required/>
 				</div>
 				<div class="spacer"></div>
 				
@@ -97,7 +98,7 @@
 				<input type="hidden" name="poi.pictureType" id="poiPictureType" value="tourism"/>
 	
 				<div class="newline">
-					<label for="poiDescription" id="poiDescriptionLabel"><g:message code="poi.description.label" /></label>
+					<label for="poiDescription" id="poiDescriptionLabel"><g:message locale="${lang}" code="poi.description.label" /></label>
 				</div>
 				<div class="spacer-small"></div>
 				<div class="newline">
@@ -105,7 +106,7 @@
 				</div>
 				<div class="spacer"></div>
 				<div class="newline">
-					<input type="checkbox" checked="checked" id="poiMain">&nbsp;<g:message code="poi.isMain" />
+					<input type="checkbox" checked="checked" id="poiMain">&nbsp;<g:message locale="${lang}" code="poi.isMain" />
 				</div>
 				<div class="spacer"></div>
 			</form>
@@ -113,7 +114,7 @@
 	</div>
 	<div id="poiTranslationDiv" >
 		<div style="padding: 10px;">
-			<a id="poiTranslationAddLink"><g:message code="translation.add.label" /></a>
+			<a id="poiTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 		</div>
 		<div id="poiTranslationGridDiv">
 			<div id="poiTranslationGrid" style="height: 144px;"></div>

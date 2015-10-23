@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#tourismPricingAddDiv, #tourismPricingTranslationDiv, #tourismPricingDownloadDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -27,17 +28,17 @@
 		<ul class="tabs">
 			<li>
 				<a id="tourismPricingGeneralTab">
-					<g:message code="tabs.general.label" />
+					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
             <li id="downloadLi">
                 <a id="tourismPricingDownloadTab">
-                    <g:message code="tabs.download.label" />
+                    <g:message locale="${lang}" code="tabs.download.label" />
                 </a>
             </li>
 			<li>
 				<a id="tourismPricingTranslationTab">
-					<g:message code="tabs.translation.label" />
+					<g:message locale="${lang}" code="tabs.translation.label" />
 				</a>
 			</li>
 		</ul>
@@ -49,25 +50,25 @@
             <div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-large">
-					<label for="tourismPricingSKU"><g:message code="tourismPricing.SKU.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismPricingSKU"><g:message locale="${lang}" code="tourismPricing.SKU.label"/>&nbsp;<sup>*</sup></label>
 				</div>
                 <div class="pricing-large">
-                    <label for="tourismPricingAvailabilityDate"><g:message code="tourismPricing.availabilityDate.label"/></label>
+                    <label for="tourismPricingAvailabilityDate"><g:message locale="${lang}" code="tourismPricing.availabilityDate.label"/></label>
                 </div>
 			</div>
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-large">
-					<input id="tourismPricingSKU" type="text" name="ticketType.sku" placeholder="<g:message code="tourismPricing.SKU.label"/>" required/>
+					<input id="tourismPricingSKU" type="text" name="ticketType.sku" placeholder="<g:message locale="${lang}" code="tourismPricing.SKU.label"/>" required/>
 				</div>
                 <div class="pricing-large">
-                    <input id="tourismPricingAvailabilityDate" type="text" name="ticketType.availabilityDate" pattern="\d{2}\/\d{2}/\d{4}" placeholder="<g:message code="calendar.datePlaceholder.label"/>" />
+                    <input id="tourismPricingAvailabilityDate" type="text" name="ticketType.availabilityDate" pattern="\d{2}\/\d{2}/\d{4}" placeholder="<g:message locale="${lang}" code="calendar.datePlaceholder.label"/>" />
                 </div>
 			</div>
 			<div class="spacer"></div>				
 			<div class="newline">
 				<div class="pricing-small">
-					<label for="tourismPricingTicketType"><g:message code="tourismPricing.ticketType.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismPricingTicketType"><g:message locale="${lang}" code="tourismPricing.ticketType.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="pricing-small">
 					<label for="tourismPricingVariation1" id="tourismPricingVariation1Label">&nbsp;</label>
@@ -82,7 +83,7 @@
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-small">
-					<input id="tourismPricingTicketType" autofocus type="text" required placeholder="(<g:message code="tourismPricing.ticketTypePlaceholder.label"/>)"  name="ticketType.name" pattern=".{1,50}"/>
+					<input id="tourismPricingTicketType" autofocus type="text" required placeholder="(<g:message locale="${lang}" code="tourismPricing.ticketTypePlaceholder.label"/>)"  name="ticketType.name" pattern=".{1,50}"/>
 				</div>
 				<div class="pricing-small">
 					<select id="tourismPricingVariation1" autofocus disabled multiple="multiple"></select>
@@ -97,22 +98,22 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-small">
-					<label for="tourismPricingTicketPrice"><g:message code="tourismPricing.ticketPrice.label"/></label>
+					<label for="tourismPricingTicketPrice"><g:message locale="${lang}" code="tourismPricing.ticketPrice.label"/></label>
 				</div>
 				<div class="pricing-small">
-					<label for="tourismPricingTicketStock"><g:message code="tourismPricing.ticketStock.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismPricingTicketStock"><g:message locale="${lang}" code="tourismPricing.ticketStock.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="pricing-small">
-					<label for="tourismPricingMinOrder"><g:message code="tourismPricing.minOrder.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismPricingMinOrder"><g:message locale="${lang}" code="tourismPricing.minOrder.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="pricing-small">
-					<label for="tourismPricingMaxOrder"><g:message code="tourismPricing.maxOrder.label"/></label>
+					<label for="tourismPricingMaxOrder"><g:message locale="${lang}" code="tourismPricing.maxOrder.label"/></label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-small">
-					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" required placeholder="<g:message code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
+					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" required placeholder="<g:message locale="${lang}" code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
 				</div>
 				<div class="pricing-small">
 					<input id="tourismPricingTicketStock" type="number" min="0" max="999999999" required pattern="\d+"/>
@@ -127,33 +128,33 @@
 			<div class="spacer"></div>				
 			<div class="newline">
 				<div class="pricing-large">
-					<label for="tourismPricingStartDate"><g:message code="tourismPricing.startDate.label"/></label>
+					<label for="tourismPricingStartDate"><g:message locale="${lang}" code="tourismPricing.startDate.label"/></label>
 				</div>
 				<div class="pricing-large">
-					<label for="tourismPricingEndDate"><g:message code="tourismPricing.endDate.label"/></label>
+					<label for="tourismPricingEndDate"><g:message locale="${lang}" code="tourismPricing.endDate.label"/></label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-large">
-					<input id="tourismPricingStartDate" type="text" name="ticketType.startDate" placeholder="<g:message code="calendar.datePlaceholder.label"/>" pattern="\d{2}\/\d{2}/\d{4}"/>
+					<input id="tourismPricingStartDate" type="text" name="ticketType.startDate" placeholder="<g:message locale="${lang}" code="calendar.datePlaceholder.label"/>" pattern="\d{2}\/\d{2}/\d{4}"/>
 				</div>
 				<div class="pricing-large">
-					<input id="tourismPricingEndDate" type="text" name="ticketType.stopDate" placeholder="<g:message code="calendar.datePlaceholder.label"/>" pattern="\d{2}\/\d{2}/\d{4}"/>
+					<input id="tourismPricingEndDate" type="text" name="ticketType.stopDate" placeholder="<g:message locale="${lang}" code="calendar.datePlaceholder.label"/>" pattern="\d{2}\/\d{2}/\d{4}"/>
 				</div>
 			</div>
 			<div class="spacer"></div>
             <div class="spacer-small"></div>
             <div class="newline">
                 <input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
-                <label for="tourismPricingPrivate"><g:message code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
+                <label for="tourismPricingPrivate"><g:message locale="${lang}" code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
                 <input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
-                <label for="tourismPricingStockUnlimited"><g:message code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
+                <label for="tourismPricingStockUnlimited"><g:message locale="${lang}" code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
                 <input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
-                <label for="tourismPricingStockOutSelling"><g:message code="pricing.globalstockoutselling.label"/></label>
+                <label for="tourismPricingStockOutSelling"><g:message locale="${lang}" code="pricing.globalstockoutselling.label"/></label>
                 <span style="float: right; font-weight: bold;" id="tourismPricingNumberOfSales">
-                    <span id="tourismPricingSold"></span>&nbsp;<g:message code="pricing.numberOfSales.label"/>,&nbsp;
-                    <span id="tourismPricingRemaining"></span>&nbsp;<g:message code="pricing.remaining.label"/>
+                    <span id="tourismPricingSold"></span>&nbsp;<g:message locale="${lang}" code="pricing.numberOfSales.label"/>,&nbsp;
+                    <span id="tourismPricingRemaining"></span>&nbsp;<g:message locale="${lang}" code="pricing.remaining.label"/>
                 </span>
             </div>
 		</form>
@@ -163,10 +164,10 @@
         <div id="tourismPricingDownloadForm" align="center">
             <img src="../images/download_file.png" width="128px" height="128px" style="cursor:pointer;"/>
             <br/>
-            <a href="javascript:void(0);" id="tourismPricingDownloadResource"><g:message code="tourismPricing.download.label" /></a>
-            &nbsp;<g:message code="tourismPricing.or.label" />
-            &nbsp;<a href="javascript:void(0);" id="tourismPricingDeleteResource"><g:message code="tourismPricing.delete.label" /></a>
-            &nbsp;<g:message code="tourismPricing.file.label" />
+            <a href="javascript:void(0);" id="tourismPricingDownloadResource"><g:message locale="${lang}" code="tourismPricing.download.label" /></a>
+            &nbsp;<g:message locale="${lang}" code="tourismPricing.or.label" />
+            &nbsp;<a href="javascript:void(0);" id="tourismPricingDeleteResource"><g:message locale="${lang}" code="tourismPricing.delete.label" /></a>
+            &nbsp;<g:message locale="${lang}" code="tourismPricing.file.label" />
             <div class="spacer"></div>
         </div>
         <div id="tourismPricingUpload">
@@ -178,11 +179,11 @@
             <div class="spacer"></div>
             <iframe id="tourismPricingDownloadHiddenFrame" name="tourismPricingDownloadHiddenFrame" style="display: none"></iframe>
         </div>
-        <div align="center" id="tourismPricingUploading" style="display:none"><g:message code="tourismPricing.uploadingResource.label" /></div>
+        <div align="center" id="tourismPricingUploading" style="display:none"><g:message locale="${lang}" code="tourismPricing.uploadingResource.label" /></div>
     </div>
 	<div id="tourismPricingTranslationDiv" >
 		<div style="padding: 10px;">
-			<a id="tourismPricingTranslationAddLink"><g:message code="translation.add.label" /></a>
+			<a id="tourismPricingTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 		</div>
 		<div id="tourismPricingTranslationGridDiv">
 			<div id="tourismPricingTranslationGrid" style="height: 185px;"></div>

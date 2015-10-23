@@ -1,39 +1,40 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <div id="companyCouponsTabs">
     <div id="ulTabs">
         <ul class="tabs">
             <li>
                 <a id="companyCouponsGeneralTab">
-                    <g:message code="tabs.general.label" />
+                    <g:message locale="${lang}" code="tabs.general.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsDescriptionTab">
-                    <g:message code="tabs.description.label" />
+                    <g:message locale="${lang}" code="tabs.description.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsRulesTab">
-                    <g:message code="tabs.rules.label" />
+                    <g:message locale="${lang}" code="tabs.rules.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsCategoriesTab">
-                    <g:message code="tabs.categories.label" />
+                    <g:message locale="${lang}" code="tabs.categories.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsProductTab">
-                    <g:message code="tabs.product.label" />
+                    <g:message locale="${lang}" code="tabs.product.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsSkuTab">
-                    <g:message code="tabs.pricing.label" />
+                    <g:message locale="${lang}" code="tabs.pricing.label" />
                 </a>
             </li>
             <li>
                 <a id="companyCouponsTranslationTab">
-                    <g:message code="tabs.translation.label" />
+                    <g:message locale="${lang}" code="tabs.translation.label" />
                 </a>
             </li>
         </ul>
@@ -45,10 +46,10 @@
             <input id="companyCouponsId" type="hidden"/>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsName"><g:message code="company.coupons.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyCouponsName"><g:message locale="${lang}" code="company.coupons.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsCode"><g:message code="company.coupons.code.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyCouponsCode"><g:message locale="${lang}" code="company.coupons.code.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -63,10 +64,10 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsPastille"><g:message code="company.coupons.pastille.label"></g:message></label><br />
+                    <label for="companyCouponsPastille"><g:message locale="${lang}" code="company.coupons.pastille.label"></g:message></label><br />
                 </div>
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsNumberOfUse"><g:message code="company.coupons.numberOfUse.label"></g:message></label><br />
+                    <label for="companyCouponsNumberOfUse"><g:message locale="${lang}" code="company.coupons.numberOfUse.label"></g:message></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -81,10 +82,10 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsStartDate"><g:message code="company.coupons.startDate.label"></g:message></label><br />
+                    <label for="companyCouponsStartDate"><g:message locale="${lang}" code="company.coupons.startDate.label"></g:message></label><br />
                 </div>
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsEndDate"><g:message code="company.coupons.endDate.label"></g:message></label><br />
+                    <label for="companyCouponsEndDate"><g:message locale="${lang}" code="company.coupons.endDate.label"></g:message></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -99,11 +100,11 @@
             <div class="spacer"></div>
             <div>
                 <input type="checkbox" id="companyCouponsActive" value="true"/>&nbsp;
-                <label for="companyCouponsActive"><g:message code="company.coupons.active.label" /></label>&nbsp;&nbsp;
+                <label for="companyCouponsActive"><g:message locale="${lang}" code="company.coupons.active.label" /></label>&nbsp;&nbsp;
                 <input type="checkbox" id="companyCouponsAnonymous" value="false"/>&nbsp;
-                <label for="companyCouponsAnonymous"><g:message code="company.coupons.anonymous.label" /></label>&nbsp;&nbsp;
+                <label for="companyCouponsAnonymous"><g:message locale="${lang}" code="company.coupons.anonymous.label" /></label>&nbsp;&nbsp;
                 <input type="checkbox" id="companyCouponsCatalogWise" value="false"/>&nbsp;
-                <label for="companyCouponsCatalogWise"><g:message code="company.coupons.catalogWise.label" /></label>&nbsp;&nbsp;
+                <label for="companyCouponsCatalogWise"><g:message locale="${lang}" code="company.coupons.catalogWise.label" /></label>&nbsp;&nbsp;
                 <select id="companyCouponsGeneralCatalog" multiple="multiple"></select>
             </div>
             <div class="spacer"></div>
@@ -113,7 +114,7 @@
     <div id="companyCouponsDescriptionDiv">
         <div class="newline">
             <div class="companyCouponsDialog-large">
-                <label for="companyCouponsDescription"><g:message code="company.coupons.description.label"></g:message></label><br />
+                <label for="companyCouponsDescription"><g:message locale="${lang}" code="company.coupons.description.label"></g:message></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
@@ -127,7 +128,7 @@
 
     <div id="companyCouponsRulesDiv">
         <div style="padding: 10px;">
-            <g:message code="company.coupons.rules.header.label" /> <a id="companyCouponsRulesAddLink"><g:message code="company.coupons.rules.add.label" /></a>
+            <g:message locale="${lang}" code="company.coupons.rules.header.label" /> <a id="companyCouponsRulesAddLink"><g:message locale="${lang}" code="company.coupons.rules.add.label" /></a>
         </div>
         <div id="companyCouponsRulesGridDiv">
             <div id="companyCouponsRulesGrid" style="height: 220px;"></div>
@@ -199,7 +200,7 @@
 
     <div id="companyCouponsTranslationDiv">
         <div style="padding: 10px;">
-            <a id="companyCouponsTranslationAddLink"><g:message code="translation.add.label" /></a>
+            <a id="companyCouponsTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
         </div>
         <div id="companyCouponsTranslationGridDiv">
             <div id="companyCouponsTranslationGrid" style="height: 144px;"></div>

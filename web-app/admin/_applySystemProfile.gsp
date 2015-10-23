@@ -1,7 +1,8 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <div id="companyProfilesApplyDiv">
     <div class="newline">
         <div class="companyProfilesDialog-full">
-            <label for="companyProfilesApplyName"><g:message code="company.profiles.name.label"></g:message>&nbsp;<sup>*</sup></label>
+            <label for="companyProfilesApplyName"><g:message locale="${lang}" code="company.profiles.name.label"></g:message>&nbsp;<sup>*</sup></label>
         </div>
         <div class="spacer-small"></div>
         <div class="companyProfilesDialog-full">
@@ -11,7 +12,7 @@
     <div class="spacer"></div>
     <div class="newline">
         <div class="companyProfilesDialog-full">
-            <label for="companyProfilesApplySystemProfile"><g:message code="company.profiles.systemProfile.label"></g:message>&nbsp;<sup>*</sup></label>
+            <label for="companyProfilesApplySystemProfile"><g:message locale="${lang}" code="company.profiles.systemProfile.label"></g:message>&nbsp;<sup>*</sup></label>
         </div>
         <div class="spacer-small"></div>
         <div class="companyProfilesDialog-full">

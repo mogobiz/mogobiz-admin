@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#tourismFeaturesAddDiv, #tourismFeaturesTranslationDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -27,12 +28,12 @@
 		<ul class="tabs">
 			<li>
 				<a id="tourismFeaturesGeneralTab">
-					<g:message code="tabs.general.label" />
+					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
 			<li>
 				<a id="tourismFeaturesTranslationTab">
-					<g:message code="tabs.translation.label" />
+					<g:message locale="${lang}" code="tabs.translation.label" />
 				</a>
 			</li>
 		</ul>
@@ -43,10 +44,10 @@
 			<input type="hidden" name="feature.id" id="tourismFeatureId"/>
 			<div class="newline">
 				<div class="features-large">
-					<label for="tourismFeatureName"><g:message code="features.name.label"/>&nbsp;<sup>*</sup></label>
+					<label for="tourismFeatureName"><g:message locale="${lang}" code="features.name.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="features-large">
-					<label for="tourismFeatureValue" id="tourismFeatureValueLabel"><g:message code="features.value.label"/>&nbsp;</label>
+					<label for="tourismFeatureValue" id="tourismFeatureValueLabel"><g:message locale="${lang}" code="features.value.label"/>&nbsp;</label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>				
@@ -62,10 +63,10 @@
 				<div class="spacer"></div>
 				<div class="newline">
 					<div class="features-large">
-						<label for="tourismFeatureExternalCode"><g:message code="features.externalCode.label"/>&nbsp;</label>
+						<label for="tourismFeatureExternalCode"><g:message locale="${lang}" code="features.externalCode.label"/>&nbsp;</label>
 					</div>
 					<div class="features-large">
-						<label for="tourismFeatureUUID"><g:message code="features.uuid.label"/>&nbsp;</label>
+						<label for="tourismFeatureUUID"><g:message locale="${lang}" code="features.uuid.label"/>&nbsp;</label>
 					</div>
 				</div>
 				<div class="spacer-small"></div>				
@@ -81,14 +82,14 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<input type="checkbox" id="tourismFeatureHide"/>
-				<label for="tourismFeatureHide"><g:message code="features.hide.label"/></label>
+				<label for="tourismFeatureHide"><g:message locale="${lang}" code="features.hide.label"/></label>
 			</div>
 			<div class="spacer"></div>
 		</form>
 	</div>
 	<div id="tourismFeaturesTranslationDiv" >
 		<div style="padding: 10px;">
-			<a id="tourismFeaturesTranslationAddLink"><g:message code="translation.add.label" /></a>
+			<a id="tourismFeaturesTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 		</div>
 		<div id="tourismFeaturesTranslationGridDiv">
 			<div id="tourismFeaturesTranslationGrid" style="height: 144px;"></div>

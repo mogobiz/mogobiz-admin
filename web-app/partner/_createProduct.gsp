@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 #productAddDiv{
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -23,10 +24,10 @@
 		<form id="productAddForm" onsubmit="return false;">
 			<div class="newline">
 				<div class="createProduct-large">
-					<label for="createProductNameField"><g:message code="product.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
+					<label for="createProductNameField"><g:message locale="${lang}" code="product.name.label"/>&nbsp;<sup>*</sup></label><br />
 				</div>
                 <div class="createProduct-small">
-                    <label for="createProductTypeField"><g:message code="product.xtype.label"></g:message></label>&nbsp;<sup>*</sup><br />
+                    <label for="createProductTypeField"><g:message locale="${lang}" code="product.xtype.label"/></label>&nbsp;<sup>*</sup><br />
                 </div>
 			</div>
 			<div class="spacer-small"></div>
@@ -36,16 +37,16 @@
 				</div>
                 <div class="createProduct-small">
                     <select id="createProductTypeField" multiple="multiple">
-                        <option value="PRODUCT"><g:message code="product.xtype.physical.label" /></option>
-                        <option value="DOWNLOADABLE"><g:message code="product.xtype.downloadable.label" /></option>
-                        <option value="SERVICE"><g:message code="product.xtype.service.label" /></option>
+                        <option value="PRODUCT"><g:message locale="${lang}" code="product.xtype.physical.label" /></option>
+                        <option value="DOWNLOADABLE"><g:message locale="${lang}" code="product.xtype.downloadable.label" /></option>
+                        <option value="SERVICE"><g:message locale="${lang}" code="product.xtype.service.label" /></option>
                     </select>
                 </div>
 			</div>
 			<div class="spacer"></div>
             <div class="newline">
                 <div class="createProduct-large">
-                    <label for="createProductCodeField"><g:message code="product.unitCode.label"></g:message></label>&nbsp;<sup>*</sup><br />
+                    <label for="createProductCodeField"><g:message locale="${lang}" code="product.unitCode.label"/></label>&nbsp;<sup>*</sup><br />
                 </div>
             </div>
             <div class="spacer-small"></div>

@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
@@ -31,7 +32,7 @@
 						<div id="signinSection" class="extraPadded">
 							<div class="sIHeader">
 								<h1>
-									<g:message code="logIn.title" />
+									<g:message locale="${lang}" code="logIn.title" />
 								</h1>
 							</div>
 							<div class="sIBody">
@@ -40,40 +41,40 @@
 										%{--<div class="signInPartner">--}%
 											%{--<a--}%
 												%{--href="${createLink(controller: 'externalAuth', action:'facebook')}?targetUri=${params.targetUri}">--}%
-												%{--<img alt="<g:message code="logIn.altFacebook.label" />"--}%
+												%{--<img alt="<g:message locale="${lang}" code="logIn.altFacebook.label" />"--}%
 												%{--src="${resource(dir:'images/icons',file:'facebook.png')}"--}%
-												%{--title="<g:message code="logIn.TitleFacebook.label" />"></img>--}%
+												%{--title="<g:message locale="${lang}" code="logIn.TitleFacebook.label" />"></img>--}%
 												%{--<div class="partnerName">--}%
-													%{--<g:message code="logIn.Facebook.label" />--}%
+													%{--<g:message locale="${lang}" code="logIn.Facebook.label" />--}%
 												%{--</div>--}%
 											%{--</a>--}%
 										%{--</div>--}%
 										%{--<div class="signInPartner">--}%
 											%{--<a--}%
 												%{--href="${createLink(controller: 'externalAuth', action:'google')}?targetUri=${params.targetUri}">--}%
-												%{--<img alt="<g:message code="logIn.altGoogle.label" />"--}%
+												%{--<img alt="<g:message locale="${lang}" code="logIn.altGoogle.label" />"--}%
 												%{--src="${resource(dir:'images/icons',file:'google.png')}"--}%
-												%{--title="<g:message code="logIn.titleGoogle.label" />"></img>--}%
+												%{--title="<g:message locale="${lang}" code="logIn.titleGoogle.label" />"></img>--}%
 												%{--<div class="partnerName">--}%
-													%{--<g:message code="logIn.Google.label" />--}%
+													%{--<g:message locale="${lang}" code="logIn.Google.label" />--}%
 												%{--</div>--}%
 											%{--</a>--}%
 										%{--</div>--}%
 										%{--<div class="signInPartner">--}%
-											%{--<a> <img alt="<g:message code="logIn.altYahoo.label" />"--}%
+											%{--<a> <img alt="<g:message locale="${lang}" code="logIn.altYahoo.label" />"--}%
 												%{--src="${resource(dir:'images/icons',file:'yahoo.png')}"--}%
-												%{--title="<g:message code="logIn.titleYahoo.label" />"></img>--}%
+												%{--title="<g:message locale="${lang}" code="logIn.titleYahoo.label" />"></img>--}%
 												%{--<div class="partnerName">--}%
-													%{--<g:message code="logIn.Yahoo.label" />--}%
+													%{--<g:message locale="${lang}" code="logIn.Yahoo.label" />--}%
 												%{--</div>--}%
 											%{--</a>--}%
 										%{--</div>--}%
 										%{--<div class="signInPartner signInPartnerLast">--}%
-											%{--<a> <img alt="<g:message code="logIn.altOpenID.label" />"--}%
+											%{--<a> <img alt="<g:message locale="${lang}" code="logIn.altOpenID.label" />"--}%
 												%{--src="${resource(dir:'images/icons',file:'openid.png')}"--}%
-												%{--title="<g:message code="logIn.titleOpenID.label" />"></img>--}%
+												%{--title="<g:message locale="${lang}" code="logIn.titleOpenID.label" />"></img>--}%
 												%{--<div class="partnerName">--}%
-													%{--<g:message code="logIn.OpenID.label" />--}%
+													%{--<g:message locale="${lang}" code="logIn.OpenID.label" />--}%
 												%{--</div>--}%
 											%{--</a>--}%
 										%{--</div>--}%
@@ -83,19 +84,19 @@
 								<br>
 									<div class="sIHeader">
 										%{--<h1>--}%
-											%{--<g:message code="logIn.headerForm.label" />--}%
+											%{--<g:message locale="${lang}" code="logIn.headerForm.label" />--}%
 										%{--</h1>--}%
 									</div>
 									<div>
 										<g:form controller="auth" action="signIn" name="login-form">
 											<g:hiddenField name="targetUri" value="${params.targetUri}" />
 											<div id="usernameSection" class="newline">
-												<label><g:message code="logIn.Email.label" /></label>
+												<label><g:message locale="${lang}" code="logIn.Email.label" /></label>
 												<g:textField name="username" value="${params.username}" />
 											</div>
 											<div class="spacer"></div>
 											<div id="passwordSection" class="newline">
-												<label><g:message code="logIn.Password.label" /></label>
+												<label><g:message locale="${lang}" code="logIn.Password.label" /></label>
 												<g:passwordField name="password" />
 											</div>
 											<div class="spacer"></div>
@@ -118,20 +119,20 @@
 								%{--<div class="sUHeader">--}%
 									%{--<div class="sUImage">--}%
 										%{--<a><img id="logoIperPic"--}%
-											%{--alt="<g:message code="logIn.altcommencementMaintenant.label" />"--}%
+											%{--alt="<g:message locale="${lang}" code="logIn.altcommencementMaintenant.label" />"--}%
 											%{--src="${resource(dir: 'images', file: 'icon.png')}"--}%
-											%{--title="<g:message code="logIn.titlecommencementMaintenant.label" />"></a>--}%
+											%{--title="<g:message locale="${lang}" code="logIn.titlecommencementMaintenant.label" />"></a>--}%
 									%{--</div>--}%
 									%{--<h1>--}%
-										%{--<g:message code="logIn.sUHeader.label" />--}%
+										%{--<g:message locale="${lang}" code="logIn.sUHeader.label" />--}%
 									%{--</h1>--}%
 								%{--</div>--}%
 								%{--<div id="commencerDiv" class="sUBody">--}%
 									%{--<p>--}%
-										%{--<g:message code="logIn.sUBody.label" />--}%
+										%{--<g:message locale="${lang}" code="logIn.sUBody.label" />--}%
 									%{--</p>--}%
 									%{--<button class="orangeButton" id="inscriptionLink">--}%
-										%{--<span><g:message code="logIn.Buttoncommencement.label" /></span>--}%
+										%{--<span><g:message locale="${lang}" code="logIn.Buttoncommencement.label" /></span>--}%
 									%{--</button>--}%
 									%{--<div class="buttonClear"></div>--}%
 								%{--</div>--}%

@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <r:script>
 	$(function(){
 		$.ajax({
@@ -210,44 +211,44 @@
 				<div class="crossheadWrapper">
 					<div class="supportTitle">
 						<a>
-							<img alt="<g:message code="logIn.SupportAltImage.label" />" class="imageTitle" src="${resource(dir: 'images', file: 'icon.png')}" title="<g:message code="logIn.SupportTitleImage.label" />"></img>
+							<img alt="<g:message locale="${lang}" code="logIn.SupportAltImage.label" />" class="imageTitle" src="${resource(dir: 'images', file: 'icon.png')}" title="<g:message locale="${lang}" code="logIn.SupportTitleImage.label" />"></img>
 						</a>
 						<h1 align="left">
-							<g:message code="logIn.SupportTitle.label" />
+							<g:message locale="${lang}" code="logIn.SupportTitle.label" />
 						</h1>
-						<p align="left"><g:message code="logIn.SupportTitleS.label" /></p>
+						<p align="left"><g:message locale="${lang}" code="logIn.SupportTitleS.label" /></p>
 					</div>
 				</div>
 				<div class="contentWrapper">
 					<div class="support">
 						<form id="join">
 							<div class="field startRow">
-								<label for="createCompanyName"><g:message code="company.general.storeName.label"/></label>
-								<%--<span class="helpText"><g:message code="logIn.SupportHelpText.label" /></span>--%>
+								<label for="createCompanyName"><g:message locale="${lang}" code="company.general.storeName.label"/></label>
+								<%--<span class="helpText"><g:message locale="${lang}" code="logIn.SupportHelpText.label" /></span>--%>
 								<input class="text" type="text" name="company.name" id="createCompanyName" pattern="[a-zA-Z0-9- ]+"/>
 							</div>
 
 							<div class="field">
-								<label for="createCompanyCode"><g:message code="company.general.storeCode.label"/></label>
-								<%--<span class="helpText"><g:message code="logIn.SupportHelpText.label" /></span>--%>
+								<label for="createCompanyCode"><g:message locale="${lang}" code="company.general.storeCode.label"/></label>
+								<%--<span class="helpText"><g:message locale="${lang}" code="logIn.SupportHelpText.label" /></span>--%>
 								<input class="text" type="text" name="company.code" id="createCompanyCode" pattern="[a-zA-Z0-9]+"/>
 							</div>
 
 							<div class="field startRow">
-								<label for="createCompanyEmail"><g:message code="company.general.email.label"/></label>
-								<%--<span class="helpText"><g:message code="logIn.SupportNomHelpText.label" /></span>--%>
+								<label for="createCompanyEmail"><g:message locale="${lang}" code="company.general.email.label"/></label>
+								<%--<span class="helpText"><g:message locale="${lang}" code="logIn.SupportNomHelpText.label" /></span>--%>
 								<input class="text" type="email" name="company.email" id="createCompanyEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"/>
 							</div>
 
 							<div class="field">
-								<label for="createCompanyCountry"><g:message code="company.general.country.label"/></label>
-								<%--<span class="helpText"><g:message code="logIn.SupportHelpText.label" /></span>--%>
+								<label for="createCompanyCountry"><g:message locale="${lang}" code="company.general.country.label"/></label>
+								<%--<span class="helpText"><g:message locale="${lang}" code="logIn.SupportHelpText.label" /></span>--%>
 								<select name="company.location.countryCode" id="createCompanyCountry" class="select"></select>
 							</div>
 
 							<div id="commencerDiv" class="sUBody">
 								<a>
-									<span class="pButton fatButton blueColor fullWidth"><g:message code="logIn.SupportCreerButton.label" /></span>
+									<span class="pButton fatButton blueColor fullWidth"><g:message locale="${lang}" code="logIn.SupportCreerButton.label" /></span>
 								</a>
 							</div>
 						</form>

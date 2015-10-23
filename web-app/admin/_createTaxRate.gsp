@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 	#taxRateCreateDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -22,13 +23,13 @@
 		<input id="taxRateId" type="hidden"/>
 		<div class="newline">
 			<div class="taxRate-large">
-				<label for="taxRateName"><g:message code="company.tax.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
+				<label for="taxRateName"><g:message locale="${lang}" code="company.tax.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
 			</div>
 		</div>
 		<div class="spacer-small"></div>
 		<div class="newline">
 			<div class="taxRate-large">
-				<input id="taxRateName" autofocus required placeholder="<g:message code="company.tax.name.label"></g:message>" type="text" class="textInput" />
+				<input id="taxRateName" autofocus required placeholder="<g:message locale="${lang}" code="company.tax.name.label"></g:message>" type="text" class="textInput" />
 			</div>
 		</div>
 		<div class="spacer"></div>

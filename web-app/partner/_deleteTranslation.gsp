@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#translationDeleteDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -20,7 +21,7 @@
 <div id="translationDeleteDiv" >
 <form id="translationDeleteForm" onsubmit="return false;">
     <div class="newline">
-        <label><g:message code="translation.delete.message.label"/></label>
+        <label><g:message locale="${lang}" code="translation.delete.message.label"/></label>
     </div>
     <div class="spacer"></div>
 </form>

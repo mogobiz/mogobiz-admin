@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style>
 #categoryCreateDiv{
 	font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -23,13 +24,13 @@
 		<input type="hidden" name="category.position" value = "0"/>
 		<div class="newline">
 			<div class="category-general-large">
-				<label for="createCategoryNameField"><g:message code="category.tabs.general.name.label"></g:message>&nbsp;<sup>*</sup></label><br />
+				<label for="createCategoryNameField"><g:message locale="${lang}" code="category.tabs.general.name.label"/>&nbsp;<sup>*</sup></label><br />
 			</div>
 		</div>
 		<div class="spacer-small"></div>
 		<div class="newline">
 			<div class="category-general-full">
-				<input id="createCategoryNameField" autofocus required placeholder="<g:message code="category.create.name.label"></g:message>" type="text" name="category.name" class="textInput" /> <br />
+				<input id="createCategoryNameField" autofocus required placeholder="<g:message locale="${lang}" code="category.create.name.label"/>" type="text" name="category.name" class="textInput" /> <br />
 			</div>
 		</div>
 		<div class="spacer"></div>

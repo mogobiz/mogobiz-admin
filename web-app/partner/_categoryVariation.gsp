@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#categoryVariationsCreateDiv, #categoryVariationsTranslationDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -26,12 +27,12 @@
 		<ul class="tabs">
 			<li>
 				<a id="categoryVariationsGeneralTab">
-					<g:message code="tabs.general.label" />
+					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
 			<li>
 				<a id="categoryVariationsTranslationTab">
-					<g:message code="tabs.translation.label" />
+					<g:message locale="${lang}" code="tabs.translation.label" />
 				</a>
 			</li>
 		</ul>
@@ -41,10 +42,10 @@
 		<form id="categoryVariationsEditForm" onsubmit="return false;">
 			<div class="newline">
 				<div class="variations-large">
-					<label for="categoryVariationName"><g:message code="category.variations.name.label"/>&nbsp;<sup>*</sup></label>
+					<label for="categoryVariationName"><g:message locale="${lang}" code="category.variations.name.label"/>&nbsp;<sup>*</sup></label>
 				</div>
 				<div class="variations-large">
-					<label for="categoryVariationExternalCode"><g:message code="category.variations.externalCode.label"/></label>
+					<label for="categoryVariationExternalCode"><g:message locale="${lang}" code="category.variations.externalCode.label"/></label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>
@@ -59,20 +60,20 @@
 			<div class="spacer"></div>
 			<div class="newLine">
 				<div class="variations-full">
-					<label for="categoryVariationValues"><g:message code="category.variations.values.label"/></label>
+					<label for="categoryVariationValues"><g:message locale="${lang}" code="category.variations.values.label"/></label>
 				</div>
 			</div>
 			<div class="spacer-small"></div>
 			<div class="newLine">
 				<div class="variations-full">
-					<input id="categoryVariationValues" autofocus type="text" name="variation.values" placeholder="<g:message code="category.variations.values.placeholder"/>"/>
+					<input id="categoryVariationValues" autofocus type="text" name="variation.values" placeholder="<g:message locale="${lang}" code="category.variations.values.placeholder"/>"/>
 				</div>
 			</div>
 			<div id="categoryVariationsEditDiv">
 				<div class="spacer"></div>
 				<div class="newline">
 					<div class="variations-large">
-						<label for="categoryVariationUUID"><g:message code="category.variations.uuid.label"/>&nbsp;</label>
+						<label for="categoryVariationUUID"><g:message locale="${lang}" code="category.variations.uuid.label"/>&nbsp;</label>
 					</div>
 				</div>
 				<div class="spacer-small"></div>				
@@ -85,14 +86,14 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<input type="checkbox" id="categoryVariationHide"/>
-				<label for="categoryVariationHide"><g:message code="category.variations.hide.label"/></label>
+				<label for="categoryVariationHide"><g:message locale="${lang}" code="category.variations.hide.label"/></label>
 			</div>
 			<div class="spacer"></div>
 		</form>
 	</div>
 	<div id="categoryVariationsTranslationDiv" >
 		<div style="padding: 10px;">
-			<a id="categoryVariationsTranslationAddLink"><g:message code="translation.add.label" /></a>
+			<a id="categoryVariationsTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 		</div>
 		<div id="categoryVariationsTranslationGridDiv">
 			<div id="categoryVariationsTranslationGrid" style="height: 144px;"></div>

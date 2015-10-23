@@ -1,3 +1,4 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <style type="text/css">
 	#translationCreateDiv{
 		font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
@@ -21,7 +22,7 @@
 	<form id="translationCreateForm" onsubmit="return false;">
 		<input type="hidden" id="translationCreateTarget"/>
 		<div class="newline">
-			<label for="translationLanguageSelect"><g:message code="translation.language.label"/></label>
+			<label for="translationLanguageSelect"><g:message locale="${lang}" code="translation.language.label"/></label>
 			<select multiple="multiple" id="translationLanguageSelect"></select>
 		</div>
 		<div class="spacer"></div>

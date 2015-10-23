@@ -1,7 +1,8 @@
+<g:set var="lang" value="${session.'org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE'}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title><g:message code="customer.event.events.label" /></title>
+<title><g:message locale="${lang}" code="customer.event.events.label" /></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <g:javascript library="jquery" />
 <jqui:resources themeCss="${resource(dir:'css/jquery-ui/themes/facebookApps-theme',file:'jquery-ui-1.8.17.custom.css')}" />
@@ -85,9 +86,9 @@
 			<div id="searchForm">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
-						<td style="padding-right:5px;"><input id="searchTextInput" type="text" name="event.fullSearch" class="inputtext" placeholder="<g:message code="customer.event.searchInput.label" />" /></td>
+						<td style="padding-right:5px;"><input id="searchTextInput" type="text" name="event.fullSearch" class="inputtext" placeholder="<g:message locale="${lang}" code="customer.event.searchInput.label" />" /></td>
 						<td style="padding-right:5px;"><select id="selectCategoriesCombo" name="selectCategoriesCombo"></select></td>
-						<td style="padding-right:5px;"><label class="uiButton uiButtonConfirm uiButtonMedium"><input type="submit" id="searchButton" value="<g:message code="customer.event.search.label" />" style="width:55px;"></input></label></td>
+						<td style="padding-right:5px;"><label class="uiButton uiButtonConfirm uiButtonMedium"><input type="submit" id="searchButton" value="<g:message locale="${lang}" code="customer.event.search.label" />" style="width:55px;"></input></label></td>
 					</tr>
 				</table>
 			</div>
@@ -97,11 +98,11 @@
 			<div class="tabsPanel">
 				<div class="tabsPanel_head">
 					<div class="row">
-						<div id="tab1" class="tab"><a href="javascript:void(0)" onclick="javascript:listAllProducts('alpha','desc')"><g:message code="customer.event.popular.label" /></a></div>
+						<div id="tab1" class="tab"><a href="javascript:void(0)" onclick="javascript:listAllProducts('alpha','desc')"><g:message locale="${lang}" code="customer.event.popular.label" /></a></div>
 						<div style="width:5px;"></div>
-						<div id="tab2" class="tab"><a href="javascript:void(0)" onclick="javascript:listFeaturedProducts()"><g:message code="customer.event.featured.label" /></a></div>
+						<div id="tab2" class="tab"><a href="javascript:void(0)" onclick="javascript:listFeaturedProducts()"><g:message locale="${lang}" code="customer.event.featured.label" /></a></div>
 						<div style="width:5px;"></div>
-						<div id="tab3" class="tab"><a href="javascript:void(0)" onclick="javascript:listLatestProducts('3')"><g:message code="customer.event.latest.label" /></a></div>
+						<div id="tab3" class="tab"><a href="javascript:void(0)" onclick="javascript:listLatestProducts('3')"><g:message locale="${lang}" code="customer.event.latest.label" /></a></div>
 						<div style="width:5px;"></div>
 					</div>
 				</div>
@@ -119,7 +120,7 @@
 	
 	<!---------------------------------------------------------------------------------------------------->
 	<div id="footer">
-		<p><g:message code="customer.event.copyright.label" /></p>
+		<p><g:message locale="${lang}" code="customer.event.copyright.label" /></p>
 		<div class="clear"></div>
 	</div>
 </body>
