@@ -66,7 +66,7 @@
 			<div class="spacer-small"></div>
 			<div class="newLine">
 				<div class="variations-full">
-					<input id="categoryVariationValues" autofocus type="text" name="variation.values" placeholder="<g:message locale="${lang}" code="category.variations.values.placeholder"/>"/>
+					<input id="categoryVariationValues" autofocus type="text" name="variation.values" pattern="[^_]+" placeholder="<g:message locale="${lang}" code="category.variations.values.placeholder"/>"/>
 				</div>
 			</div>
 			<div id="categoryVariationsEditDiv">

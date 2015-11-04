@@ -243,6 +243,7 @@ function categoryVariationsPageInitFields(variationId, isCreate){
 
 function categoryVariationsValidateForm(){
     if ($("#categoryVariationName").val() == "") {
+        $("#categoryVariationName").focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : fieldsRequiredMessageLabel,
@@ -251,7 +252,18 @@ function categoryVariationsValidateForm(){
         });
         return false;
     }
-    if($("#categoryVariationValues").val().indexOf(",,") > 0){
+    if (!$("#categoryVariationValues")[0].checkValidity()) {
+        $('#categoryVariationValues').focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : variationsValueNotAllowedErrorLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if($("#categoryVariationValues").val().indexOf(",,") >= 0){
+        $('#categoryVariationValues').focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : variationsEmptyValueErrorLabel,

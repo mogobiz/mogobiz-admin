@@ -276,6 +276,7 @@
             var variationsUniqueErrorLabel = "${message(code: 'variations.error.unique.label')}";
             var variationsMaximumErrorLabel = "${message(code: 'variations.error.maximum.label')}";
             var variationsEmptyValueErrorLabel = "${message(code: 'variations.error.emptyValue.label')}";
+            var variationsValueNotAllowedErrorLabel = "${message(code: 'variations.error.notAllowed.label')}";
             var variationsTranslationErrorLabel = "${message(code: 'variations.error.translation.label')}";
             var variationsReferenceErrorLabel = "${message(code: 'variations.error.reference.label')}";
             var variationsResourceErrorLabel = "${message(code: 'variations.error.invalidResource.label')}";
