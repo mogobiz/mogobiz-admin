@@ -180,6 +180,18 @@ class SecurityFilters {
             }
         }
 
+        /**
+         * Seller password acl
+         */
+        sellerPassword(controller: "sellerPassword", action: "resendPassword") {
+            before = {
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+
         sellerRenewPassword(controller: "sellerPassword", action: "renewPassword") {
             before = {
                 accessControl(auth: true) {

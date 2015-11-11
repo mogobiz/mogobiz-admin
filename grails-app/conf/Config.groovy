@@ -391,8 +391,6 @@ roles = org.apache.shiro.web.filter.authz.RolesAuthorizationFilter
 /js/**=anon
 /site/**=anon
 /plugins/**=anon
-/services/acquisition=anon
-/services/utiliserPack=anon
 /resource/display/**=anon
 /country/**=anon
 /geolocalisationService/obtenirCarteOfPack=anon
@@ -431,7 +429,8 @@ roles = org.apache.shiro.web.filter.authz.RolesAuthorizationFilter
 /OAuth/**=anon
 /resource/**=anon
 /twitter/**=anon
-
+/sellerPassword/isValidPassword=anon
+/sellerPassword/resendPassword=anon
 #by default all other resources needed an authentication
 /**=authcBasic
 """
