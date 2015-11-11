@@ -116,6 +116,15 @@ grails {
     }
 }
 
+password {
+//    policy = "(?=.{8,})"   +     // "" followed by 8+ symbols
+//            "(?=.*[a-z])" +     // --- ' ' --- at least 1 lower
+//            "(?=.*[A-Z])" +     // --- ' ' --- at least 1 upper
+//            "(?=.*[0-9])" +     // --- ' ' --- at least 1 digit
+//            "(?=.*\\p{Punct})"+ // --- ' ' --- at least 1 symbol
+//            ".*"
+    policy = '(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*'
+}
 // email confirmation
 emailConfirmation {
     from = 'mogobiz@gmail.com'
