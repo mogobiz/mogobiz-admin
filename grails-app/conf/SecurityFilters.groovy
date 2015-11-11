@@ -168,6 +168,29 @@ class SecurityFilters {
             afterView = {
             }
         }
+        /**
+         * Seller password acl
+         */
+        sellerPassword(controller: "sellerPassword", action: "isValidPassword") {
+            before = {
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+
+        sellerRenewPassword(controller: "sellerPassword", action: "renewPassword") {
+            before = {
+                accessControl(auth: true) {
+                    (role(RoleName.ADMINISTRATOR.name()) || role(RoleName.PARTNER.name()))
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
 
 
         partner(controller: "partner", action: "*") {
