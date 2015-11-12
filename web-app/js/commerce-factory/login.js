@@ -54,4 +54,25 @@ $(function() {
 			$('#passwordSection').addClass('filled');
 		}
 	}, 100);
+
+    $('#email').focus(function() {
+        $('#emailSection').addClass('focused');
+    }).blur(function() {
+        $('#emailSection').removeClass('focused');
+    }).keyup(function() {
+        if ($('#email').val() != '')
+            $('#emailSection').addClass('filled');
+        else
+            $('#emailSection').removeClass('filled');
+    }).change(function() {
+        if ($('#email').val() != '')
+            $('#emailSection').addClass('filled');
+        else
+            $('#emailSection').removeClass('filled');
+    });
 });
+
+function showHideResetPasswordForm(){
+    $("#signinSection").toggle();
+    $("#resetPasswordSection").toggle();
+}

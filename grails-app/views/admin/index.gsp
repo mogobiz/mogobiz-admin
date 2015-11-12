@@ -180,6 +180,13 @@
             var companySellersTitleAddLabel = "${message(code: 'company.sellers.add.title')}";
             var companySellersTitleEditLabel = "${message(code: 'company.sellers.edit.title')}";
 
+            //----- Profile -----//
+            var profilePageUrl = "${resource(dir: 'user', file: '_profile.gsp')}";
+            var profilePasswordPageUrl = "${resource(dir: 'user', file: '_changePassword.gsp')}";
+
+            var profilePasswordPageTitle = "${message(code: 'company.sellers.add.title')}";
+            var profilePasswordDontMatchError = "${message(code: 'company.sellers.pass')}";
+
             // Shipping
             var shippingPolicyShowUrl = "${createLink(controller: 'companyShippingPolicy', action:'show')}";
             var shippingPolicyUpdateUrl = "${createLink(controller: 'companyShippingPolicy', action:'update')}";
@@ -231,7 +238,7 @@
         <content tag="header">
         <!-- header -->
         <div id="logo">
-            <img src="${resource(dir:'images',file:'ebiznext_logo.png')}" />
+            <img src="${resource(dir:'images',file:'logo.png')}" />
         </div>
         <jsec:isLoggedIn>
             <div id="user" align="right">
@@ -268,6 +275,7 @@
         <div id="companySellersDialog"></div>
         <div id="taxRateDialog"></div>
         <div id="shippingRuleDialog"></div>
+        <div id="userChangePasswordDialog"></div>
         <content tag="footer">
         <!-- footer -->
         <g:render template="/layouts/footer" />

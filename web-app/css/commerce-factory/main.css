@@ -214,7 +214,7 @@ div.mainContent {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 
 }
-#chekDiv {
+#chekDiv, #resetPassBtnDiv {
     text-align: right;
 }
 .sIHeader {
@@ -276,7 +276,7 @@ div.mainContent {
     font-family: Arial;
     font-size: large;
 }
-#signinSection .sIHeader h1 {
+#signinSection .sIHeader h1, #resetPasswordSection .sIHeader h1 {
     color: #333333;
     font-family: tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 24px;
@@ -316,7 +316,7 @@ table.form td {
 
 }
 
-#signinSection {
+#signinSection, #resetPasswordSection {
     border-right: 1px solid #dedede;
     color: #333333;
     padding-left: 60px;
@@ -324,7 +324,7 @@ table.form td {
     width: 400px;
 }
 
-#signinSection #login-form input{
+#signinSection #login-form input, #resetPasswordSection #reset-form input{
     position:relative;
     z-index:2;
     left:0;
@@ -350,7 +350,7 @@ table.form td {
     transition:all .1s linear;
 }
 
-#signinSection #login-form label{
+#signinSection #login-form label, #resetPasswordSection #reset-form label{
     cursor:text;
     z-index:1;
     position:absolute;
@@ -364,37 +364,22 @@ table.form td {
     transition:opacity .1s linear;
 }
 
-#signinSection #login-form div{
+#signinSection #login-form div, #resetPasswordSection #reset-form div{
     width:364px;
 }
 
-#signinSection #login-form #usernameSection.focused label{
+#signinSection #login-form #usernameSection.focused label, #signinSection #login-form #passwordSection.focused label, #resetPasswordSection #reset-form #emailSection.focused label{
     opacity:.5
 }
 
-#signinSection #login-form #passwordSection.focused label{
-    opacity:.5
-}
-
-#signinSection #login-form #usernameSection.focused{
+#signinSection #login-form #usernameSection.focused, #signinSection #login-form #passwordSection.focused, #resetPasswordSection #reset-form #emailSection.focused{
     -moz-box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
     -webkit-box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
     box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
     width: 344px !important;
 }
 
-#signinSection #login-form #passwordSection.focused{
-    -moz-box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
-    -webkit-box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
-    box-shadow:0 1px 3px rgba(0,0,0,.3) inset,0px 0 5px #43bfe3;
-    width: 344px !important;
-}
-
-#signinSection #login-form #usernameSection.filled label{
-    opacity:0
-}
-
-#signinSection #login-form #passwordSection.filled label{
+#signinSection #login-form #usernameSection.filled label, #signinSection #login-form #passwordSection.filled label, #resetPasswordSection #reset-form #emailSection.filled label{
     opacity:0
 }
 
@@ -431,7 +416,7 @@ select option {
     padding: 0 10px;
 }
 
-#chekDiv .extraWideButton {
+#chekDiv .extraWideButton, #resetPassBtnDiv .extraWideButton {
     padding-left: 10px !important;
     padding-right: 10px !important;
     background-color:   #39f;
@@ -444,6 +429,12 @@ select option {
     padding-top: 4px;
     padding-bottom: 4px;
 
+}
+
+#chekDiv .resetLink {
+    float: left;
+    margin-top: 9px;
+    text-decoration: underline;
 }
 
 table.form label {

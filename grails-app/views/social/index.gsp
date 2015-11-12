@@ -26,7 +26,7 @@
     <div id="header" class="group">
         <!-- header -->
         <div id="logo" style="float:left;">
-            <img src="${resource(dir: 'images', file: 'ebiznext_logo.png')}"/>
+            <img src="${resource(dir: 'images', file: 'logo.png')}"/>
         </div>
 
         <div id="backBtnDiv" style="float: right;">

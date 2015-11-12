@@ -62,12 +62,24 @@ var StateType = {
     DELETED : 'deleted'
 };
 
-function partnerGetAdminPage(partnerId) {
-    $('#editCompanyTabs').remove();
+function partnerGetProfilePage() {
+    $("#editCompanyTabs, #editUserProfile").remove();
+    $.get(
+        profilePageUrl,
+        function(responseText) {
+            responseText = jQuery.trim(responseText);
+            $(responseText).appendTo(document.body);
+            userProfileGetDetails(partnerUserId);
+        }, "html"
+    );
+}
+
+function partnerGetAdminPage() {
+    $("#editCompanyTabs, #editUserProfile").remove();
     companyHashTable = [];
     companyTagsPageOffset = 0;
     companyIBeaconPageOffset = 0;
-    compGetUserPermission(sellerCompanyId, sellerCompanyCode, partnerId);
+    compGetUserPermission(sellerCompanyId, sellerCompanyCode, partnerUserId);
 }
 
 function partnerGetAllUserCompanies(){
@@ -103,11 +115,13 @@ function partnerChangeActiveCompany(companyCode){
         success : function(response, status) {
             addUserMenuList();
             addCatalogMenuList();
-            sellerCompanyCode = companyCode;
+            sellerCompanyId = response.company.id;
+            sellerCompanyCode = response.company.code;
+            sellerCompanyMapProvider = response.company.mapProvider;
             categorySelectedId = null;
             catalogSelectedId = null;
             partnerActiveCompanyChanged = false;
-            $("#active_company_div").html(companyCode);
+            $("#active_company_div").html(sellerCompanyCode);
             if($("#editCompanyTabs").is(":visible")) {
                 partnerGetAdminPage(partnerSellerId);
                 partnerActiveCompanyChanged = true;
@@ -126,7 +140,6 @@ function partnerChangeActiveCompany(companyCode){
 function addUserMenuList(){
     $.get(
         userMenuListPageUrl,
-        "partnerId=" + partnerUserId,
         function (htmlresponse) {
             htmlresponse = jQuery.trim(htmlresponse);
             $("#userMenuList").empty().html(htmlresponse);

@@ -73,21 +73,22 @@ function companySellersGetAllSellers(compId, partnerId) {
 				id: "name",
 				name: companySellers_nameLabel,
 				field: "id",
-				width: 40,
+				width: 25,
 				resizable: true,
 				formatter: companySellersNameCellFormatter,
 				sortable: false
 			},{
-				id: "email",
-				name: companySellers_emailLabel,
-				field: "email",
-				width: 40,
-				resizable: true
+				id: "profiles",
+				name: companySellers_profilesLabel,
+				field: "profiles",
+				width: 65,
+				resizable: true,
+                formatter: companySellersProfilesCellFormatter
 			},{
 				id: "active",
 				name: companySellers_activeLabel,
 				field: "active",
-				width: 20,
+				width: 10,
 				resizable: true,
 				formatter: companySellersActiveCellFormatter
 			}
@@ -129,6 +130,18 @@ function companySellersNameCellFormatter(row, cell, value, columnDef, dataContex
 	if (value == null || value === "")
 		return "";
 	return "<a href='javascript:void(0)' onclick='companySellersGetDetails(" + dataContext.companyId + "," + dataContext.sellerId + ", " + false + ");'>" + dataContext.firstName + " " + dataContext.lastName + "</a>";
+}
+
+function companySellersProfilesCellFormatter(row, cell, value, columnDef, dataContext) {
+	var profilesStr = "";
+	var profiles = dataContext.profiles;
+	for(var i = 0 ; i < profiles.length; i++) {
+        if (profiles[i].company.id == dataContext.companyId) {
+            profilesStr += profilesStr != "" ? ", " : "";
+            profilesStr += profiles[i].name;
+        }
+    }
+	return profilesStr;
 }
 
 function companySellersActiveCellFormatter(row, cell, value, columnDef, dataContext) {
@@ -361,13 +374,13 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 
 function companySellersValidateForm(isCreate) {
 	if($("#sellerFirstName").val() == "") {
-		$("#formSeller #sellerFirstName").focus();
-		jQuery.noticeAdd({
-			stayTime : 2000,
-			text : companySellersErrors_requiredFirstNameLabel,
-			stay : false,
-			type : "error"
-		});
+        $("#formSeller #sellerFirstName").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companySellersErrors_requiredFirstNameLabel,
+            stay : false,
+            type : "error"
+        });
 		return false;
 	}
 

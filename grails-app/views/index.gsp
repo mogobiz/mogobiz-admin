@@ -97,19 +97,14 @@
 
         <g:javascript src="${env}/application.js"/>
         <g:javascript src="${env}/main.js"/>
-
-        <script type="text/javascript">
-        $(document).ready(function() {
-        	$("#inner-content").hide();
-		});
-        </script>
         <!-- agile carousel -->
+        <style>#inner-content{display: none;}</style>
    </head>
     <body>
 <content tag="header">
 <!-- header -->
 <div id="logo" style="float:left;">
-	<img src="${resource(dir:'images',file:'ebiznext_logo.png')}" />
+	<img src="${resource(dir:'images',file:'logo.png')}" />
 </div>
 <br/>
 <div align="right">

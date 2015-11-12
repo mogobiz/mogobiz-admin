@@ -291,7 +291,36 @@ function compGetUserPermission(compId, companyCode, partnerId){
         cache: false,
         async: true,
         success: function (response, status) {
-           compObjGetEditCompanyPage(compId, companyCode, partnerId);
+            if(partnerId) {
+                for(var i = 0 ; i < response.length; i++) {
+                    if(response[i].target == "company:" + compId + ":admin") {
+                        compObjGetEditCompanyPage(compId, companyCode, partnerId);
+                        return;
+                    }
+                }
+                if (categorySelectedId) {
+                    categoryGeneralGetInfo();
+                }
+                if (partnerActiveCompanyChanged) {
+                    partnerActiveCompanyChanged = false;
+                    $("#createProductMenu").detach().prependTo(document.body).hide();
+                    $("#categoryTree").empty();
+                    $("#categoryDetails").empty();
+                    catalogueLoadList();
+                }
+                $("#items").empty().hide(); // show catalog tree
+                $("#categoriesMain").show();
+
+                if ($("#catalogTabs").is(":visible")) {
+                    catalogGetEsEnvList();
+                }
+                if ($("#catalogGeneralDiv").is(":visible")) {
+                    catalogResetRunningInterval();
+                }
+            }
+            else{
+                compObjGetEditCompanyPage(compId, companyCode, false);
+            }
         }
     });
 }

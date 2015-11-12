@@ -478,3 +478,16 @@ hr.spacer {
 	border: 0px;
 	width: 100%;
 }
+
+/* User Profile */
+#userProfileForm{
+    display: none;
+}
+
+#userProfileForm .userProfile-large, #profileChangePassword .userProfile-large{
+    width: 100%;
+}
+
+#userProfileForm .userProfile-large input, #profileChangePassword .userProfile-large input{
+    width: 95%;
+}

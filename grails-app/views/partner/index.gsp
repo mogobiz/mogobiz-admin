@@ -157,6 +157,7 @@
     <g:javascript src="${env}/catalog.js"/>
     <g:javascript src="${env}/category.js"/>
     <g:javascript src="${env}/partner.js"/>
+    <g:javascript src="${env}/userProfile.js"/>
     <g:javascript src="${env}/brand.js"/>
 
     <g:javascript src="${env}/catalogProducts.js"/>
@@ -381,6 +382,16 @@
 
             var BrandPageUrl = "${resource(dir: 'partner', file: '_brand.gsp')}";
 
+            //----- Profile -----//
+            var profileChangePasswordUrl = "${createLink(controller: 'sellerPassword', action: 'renewPassword')}";
+            var profilePageUrl = "${resource(dir: 'user', file: '_profile.gsp')}";
+            var profilePasswordPageUrl = "${resource(dir: 'user', file: '_changePassword.gsp')}";
+
+            var profilePasswordPageTitle = "${message(code: 'company.sellers.changePassword.title')}";
+            var profilePasswordDontMatchError = "${message(code: 'company.sellers.errors.passwordDontMatch.message')}";
+            var profilePasswordIncorrectError = "${message(code: 'company.sellers.errors.incorrectPassword.message')}";
+            var profilePasswordIncorrectOldError = "${message(code: 'company.sellers.errors.incorrectOldPassword.message')}";
+
             //----- Company -----//
             var companyPageUrl = "${createLink(controller: 'company', action: 'initDisplayCompany')}";
 
@@ -600,7 +611,7 @@
 <content tag="header">
     <!-- header -->
     <div id="logo" style="float:left;">
-        <img src="${resource(dir: 'images', file: 'ebiznext_logo.png')}"/>
+        <img src="${resource(dir: 'images', file: 'logo.png')}"/>
     </div>
     <jsec:isLoggedIn>
         <div id="user" align="right">
@@ -729,6 +740,8 @@
 <div id="companyPublishingDialog"></div>
 
 <div id="companyIBeaconDialog"></div>
+
+<div id="userChangePasswordDialog"></div>
 <content tag="footer">
     <!-- footer -->
     <g:render template="/layouts/footer"/>

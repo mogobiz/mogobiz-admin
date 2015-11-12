@@ -82,34 +82,61 @@
 									%{--</div>--}%
 								</div>
 								<br>
-									<div class="sIHeader">
-										%{--<h1>--}%
-											%{--<g:message locale="${lang}" code="logIn.headerForm.label" />--}%
-										%{--</h1>--}%
-									</div>
-									<div>
-										<g:form controller="auth" action="signIn" name="login-form">
-											<g:hiddenField name="targetUri" value="${params.targetUri}" />
-											<div id="usernameSection" class="newline">
-												<label><g:message locale="${lang}" code="logIn.Email.label" /></label>
-												<g:textField name="username" value="${params.username}" />
-											</div>
-											<div class="spacer"></div>
-											<div id="passwordSection" class="newline">
-												<label><g:message locale="${lang}" code="logIn.Password.label" /></label>
-												<g:passwordField name="password" />
-											</div>
-											<div class="spacer"></div>
-											<div class="spacer"></div>
-											<div class="newline" id="chekDiv">
-												<button class="extraWideButton" id="login" name="submit"
-													type="submit" style="cursor: pointer">
-													<span style="font-size: large;"><g:message
-															code="logIn.Connexion.label" /></span>
-												</button>
-											</div>
-										</g:form>
-									</div>
+                                <div class="sIHeader">
+                                    %{--<h1>--}%
+                                        %{--<g:message locale="${lang}" code="logIn.headerForm.label" />--}%
+                                    %{--</h1>--}%
+                                </div>
+                                <div>
+                                    <g:form controller="auth" action="signIn" name="login-form">
+                                        <g:hiddenField name="targetUri" value="${params.targetUri}" />
+                                        <div id="usernameSection" class="newline">
+                                            <label><g:message locale="${lang}" code="logIn.Email.label" /></label>
+                                            <g:textField name="username" value="${params.username}" />
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div id="passwordSection" class="newline">
+                                            <label><g:message locale="${lang}" code="logIn.Password.label" /></label>
+                                            <g:passwordField name="password" />
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="spacer"></div>
+                                        <div class="newline" id="chekDiv">
+                                            <a href="javascript:void(0)" onclick="showHideResetPasswordForm()" class="resetLink"><g:message locale="${lang}" code="logIn.forgetPass.label" /></a>
+                                            <button class="extraWideButton" id="login" name="submit" type="submit" style="cursor: pointer">
+                                                <span style="font-size: large;"><g:message locale="${lang}" code="logIn.Connexion.label" /></span>
+                                            </button>
+                                        </div>
+                                    </g:form>
+                                </div>
+							</div>
+						</div>
+						<div id="resetPasswordSection" class="extraPadded" style="display:none">
+							<div class="sIHeader">
+								<h1>
+									<g:message locale="${lang}" code="logIn.reset.title" />
+								</h1>
+							</div>
+							<div class="sIBody">
+								<br>
+                                <div>
+                                    <g:form controller="sellerPassword" action="resendPassword" name="reset-form">
+                                        <div id="emailSection" class="newline">
+                                            <label><g:message locale="${lang}" code="logIn.Email.label" /></label>
+                                            <g:textField name="email" value="" />
+                                        </div>
+                                        <div class="spacer"></div>
+                                        <div class="spacer"></div>
+                                        <div class="newline" id="resetPassBtnDiv">
+                                            <button class="extraWideButton" type="button" onclick="showHideResetPasswordForm()" style="cursor: pointer; float:left; font-weight: normal;">
+                                                <span style="font-size: large;"><g:message locale="${lang}" code="default.button.cancel.label" /></span>
+                                            </button>
+                                            <button class="extraWideButton" id="reset" name="submit" type="submit" style="cursor: pointer">
+                                                <span style="font-size: large;"><g:message locale="${lang}" code="logIn.reset.label" /></span>
+                                            </button>
+                                        </div>
+                                    </g:form>
+                                </div>
 							</div>
 						</div>
 					</td>

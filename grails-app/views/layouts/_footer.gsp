@@ -1,1 +1,1 @@
-&copy; ebiznext
+&copy; mogobiz

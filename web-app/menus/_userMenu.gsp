@@ -2,9 +2,10 @@
 <%@ page import="com.mogobiz.utils.PermissionType" %>
 
 <ul class="subnav" style="display:none;">
+    <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)" onclick="partnerGetProfilePage();"><g:message locale="${lang}" code="seller.profile.link"/></a></li>
     <store:hasPermission permission="${PermissionType.ADMIN_COMPANY.key}">
         <li onclick="hideUsernameSubnav();"><a href="javascript:void(0)"
-                                               onclick="partnerGetAdminPage(${params?.partnerId});"><g:message
+                                               onclick="partnerGetAdminPage();"><g:message
                     locale="${lang}" code="seller.admin.link"/></a></li>
     </store:hasPermission>
     %{--

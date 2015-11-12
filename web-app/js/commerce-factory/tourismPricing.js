@@ -77,11 +77,11 @@ function tourismPricingLoadPricings(productId) {
                     'variation2' : (response[i].variation2) ? response[i].variation2.id : null,
                     'variation3' : (response[i].variation3) ? response[i].variation3.id : null,
                     'cost' : (response[i].price / 100),
-                    'stock' : (!response[i].stock || response[i].stock.stockUnlimited) ? "Unlimited" : response[i].stock.stock,
+                    'stock' : (!response[i].stock || response[i].stock.stockUnlimited) ? defaultUnlimitedLabel : response[i].stock.stock,
                     'stockUnlimited' : (!response[i].stock) ? true : response[i].stock.stockUnlimited,
                     'stockOutSelling' : (!response[i].stock) ? false : response[i].stock.stockOutSelling,
-                    'minOrder' : (response[i].minOrder >= 0) ? response[i].minOrder : 'Unlimited',
-                    'maxOrder' : (response[i].maxOrder >= 0) ? response[i].maxOrder : 'Unlimited',
+                    'minOrder' : (response[i].minOrder >= 0) ? response[i].minOrder : defaultUnlimitedLabel,
+                    'maxOrder' : (response[i].maxOrder >= 0) ? response[i].maxOrder : defaultUnlimitedLabel,
                     'startDate' : (response[i].startDate ? response[i].startDate.split(' ')[0] : ""),
                     'stopDate' : (response[i].stopDate ? response[i].stopDate.split(' ')[0]: ""),
                     'availabilityDate' : (response[i].availabilityDate ? response[i].availabilityDate.split(' ')[0]: ""),
@@ -147,6 +147,8 @@ function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataCont
 }
 
 function tourismPricingStockCellFormatter(row, cell, value, columnDef, dataContext) {
+    if(value == defaultUnlimitedLabel)
+        return defaultUnlimitedLabel;
     return (value - dataContext.nbSales) + " / " + value;
 }
 
@@ -400,7 +402,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         var data = tourismPricingGetDataRowByTicketId(ticketId);
         $("#tourismPricingNumberOfSales").show();
         $("#tourismPricingSold").html(data.nbSales);
-        $("#tourismPricingRemaining").html(data.stock - data.nbSales);
+        $("#tourismPricingRemaining").html(data.stock == defaultUnlimitedLabel ? defaultUnlimitedLabel : (data.stock - data.nbSales));
         $("#tourismPricingTicketStock").attr("min", data.nbSales);
         $("#tourismPricingId").val(data.ticketId);
         $("#tourismPricingSKU").val(data.sku);
@@ -438,8 +440,8 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingVariation3").val(data.variation3);
         $("#tourismPricingTicketPrice").val(data.cost);
         $("#tourismPricingTicketStock").val(data.stock);
-        $("#tourismPricingMinOrder").val((data.minOrder == "Unlimited") ? "" : data.minOrder);
-        $("#tourismPricingMaxOrder").val((data.maxOrder == "Unlimited") ? "" : data.maxOrder);
+        $("#tourismPricingMinOrder").val((data.minOrder == defaultUnlimitedLabel) ? "" : data.minOrder);
+        $("#tourismPricingMaxOrder").val((data.maxOrder == defaultUnlimitedLabel) ? "" : data.maxOrder);
         $("#tourismPricingStartDate").val("");
         $("#tourismPricingEndDate").val("");
         if (data.startDate) {
