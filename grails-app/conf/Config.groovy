@@ -431,6 +431,7 @@ roles = org.apache.shiro.web.filter.authz.RolesAuthorizationFilter
 /twitter/**=anon
 /sellerPassword/isValidPassword=anon
 /sellerPassword/resendPassword=anon
+/sellerPassword/resendPasswordConfirmation=anon
 #by default all other resources needed an authentication
 /**=authcBasic
 """
