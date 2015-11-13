@@ -275,6 +275,14 @@ function productAttachEditForm(productId, fromPage) {
             });
 
 // Fill Pricing Tab Fields
+            $("#productTaxRate").empty().multiselect("destroy");
+            $("#productTaxRate").unbind().multiselect({
+                header : false,
+                multiple : false,
+                noneSelectedText : multiselectNoneSelectedTextLabel,
+                minWidth : 130,
+                selectedList : 1
+            });
             tourismProductLoadTaxList(product);
             if (product.stockDisplay) {
                 $('#globalstockDisplay').prop("checked", true);
