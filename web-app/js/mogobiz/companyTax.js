@@ -489,7 +489,11 @@ function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
         for(var i = 0; i < countries.length; i++){
             $("#localTaxRateCountry").append("<option value='" + countries[i].code + "'>" + countries[i].name + "</option>");
         }
-        $("#localTaxRateCountry").multiselect("refresh").unbind().bind("multiselectclick", function(event, ui){companyTaxLocalGetCountryStates(ui.value)})
+        $("#localTaxRateCountry").multiselect("refresh").unbind().bind("multiselectclick", function(event, ui){
+            if(ui.value == $("#localTaxRateCountry").val())
+                return;
+            companyTaxLocalGetCountryStates(ui.value)
+        });
     }
     else{
         var localTaxRate = null;
@@ -556,6 +560,7 @@ function companyTaxLocalGetCountryStates(countryCode){
 }
 
 function companyTaxLocalFillStateCombo(countryCode){
+    $("#localTaxRateState").empty();
     var states = taxRateLocalCountryStates[countryCode];
     for (var i = 0; i < states.length; i++) {
         if(!companyTaxLocalExistCountryAndStateInGrid(countryCode, states[i].code))

@@ -123,7 +123,7 @@ function partnerChangeActiveCompany(companyCode){
             partnerActiveCompanyChanged = false;
             $("#active_company_div").html(sellerCompanyCode);
             if($("#editCompanyTabs").is(":visible")) {
-                partnerGetAdminPage(partnerSellerId);
+                partnerGetAdminPage();
                 partnerActiveCompanyChanged = true;
             }
             else{
