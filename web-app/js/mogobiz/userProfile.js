@@ -8,6 +8,14 @@ function userProfileGetDetails(sellerId){
         cache : false,
         async : true,
         success : function(response, status) {
+            var profilesStr = "";
+            var profiles = response.profiles;
+            for(var i = 0 ; i < profiles.length; i++) {
+                if (profiles[i].company.id == sellerCompanyId) {
+                    profilesStr += profilesStr != "" ? ", " : "";
+                    profilesStr += profiles[i].name;
+                }
+            }
             $("#categoriesMain").hide();
             $("#items").show().empty().hideLoading();
             $("#searchForm").hide();
@@ -16,7 +24,7 @@ function userProfileGetDetails(sellerId){
             $("#userProfileLastName").val(response.lastName);
             $("#userProfileEmail").val(response.email);
             $("#userProfileCompanies").val(response.companies.join(", "));
-            $("#userProfileProfiles").val($.map(response.profiles, function(obj){return obj.name}).join(", "));
+            $("#userProfileProfiles").val(profilesStr);
             $("#userProfileCloseBtn").unbind().click(function() {
                 if(categorySelectedId){
                     categoryGeneralGetInfo();
@@ -138,7 +146,7 @@ function userProfileChangePassword(sellerId){
         success : function(response, status) {
             $("#userChangePasswordDialog").dialog("close");
         },
-        error: function(response, status) {console.log(response)
+        error: function(response, status) {
             if(response.status == 400){
                 jQuery.noticeAdd({
                     stayTime : 4000,

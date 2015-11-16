@@ -804,5 +804,5 @@ function poiTranslationDrawAll(poiId){
 			$("#poiTranslationDiv").hide();
 		$("#categoriesMain").hideLoading();
 	};
-	translationGetAllData("poi", poiId", successCallback);
+	translationGetAllData("poi", poiId, successCallback);
 }
