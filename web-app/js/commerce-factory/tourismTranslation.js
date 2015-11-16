@@ -26,6 +26,6 @@ function tourismTranslationDrawAll(productId){
 		}
 		tourismTranslationGrid = translationGetGrid("tourismTranslationGrid", productId, fields, columns, data);
 		$("#categoriesMain").hideLoading();
-	}
-	translationGetAllData(productId, successCallback);
+	};
+	translationGetAllData("product", productId, successCallback);
 }

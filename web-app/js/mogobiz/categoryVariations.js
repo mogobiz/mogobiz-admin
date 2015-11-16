@@ -616,8 +616,8 @@ function categoryVariationTranslationDrawAll(variationId){
         if(! tabVisible)
             $("#categoryVariationsTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(variationId, successCallback);
+    };
+    translationGetAllData("categoryVariation", variationId, successCallback);
 }
 
 function categoryVariationCheckTranslationValues(e){

@@ -512,6 +512,6 @@ function companyBrandsTranslationDrawAll(brandId){
         if(! tabVisible)
             $("#companyBrandsTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(brandId, successCallback);
+    };
+    translationGetAllData("companyBrands", brandId, successCallback);
 }

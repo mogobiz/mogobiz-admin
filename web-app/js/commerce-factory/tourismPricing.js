@@ -864,6 +864,6 @@ function tourismPricingTranslationDrawAll(ticketId){
         if(! tabVisible)
             $("#tourismPricingTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(ticketId, successCallback);
+    };
+    translationGetAllData("ticketType", ticketId, successCallback);
 }

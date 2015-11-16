@@ -285,6 +285,6 @@ function tourismPropertiesTranslationDrawAll(propertyId){
         if(! tabVisible)
             $("#tourismPropertiesTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(propertyId, successCallback);
+    };
+    translationGetAllData("productProperties", propertyId, successCallback);
 }

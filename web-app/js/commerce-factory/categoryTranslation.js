@@ -38,6 +38,6 @@ function categoryTranslationDrawAll(){
 		if(categoryGeneralInfoLoaded && categoryVariationsListLoaded && categoryProductListLoaded && categoryFeatureListLoaded){
 			$("#categoriesMain").hideLoading();
 		}
-	}
-	translationGetAllData(categorySelectedId, successCallback);
+	};
+	translationGetAllData("categories", categorySelectedId, successCallback);
 }

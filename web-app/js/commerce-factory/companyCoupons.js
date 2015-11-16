@@ -790,8 +790,8 @@ function companyCouponsTranslationDrawAll(couponId){
         if(! tabVisible)
             $("#companyCouponsTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(couponId, successCallback);
+    };
+    translationGetAllData("companyCoupons", couponId, successCallback);
 }
 
 /**

@@ -407,6 +407,6 @@ function tourismFeaturesTranslationDrawAll(featureId){
 		if(! tabVisible)
 			$("#tourismFeaturesTranslationDiv").hide();
 		$("#categoriesMain").hideLoading();
-	}
-	translationGetAllData(featureId, successCallback);
+	};
+	translationGetAllData("productFeatures", featureId, successCallback);
 }

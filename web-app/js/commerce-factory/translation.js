@@ -1,18 +1,19 @@
-function translationGetAllData(targetId, successCallback){
-	var dataToSend = "target=" + targetId;
-	$.ajax({
-		url : listTranslationUrl,
-		type : "GET",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if(typeof(successCallback) == "function"){
-				successCallback.call(this, response);
-			}
-		}
-	});
+function translationGetAllData(type, targetId, successCallback){
+    var typeTranslation = translationGetRealType(type);
+    var dataToSend = "target=" + targetId + "&type=" + typeTranslation;
+    $.ajax({
+        url : listTranslationUrl,
+        type : "GET",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if(typeof(successCallback) == "function"){
+                successCallback.call(this, response);
+            }
+        }
+    });
 }
 
 function translationGetGrid(gridId, targetId, fields, columns, data){
@@ -79,7 +80,7 @@ function translationGetGrid(gridId, targetId, fields, columns, data){
 }
 
 function translationLanguageFormatter(row, cell, value, columnDef, dataContext){
-	return "<a href='javascript:void(0)' onclick='translationGetDeletePage(\"" + dataContext.translationType + "\",\"" + dataContext.targetId + "\",\"" + dataContext.lang + "\")'>" + value + "</a>";
+    return "<a href='javascript:void(0)' onclick='translationGetDeletePage(\"" + dataContext.translationType + "\",\"" + dataContext.targetId + "\",\"" + dataContext.lang + "\")'>" + value + "</a>";
 }
 
 function translationFieldFormatter(row, cell, value, columnDef, dataContext){
@@ -87,154 +88,142 @@ function translationFieldFormatter(row, cell, value, columnDef, dataContext){
 }
 
 function translationGetCreatePage(type, target, fields, data) {
-	$.get(
-		createTranslationPageUrl,
-		{},
-		function(responseText) {
-			responseText = jQuery.trim(responseText);
-			createTranslationPageSetup(responseText, type, target, fields, data);
-		},
-		"html"
-	);
+    $.get(
+        createTranslationPageUrl,
+        {},
+        function(responseText) {
+            responseText = jQuery.trim(responseText);
+            createTranslationPageSetup(responseText, type, target, fields, data);
+        },
+        "html"
+    );
 }
 
 function createTranslationPageSetup(responseText, type, target, fields, data){
-	if ($("#translationDialog").dialog( "isOpen" ) !== true) {
-		$("#translationDialog").empty();
-		$("#translationDialog").html(responseText);
-		
-		$("#translationDialog").dialog({
-			width : "300",
-			height : "190",
-			title : translationDialogTitleLabel,
-			resizable: false,
-			modal: true,
-			open: function(event) {
-				createTranslationPageInitFields();
-				$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
-				$(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
-				$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-				$(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
-			},
-			buttons : {
-				cancelLabel : function() {
-					$("#translationDialog").dialog("close");
-				},
-				createLabel : function() {
-					if (translationCreateValidateForm())
-						translationCreateTranslation(type, target, fields, data);
-				}
-			}
-		});
-	}
+    if ($("#translationDialog").dialog( "isOpen" ) !== true) {
+        $("#translationDialog").empty();
+        $("#translationDialog").html(responseText);
+
+        $("#translationDialog").dialog({
+            width : "300",
+            height : "190",
+            title : translationDialogTitleLabel,
+            resizable: false,
+            modal: true,
+            open: function(event) {
+                createTranslationPageInitFields();
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+                $(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+            },
+            buttons : {
+                cancelLabel : function() {
+                    $("#translationDialog").dialog("close");
+                },
+                createLabel : function() {
+                    if (translationCreateValidateForm())
+                        translationCreateTranslation(type, target, fields, data);
+                }
+            }
+        });
+    }
 }
 
 function createTranslationPageInitFields(){
-	var output = "";
-	for(var i = 0; i < translateLanguage.length; i++){
-		output += "<option " + "value='" + translateLanguage[i] + "'>" + translateLanguage[i] + "</option>";
-	}
-	$("#translationLanguageSelect").empty().html(output);
-	$('#translationLanguageSelect').multiselect({
-		header : false,
-		multiple : false,
-		noneSelectedText : multiselectNoneSelectedTextLabel,
-		minWidth : 150,
-		height: 60,
-		selectedList : 1
-	});
+    var output = "";
+    for(var i = 0; i < translateLanguage.length; i++){
+        output += "<option " + "value='" + translateLanguage[i] + "'>" + translateLanguage[i] + "</option>";
+    }
+    $("#translationLanguageSelect").empty().html(output);
+    $('#translationLanguageSelect').multiselect({
+        header : false,
+        multiple : false,
+        noneSelectedText : multiselectNoneSelectedTextLabel,
+        minWidth : 150,
+        height: 60,
+        selectedList : 1
+    });
 }
 
 function translationCreateValidateForm(){
-	if($("#translationLanguageSelect").val() == "" || $("#translationLanguageSelect").val() == null){
-		jQuery.noticeAdd({
-			stayTime : 2000,
-			text : fieldsRequiredMessageLabel,
-			stay : false,
-			type : "error"
-		});
-		return false;
-	}
-	return true;
+    if($("#translationLanguageSelect").val() == "" || $("#translationLanguageSelect").val() == null){
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsRequiredMessageLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    return true;
 }
 
 function translationCreateTranslation(type, target, fields, data){
-	var callback = null;
-	var typeTranslation = "";
-	switch(type){
-	case "categories":
-        typeTranslation = "CATEGORY";
-		callback = function(){categoryTranslationDrawAll();};
-		break;
-    case "productProperties":
-        typeTranslation = "FEATURE";
-        callback = function(){tourismPropertiesTranslationDrawAll(target);};
-        break;
-    case "productFeatures":
-        typeTranslation = "FEATURE";
-        callback = function(){tourismFeaturesTranslationDrawAll(target);};
-        break;
-	case "categoryFeatures":
-        typeTranslation = "FEATURE";
-		callback = function(){categoryFeaturesTranslationDrawAll(target);};
-		break;
-	case "catalog":
-        typeTranslation = "CATALOG";
-		callback = function(){catalogTranslationDrawAll();};
-		break;
-	case "categoryVariation":
-        typeTranslation = "VARIATION";
-		callback = function(){categoryVariationCreateTranslationValues($("#translationLanguageSelect").val(), target);};
-		break;
-	case "product":
-        typeTranslation = "PRODUCT";
-		callback = function(){tourismTranslationDrawAll(target);};
-		break;
-	case "ticketType":
-        typeTranslation = "TICKET_TYPE";
-		callback = function(){tourismPricingTranslationDrawAll(target);};
-		break;
-	case "poi":
-        typeTranslation = "POI";
-		callback = function(){poiTranslationDrawAll(target);};
-		break;
-    case "companyBrands":
-         typeTranslation = "BRAND";
-         callback = function(){companyBrandsTranslationDrawAll(target);};
-         break;
-    case "productBrands":
-         typeTranslation = "BRAND";
-         callback = function(){productBrandsTranslationDrawAll(target);};
-         break;
-    case "companyCoupons":
-        typeTranslation = "COUPON";
-        callback = function(){companyCouponsTranslationDrawAll(target);};
-        break;
-	default:
-		break;
-	}
+    var callback = null;
+    var typeTranslation = translationGetRealType(type);
+    switch(type){
+        case "categories":
+            callback = function(){categoryTranslationDrawAll();};
+            break;
+        case "productProperties":
+            callback = function(){tourismPropertiesTranslationDrawAll(target);};
+            break;
+        case "productFeatures":
+            callback = function(){tourismFeaturesTranslationDrawAll(target);};
+            break;
+        case "categoryFeatures":
+            callback = function(){categoryFeaturesTranslationDrawAll(target);};
+            break;
+        case "catalog":
+            callback = function(){catalogTranslationDrawAll();};
+            break;
+        case "categoryVariation":
+            callback = function(){categoryVariationCreateTranslationValues($("#translationLanguageSelect").val(), target);};
+            break;
+        case "product":
+            callback = function(){tourismTranslationDrawAll(target);};
+            break;
+        case "ticketType":
+            callback = function(){tourismPricingTranslationDrawAll(target);};
+            break;
+        case "poi":
+            callback = function(){poiTranslationDrawAll(target);};
+            break;
+        case "companyBrands":
+            callback = function(){companyBrandsTranslationDrawAll(target);};
+            break;
+        case "productBrands":
+            callback = function(){productBrandsTranslationDrawAll(target);};
+            break;
+        case "companyCoupons":
+            callback = function(){companyCouponsTranslationDrawAll(target);};
+            break;
+        default:
+            break;
+    }
     var valueObj = new Object();
     for(var i = 0; i < fields.length; i++){
         valueObj[fields[i]] = data[fields[i]];
     }
-	var dataToSend = "target=" + target + "&language=" + $("#translationLanguageSelect").val() + "&type=" + typeTranslation + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
+    var dataToSend = "target=" + target + "&language=" + $("#translationLanguageSelect").val() + "&type=" + typeTranslation + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
 
-	$.ajax({
-		url : updateTranslationUrl,
-		type : "POST",
-		noticeType : "POST",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if(typeof(callback) == "function"){
-				$("#translationDialog").dialog("close");
-				$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-				callback.call(this);
-			}
-		}
-	});
+    $.ajax({
+        url : updateTranslationUrl,
+        type : "POST",
+        noticeType : "POST",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if(typeof(callback) == "function"){
+                $("#translationDialog").dialog("close");
+                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+                callback.call(this);
+            }
+        }
+    });
 }
 
 function translationUpdateTranslation(targetId, fields, data){
@@ -244,116 +233,161 @@ function translationUpdateTranslation(targetId, fields, data){
     }
     var dataToSend = "target=" + targetId + "&language=" + data.lang + "&type=" + data.type + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
 
-	$.ajax({
-		url : updateTranslationUrl,
-		type : "POST",
-		noticeType : "POST",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {}
-	});
+    $.ajax({
+        url : updateTranslationUrl,
+        type : "POST",
+        noticeType : "POST",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {}
+    });
 }
 
 function translationGetDeletePage(type, target, language) {
-	$.get(
-		deleteTranslationPageUrl,
-		{},
-		function(responseText) {
-			responseText = jQuery.trim(responseText);
-			deleteTranslationPageSetup(responseText, type, target, language);
-		},
-		"html"
-	);
+    $.get(
+        deleteTranslationPageUrl,
+        {},
+        function(responseText) {
+            responseText = jQuery.trim(responseText);
+            deleteTranslationPageSetup(responseText, type, target, language);
+        },
+        "html"
+    );
 }
 
 function deleteTranslationPageSetup(responseText, type, target, language){
-	if ($("#translationDialog").dialog( "isOpen" ) !== true) {
-		$("#translationDialog").empty();
-		$("#translationDialog").html(responseText);
-		
-		$("#translationDialog").dialog({
-			width : "300",
-			height: "118",
-			title : translationDialogTitleLabel,
-			resizable: false,
-			modal: true,
-			open: function(event) {
-				$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
-				$(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
-				$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-				$(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
-			},
-			buttons : {
-				cancelLabel : function() {
-					$("#translationDialog").dialog("close");
-				},
-				deleteLabel : function() {
-					translationDeleteTranslation(type, target, language);
-				}
-			}
-		});
-	}
+    if ($("#translationDialog").dialog( "isOpen" ) !== true) {
+        $("#translationDialog").empty();
+        $("#translationDialog").html(responseText);
+
+        $("#translationDialog").dialog({
+            width : "300",
+            height: "118",
+            title : translationDialogTitleLabel,
+            resizable: false,
+            modal: true,
+            open: function(event) {
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            },
+            buttons : {
+                cancelLabel : function() {
+                    $("#translationDialog").dialog("close");
+                },
+                deleteLabel : function() {
+                    translationDeleteTranslation(type, target, language);
+                }
+            }
+        });
+    }
 }
 
 function translationDeleteTranslation(type, target, language){
-	var callback = null;
-	switch(type){
-	case "categories":
-		callback = function(){categoryTranslationDrawAll();};
-		break;
-    case "productProperties":
-        callback = function(){tourismPropertiesTranslationDrawAll(target);};
-        break;
-	case "productFeatures":
-		callback = function(){tourismFeaturesTranslationDrawAll(target);};
-		break;
-	case "categoryFeatures":
-		callback = function(){categoryFeaturesTranslationDrawAll(target);};
-		break;
-	case "catalog":
-		callback = function(){catalogTranslationDrawAll();};
-		break;
-	case "categoryVariation":
-		callback = function(){categoryVariationGetValuesTranslation(target);};
-		break;
-	case "product":
-		callback = function(){tourismTranslationDrawAll(target);};
-		break;
-	case "ticketType":
-		callback = function(){tourismPricingTranslationDrawAll(target);};
-		break;
-	case "poi":
-		callback = function(){poiTranslationDrawAll(target);};
-		break;
-    case "companyBrands":
-        callback = function(){companyBrandsTranslationDrawAll(target);};
-        break;
-    case "productBrands":
-        callback = function(){productBrandsTranslationDrawAll(target);};
-        break;
-    case "companyCoupons":
-        callback = function(){companyCouponsTranslationDrawAll(target);};
-        break;
-	default:
-		break;
-	}
-	var dataToSend = "target=" + target + "&language=" + language;
-	$.ajax({
-		url : deleteTranslationUrl,
-		type : "GET",
-		noticeType : "DELETE",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if(typeof(callback) == "function"){
-				$("#translationDialog").dialog("close");
-				$("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
-				callback.call(this);
-			}
-		}
-	});
+    var callback = null;
+    switch(type){
+        case "categories":
+            callback = function(){categoryTranslationDrawAll();};
+            break;
+        case "productProperties":
+            callback = function(){tourismPropertiesTranslationDrawAll(target);};
+            break;
+        case "productFeatures":
+            callback = function(){tourismFeaturesTranslationDrawAll(target);};
+            break;
+        case "categoryFeatures":
+            callback = function(){categoryFeaturesTranslationDrawAll(target);};
+            break;
+        case "catalog":
+            callback = function(){catalogTranslationDrawAll();};
+            break;
+        case "categoryVariation":
+            callback = function(){categoryVariationGetValuesTranslation(target);};
+            break;
+        case "product":
+            callback = function(){tourismTranslationDrawAll(target);};
+            break;
+        case "ticketType":
+            callback = function(){tourismPricingTranslationDrawAll(target);};
+            break;
+        case "poi":
+            callback = function(){poiTranslationDrawAll(target);};
+            break;
+        case "companyBrands":
+            callback = function(){companyBrandsTranslationDrawAll(target);};
+            break;
+        case "productBrands":
+            callback = function(){productBrandsTranslationDrawAll(target);};
+            break;
+        case "companyCoupons":
+            callback = function(){companyCouponsTranslationDrawAll(target);};
+            break;
+        default:
+            break;
+    }
+    var typeTranslation = translationGetRealType(type);
+    var dataToSend = "target=" + target + "&type=" + typeTranslation + "&language=" + language;
+    $.ajax({
+        url : deleteTranslationUrl,
+        type : "GET",
+        noticeType : "DELETE",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if(typeof(callback) == "function"){
+                $("#translationDialog").dialog("close");
+                $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+                callback.call(this);
+            }
+        }
+    });
+}
+
+function translationGetRealType(type){
+    var typeTranslation = "";
+    switch(type){
+        case "categories":
+            typeTranslation = "CATEGORY";
+            break;
+        case "productProperties":
+            typeTranslation = "FEATURE";
+            break;
+        case "productFeatures":
+            typeTranslation = "FEATURE";
+            break;
+        case "categoryFeatures":
+            typeTranslation = "FEATURE";
+        case "catalog":
+            typeTranslation = "CATALOG";
+            break;
+        case "categoryVariation":
+            typeTranslation = "VARIATION";
+            break;
+        case "product":
+            typeTranslation = "PRODUCT";
+            break;
+        case "ticketType":
+            typeTranslation = "TICKET_TYPE";
+            break;
+        case "poi":
+            typeTranslation = "POI";
+            break;
+        case "companyBrands":
+            typeTranslation = "BRAND";
+            break;
+        case "productBrands":
+            typeTranslation = "BRAND";
+            break;
+        case "companyCoupons":
+            typeTranslation = "COUPON";
+            break;
+        default:
+            break;
+    }
+    return typeTranslation;
 }

@@ -739,6 +739,6 @@ function catalogTranslationDrawAll() {
         if (!tabVisible)
             $("#catalogTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(catalogSelectedId, successCallback);
+    };
+    translationGetAllData("catalog", catalogSelectedId, successCallback);
 }

@@ -803,6 +803,6 @@ function poiTranslationDrawAll(poiId){
 		if(! tabVisible)
 			$("#poiTranslationDiv").hide();
 		$("#categoriesMain").hideLoading();
-	}
-	translationGetAllData(poiId, successCallback);
+	};
+	translationGetAllData("poi", poiId, successCallback);
 }

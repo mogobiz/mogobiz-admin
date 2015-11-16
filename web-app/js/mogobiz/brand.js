@@ -594,6 +594,6 @@ function productBrandsTranslationDrawAll(brandId){
         if(! tabVisible)
             $("#productBrandsTranslationDiv").hide();
         $("#categoriesMain").hideLoading();
-    }
-    translationGetAllData(brandId, successCallback);
+    };
+    translationGetAllData("productBrands", brandId, successCallback);
 }

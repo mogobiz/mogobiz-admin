@@ -1,5 +1,6 @@
-function translationGetAllData(targetId, successCallback){
-	var dataToSend = "target=" + targetId;
+function translationGetAllData(type, targetId, successCallback){
+    var typeTranslation = translationGetRealType(type);
+	var dataToSend = "target=" + targetId + "&type=" + typeTranslation;
 	$.ajax({
 		url : listTranslationUrl,
 		type : "GET",
@@ -160,54 +161,42 @@ function translationCreateValidateForm(){
 
 function translationCreateTranslation(type, target, fields, data){
 	var callback = null;
-	var typeTranslation = "";
+    var typeTranslation = translationGetRealType(type);
 	switch(type){
 	case "categories":
-        typeTranslation = "CATEGORY";
 		callback = function(){categoryTranslationDrawAll();};
 		break;
     case "productProperties":
-        typeTranslation = "FEATURE";
         callback = function(){tourismPropertiesTranslationDrawAll(target);};
         break;
     case "productFeatures":
-        typeTranslation = "FEATURE";
         callback = function(){tourismFeaturesTranslationDrawAll(target);};
         break;
 	case "categoryFeatures":
-        typeTranslation = "FEATURE";
 		callback = function(){categoryFeaturesTranslationDrawAll(target);};
 		break;
 	case "catalog":
-        typeTranslation = "CATALOG";
 		callback = function(){catalogTranslationDrawAll();};
 		break;
 	case "categoryVariation":
-        typeTranslation = "VARIATION";
 		callback = function(){categoryVariationCreateTranslationValues($("#translationLanguageSelect").val(), target);};
 		break;
 	case "product":
-        typeTranslation = "PRODUCT";
 		callback = function(){tourismTranslationDrawAll(target);};
 		break;
 	case "ticketType":
-        typeTranslation = "TICKET_TYPE";
 		callback = function(){tourismPricingTranslationDrawAll(target);};
 		break;
 	case "poi":
-        typeTranslation = "POI";
 		callback = function(){poiTranslationDrawAll(target);};
 		break;
     case "companyBrands":
-         typeTranslation = "BRAND";
          callback = function(){companyBrandsTranslationDrawAll(target);};
          break;
     case "productBrands":
-         typeTranslation = "BRAND";
          callback = function(){productBrandsTranslationDrawAll(target);};
          break;
     case "companyCoupons":
-        typeTranslation = "COUPON";
         callback = function(){companyCouponsTranslationDrawAll(target);};
         break;
 	default:
@@ -339,7 +328,8 @@ function translationDeleteTranslation(type, target, language){
 	default:
 		break;
 	}
-	var dataToSend = "target=" + target + "&language=" + language;
+    var typeTranslation = translationGetRealType(type);
+	var dataToSend = "target=" + target + "&type=" + typeTranslation + "&language=" + language;
 	$.ajax({
 		url : deleteTranslationUrl,
 		type : "GET",
@@ -356,4 +346,48 @@ function translationDeleteTranslation(type, target, language){
 			}
 		}
 	});
+}
+
+function translationGetRealType(type){
+    var typeTranslation = "";
+    switch(type){
+        case "categories":
+            typeTranslation = "CATEGORY";
+            break;
+        case "productProperties":
+            typeTranslation = "FEATURE";
+            break;
+        case "productFeatures":
+            typeTranslation = "FEATURE";
+            break;
+        case "categoryFeatures":
+            typeTranslation = "FEATURE";
+        case "catalog":
+            typeTranslation = "CATALOG";
+            break;
+        case "categoryVariation":
+            typeTranslation = "VARIATION";
+            break;
+        case "product":
+            typeTranslation = "PRODUCT";
+            break;
+        case "ticketType":
+            typeTranslation = "TICKET_TYPE";
+            break;
+        case "poi":
+            typeTranslation = "POI";
+            break;
+        case "companyBrands":
+            typeTranslation = "BRAND";
+            break;
+        case "productBrands":
+            typeTranslation = "BRAND";
+            break;
+        case "companyCoupons":
+            typeTranslation = "COUPON";
+            break;
+        default:
+            break;
+    }
+    return typeTranslation;
 }

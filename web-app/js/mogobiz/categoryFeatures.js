@@ -393,6 +393,6 @@ function categoryFeaturesTranslationDrawAll(featureId){
 		if(! tabVisible)
 			$("#categoryFeaturesTranslationDiv").hide();
 		$("#categoriesMain").hideLoading();
-	}
-	translationGetAllData(featureId, successCallback);
+	};
+	translationGetAllData("categoryFeatures", featureId, successCallback);
 }
