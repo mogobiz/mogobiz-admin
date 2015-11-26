@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
+ */
+
 import bootstrap.CommerceService
 import bootstrap.CommonService
 import bootstrap.EmbeddedElasticSearchService
@@ -11,7 +15,7 @@ class BootStrap {
     public static final int LEVEL_TWO_CATEGORY = 5
 
     // Nombre de produits par sous catégorie
-    public static final int MAX_PRODUCTS_PER_CATEGORY = 200
+    public static final int MAX_PRODUCTS_PER_CATEGORY = 20
     // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 100 = 5000)
 
     def grailsApplication
