@@ -232,7 +232,7 @@
                 $("#user_name_div").parent().find("ul.subnav").hide();
             }
         </r:script>
-
+        <g:render template="/admin/custom-header"/>
     </head>
     <body>
         <content tag="header">

@@ -604,7 +604,7 @@
                 $("#catalogMenuDiv").parent().find("ul.subnav").hide();
             }
     </r:script>
-
+    <g:render template="/partner/custom-header"/>
 </head>
 
 <body>
