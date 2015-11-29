@@ -25,6 +25,12 @@ beans = {
     warehouseCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Warehouse) {
         excludes = ['class']
     }
+    warehouseStockRenderer(JsonRenderer, com.mogobiz.store.domain.WarehouseStock){
+        excludes = ['class']
+    }
+    warehouseStockCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.WarehouseStock){
+        excludes = ['class']
+    }
     priceRenderer(JsonRenderer, com.mogobiz.store.domain.Price) {
         excludes = ['class']
     }
@@ -493,6 +499,8 @@ beans = {
     featureValueValidation(com.mogobiz.store.domain.FeatureValueValidation)
     warehouseRender(com.mogobiz.store.domain.WarehouseRender)
     warehouseValidation(com.mogobiz.store.domain.WarehouseValidation)
+    warehouseStockValidation (com.mogobiz.store.domain.WarehouseStockValidation)
+    warehouseStockRender (com.mogobiz.store.domain.WarehouseStockRender)
     priceRender(com.mogobiz.store.domain.PriceRender)
     priceValidation(com.mogobiz.store.domain.PriceValidation)
     customerProfileRender(com.mogobiz.store.domain.CustomerProfileRender)
