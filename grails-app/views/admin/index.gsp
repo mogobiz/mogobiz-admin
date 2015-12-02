@@ -139,6 +139,7 @@
 
             // General
             var existCompanyNameUrl = "${createLink(controller: 'company', action:'isNameNew')}";
+            var existCompanyCodeUrl = "${createLink(controller: 'company', action:'isCodeNew')}";
             var showCompanyUrl = "${createLink(controller: 'company', action:'show')}";
             var createCompanyUrl = "${createLink(controller: 'company', action:'save')}";
             var updateCompanyUrl = "${createLink(controller: 'company', action:'update')}";

@@ -196,9 +196,9 @@ function checkUniqueCompanyName(){
 
 function checkUniqueCompanyCode(){
 	$.ajax({
-		url : existCompanyNameUrl,
+		url : existCompanyCodeUrl,
 		type : "GET",
-		data : "name=" + $('#createCompanyCode').val(),
+		data : "code=" + $('#createCompanyCode').val(),
 		dataType : "json",
 		cache : false,
 		async : true,
