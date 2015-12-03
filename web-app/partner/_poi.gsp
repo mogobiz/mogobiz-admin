@@ -50,7 +50,7 @@
 				</a>
 			</li>
 		</ul>
-		<hr style="margin-top: 5px;" />
+        <hr style="margin-top: -1px;"/>
 	</div>
 	<div id="creatPoiDiv">
 		<div id="poiAddress" align="left">

@@ -37,7 +37,7 @@
                 </li>
 </store:hasPermission>
 			</ul>
-			<hr style="margin-top: 5px;" />
+            <hr style="margin-top: -1px;"/>
 		</div>
 		<div id="categoryGeneralTabInfo">
 			<form id="categoryEditGeneralForm" onsubmit="return false;" enctype="multipart/form-data">

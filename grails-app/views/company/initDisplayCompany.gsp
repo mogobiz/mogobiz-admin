@@ -84,7 +84,7 @@
                 </li>
 </store:hasPermission>
 			</ul>
-			<hr style="margin-top:5px;"/>
+			<hr style="margin-top: -1px;"/>
 		</div>
 		<!-- Tabs Content  -->
 

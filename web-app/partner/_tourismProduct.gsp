@@ -25,7 +25,7 @@ function uploadAnotherFile() {
                 <li><a id="shippingTab"> <g:message locale="${lang}" code="tabs.shipping.label" /> </a></li>
 				<li><a id="traslationTab"> <g:message locale="${lang}" code="tabs.translation.label" /> </a></li>
 			</ul>
-			<hr style="margin-top: 5px;" />
+            <hr style="margin-top: -1px;"/>
 		</div>
 		<div id="generalInfo" class="fk_content_area">
 			<form id="formCreerProd" name="form_ProductInfo" onsubmit="return false;" method="POST" enctype="multipart/form-data">

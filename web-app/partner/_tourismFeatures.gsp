@@ -37,7 +37,7 @@
 				</a>
 			</li>
 		</ul>
-		<hr style="margin-top: 5px;" />
+        <hr style="margin-top: -1px;"/>
 	</div>
 	<div id="tourismFeaturesAddDiv" >
 		<form id="tourismFeaturesAddForm" onsubmit="return false;">

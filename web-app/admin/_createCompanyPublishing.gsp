@@ -16,7 +16,7 @@
             </li>
 </store:hasPermission>
         </ul>
-    <hr style="margin-top: 5px;" />
+        <hr style="margin-top: -1px;"/>
     </div>
     <div id="companyPublishingCreateDiv" style="padding-top: 7px;">
         <form id="companyPublishingForm" onsubmit="return false;">

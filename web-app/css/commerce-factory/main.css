@@ -773,7 +773,8 @@ ul.tabs {
 
 ul.tabs li {
     list-style: none;
-    display: inline;
+    display: inline-block;
+    margin-left: -4px;
 }
 
 ul.tabs li a {
@@ -784,6 +785,7 @@ ul.tabs li a {
     cursor: pointer;
     color: #39f;
     margin-left:2px;
+    display: block;
 }
 
 ul.tabs li a:hover {

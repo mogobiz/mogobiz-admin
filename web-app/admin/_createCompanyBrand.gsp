@@ -13,7 +13,7 @@
                 </a>
             </li>
         </ul>
-        <hr style="margin-top: 5px;" />
+        <hr style="margin-top: -1px;"/>
     </div>
     <div id="companyBrandsCreateDiv">
         <form id="companyBrandsForm" onsubmit="return false;" method="POST" enctype="multipart/form-data">
