@@ -7,7 +7,6 @@ package com.mogobiz.job
 import com.mogobiz.service.ElasticsearchService
 
 /**
- * Created by stephane.manciot@ebiznext.com on 17/02/2014.
  */
 class ElasticSearchJob {
 

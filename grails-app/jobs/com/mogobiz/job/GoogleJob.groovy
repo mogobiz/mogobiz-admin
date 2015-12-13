@@ -8,7 +8,6 @@ import com.mogobiz.service.GoogleService
 import grails.util.Holders
 
 /**
- * Created by stephane.manciot@ebiznext.com on 30/05/2014.
  */
 class GoogleJob {
 
