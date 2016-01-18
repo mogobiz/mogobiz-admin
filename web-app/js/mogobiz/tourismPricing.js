@@ -408,12 +408,16 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingSKU").val(data.sku);
         $("#tourismPricingAvailabilityDate").val(data.availabilityDate);
         $("#tourismPricingTicketType").val(data.ticketName);
+
+        var variation1 = data.variation1 == null ? 'NONE' : data.variation1;
+        var variation2 = data.variation2 == null ? 'NONE' : data.variation2;
+        var variation3 = data.variation3 == null ? 'NONE' : data.variation3;
         $("#tourismPricingVariation1").multiselect('uncheckAll');
         $('#tourismPricingVariation1').find('option:contains(' + data.variation1 + ')').attr('selected','selected');
         $("#tourismPricingVariation1").multiselect('refresh');
         $('#tourismPricingAddForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_tourismPricingVariation1"]')
             .each(function() {
-                if (this.value == data.variation1) {
+                if (this.value == variation1) {
                     this.click();
                 }
             });
@@ -422,7 +426,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingVariation2").multiselect('refresh');
         $('#tourismPricingAddForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_tourismPricingVariation2"]')
             .each(function() {
-                if (this.value == data.variation2) {
+                if (this.value == variation2) {
                     this.click();
                 }
             });
@@ -431,13 +435,13 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingVariation3").multiselect('refresh');
         $('#tourismPricingAddForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_tourismPricingVariation3"]')
             .each(function() {
-                if (this.value == data.variation3) {
+                if (this.value == variation3) {
                     this.click();
                 }
             });
-        $("#tourismPricingVariation1").val(data.variation1);
-        $("#tourismPricingVariation2").val(data.variation2);
-        $("#tourismPricingVariation3").val(data.variation3);
+        $("#tourismPricingVariation1").val(variation1);
+        $("#tourismPricingVariation2").val(variation2);
+        $("#tourismPricingVariation3").val(variation3);
         $("#tourismPricingTicketPrice").val(data.cost);
         $("#tourismPricingTicketStock").val(data.stock);
         $("#tourismPricingMinOrder").val((data.minOrder == defaultUnlimitedLabel) ? "" : data.minOrder);
