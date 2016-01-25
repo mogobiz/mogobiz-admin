@@ -88,7 +88,7 @@
                             <div class="companyBrandsDialog-large">
                                 <label for="productBrandsWebsite"><g:message locale="${lang}" code="brand.BrandURLLabel.label"/></label><br />
                                 <div class="spacer-small"></div>
-                                <input type="text" id="productBrandsWebsite" pattern="https?://([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?"/>
+                                <input type="text" id="productBrandsWebsite" pattern="(https?://)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?"/>
                             </div>
                         </div>
                         <div class="spacer"></div>
