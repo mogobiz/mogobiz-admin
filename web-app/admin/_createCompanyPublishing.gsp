@@ -35,7 +35,7 @@
                     <input type="text" id="companyPublishingName" />
                 </div>
                 <div class="companyPublishingDialog-large">
-                    <input type="text" id="companyPublishingUrl" pattern="https?://.+"/>
+                    <input type="text" id="companyPublishingUrl" pattern="(https?://)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?"/>
                 </div>
             </div>
             <div class="spacer"></div>

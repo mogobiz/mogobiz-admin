@@ -25,8 +25,13 @@ function companyGeneralDoUpdateField(compId, objId, objProperty, blankOK, checkV
         });
     }
     else {
+        var value = $(objId).val();
+        if(objProperty == "company.website"){
+            value = (value.indexOf("://") < 0 ) ? "http://" + value : value;
+        }
+
         var dataToSend = "company.id=" + compId;
-        dataToSend += "&" + objProperty + "=" + $(objId).val();
+        dataToSend += "&" + objProperty + "=" + value;
         dataToSend += "&format=json";
         $.ajax( {
             url : updateCompanyUrl,
