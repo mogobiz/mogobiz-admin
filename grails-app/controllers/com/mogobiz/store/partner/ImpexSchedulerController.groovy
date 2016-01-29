@@ -52,6 +52,19 @@ class ImpexSchedulerController {
         }
     }
 
+    def checkExport() {
+        String zipFilename = params["export"]
+        String now = new SimpleDateFormat("yyyy-MM-dd.HHmmss").format(new Date())
+        File outDir = exportService.getExportDir(now)
+        File zipFile = new File(outDir.getParentFile(), zipFilename)
+        File successFile = new File(zipFile.getAbsolutePath() + ".success")
+        if (successFile.exists()) {
+            render text: "Export finished", status: 200
+        } else {
+            render text: "Export not finished", status: 403
+        }
+    }
+
     def downloadImportReport() {
         String impexPath = grailsApplication.config.impex.path
         File prefixFile = new File(new File(impexPath), "import")
@@ -145,7 +158,7 @@ class ImpexSchedulerController {
                             company.id as String,
                             catalog.id as String
                     )
-                    ImpexJob.triggerNow(["catalogId": catalog.id, "export": false, "sellerId":seller.id, "companyId":company.id, "zipFile": tmpFile.getAbsolutePath()])
+                    ImpexJob.triggerNow(["catalogId": catalog.id, "export": false, "sellerId": seller.id, "companyId": company.id, "zipFile": tmpFile.getAbsolutePath()])
                     withFormat {
                         json { render catalog as JSON }
                     }
