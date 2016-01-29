@@ -204,8 +204,8 @@
             var deleteCatalogUrl = "${createLink(controller: 'catalog', action: 'delete')}";
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action: 'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'publish')}";
-            var importCatalogUrl = "${createLink(controller: 'impex', action: 'ximport')}";
-            var exportCatalogUrl = "${createLink(controller: 'impex', action: 'export')}";
+            var importCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'ximport')}";
+            var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";
 
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
