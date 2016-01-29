@@ -61,7 +61,7 @@ class ImpexSchedulerController {
         if (successFile.exists()) {
             render text: "Export finished", status: 200
         } else {
-            render text: "Export not finished", status: 403
+            render text: "Export not finished", status: 404
         }
     }
 
