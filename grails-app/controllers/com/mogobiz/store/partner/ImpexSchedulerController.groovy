@@ -59,8 +59,10 @@ class ImpexSchedulerController {
         File zipFile = new File(outDir.getParentFile(), zipFilename)
         File successFile = new File(zipFile.getAbsolutePath() + ".success")
         if (successFile.exists()) {
+            outDir.delete()
             render text: "Export finished", status: 200
         } else {
+            outDir.delete()
             render text: "Export not finished", status: 404
         }
     }
