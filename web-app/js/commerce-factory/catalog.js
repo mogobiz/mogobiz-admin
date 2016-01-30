@@ -591,7 +591,7 @@ function catalogCheckImport(catalogId){
             $("#catalogCreateDialog").dialog("close");
         },
         error: function (response, status) {
-            if(response.status == "403") {
+            if(response.status == "404") {
                 setTimeout(function () {catalogCheckImport(catalogId);}, 10000);
             }
             else{

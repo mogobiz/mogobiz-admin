@@ -75,7 +75,7 @@ class ImpexSchedulerController {
             successFile.delete()
             render text: "Import success", status: 200
         } else {
-            render text: "Import not finished", status: 403
+            render text: "Import not finished", status: 404
         }
     }
 
