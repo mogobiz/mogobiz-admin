@@ -34,7 +34,7 @@
                         <div class="companyBrandsDialog-large">
                             <label for="companyBrandsWebsite"><g:message locale="${lang}" code="company.brands.website.label"></g:message></label>
                             <div class="spacer-small"></div>
-                            <input type="text" id="companyBrandsWebsite" pattern="(https?://)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}((\/[^\/~,]+)+)?/?"/>
+                            <input type="text" id="companyBrandsWebsite" pattern="(https?://)?((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4})|(([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)?)+(.[a-zA-Z]{2,4})?\:[0-9]{4}))((\/[^\/~,]+)+)?/?"/>
                         </div>
                     </div>
                     <div class="spacer"></div>
