@@ -347,7 +347,7 @@ function companyBrandsValidateForm(){
 
 function companyBrandsCreateBrand(){
     companyBrandsCleditor.updateTextArea();
-    var website = ($("#companyBrandsWebsite").val().indexOf("://") < 0 ) ? "http://" + $("#companyBrandsWebsite").val() : $("#companyBrandsWebsite").val();
+    var website = ($("#companyBrandsWebsite").val().trim() != "" && $("#companyBrandsWebsite").val().indexOf("://") < 0 ) ? "http://" + $("#companyBrandsWebsite").val().trim() : $("#companyBrandsWebsite").val().trim();
     var dataToSend = "brand.name=" + $("#companyBrandsName").val() + "&brand.website=" + website + "&brand.ibeaconId=" + $("#companyBrandsIBeacon").val();
     dataToSend += "&brand.description=" + encodeURIComponent($("#companyBrandsDescription").val()) + "&brand.hide=" + $("#companyBrandsHide").is(':checked') + "&format=json";
     $.ajax({
@@ -360,7 +360,7 @@ function companyBrandsCreateBrand(){
         async : true,
         success : function(response, status) {
             if(companyBrandsLogoChanged && $("#companyBrandsLogo").val() !=""){
-                $("#companyBrandsId").val(response.id)
+                $("#companyBrandsId").val(response.id);
                 companyBrandsUploadLogo();
             }
             else{
@@ -382,7 +382,7 @@ function companyBrandsCreateBrand(){
 
 function companyBrandsUpdateBrand(){
     companyBrandsCleditor.updateTextArea();
-    var website = ($("#companyBrandsWebsite").val().indexOf("://") < 0 ) ? "http://" + $("#companyBrandsWebsite").val() : $("#companyBrandsWebsite").val();
+    var website = ($("#companyBrandsWebsite").val().trim() != "" && $("#companyBrandsWebsite").val().indexOf("://") < 0 ) ? "http://" + $("#companyBrandsWebsite").val().trim() : $("#companyBrandsWebsite").val().trim();
     var dataToSend = "brand.id=" + $("#companyBrandsId").val() + "&brand.name=" + $("#companyBrandsName").val() + "&brand.website=" + website;
     dataToSend += "&brand.ibeaconId=" + $("#companyBrandsIBeacon").val() + "&brand.description=" + encodeURIComponent($("#companyBrandsDescription").val());
     dataToSend += "&brand.hide=" + $("#companyBrandsHide").is(':checked') + "&format=json";
