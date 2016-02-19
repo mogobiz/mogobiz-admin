@@ -90,6 +90,12 @@
 					if(skipTag == true) {
 					    //Marks fake input as not_valid to let styling it
     				    $('#'+id+'_tag').addClass('not_valid');
+                        jQuery.noticeAdd({
+                            stayTime : 2000,
+                            text : tagsUniqueErrorLabel,
+                            stay : false,
+                            type : "error"
+                        });
     				}
 				} else {
 					var skipTag = false; 
@@ -323,7 +329,7 @@
 				//Removes the not_valid class when user changes the value of the fake input
 				if(data.unique) {
 				    $(data.fake_input).keydown(function(event){
-				        if(event.keyCode == 8 || String.fromCharCode(event.which).match(/\w+|[áéíóúÁÉÍÓÚñÑ,/]+/)) {
+				        if(event.keyCode == 8 || String.fromCharCode(event.which).match(/\w+|[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,/]+/)) {
 				            $(this).removeClass('not_valid');
 				        }
 				    });

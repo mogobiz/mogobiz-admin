@@ -315,6 +315,8 @@
             var addProductTagUrl = "${createLink(controller: 'product', action: 'addTag')}";
             var removeProductTagUrl = "${createLink(controller: 'product', action: 'removeTag')}";
 
+            var tagsUniqueErrorLabel = "${message(code: 'product.tag.unique.error')}";
+
             //-----Properties----//
             var savePropertyUrl = "${createLink(controller: 'product', action: 'saveProperty')}";
             var deletePropertyUrl = "${createLink(controller: 'product', action: 'deleteProperty')}";
