@@ -342,7 +342,7 @@ function companyPublishingValidateForm(){
 }
 
 function companyPublishingCreatePublishing(companyId){
-    var url = ($("#companyPublishingUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyPublishingUrl").val() : $("#companyPublishingUrl").val();
+    var url = ($("#companyPublishingUrl").val().trim() != "" && $("#companyPublishingUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyPublishingUrl").val().trim() : $("#companyPublishingUrl").val().trim();
     var dataToSend = "esenv.name=" + $("#companyPublishingName").val() + "&esenv.url=" + url;
     if($("#companyPublishingManual").is(":checked"))
         dataToSend += "&esenv.cronExpr=\"\"";
@@ -374,7 +374,7 @@ function companyPublishingCreatePublishing(companyId){
 }
 
 function companyPublishingUpdatePublishing(companyId){
-    var url = ($("#companyPublishingUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyPublishingUrl").val() : $("#companyPublishingUrl").val();
+    var url = ($("#companyPublishingUrl").val().trim() != "" && $("#companyPublishingUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyPublishingUrl").val().trim() : $("#companyPublishingUrl").val().trim();
     var dataToSend = "esenv.id=" + $("#companyPublishingId").val() + "&esenv.name=" + $("#companyPublishingName").val() + "&esenv.url=" + url;
     if($("#companyPublishingManual").is(":checked"))
         dataToSend += "&esenv.cronExpr=\"\"";

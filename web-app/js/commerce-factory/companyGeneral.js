@@ -27,7 +27,7 @@ function companyGeneralDoUpdateField(compId, objId, objProperty, blankOK, checkV
     else {
         var value = $(objId).val();
         if(objProperty == "company.website"){
-            value = (value.indexOf("://") < 0 ) ? "http://" + value : value;
+            value = (value.trim() != "" && value.indexOf("://") < 0 ) ? "http://" + value.trim() : value.trim();
         }
 
         var dataToSend = "company.id=" + compId;
