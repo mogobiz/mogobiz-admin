@@ -1768,4 +1768,5 @@ ul.topnav li ul.subnav {
 /*--Fix for CF-191--*/
 ul.jPag-pages li span, ul.jPag-pages li a{
     font-size: 12px;
+    width: auto;
 }
