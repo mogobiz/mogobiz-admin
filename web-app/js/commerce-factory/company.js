@@ -404,7 +404,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
 			$('#generalTab').addClass('selected');
 
 			//Fill languages combo
-            var output = "";
+            var output = "<option " + "value='" + response.defaultLanguage + "'>" + response.defaultLanguage + "</option>";
             for(var i = 0; i < translateLanguage.length; i++){
                 output += "<option " + "value='" + translateLanguage[i] + "'>" + translateLanguage[i] + "</option>";
             }

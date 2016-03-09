@@ -57,7 +57,11 @@ function companyGeneralMultiSelectAutoUpdate(compId, objId, objProperty){
             data : dataToSend,
             dataType : "json",
             cache : false,
-            async : true
+            async : true,
+            success: function(){
+                if(objProperty == "company.defaultLanguage")
+                    loadTranslateLanguages();
+            }
         });
     });
 }
