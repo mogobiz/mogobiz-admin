@@ -204,8 +204,11 @@
             var deleteCatalogUrl = "${createLink(controller: 'catalog', action: 'delete')}";
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action: 'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'publish')}";
-            var importCatalogUrl = "${createLink(controller: 'impex', action: 'ximport')}";
-            var exportCatalogUrl = "${createLink(controller: 'impex', action: 'export')}";
+            var importCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'ximport')}";
+            var reportImportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadImportReport')}";
+            var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";
+            var exportCheckCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'checkExport')}";
+            var downloadExportedCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadExportFile')}";
 
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
@@ -217,6 +220,8 @@
             var catalogDeleteLabel = "${message(code: 'catalog.delete.label')}";
             var catalogImportLabel  = "${message(code: 'catalog.import.label')}";
             var catalogExportLabel = "${message(code: 'catalog.export.label')}";
+            var catalogExportFinishLabel = "${message(code: 'catalog.export.finish.label')}";
+            var catalogExportDownloadLabel = "${message(code: 'catalog.export.download.label')}";
             var catalogPublicationRunningLabel = "${message(code: 'catalog.publicationRunning.label')}";
             var catalogLastPublicationLabel = "${message(code: 'catalog.lastPublication.label')}";
             var catalogPublicationSuccessLabel = "${message(code: 'catalog.publicationSuccess.label')}";
@@ -309,6 +314,8 @@
             var getCompanyTagsUrl = "${createLink(controller: 'product', action: 'getTagsByCompany')}";
             var addProductTagUrl = "${createLink(controller: 'product', action: 'addTag')}";
             var removeProductTagUrl = "${createLink(controller: 'product', action: 'removeTag')}";
+
+            var tagsUniqueErrorLabel = "${message(code: 'product.tag.unique.error')}";
 
             //-----Properties----//
             var savePropertyUrl = "${createLink(controller: 'product', action: 'saveProperty')}";
@@ -682,6 +689,8 @@
 <div id="items"></div>
 
 <div id="catalogCreateDialog"></div>
+
+<div id="catalogDownloadDialog"></div>
 
 <div id="categoryCreateDialog"></div>
 

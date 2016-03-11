@@ -102,6 +102,7 @@ importCatalog {
     flushsize = 100
 }
 grails {
+    plugin.console.enabled = true
     serverURL = "http://mogobiz.ebiznext.com/mogobiz"
     mail {
         from = 'mogobiz@gmail.com'
@@ -134,7 +135,7 @@ emailConfirmation {
 
 mogopay {
     url = 'http://jahiacommerce.ebiznext.com/pay/'
-    elasticsearch{
+    elasticsearch {
         serverURL = 'http://localhost:9200'
         shards = 1
         replicas = 1

@@ -35,6 +35,17 @@ class SecurityFilters {
             afterView = {
             }
         }
+        console(uri: "/console/**") {
+            before = {
+                accessControl(auth: true) {
+                    role(RoleName.ADMINISTRATOR.name())
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
 
         /**
          * Company acl

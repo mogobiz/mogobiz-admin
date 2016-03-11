@@ -487,6 +487,14 @@
             <scope>compile</scope>
             <type>zip</type>
         </dependency>
+        <dependency>
+            <groupId>org.grails.plugins</groupId>
+            <artifactId>console</artifactId>
+            <version>1.5.7</version>
+            <scope>runtime</scope>
+            <type>zip</type>
+        </dependency>
+
 
         <dependency>
             <groupId>org.grails.plugins</groupId>
