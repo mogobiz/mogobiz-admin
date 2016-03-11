@@ -748,7 +748,7 @@
                             <groupId>${project.groupId}</groupId>
                             <artifactId>${project.artifactId}</artifactId>
                             <version>${project.version}</version>
-                            <classifier>standalone</classifier>
+                            <classifier>${grails.env}-standalone</classifier>
                             <packaging>jar</packaging>
                             <generatePom>true</generatePom>
                         </configuration>
@@ -772,7 +772,7 @@
                                 <artifact>
                                     <file>${project.build.directory}/standalone-${project.version}.jar</file>
                                     <type>jar</type>
-                                    <classifier>standalone</classifier>
+                                    <classifier>${grails.env}-standalone</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
