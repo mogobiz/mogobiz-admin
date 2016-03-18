@@ -14,7 +14,7 @@
 
     <properties>
         <grails.version>2.3.8</grails.version>
-        <grails.env>mogobiz</grails.env>
+        <grails.env>commerce-factory</grails.env>
         <h2.version>1.3.170</h2.version>
     </properties>
 
