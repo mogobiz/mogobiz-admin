@@ -746,7 +746,7 @@ function companyCouponsSearchSku(){
             $("#companyCouponsSku").empty();
             for(var i = 0; i < response.length; i++){
                 if($("#companyCouponsSku_to > option[value='" + response[i].id + "']").length == 0) {
-                    $("#companyCouponsSku").append($("<option></option>").attr("value", response[i].id).text(response[i].name));
+                    $("#companyCouponsSku").append($("<option></option>").attr("value", response[i].id).text(response[i].name + " (" + response[i].product.name + ")"));
                 }
             }
         },
