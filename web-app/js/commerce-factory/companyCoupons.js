@@ -484,7 +484,7 @@ function companyCouponsPageInitFields(couponId, isCreate){
                 $("#companyCouponsProduct_to").append($("<option></option>").attr("value", coupon.products[i].id).text(coupon.products[i].name));
             }
             for(var i = 0; i < coupon.skus.length; i++){
-                $("#companyCouponsSku_to").append($("<option></option>").attr("value", coupon.skus[i].id).text(coupon.skus[i].name));
+                $("#companyCouponsSku_to").append($("<option></option>").attr("value", coupon.skus[i].id).text(coupon.skus[i].name + " (" + coupon.skus[i].product.name + ")"));
             }
             var rules = [];
             for ( var i = 0; i < coupon.rules.length; i++) {
