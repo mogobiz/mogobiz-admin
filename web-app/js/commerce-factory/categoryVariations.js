@@ -536,7 +536,7 @@ function categoryVariationGetValuesTranslation(variationId){
         categoryVariationTranslationDrawAll(variationId);
         return;
     }
-    var dataToSend = "target=" + categoryVariationsValues[categoryVariationsTranslationIndex].id;
+    var dataToSend = "target=" + categoryVariationsValues[categoryVariationsTranslationIndex].id + "&type=VARIATION_VALUE";
     $.ajax({
         url : listTranslationUrl,
         type : "GET",
