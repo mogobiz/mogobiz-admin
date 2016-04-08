@@ -9,3 +9,4 @@ out
 .settings
 target-eclipse
 test
+.slcache

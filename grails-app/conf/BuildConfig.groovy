@@ -123,7 +123,7 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
         compile ":standalone:1.3"
 
-        compile "com.mogobiz:mogobiz-core:0.4.1-SNAPSHOT"
+      compile "com.mogobiz:mogobiz-core:0.4.1-SNAPSHOT"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.

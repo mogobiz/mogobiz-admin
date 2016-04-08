@@ -94,7 +94,7 @@ dataSource {
 
 importCountries {
     codes = 'DE,ES,FR,GB,US'
-    dir = "/data/mogopay/import/countries"
+    dir = "C:\\Projects\\countries"
 }
 
 importCatalog {
@@ -103,7 +103,7 @@ importCatalog {
 }
 grails {
     plugin.console.enabled = true
-    serverURL = "http://mogobiz.ebiznext.com:8090/mogobiz"
+    serverURL = "http://localhost:8090/mogobiz"
     mail {
         from = 'mogobiz@gmail.com'
         host = 'smtp.gmail.com'
