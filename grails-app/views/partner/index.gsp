@@ -205,6 +205,7 @@
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action: 'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'publish')}";
             var importCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'ximport')}";
+            var importHybrisCatalogUrl = "${createLink(controller: 'hybrisImport', action: 'ximport')}";
             var reportImportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadImportReport')}";
             var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";
             var exportCheckCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'checkExport')}";
@@ -213,6 +214,7 @@
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
             var catalogImportPageUrl = "${resource(dir: 'partner', file: '_importCatalog.gsp')}";
+            var catalogHybrisImportPageUrl = "${resource(dir: 'partner', file: '_importHybrisCatalog.gsp')}";
 
             var catalogTitleLabel = "${message(code: 'catalog.title.label')}";
             var catalogUniqueNameLabel = "${message(code: 'catalog.unique.name.label')}";

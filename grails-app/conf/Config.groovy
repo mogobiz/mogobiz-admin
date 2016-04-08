@@ -103,7 +103,7 @@ importCatalog {
 }
 grails {
     plugin.console.enabled = true
-    serverURL = "http://mogobiz.ebiznext.com/mogobiz"
+    serverURL = "http://mogobiz.ebiznext.com:8090/mogobiz"
     mail {
         from = 'mogobiz@gmail.com'
         host = 'smtp.gmail.com'

@@ -21,9 +21,14 @@
     </store:hasPermission>
     <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
         <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
-                                                  onclick="catalogGetImportPage();"><g:message
+                                                  onclick="catalogGetImportPage('default');"><g:message
                     locale="${lang}" code="catalog.import.label"/></a></li>
     </store:hasPermission>
+    <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
+        <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
+                                                  onclick="catalogGetImportPage('hybris');"><g:message
+                    locale="${lang}" code="catalog.hybris.import.label"/></a></li>
+    </store:hasPermission>    
     <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
                                               id="searchProductCatalogLink"
                                               class="disabled"><g:message

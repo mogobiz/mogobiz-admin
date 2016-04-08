@@ -4,3 +4,8 @@ plugins
 *.log
 .idea
 out
+.classpath
+.project
+.settings
+target-eclipse
+test

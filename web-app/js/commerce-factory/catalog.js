@@ -493,19 +493,19 @@ function catalogPublish() {
     });
 }
 
-function catalogGetImportPage() {
+function catalogGetImportPage(calalogtype) {
     $.get(
         catalogImportPageUrl,
         {},
         function (htmlresponse) {
             htmlresponse = jQuery.trim(htmlresponse);
-            catalogImportPageSetup(htmlresponse);
+            catalogImportPageSetup(htmlresponse, calalogtype);
         },
         "html"
     );
 }
 
-function catalogImportPageSetup(htmlresponse) {
+function catalogImportPageSetup(htmlresponse, calalogtype) {
     if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
         $("#catalogCreateDialog").empty();
         $("#catalogCreateDialog").html(htmlresponse);
@@ -523,8 +523,14 @@ function catalogImportPageSetup(htmlresponse) {
                     $("#catalogCreateDialog").dialog("close");
                 },
                 importLabel: function () {
-                    if (catalogValidateImportForm())
-                        catalogImport();
+                    if (catalogValidateImportForm()) {
+                    	switch (calalogtype)
+                    	{
+                    	   case 'hybris' : hybrisCatalogImport()
+                    	   break;                    	   
+                    	   default: catalogImport()
+                    	}
+                    }
                 }
             }
         });
@@ -557,6 +563,29 @@ function catalogImport() {
     $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
     document.getElementById("catalogImportForm").target = "catalogImportHiddenFrame"; // 'upload_target' is the name of the iframe
     document.getElementById("catalogImportForm").action = importCatalogUrl;
+    document.getElementById("catalogImportForm").submit();
+    document.getElementById("catalogImportHiddenFrame").onload = function () {
+        var responseText = document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText;
+        try {
+            var cat = JSON.parse(responseText);
+            catalogCheckImport(cat.id);
+        }
+        catch(e){
+            $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+            if(responseText.toLowerCase().indexOf("error:") == 0){
+                $("#catalogImportError").html(responseText.substring(6));
+            }
+            else{
+                $("#catalogImportError").html(catalogImportFailureLabel);
+            }
+        }
+    }
+}
+
+function hybrisCatalogImport() {
+    $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
+    document.getElementById("catalogImportForm").target = "catalogImportHiddenFrame"; // 'upload_target' is the name of the iframe
+    document.getElementById("catalogImportForm").action = importHybrisCatalogUrl;
     document.getElementById("catalogImportForm").submit();
     document.getElementById("catalogImportHiddenFrame").onload = function () {
         var responseText = document.getElementById("catalogImportHiddenFrame").contentWindow.document.body.innerText;
