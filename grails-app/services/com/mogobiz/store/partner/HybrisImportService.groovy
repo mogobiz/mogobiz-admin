@@ -11,8 +11,24 @@ import java.util.zip.ZipFile
 class HybrisImportService {
     static transactional = true
     final static Map<String,String> csvSettings = ['separatorChar':';', 'charset':'UTF-8',]
-    final static Map<String,String> fileToObject = ['Category.csv': 'com.mogobiz.store.domain.Category', 'Product.csv': 'com.mogobiz.store.domain.Product']
-    final static Map<String,String> categoryMapping = ['externalCode': '# pk', 'name': 'name_en', description: 'description_en', 'keywords':'detail']
+    final static Map<String,Map<String,String>> csvObjectMappings = ['Category.csv': ['className':'com.mogobiz.store.domain.Category',
+                                                                                      'properties': ['# pk': 'externalCode',
+                                                                                                      'name_en' : 'name',
+                                                                                                      'description_en' : 'description',
+                                                                                                      'detail':'keywords']],
+                                                                     'Product.csv': ['className':'com.mogobiz.store.domain.Product',
+                                                                                     'properties': ['# pk': 'externalCode',
+                                                                                                    'name_en' : 'name',
+                                                                                                    'description_en' : 'description',
+                                                                                                    'detail':'keywords']]]
+
+
+    /*
+    Category Headers = # pk;catalog;catalogVersion;code;creationtime;data_sheet;description_en;description_fr;detail;logo;modifiedtime;name_en;name_fr;normal;order;others;owner;picture;thumbnail;thumbnails
+    Product Headers = # pk;Europe1prices;Europe1PriceFactory_PDG;Europe1PriceFactory_PPG;Europe1PriceFactory_PTG;approvalStatus;articleStatus_en;articleStatus_fr;buyerIDS;catalog;catalogVersion;code;contentUnit;creationtime;data_sheet;deliveryTime;description_en;description_fr;detail;ean;endLineNumber;erpGroupBuyer;erpGroupSupplier;europe1Discounts;europe1Prices;europe1Taxes;galleryImages;logo;manufacturerAID;manufacturerName;manufacturerTypeDescription_en;manufacturerTypeDescription_fr;maxOrderQuantity;minOrderQuantity;modifiedtime;name_en;name_fr;normal;numberContentUnits;offlineDate;onlineDate;order;orderQuantityInterval;others;owner;picture;priceQuantity;productOrderLimit;remarks_en;remarks_fr;segment_en;segment_fr;sequenceId;specialTreatmentClasses;startLineNumber;summary_en;summary_fr;supplierAlternativeAID;thumbnail;thumbnails;unit;variantType;variants;xmlcontent
+     */
+
+
     static SanitizeUrlService sanitizeUrlService
 
 
@@ -36,12 +52,12 @@ class HybrisImportService {
         }
     }
 
-    public static Object mapToObject(Map map, String objectType,Catalog catalog) {
-        def object = Class.forName(objectType).newInstance()
-        //TODO use dynamic mapping
-        categoryMapping.keySet().each {
-            def val = map.get(categoryMapping.get(it))
-            object.setProperty(it, val)
+    public static Object mapToObject(Map data, Map mapping, Catalog catalog) {
+        def object = Class.forName(mapping.className).newInstance()
+        mapping.keySet().each { csvHeader ->
+            def property = mapping.properties.get(csvHeader)
+            def value = data.get(csvHeader)
+            object.setProperty(property, value)
         }
 
         //TODO Add specific properties for each object
@@ -73,18 +89,18 @@ class HybrisImportService {
         }
 
         //hybris -> mogobis mapping
-        fileToObject.keySet().each { f ->
+        csvObjectMappings.keySet().each { f ->
             def csv = csvToImport.find { it.getName().equals(f)}
             def csvMapReader = new File(csv.getAbsolutePath()).toCsvMapReader(csvSettings)
-            def maps = csvMapReader.toList()
-            maps.each { map ->
-                def objectType = fileToObject.get(f)
-                def object = mapToObject(map, objectType, catalog)
+            def datalist = csvMapReader.toList()
+            datalist.each { data ->
+                def mapping = csvObjectMappings.get(f)
+                def object = mapToObject(data, mapping, catalog)
 
                 //save object
                 if (object.validate()) {
                     //TODO category.save(flush: true)
-                    println object.toString()
+                    println "Saving object : " + object.toString()
                 } else {
                     println(" KO! ")
                 }
