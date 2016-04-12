@@ -24,7 +24,7 @@
                                                   onclick="catalogGetImportPage('default');"><g:message
                     locale="${lang}" code="catalog.import.label"/></a></li>
     </store:hasPermission>
-    <store:hasPermission permission="${PermissionType.IMPORT_HYBRIS_STORE_CATALOGS.key}">
+    <store:hasPermission permission="${PermissionType.IMPORT_STORE_CATALOGS.key}">
         <li onclick="hideCatalogMenuSubnav();"><a href="javascript:void(0);"
                                                   onclick="catalogGetImportPage('hybris');"><g:message
                     locale="${lang}" code="catalog.hybris.import.label"/></a></li>

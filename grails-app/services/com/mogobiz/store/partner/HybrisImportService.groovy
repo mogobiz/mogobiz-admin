@@ -54,21 +54,24 @@ class HybrisImportService {
 
     public static Object mapToObject(Map data, Map mapping, Catalog catalog) {
         def object = Class.forName(mapping.className).newInstance()
-        mapping.keySet().each { csvHeader ->
+        mapping.properties.keySet().each { csvHeader ->
             def property = mapping.properties.get(csvHeader)
             def value = data.get(csvHeader)
             object.setProperty(property, value)
         }
 
-        //TODO Add specific properties for each object
-        //Example : Category
-        /*
-        def category = new Category()
-        category.catalog = catalog
-        category.company = catalog.company
-        category.uuid = UUID.randomUUID().toString()
-        category.sanitizedName = sanitizeUrlService.sanitizeWithDashes(category.name)
-        */
+
+        switch (object.class.name) {
+            case 'com.mogobiz.store.domain.Category':
+                object.catalog = catalog
+                object.company = catalog.company
+                object.uuid = UUID.randomUUID().toString()
+                object.sanitizedName = sanitizeUrlService.sanitizeWithDashes(object.name)
+                break
+            case 'com.mogobiz.store.domain.Product':
+                //TODO add specific attributes for product
+                break
+        }
 
         return object
     }
