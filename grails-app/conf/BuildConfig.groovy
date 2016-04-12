@@ -122,6 +122,7 @@ grails.project.dependency.resolution = {
         compile ":joda-time:1.4"
         test ':spock:0.7'
         compile ":standalone:1.3"
+        compile ":csv:0.3.1"
 
       compile "com.mogobiz:mogobiz-core:0.4.1-SNAPSHOT"
     }

@@ -8,9 +8,11 @@ import com.mogobiz.utils.PermissionType
 import grails.converters.JSON
 import grails.converters.XML
 
+import java.util.zip.ZipFile
+
 class HybrisImportController {
 	AuthenticationService authenticationService
-	//HybrisImportService hybrisImportService
+	HybrisImportService hybrisImportService
 
     def ximport() {
 		def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
@@ -25,12 +27,12 @@ class HybrisImportController {
 			if (catalog && catalog.company == seller.company) {
 				log.info("Uploading hybris catalog ...")
 				def file = request.getFile('file')
+				File tmpFile = File.createTempFile("import", ".zip")
+				file.transferTo(tmpFile)
 				if (file && !file.empty) {
-					File tmpFile = File.createTempFile("import", ".zip")
-					file.transferTo(tmpFile)
 					Company company = seller.company
 					//TODO call service hybris here
-					//hybrisImportService.ximport(id, seller.id, company.id, file)
+					hybrisImportService.ximport(catalog, tmpFile)
 				}
 			} else {
 				response.sendError 404
