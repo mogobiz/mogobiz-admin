@@ -894,6 +894,7 @@ function productUploadFileSetup(productId) {
             tourismProductLoadAllPictureForCaroussel(productId);
             document.getElementById('hidden-upload-frame').onload = function() {};
             $('#uploadSuccess')[0].style.display='block';$('#uploading')[0].style.display='none';
+            filesUpload.value = "";
         }
     }, false);
 }
