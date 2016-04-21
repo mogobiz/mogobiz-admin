@@ -113,7 +113,7 @@
 			<div class="spacer-small"></div>				
 			<div class="newline">
 				<div class="pricing-small">
-					<input id="tourismPricingTicketPrice" type="text" pattern="\d{0,6}\.?\d{0,2}" required placeholder="<g:message locale="${lang}" code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
+					<input id="tourismPricingTicketPrice" type="text" pattern="\d+" required placeholder="<g:message locale="${lang}" code="tourismPricing.ticketPricePlaceholder.label"/>" name="ticketType.amount" />
 				</div>
 				<div class="pricing-small">
 					<input id="tourismPricingTicketStock" type="number" min="0" max="999999999" required pattern="\d+"/>
@@ -125,7 +125,7 @@
 					<input id="tourismPricingMaxOrder" type="number" min="0" name="ticketType.maxOrder" max="999999999" pattern="\d+"/>
 				</div>
 			</div>
-			<div class="spacer"></div>				
+			<div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-large">
 					<label for="tourismPricingStartDate"><g:message locale="${lang}" code="tourismPricing.startDate.label"/></label>
