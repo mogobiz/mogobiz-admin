@@ -566,6 +566,7 @@ function productAttachEditForm(productId, fromPage) {
                         break;
                     case 'suggestionsTab':
                         $('#generalInfo').hide();
+                        $('#tourismProperties').hide();
                         $('#featuresInfo').hide();
                         $('#tourismPricing').hide();
                         $('#calendarDiv').hide();
@@ -580,6 +581,7 @@ function productAttachEditForm(productId, fromPage) {
                         break;
                     case 'shippingTab':
                         $('#generalInfo').hide();
+                        $('#tourismProperties').hide();
                         $('#featuresInfo').hide();
                         $('#tourismPricing').hide();
                         $('#calendarDiv').hide();
@@ -590,6 +592,7 @@ function productAttachEditForm(productId, fromPage) {
                         break;
                     case 'traslationTab':
                         $('#generalInfo').hide();
+                        $('#tourismProperties').hide();
                         $('#featuresInfo').hide();
                         $('#tourismPricing').hide();
                         $('#calendarDiv').hide();
