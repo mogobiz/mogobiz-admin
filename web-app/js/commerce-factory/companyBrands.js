@@ -485,13 +485,13 @@ var companyBrandsTranslationGrid = null;
 function companyBrandsTranslationDrawAll(brandId){
     companyBrandsTranslationGrid = null;
     var successCallback = function (response){
-        var fields = ["name", "website"];
+        var fields = ["website"];
         $("#companyBrandsTranslationAddLink").unbind();
         $("#companyBrandsTranslationAddLink").bind("click", function(){
-            var defaultsData = {name: $("#companyBrandsName").val(), website: $("#companyBrandsWebsite").val()};
+            var defaultsData = {website: $("#companyBrandsWebsite").val()};
             translationGetCreatePage("companyBrands", brandId, fields, defaultsData);
         });
-        var columns = [{field: "name", title: translationNameGridLabel},{field: "website", title: translationWebstieGridLabel}];
+        var columns = [{field: "website", title: translationWebstieGridLabel}];
         var data = [];
         for (var i = 0; i < response.length; i++) {
             var value = eval( "(" + response[i].value + ")" );
@@ -501,7 +501,6 @@ function companyBrandsTranslationDrawAll(brandId){
                 "translationType": "companyBrands",
                 "lang": response[i].lang,
                 "type": response[i].type,
-                "name": value.name,
                 "website": value.website
             }
         }
