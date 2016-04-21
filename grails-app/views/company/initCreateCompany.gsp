@@ -44,7 +44,7 @@
 	<div class="spacer-small"></div>
 	<div class="newline">
 		<div class="createCompany">
-			<input type="email" name="company.email" id="createCompanyEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}" required/>
+			<input type="email" name="company.email" id="createCompanyEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,15}" required/>
 		</div>
 		<div class="createCompany">
 			<select name="company.location.countryCode" id="createCompanyCountry" multiple="multiple"></select>

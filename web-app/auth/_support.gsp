@@ -237,7 +237,7 @@
 							<div class="field startRow">
 								<label for="createCompanyEmail"><g:message locale="${lang}" code="company.general.email.label"/></label>
 								<%--<span class="helpText"><g:message locale="${lang}" code="logIn.SupportNomHelpText.label" /></span>--%>
-								<input class="text" type="email" name="company.email" id="createCompanyEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}"/>
+								<input class="text" type="email" name="company.email" id="createCompanyEmail" pattern="[a-zA-Z0-9._-]+\@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,15}"/>
 							</div>
 
 							<div class="field">
