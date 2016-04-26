@@ -234,6 +234,23 @@ class SecurityFilters {
             afterView = {
             }
         }
+
+        currency(controller: "currency", action: "*") {
+            before = {
+                accessControl(auth: true) {
+                    role(RoleName.PARTNER.name())
+                }
+                def subject = SecurityUtils.getSubject()
+                if (subject && subject?.principal) {
+                    request.seller = Seller.findByLogin(subject.principal as String)
+                }
+            }
+            after = { model ->
+            }
+            afterView = {
+            }
+        }
+
         resource(controller: "resource", action: "update|save|delete") {
             before = {
                 accessControl(auth: true) {

@@ -98,7 +98,7 @@
 			<div class="spacer"></div>
 			<div class="newline">
 				<div class="pricing-small">
-					<label for="tourismPricingTicketPrice"><g:message locale="${lang}" code="tourismPricing.ticketPrice.label"/></label>
+					<label for="tourismPricingTicketPrice"><g:message locale="${lang}" code="tourismPricing.ticketPrice.label"/></label>(<span id="tourismPricingCurrencyCode"></span>)
 				</div>
 				<div class="pricing-small">
 					<label for="tourismPricingTicketStock"><g:message locale="${lang}" code="tourismPricing.ticketStock.label"/>&nbsp;<sup>*</sup></label>

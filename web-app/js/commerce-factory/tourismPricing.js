@@ -1,4 +1,5 @@
 var tourismPricingGridObject = null;
+var tourismPricingDefaultCurrency = null
 
 function tourismPricingLoadPricings(productId) {
     var dataToSend = 'product.id=' + productId;
@@ -216,24 +217,24 @@ function tourismPricingInitControls(create) {
     var startDate = new Date();
     var availablesDates = $("#tourismPricingStartDate, #tourismPricingEndDate")
         .datepicker(
-        {
-            dateFormat : 'dd/mm/yy',
-            minDate : startDate,
-            changeMonth : true,
-            changeYear : true,
-            firstDay : 1,
-            onClose : function(selectedDate) {
-                var option = this.id == "tourismPricingStartDate" ? "minDate"
-                    : "maxDate", instance = $(this).data(
-                    "datepicker"), date = $.datepicker
-                    .parseDate(
-                        instance.settings.dateFormat
-                        || $.datepicker._defaults.dateFormat,
-                    selectedDate, instance.settings);
-                availablesDates.not(this).datepicker("option",
-                    option, date);
-            }
-        }).keydown(function(e) {
+            {
+                dateFormat : 'dd/mm/yy',
+                minDate : startDate,
+                changeMonth : true,
+                changeYear : true,
+                firstDay : 1,
+                onClose : function(selectedDate) {
+                    var option = this.id == "tourismPricingStartDate" ? "minDate"
+                        : "maxDate", instance = $(this).data(
+                        "datepicker"), date = $.datepicker
+                        .parseDate(
+                            instance.settings.dateFormat
+                            || $.datepicker._defaults.dateFormat,
+                            selectedDate, instance.settings);
+                    availablesDates.not(this).datepicker("option",
+                        option, date);
+                }
+            }).keydown(function(e) {
             if(e.keyCode == 8 || e.keyCode == 46)
                 $(this).val("")
             return false;
@@ -249,23 +250,23 @@ function tourismPricingInitControls(create) {
 
     $("#tourismPricingMinOrder")
         .change(
-        function() {
-            if ($("#tourismPricingMinOrder").val() == ''
-                || parseInt($("#tourismPricingMinOrder").val()) < 0) {
-                $("#tourismPricingMinOrder").val(0);
-            }
-            if (($("#tourismPricingMaxOrder").val() != '')
-                && (parseInt($("#tourismPricingMinOrder").val()) > parseInt($(
-                    "#tourismPricingMaxOrder").val()))) {
-                $("#tourismPricingMinOrder")
-                    .val(
-                    parseInt($(
-                        "#tourismPricingMaxOrder")
-                        .val()));
-            }
-            $("#tourismPricingMaxOrder").attr("min",
-                $("#tourismPricingMinOrder").val());
-        });
+            function() {
+                if ($("#tourismPricingMinOrder").val() == ''
+                    || parseInt($("#tourismPricingMinOrder").val()) < 0) {
+                    $("#tourismPricingMinOrder").val(0);
+                }
+                if (($("#tourismPricingMaxOrder").val() != '')
+                    && (parseInt($("#tourismPricingMinOrder").val()) > parseInt($(
+                        "#tourismPricingMaxOrder").val()))) {
+                    $("#tourismPricingMinOrder")
+                        .val(
+                            parseInt($(
+                                "#tourismPricingMaxOrder")
+                                .val()));
+                }
+                $("#tourismPricingMaxOrder").attr("min",
+                    $("#tourismPricingMinOrder").val());
+            });
 
     $("#tourismPricingMaxOrder").change(
         function() {
@@ -277,9 +278,9 @@ function tourismPricingInitControls(create) {
                     "#tourismPricingMinOrder").val()))) {
                 $("#tourismPricingMaxOrder")
                     .val(
-                    parseInt($(
-                        "#tourismPricingMinOrder")
-                        .val()));
+                        parseInt($(
+                            "#tourismPricingMinOrder")
+                            .val()));
             }
             $("#tourismPricingMinOrder").attr("max",
                 $("#tourismPricingMaxOrder").val());
@@ -469,6 +470,20 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         }
         tourismPricingInitUploadForm(ticketId, hasResource);
         tourismPricingTranslationDrawAll(ticketId);
+        var dataToSend = "format=json";
+        $.ajax({
+            url : currencyUrl,
+            type : "GET",
+            data : dataToSend,
+            dataType : "json",
+            cache : false,
+            async : true,
+            success : function(response, status) {
+                tourismPricingDefaultCurrency = response;
+                $("#tourismPricingCurrencyCode").val(tourismPricingDefaultCurrency.currencyCode);
+                $("#tourismPricingTicketPrice").val(data.cost / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
+            }
+        })
     }
     else if(tourismPricingGridObject.getData().length == 0){
         $('#tourismPricingTicketType').val($("#productName").val());
@@ -600,7 +615,7 @@ function tourismPricingCreateTicketCombinaison(productId) {
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) * 100));
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) * Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)))
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;
@@ -655,7 +670,7 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) * 100));
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) *  Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)));
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;

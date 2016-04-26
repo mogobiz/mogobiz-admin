@@ -459,6 +459,9 @@
 
             var companyShippingRulesCreatePageUrl = "${resource(dir: 'admin', file: '_createShippingRule.gsp')}";
 
+            // Currency
+            var currencyUrl = "${createLink(controller: 'currency', action: 'defaultCurrency')}";
+
             //TaxRate
             var taxRateListUrl = "${createLink(controller: 'taxRate', action: 'listTaxRate')}";
             var taxRateCreateUrl = "${createLink(controller: 'taxRate', action: 'createTaxRate')}";
