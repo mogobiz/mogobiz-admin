@@ -1,5 +1,19 @@
 var tourismPricingGridObject = null;
-var tourismPricingDefaultCurrency = null
+var tourismPricingDefaultCurrency = null;
+
+function tourismPricingLoadDefaultCurrency(){
+    $.ajax({
+        url : currencyUrl,
+        type : "GET",
+        data : "format=json",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            tourismPricingDefaultCurrency = response;console.log(tourismPricingDefaultCurrency)
+        }
+    });
+}
 
 function tourismPricingLoadPricings(productId) {
     var dataToSend = 'product.id=' + productId;
@@ -36,6 +50,7 @@ function tourismPricingLoadPricings(productId) {
                 name : tourismPricing_ticketPrice_label,
                 field : "cost",
                 width : 15,
+                formatter : tourismPricingCostCellFormatter,
                 cssClass : ""
             }, {
                 id : "stock",
@@ -147,6 +162,10 @@ function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataCont
     return "<a href='javascript:void(0)' onclick='tourismPricingCheckTicketResource(" + dataContext.productId + "," + dataContext.ticketId + ")'>" + value + "</a>";
 }
 
+function tourismPricingCostCellFormatter(row, cell, value, columnDef, dataContext) {
+    return "(" + tourismPricingDefaultCurrency.currencyCode + ") " + (value / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
+}
+
 function tourismPricingStockCellFormatter(row, cell, value, columnDef, dataContext) {
     if(value == defaultUnlimitedLabel)
         return defaultUnlimitedLabel;
@@ -217,26 +236,26 @@ function tourismPricingInitControls(create) {
     var startDate = new Date();
     var availablesDates = $("#tourismPricingStartDate, #tourismPricingEndDate")
         .datepicker(
-            {
-                dateFormat : 'dd/mm/yy',
-                minDate : startDate,
-                changeMonth : true,
-                changeYear : true,
-                firstDay : 1,
-                onClose : function(selectedDate) {
-                    var option = this.id == "tourismPricingStartDate" ? "minDate"
-                        : "maxDate", instance = $(this).data(
-                        "datepicker"), date = $.datepicker
-                        .parseDate(
-                            instance.settings.dateFormat
-                            || $.datepicker._defaults.dateFormat,
-                            selectedDate, instance.settings);
-                    availablesDates.not(this).datepicker("option",
-                        option, date);
-                }
-            }).keydown(function(e) {
+        {
+            dateFormat : 'dd/mm/yy',
+            minDate : startDate,
+            changeMonth : true,
+            changeYear : true,
+            firstDay : 1,
+            onClose : function(selectedDate) {
+                var option = this.id == "tourismPricingStartDate" ? "minDate"
+                    : "maxDate", instance = $(this).data(
+                    "datepicker"), date = $.datepicker
+                    .parseDate(
+                        instance.settings.dateFormat
+                        || $.datepicker._defaults.dateFormat,
+                    selectedDate, instance.settings);
+                availablesDates.not(this).datepicker("option",
+                    option, date);
+            }
+        }).keydown(function(e) {
             if(e.keyCode == 8 || e.keyCode == 46)
-                $(this).val("")
+                $(this).val("");
             return false;
         });
     $("#tourismPricingAvailabilityDate").datepicker("destroy");
@@ -250,23 +269,23 @@ function tourismPricingInitControls(create) {
 
     $("#tourismPricingMinOrder")
         .change(
-            function() {
-                if ($("#tourismPricingMinOrder").val() == ''
-                    || parseInt($("#tourismPricingMinOrder").val()) < 0) {
-                    $("#tourismPricingMinOrder").val(0);
-                }
-                if (($("#tourismPricingMaxOrder").val() != '')
-                    && (parseInt($("#tourismPricingMinOrder").val()) > parseInt($(
-                        "#tourismPricingMaxOrder").val()))) {
-                    $("#tourismPricingMinOrder")
-                        .val(
-                            parseInt($(
-                                "#tourismPricingMaxOrder")
-                                .val()));
-                }
-                $("#tourismPricingMaxOrder").attr("min",
-                    $("#tourismPricingMinOrder").val());
-            });
+        function() {
+            if ($("#tourismPricingMinOrder").val() == ''
+                || parseInt($("#tourismPricingMinOrder").val()) < 0) {
+                $("#tourismPricingMinOrder").val(0);
+            }
+            if (($("#tourismPricingMaxOrder").val() != '')
+                && (parseInt($("#tourismPricingMinOrder").val()) > parseInt($(
+                    "#tourismPricingMaxOrder").val()))) {
+                $("#tourismPricingMinOrder")
+                    .val(
+                    parseInt($(
+                        "#tourismPricingMaxOrder")
+                        .val()));
+            }
+            $("#tourismPricingMaxOrder").attr("min",
+                $("#tourismPricingMinOrder").val());
+        });
 
     $("#tourismPricingMaxOrder").change(
         function() {
@@ -278,9 +297,9 @@ function tourismPricingInitControls(create) {
                     "#tourismPricingMinOrder").val()))) {
                 $("#tourismPricingMaxOrder")
                     .val(
-                        parseInt($(
-                            "#tourismPricingMinOrder")
-                            .val()));
+                    parseInt($(
+                        "#tourismPricingMinOrder")
+                        .val()));
             }
             $("#tourismPricingMinOrder").attr("max",
                 $("#tourismPricingMaxOrder").val());
@@ -383,6 +402,8 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
     $("#tourismPricingStockOutSelling").prop("checked", false);
     $('#tourismPricingStartDate').datepicker("option", "maxDate", "");
     $('#tourismPricingEndDate').datepicker("option", "minDate", new Date());
+    $("#tourismPricingCurrencyCode").html(tourismPricingDefaultCurrency.currencyCode);
+    $("#tourismPricingTicketPrice").attr("pattern", "\\d+\\.?\\d{0," + tourismPricingDefaultCurrency.fractionDigits + "}");
     if ($('#productType').val() != 'SERVICE') {
         for ( var i = 0; i < ticketTypes.length; i++) {
             $('#tourismPricingVariation' + ticketTypes[i].position + 'Label').html(ticketTypes[i].name + "&nbsp;<sup>*</sup>");
@@ -443,7 +464,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingVariation1").val(variation1);
         $("#tourismPricingVariation2").val(variation2);
         $("#tourismPricingVariation3").val(variation3);
-        $("#tourismPricingTicketPrice").val(data.cost);
+        $("#tourismPricingTicketPrice").val(data.cost / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
         $("#tourismPricingTicketStock").val(data.stock);
         $("#tourismPricingMinOrder").val((data.minOrder == defaultUnlimitedLabel) ? "" : data.minOrder);
         $("#tourismPricingMaxOrder").val((data.maxOrder == defaultUnlimitedLabel) ? "" : data.maxOrder);
@@ -470,20 +491,6 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         }
         tourismPricingInitUploadForm(ticketId, hasResource);
         tourismPricingTranslationDrawAll(ticketId);
-        var dataToSend = "format=json";
-        $.ajax({
-            url : currencyUrl,
-            type : "GET",
-            data : dataToSend,
-            dataType : "json",
-            cache : false,
-            async : true,
-            success : function(response, status) {
-                tourismPricingDefaultCurrency = response;
-                $("#tourismPricingCurrencyCode").val(tourismPricingDefaultCurrency.currencyCode);
-                $("#tourismPricingTicketPrice").val(data.cost / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
-            }
-        })
     }
     else if(tourismPricingGridObject.getData().length == 0){
         $('#tourismPricingTicketType').val($("#productName").val());

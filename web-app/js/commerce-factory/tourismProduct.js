@@ -284,6 +284,7 @@ function productAttachEditForm(productId, fromPage) {
                 selectedList : 1
             });
             tourismProductLoadTaxList(product);
+            tourismPricingLoadDefaultCurrency();
             if (product.stockDisplay) {
                 $('#globalstockDisplay').prop("checked", true);
             }
@@ -387,11 +388,11 @@ function productAttachEditForm(productId, fromPage) {
                 changeMonth : true,
                 changeYear : true,
                 onClose : function(selectedDate) {
-                    productValidityPeriodFeaturedChanged(productId)
+                    productValidityPeriodFeaturedChanged(productId);
                     var option = this.id == "productStartDatefeatured" ? "minDate" : "maxDate",
                         instance = $(this).data("datepicker"),
                         Date = $.datepicker.parseDate(
-                            instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                                instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                     datesFeature.not(this).datepicker("option", option, selectedDate);
                 }
             }).keydown(function(){
@@ -610,7 +611,7 @@ function productAttachEditForm(productId, fromPage) {
                 $("#shippingTab").unbind().hide();
             }
         }
-   });
+    });
 }
 
 function selectValidityPeriodFeatured() {
