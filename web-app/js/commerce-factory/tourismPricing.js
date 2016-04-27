@@ -10,7 +10,7 @@ function tourismPricingLoadDefaultCurrency(){
         cache : false,
         async : true,
         success : function(response, status) {
-            tourismPricingDefaultCurrency = response;console.log(tourismPricingDefaultCurrency)
+            tourismPricingDefaultCurrency = response;
         }
     });
 }
@@ -92,7 +92,7 @@ function tourismPricingLoadPricings(productId) {
                     'variation1' : (response[i].variation1) ? response[i].variation1.id : null,
                     'variation2' : (response[i].variation2) ? response[i].variation2.id : null,
                     'variation3' : (response[i].variation3) ? response[i].variation3.id : null,
-                    'cost' : (response[i].price / 100),
+                    'cost' : (response[i].price / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)).toFixed(tourismPricingDefaultCurrency.fractionDigits),
                     'stock' : (!response[i].stock || response[i].stock.stockUnlimited) ? defaultUnlimitedLabel : response[i].stock.stock,
                     'stockUnlimited' : (!response[i].stock) ? true : response[i].stock.stockUnlimited,
                     'stockOutSelling' : (!response[i].stock) ? false : response[i].stock.stockOutSelling,
@@ -163,7 +163,7 @@ function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataCont
 }
 
 function tourismPricingCostCellFormatter(row, cell, value, columnDef, dataContext) {
-    return "(" + tourismPricingDefaultCurrency.currencyCode + ") " + (value / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
+    return tourismPricingDefaultCurrency.currencyCode + " " + value;
 }
 
 function tourismPricingStockCellFormatter(row, cell, value, columnDef, dataContext) {
@@ -464,7 +464,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
         $("#tourismPricingVariation1").val(variation1);
         $("#tourismPricingVariation2").val(variation2);
         $("#tourismPricingVariation3").val(variation3);
-        $("#tourismPricingTicketPrice").val(data.cost / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits));
+        $("#tourismPricingTicketPrice").val(data.cost);
         $("#tourismPricingTicketStock").val(data.stock);
         $("#tourismPricingMinOrder").val((data.minOrder == defaultUnlimitedLabel) ? "" : data.minOrder);
         $("#tourismPricingMaxOrder").val((data.maxOrder == defaultUnlimitedLabel) ? "" : data.maxOrder);
