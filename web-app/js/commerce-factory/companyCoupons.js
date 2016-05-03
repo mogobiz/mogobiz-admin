@@ -478,13 +478,15 @@ function companyCouponsPageInitFields(couponId, isCreate){
             companyCouponsDescriptionCkeditor.updateFrame();
 
             for(var i = 0; i < coupon.categories.length; i++){
-                $("#companyCouponsCategories_to").append($("<option></option>").attr("value", coupon.categories[i].id).text(coupon.categories[i].name));
+                var libelle = coupon.categories[i].name + " / " + coupon.categories[i].catalog.name
+                $("#companyCouponsCategories_to").append($("<option></option>").attr("value", coupon.categories[i].id).attr("title", libelle).text(libelle));
             }
             for(var i = 0; i < coupon.products.length; i++){
-                $("#companyCouponsProduct_to").append($("<option></option>").attr("value", coupon.products[i].id).text(coupon.products[i].name));
+                var libelle = coupon.products[i].name + " / " + coupon.products[i].category.catalog.name
+                $("#companyCouponsProduct_to").append($("<option></option>").attr("value", coupon.products[i].id).attr("title", libelle).text(libelle));
             }
             for(var i = 0; i < coupon.skus.length; i++){
-                var libelle = coupon.skus[i].name + " (" + coupon.skus[i].product.name + " / " + coupon.skus[i].product.company.name + ")"
+                var libelle = coupon.skus[i].name + " (" + coupon.skus[i].product.name + " / " + coupon.skus[i].product.category.catalog.name + ")"
                 $("#companyCouponsSku_to").append($("<option></option>").attr("value", coupon.skus[i].id).attr("title", libelle).text(libelle));
             }
             var rules = [];
@@ -694,7 +696,8 @@ function companyCouponsSearchCategories(){
             $("#companyCouponsCategories").empty();
             for(var i = 0; i < response.length; i++){
                 if($("#companyCouponsCategories_to > option[value=" + response[i].id + "]").length == 0) {
-                    $("#companyCouponsCategories").append($("<option></option>").attr("value", response[i].id).text(response[i].name));
+                    var libelle = response[i].name + " / " + response[i].catalog.name
+                    $("#companyCouponsCategories").append($("<option></option>").attr("value", response[i].id).attr("title", libelle).text(libelle));
                 }
             }
         },
@@ -721,7 +724,8 @@ function companyCouponsSearchProducts(){
             $("#companyCouponsProduct").empty();
             for(var i = 0; i < products.length; i++){
                 if($("#companyCouponsProduct_to > option[value='" + products[i].id + "']").length == 0) {
-                    $("#companyCouponsProduct").append($("<option></option>").attr("value", products[i].id).text(products[i].name));
+                    var libelle = products[i].name + " / " + products[i].category.catalog.name
+                    $("#companyCouponsProduct").append($("<option></option>").attr("value", products[i].id).attr("title", libelle).text(libelle));
                 }
             }
         },
@@ -747,7 +751,7 @@ function companyCouponsSearchSku(){
             $("#companyCouponsSku").empty();
             for(var i = 0; i < response.length; i++){
                 if($("#companyCouponsSku_to > option[value='" + response[i].id + "']").length == 0) {
-                    var libelle = response[i].name + " (" + response[i].product.name + " / " + response[i].product.company.name + ")"
+                    var libelle = response[i].name + " (" + response[i].product.name + " / " + response[i].product.category.catalog.name + ")"
                     $("#companyCouponsSku").append($("<option></option>").attr("value", response[i].id).attr("title", libelle).text(libelle));
                 }
             }
