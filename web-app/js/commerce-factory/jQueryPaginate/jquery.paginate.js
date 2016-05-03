@@ -222,28 +222,30 @@
 		var tmp = left - (outsidewidth / 2);
 		if(ver == 'ie7') _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 52 + 'px'});	
 		else _ulwrapdiv.animate({scrollLeft: left + tmp - _first.parent().width() + 'px'});	
-	}
+	};
 	
 	$.fn.applystyle = function(o,obj,a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright){
-					obj.find('a').css(a_css);
-					obj.find('span.jPag-current').css(hover_css);
-					obj.find('a').hover(
-					function(){
-						$(this).css(hover_css);
-					},
-					function(){
-						$(this).css(a_css);
-					}
-					);
-					obj.css('padding-left',_first.parent().width() + 5 +'px');
-					insidewidth = 0;
-					
-					obj.find('li').each(function(i,n){
-						if(i == (o.display-1)){
-							outsidewidth_tmp = this.offsetLeft + this.offsetWidth ;
-						}
-						insidewidth += this.offsetWidth;
-					})
-					_ul.css('width',insidewidth+'px');
-	}
+        obj.find('a').css(a_css);
+        obj.find('span.jPag-current').css(hover_css);
+        obj.find('a').hover(
+        function(){
+            $(this).css(hover_css);
+        },
+        function(){
+            $(this).css(a_css);
+        }
+        );
+        obj.css('padding-left',_first.parent().width() + 10 +'px'); // 5 pixels are added for chrome on mac problem
+        insidewidth = 0;
+
+        obj.find('li').each(function(i,n){
+            if(i == (o.display-1)){
+                outsidewidth_tmp = this.offsetLeft + this.offsetWidth ;
+            }
+            insidewidth += this.offsetWidth;
+        });
+        insidewidth += 5; // 5 pixels are added for chrome on mac problem
+        outsidewidth_tmp += 5; // 5 pixels are added for chrome on mac problem
+        _ul.css('width',insidewidth+'px');
+	};
 })(jQuery);

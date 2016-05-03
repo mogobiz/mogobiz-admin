@@ -413,7 +413,7 @@ table.form label {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
-	behavior: url(../htc/border-radius.htc); /*hack IE*/
+	behavior: url(../../htc/border-radius.htc); /*hack IE*/
 	/*-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .25);
 	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, .25);
 	box-shadow: 0 3px 5px rgba(0, 0, 0, .25);*/
@@ -775,30 +775,30 @@ creer file d'ariane
 }
 
 #fileArianne ul.info {
-	background: url("/iper2010/images/arrows-back1.png") no-repeat;
+	background: url("/mogobiz/images/arrows-back1.png") no-repeat;
 	height: 34px;
 	cursor: pointer;
 }
 #fileArianne ul.products {
-	background: url("/iper2010/images/arrows-back1.png") no-repeat;
+	background: url("/mogobiz/images/arrows-back1.png") no-repeat;
 	height: 34px;
 	cursor: pointer;
 }
 #fileArianne ul.resources {
-	background: url("/iper2010/images/arrows-back2.png") no-repeat;
+	background: url("/mogobiz/images/arrows-back2.png") no-repeat;
 	height: 34px;
 	cursor: pointer;
 }
 
 #fileArianne ul.pictures {
-	background: url("/iper2010/images/arrows-back1.png") no-repeat;
+	background: url("/mogobiz/images/arrows-back1.png") no-repeat;
 	height: 34px;
 	cursor: pointer;
 }
 
 
 #fileArianne ul.geoloc {
-	background: url("/iper2010/images/arrows-back3.png") no-repeat;
+	background: url("/mogobiz/images/arrows-back3.png") no-repeat;
 	height: 34px;
 	cursor: pointer;
 }
