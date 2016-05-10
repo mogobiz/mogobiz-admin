@@ -43,6 +43,7 @@ var multiselectNoneSelectedTextLabel = "${message(code:'multiselect.noneSelected
 var multiselectNoneSelectedTextDisabledLabel = "${message(code:'multiselect.noneSelectedText.disabled.label')}";
 var fancyBoxErrorMessage_1 = "${message(code:'default.fancybox.error1.message')}";
 var fancyBoxErrorMessage_2 = "${message(code:'default.fancybox.error2.message')}";
+var elasticsearchServerError = "${message(code:'default.elasticsearch.server.message')}";
 
 //company labels
 var createCompanyLabel = "${message(code:'company.new.label')}";

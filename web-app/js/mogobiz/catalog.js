@@ -752,7 +752,7 @@ function catalogGetEsEnvPreviousIndices(){
                     }
 
                     $("#catalogListIndices").empty().html(html);
-                    $("#catalogListIndices").multiselect("refresh");
+                    $("#catalogListIndices").multiselect("enable").multiselect("refresh");
                     $('#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogListIndices"]').each(function () {
                         if (this.value == catalogActiveIndex) {
                             $(this.parentNode).addClass("ui-state-active");
@@ -764,7 +764,16 @@ function catalogGetEsEnvPreviousIndices(){
                 error: function (response, status) {}
             });
         },
-        error: function (response, status) {}
+        error: function (response, status) {
+            jQuery.noticeAdd({
+                stayTime: 2000,
+                text: elasticsearchServerError,
+                stay: false,
+                type: "error"
+            });
+            $("#categoriesMain").hideLoading();
+            $("#catalogListIndices").empty().multiselect("disable");
+        }
     });
 }
 
