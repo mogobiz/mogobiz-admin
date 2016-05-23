@@ -88,6 +88,9 @@
                                     %{--</h1>--}%
                                 </div>
                                 <div>
+                                    <g:if test="${flash.message}">
+                                        <div class="errorMessage" style="display: none;">${flash.message}</div>
+                                    </g:if>
                                     <g:form controller="auth" action="signIn" name="login-form">
                                         <g:hiddenField name="targetUri" value="${params.targetUri}" />
                                         <div id="usernameSection" class="newline">
@@ -169,9 +172,6 @@
 				</tr>
 			</table>
 		</div>
-	</div>
-	<div align="center" id="inscriptionDiv" style="display: none;">
-		<g:render template="/auth/support" />
 	</div>
 </body>
 </html>

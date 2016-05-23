@@ -70,6 +70,14 @@ $(function() {
         else
             $('#emailSection').removeClass('filled');
     });
+    if($(".errorMessage").length > 0){
+        jQuery.noticeAdd({
+            stayTime : 5000,
+            text : $(".errorMessage").html(),
+            stay : false,
+            type : 'error'
+        });
+    }
 });
 
 function showHideResetPasswordForm(){
