@@ -227,30 +227,39 @@ $(document).ready(function() {
 	});
 
 	$( document ).ajaxSuccess( function(event, xhr, settings) {
-		if(settings.hideNotice)
+		if (settings.hideNotice)
 			return;
 		var type = settings.noticeType
 		if (type == 'PUT') {
 			jQuery.noticeAdd({
-				stayTime : 1000,
-				text : 'Updating asset on the server',
-				stay : false,
-				type : 'success'
+				stayTime: 1000,
+				text: 'Updating asset on the server',
+				stay: false,
+				type: 'success'
 			});
 		} else if (type == 'POST') {
 			jQuery.noticeAdd({
-				stayTime : 1000,
-				text : 'Creating asset on the server',
-				stay : false,
-				type : 'success'
+				stayTime: 1000,
+				text: 'Creating asset on the server',
+				stay: false,
+				type: 'success'
 			});
 		} else if (type == 'DELETE') {
 			jQuery.noticeAdd({
-				stayTime : 1000,
-				text : 'Deleting asset on the server',
-				stay : false,
-				type : 'success'
+				stayTime: 1000,
+				text: 'Deleting asset on the server',
+				stay: false,
+				type: 'success'
 			});
+		}
+	});
+
+	$( document ).ajaxComplete( function(event, xhr, settings) {
+		if (xhr.status == 201) {
+			var rootCause = xhr.getResponseHeader("MOGOBIZ_201_ROOT_CAUSE")
+			if ("MULTI_SESSION" == rootCause) {
+				location.href = multiSessionRedirectUrl;
+			}
 		}
 	});
 });

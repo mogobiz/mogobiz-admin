@@ -2,6 +2,8 @@
  * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
  */
 
+
+import com.mogobiz.auth.AuthRealm
 import com.mogobiz.store.domain.Company
 import org.apache.shiro.SecurityUtils
 
@@ -11,6 +13,7 @@ import com.mogobiz.store.domain.Seller
 import com.mogobiz.store.domain.User
 
 import com.mogobiz.utils.PermissionType
+
 import static com.mogobiz.utils.ProfileUtils.*
 
 /**
@@ -373,6 +376,15 @@ class SecurityFilters {
                 def subject = SecurityUtils.getSubject()
                 if (subject && subject?.principal) {
                     request.user = User.findByLogin(subject.principal as String)
+                    if (!"auth".equals(controllerName) && !"signIn".equals(actionName)) {
+                        if (!AuthRealm.checkUserAndSessionId(subject.principal as String, session.id)) {
+                            request.user = null
+
+                            response.status = 201
+                            response.addHeader("MOGOBIZ_201_ROOT_CAUSE", "MULTI_SESSION")
+                            return false
+                        }
+                    }
                 }
             }
         }
