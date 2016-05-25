@@ -32,7 +32,7 @@
                             </h1>
                         </div>
                         <div class="sIBody">
-                            <div style="color: #FF0000">${flash.message}</div>
+                            <div style="color: #FF0000"><g:message code="${params.codeMessage}" /></div>
                         </div>
                     </div>
                 </td>

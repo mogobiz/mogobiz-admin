@@ -382,6 +382,8 @@ class SecurityFilters {
 
                             response.status = 201
                             response.addHeader("MOGOBIZ_201_ROOT_CAUSE", "MULTI_SESSION")
+                            response.addHeader("MOGOBIZ_201_ERROR", "logIn.errors.already.logged")
+                            flash.codeMessage = "logIn.errors.already.logged"
                             return false
                         }
                     }

@@ -258,7 +258,8 @@ $(document).ready(function() {
 		if (xhr.status == 201) {
 			var rootCause = xhr.getResponseHeader("MOGOBIZ_201_ROOT_CAUSE")
 			if ("MULTI_SESSION" == rootCause) {
-				location.href = multiSessionRedirectUrl;
+				var errorCode = xhr.getResponseHeader("MOGOBIZ_201_ERROR")
+				location.href = multiSessionRedirectUrl + "?codeMessage=" + errorCode;
 			}
 		}
 	});
