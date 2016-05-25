@@ -351,7 +351,7 @@ function drawLocalTaxRateGrid(companyId, taxRate){
             "localTaxRateId": taxRate[i].id,
             "countryCode": taxRate[i].countryCode,
             "stateCode": taxRate[i].stateCode,
-            "rate" : (taxRate[i].rate / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
+            "rate" : taxRate[i].rate,
             "active": taxRate[i].active
         }
     }
@@ -457,8 +457,6 @@ function companyTaxLocalInitControls(isCreate) {
 }
 
 function companyTaxLocalInitFields(companyId, localTaxRateId, isCreate){
-    $("#localTaxRateRateCurrency").html(defaultCurrency.currencyCode);
-    $("#localTaxRateRate").attr("pattern", "\\d+\\.?\\d{0," + defaultCurrency.fractionDigits + "}");
     $("#localTaxRateCompanyId").val(companyId);
     $("#localTaxRateRate").val(0);
     $("#localTaxRateActive").attr("checked", "checked");
@@ -624,7 +622,7 @@ function companyTaxLocalAddNew(){
             dataToSend += "&taxRateId=" + companyTaxSelectedId;
             dataToSend += "&country=" + $("#localTaxRateCountry").val();
             dataToSend += "&state=" + states[i];
-            dataToSend += "&rate=" + encodeURIComponent(parseInt(parseFloat($("#localTaxRateRate").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+            dataToSend += "&rate=" + $("#localTaxRateRate").val();
             dataToSend += "&active=" + $("#localTaxRateActive").is(":checked");
             dataToSend += "&format=json";
             $.ajax({
@@ -652,7 +650,7 @@ function companyTaxLocalAddNew(){
         dataToSend += "&taxRateId=" + companyTaxSelectedId;
         dataToSend += "&country=" + $("#localTaxRateCountry").val();
         dataToSend += "&state=";
-        dataToSend += "&rate=" + encodeURIComponent(parseInt(parseFloat($("#localTaxRateRate").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+        dataToSend += "&rate=" + $("#localTaxRateRate").val();
         dataToSend += "&active=" + $("#localTaxRateActive").is(":checked");
         dataToSend += "&format=json";
         $.ajax({

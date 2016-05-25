@@ -85,106 +85,106 @@ function companyShippingMultiSelectAutoUpdate(compId, objId, objProperty){
 }
 
 function companyGetShippingPolicy(compId) {
-	var dataToSend = "company.id="+compId;
-	dataToSend += "&format=json";
+    var dataToSend = "company.id="+compId;
+    dataToSend += "&format=json";
 
-	$.ajax({
-		url : shippingPolicyShowUrl,
-		type : "GET",
-		data : dataToSend,
-		dataType : "json",
-		cache : false,
-		async : true,
-		success : function(response, status) {
-			if (response.success) {
-				var shipping = response.data;
-				var shippingEncoded = $.toJSON(shipping);
-				var shippingFormValues = shippingEncoded;
-				shippingFormValues = shippingFormValues.replace(/(^\s+|\s+$)/, '');
-				shippingFormValues = "(" + shippingFormValues + ");";
-				try	{
-					var json = eval(shippingFormValues);
-					var newJson = new Object();
-					for(var key in json){
-						var newKey = "company."+key;
-						if (key=='shipFrom') {
-							var companyshipFromObj = json[key];
-							for(var key1 in companyshipFromObj){
-								var newKey1 = "company.shipFrom."+key1;
-								newJson[newKey1] = companyshipFromObj[key1];
-							}
-						}
-						else if (key == "weightUnit" && json[key]) {
-							var newKey1 = "company.weightUnit.name";
-							newJson[newKey1] = json[key].name;
-						}
-						else if (key == "refundPolicy" && json[key]) {
-							var newKey1 = "company.refundPolicy.name";
-							newJson[newKey1] = json[key].name;
-						}
-						else {
-							newJson[newKey] = json[key];
-						}
-					}
-				}
-				catch(err)	{
+    $.ajax({
+        url : shippingPolicyShowUrl,
+        type : "GET",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if (response.success) {
+                var shipping = response.data;
+                var shippingEncoded = $.toJSON(shipping);
+                var shippingFormValues = shippingEncoded;
+                shippingFormValues = shippingFormValues.replace(/(^\s+|\s+$)/, '');
+                shippingFormValues = "(" + shippingFormValues + ");";
+                try	{
+                    var json = eval(shippingFormValues);
+                    var newJson = new Object();
+                    for(var key in json){
+                        var newKey = "company."+key;
+                        if (key=='shipFrom') {
+                            var companyshipFromObj = json[key];
+                            for(var key1 in companyshipFromObj){
+                                var newKey1 = "company.shipFrom."+key1;
+                                newJson[newKey1] = companyshipFromObj[key1];
+                            }
+                        }
+                        else if (key == "weightUnit" && json[key]) {
+                            var newKey1 = "company.weightUnit.name";
+                            newJson[newKey1] = json[key].name;
+                        }
+                        else if (key == "refundPolicy" && json[key]) {
+                            var newKey1 = "company.refundPolicy.name";
+                            newJson[newKey1] = json[key].name;
+                        }
+                        else {
+                            newJson[newKey] = json[key];
+                        }
+                    }
+                }
+                catch(err)	{
                     console.log('That appears to be invalid JSON!');
-					return false;
-				}
-				var shippingForm = document.forms['formShipping'];
-				$(shippingForm).populate(newJson, {debug:1});
+                    return false;
+                }
+                var shippingForm = document.forms['formShipping'];
+                $(shippingForm).populate(newJson, {debug:1});
 
-				// set multicheck combos values
-				$("#shippingCountry").multiselect('uncheckAll');
-				$('#shippingCountry').multiselect('refresh');
+                // set multicheck combos values
+                $("#shippingCountry").multiselect('uncheckAll');
+                $('#shippingCountry').multiselect('refresh');
 
-				if(newJson["company.shipFrom.countryCode"] && newJson["company.shipFrom.countryCode"] != ""){
-					$('#shippingCountry').find('option:contains(' + newJson["company.shipFrom.countryCode"] + ')').attr('selected','selected');
-					$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCountry"]').each(function() {
-						if(this.value == newJson["company.shipFrom.countryCode"]) {
+                if(newJson["company.shipFrom.countryCode"] && newJson["company.shipFrom.countryCode"] != ""){
+                    $('#shippingCountry').find('option:contains(' + newJson["company.shipFrom.countryCode"] + ')').attr('selected','selected');
+                    $('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCountry"]').each(function() {
+                        if(this.value == newJson["company.shipFrom.countryCode"]) {
                             $("#shippingCountry").unbind("multiselectclick");
-							this.click();
+                            this.click();
                             companyShippingMultiSelectAutoUpdate(compId, "#shippingCountry", "company.shipFrom.countryCode");
-						}
-					});
-				}
+                        }
+                    });
+                }
 
-				// set value of Allow International Shipping
-				if(response.data.shippingInternational){
-					$('#formShipping #shippingAllowInternational').attr("checked","checked");
-				}
-			}
-			else {
-				showErrors('#formShipping .errors', response.errors);
-			}
-		}
-	});
+                // set value of Allow International Shipping
+                if(response.data.shippingInternational){
+                    $('#formShipping #shippingAllowInternational').attr("checked","checked");
+                }
+            }
+            else {
+                showErrors('#formShipping .errors', response.errors);
+            }
+        }
+    });
 }
 
 function getStoreAddress(compId) {
-	// Country
-	if ($('#generalCountry').val() == null) {
-		$("#shippingCountry").multiselect('uncheckAll');
-		$('#shippingCountry').multiselect('refresh');
-	}
-	else {
-		$("#shippingCountry").multiselect('uncheckAll');
-		$('#shippingCountry').find('option:contains('+$('#generalCountry option:selected').text()+')').attr('selected','selected');
-		$('#shippingCountry').multiselect('refresh');
-		$('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCountry"]').each(function() {
-			if(this.title == $('#generalCountry option:selected').text()) {
+    // Country
+    if ($('#generalCountry').val() == null) {
+        $("#shippingCountry").multiselect('uncheckAll');
+        $('#shippingCountry').multiselect('refresh');
+    }
+    else {
+        $("#shippingCountry").multiselect('uncheckAll');
+        $('#shippingCountry').find('option:contains('+$('#generalCountry option:selected').text()+')').attr('selected','selected');
+        $('#shippingCountry').multiselect('refresh');
+        $('#formShipping .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_shippingCountry"]').each(function() {
+            if(this.title == $('#generalCountry option:selected').text()) {
                 $("#shippingCountry").unbind("multiselectclick");
-				this.click();
+                this.click();
                 companyShippingMultiSelectAutoUpdate(compId, "#shippingCountry", "company.shipFrom.countryCode");
-			}
-		});
-	}
+            }
+        });
+    }
 
-	$('#formShipping #shippingCity').val($('#formGeneral #generalCity').val());
-	$('#formShipping #shippingState').val($('#formGeneral #generalState').val());
-	$('#formShipping #shippingPostalCode').val($('#formGeneral #generalPostalCode').val());
-	$('#formShipping #shippingAddress1').val($('#formGeneral #generalAddress1').val());
-	$('#formShipping #shippingAddress2').val($('#formGeneral #generalAddress2').val());
+    $('#formShipping #shippingCity').val($('#formGeneral #generalCity').val());
+    $('#formShipping #shippingState').val($('#formGeneral #generalState').val());
+    $('#formShipping #shippingPostalCode').val($('#formGeneral #generalPostalCode').val());
+    $('#formShipping #shippingAddress1').val($('#formGeneral #generalAddress1').val());
+    $('#formShipping #shippingAddress2').val($('#formGeneral #generalAddress2').val());
 
     var dataToSend = "company.id=" + compId;
     dataToSend += "&company.shipFrom.countryCode=" + $('#generalCountry').val();
@@ -260,11 +260,15 @@ function companyShippingRulesDrawAll(companyId){
             var rules = response.list;
             if(rules){
                 for ( var i = 0; i < rules.length; i++) {
+                    var isPriceNum = /^\d+(\.\d+)?$/.test(rules[i].price);
+                    var price = rules[i].price;
+                    if(isPriceNum)
+                        price = (rules[i].price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
                     gridData[gridData.length] = {
                         "id" : i,
                         "companyId": companyId,
                         "ruleId": rules[i].id,
-                        "price": isNaN(rules[i].price) ? rules[i].price : (rules[i].price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
+                        "price": price,
                         "maxAmount": (rules[i].maxAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "minAmount": (rules[i].minAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "countryCode": rules[i].countryCode
@@ -359,7 +363,7 @@ function companyShippingRulesInitControls(isCreate) {
 
 function companyShippingRulesInitFields(companyId, ruleId, isCreate){
     $("#shippingRuleCompanyId").val(companyId);
-    $("#shippingRuleMinAmountCurrency, #shippingRuleMaxAmountCurrency").html(defaultCurrency.currencyCode);
+    $("#shippingRuleMinAmountCurrency, #shippingRuleMaxAmountCurrency, #shippingRulePriceCurrency").html(defaultCurrency.currencyCode);
     $("#shippingRuleMaxAmount, #shippingRuleMinAmount").attr("pattern", "\\d+\\.?\\d{0," + defaultCurrency.fractionDigits + "}");
     $("#shippingRuleMaxAmount, #shippingRuleMinAmount, #shippingRulePrice").val(0);
     $("#shippingRuleCountry").empty();
@@ -471,8 +475,12 @@ function companyShippingRulesValidateForm(isCreate){
 }
 
 function companyShippingRulesAddNew(){
+    var isPriceNum = /^\d+(\.\d+)?$/.test($("#shippingRulePrice").val());
+    var price = $("#shippingRulePrice").val();
+    if(isPriceNum)
+        price = encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     var dataToSend = "countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + isNaN($("#shippingRulePrice").val()) ? encodeURIComponent($("#shippingRulePrice").val()) : encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&price=" + price;
     dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";
@@ -493,9 +501,13 @@ function companyShippingRulesAddNew(){
 }
 
 function companyShippingRulesUpdate(){
+    var isPriceNum = /^\d+(\.\d+)?$/.test($("#shippingRulePrice").val());
+    var price = $("#shippingRulePrice").val();
+    if(isPriceNum)
+        price = encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     var dataToSend = "id=" + $("#shippingRuleId").val();
     dataToSend += "&countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + isNaN($("#shippingRulePrice").val()) ? encodeURIComponent($("#shippingRulePrice").val()) : encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&price=" + price;
     dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";

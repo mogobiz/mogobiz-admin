@@ -64,7 +64,7 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsPastille"><g:message locale="${lang}" code="company.coupons.pastille.label"></g:message><span id="companyCouponsPastilleCurrency"></span></label><br />
+                    <label for="companyCouponsPastille"><g:message locale="${lang}" code="company.coupons.pastille.label"></g:message></label><br />
                 </div>
                 <div class="companyCouponsDialog-large">
                     <label for="companyCouponsNumberOfUse"><g:message locale="${lang}" code="company.coupons.numberOfUse.label"></g:message></label><br />
