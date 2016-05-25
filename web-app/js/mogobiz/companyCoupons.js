@@ -84,7 +84,7 @@ function companyCouponsDrawAll(){
                         "couponId": coupons[i].id,
                         "name": coupons[i].name,
                         "code": coupons[i].code,
-                        "pastille": coupons[i].pastille,
+                        "pastille": isNaN(coupons[i].pastille) ? coupons[i].pastille : (coupons[i].pastille / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "startDate": coupons[i].startDate,
                         "endDate": coupons[i].endDate,
                         "numberOfUses": coupons[i].numberOfUses,
@@ -375,6 +375,7 @@ function companyCouponsPageInitControls(isCreate) {
 }
 
 function companyCouponsPageInitFields(couponId, isCreate){
+    $("#companyCouponsPastilleCurrency").html(defaultCurrency.currencyCode);
     $("#companyCouponsId").val(couponId);
     $("#companyCouponsName,#companyCouponsCode,#companyCouponsStartDate,#companyCouponsEndDate,#companyCouponsNumberOfUse,#companyCouponsPastille").val("");
     $("#companyCouponsActive").prop("checked", false);
@@ -579,7 +580,8 @@ function companyCouponsCreateCoupon(){
             rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
 
-    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent($("#companyCouponsPastille").val());
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val());
+    dataToSend += "&pastille=" + isNaN($("#companyCouponsPastille").val()) ? encodeURIComponent($("#companyCouponsPastille").val()) : encodeURIComponent(parseInt(parseFloat($("#companyCouponsPastille").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;
@@ -647,7 +649,8 @@ function companyCouponsUpdateCoupon(){
     }
 
     var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + encodeURIComponent($("#companyCouponsName").val());
-    dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent($("#companyCouponsPastille").val());
+    dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val());
+    dataToSend += "&pastille=" + isNaN($("#companyCouponsPastille").val()) ? encodeURIComponent($("#companyCouponsPastille").val()) : encodeURIComponent(parseInt(parseFloat($("#companyCouponsPastille").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;

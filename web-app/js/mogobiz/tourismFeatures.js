@@ -73,8 +73,8 @@ function tourismFeaturesLoad(productId) {
 						'featureUUID' : response.features[i].uuid,
 						'featureName' : response.features[i].name,
 						'featurePosition' : ((i + 1) * 10),
-						'featureValue' : response.features[i].value,
-						'featureExternalCode' : response.features[i].externalCode,
+						'featureValue' : response.features[i].value != null ? response.features[i].value : "",
+						'featureExternalCode' : response.features[i].externalCode ? response.features[i].externalCode : "",
 						'featureHide' : response.features[i].hide,
 						'productId' : productId,
 						'category': response.features[i].category

@@ -28,7 +28,7 @@
                 <label for="shippingRuleCountry"><g:message locale="${lang}" code="company.shipping.rules.countryCode.label"></g:message>&nbsp;<sup>*</sup></label><br />
             </div>
             <div class="shipping_medium">
-                <label for="shippingRulePrice"><g:message locale="${lang}" code="company.shipping.rules.price.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRulePrice"><g:message locale="${lang}" code="company.shipping.rules.price.label"></g:message>&nbsp;(<span id="shippingRulePriceCurrency"></span>)&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>
@@ -43,10 +43,10 @@
         <div class="spacer"></div>
         <div class="newline">
             <div class="shipping_medium">
-                <label for="shippingRuleMinAmount"><g:message locale="${lang}" code="company.shipping.rules.minAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRuleMinAmount"><g:message locale="${lang}" code="company.shipping.rules.minAmount.label"></g:message>&nbsp;(<span id="shippingRuleMinAmountCurrency"></span>)&nbsp;<sup>*</sup></label><br />
             </div>
             <div class="shipping_medium">
-                <label for="shippingRuleMaxAmount"><g:message locale="${lang}" code="company.shipping.rules.maxAmount.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="shippingRuleMaxAmount"><g:message locale="${lang}" code="company.shipping.rules.maxAmount.label"></g:message>&nbsp;(<span id="shippingRuleMaxAmountCurrency"></span>)&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>

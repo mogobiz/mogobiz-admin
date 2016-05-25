@@ -344,7 +344,7 @@ function uploadAnotherFile() {
             <div class="spacer"></div>
             <div class="newline">
                 <div class="product-shipping">
-                    <label for="tourismShippingAmount"><g:message locale="${lang}" code="shipping.amount.label"/></label>
+                    <label for="tourismShippingAmount"><g:message locale="${lang}" code="shipping.amount.label"/> (<span id="tourismShippingCurrencyCode"></span>)</label>
                 </div>
             </div>
             <div class="spacer-small"></div>

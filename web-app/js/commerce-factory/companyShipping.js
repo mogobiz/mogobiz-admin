@@ -264,9 +264,9 @@ function companyShippingRulesDrawAll(companyId){
                         "id" : i,
                         "companyId": companyId,
                         "ruleId": rules[i].id,
-                        "price": rules[i].price,
-                        "maxAmount": rules[i].maxAmount,
-                        "minAmount": rules[i].minAmount,
+                        "price": isNaN(rules[i].price) ? rules[i].price : (rules[i].price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
+                        "maxAmount": (rules[i].maxAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
+                        "minAmount": (rules[i].minAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "countryCode": rules[i].countryCode
                     }
                 }
@@ -359,6 +359,8 @@ function companyShippingRulesInitControls(isCreate) {
 
 function companyShippingRulesInitFields(companyId, ruleId, isCreate){
     $("#shippingRuleCompanyId").val(companyId);
+    $("#shippingRuleMinAmountCurrency, #shippingRuleMaxAmountCurrency").html(defaultCurrency.currencyCode);
+    $("#shippingRuleMaxAmount, #shippingRuleMinAmount").attr("pattern", "\\d+\\.?\\d{0," + defaultCurrency.fractionDigits + "}");
     $("#shippingRuleMaxAmount, #shippingRuleMinAmount, #shippingRulePrice").val(0);
     $("#shippingRuleCountry").empty();
 
@@ -470,9 +472,9 @@ function companyShippingRulesValidateForm(isCreate){
 
 function companyShippingRulesAddNew(){
     var dataToSend = "countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + encodeURIComponent($("#shippingRulePrice").val());
-    dataToSend += "&minAmount=" + encodeURIComponent($("#shippingRuleMinAmount").val());
-    dataToSend += "&maxAmount=" + encodeURIComponent($("#shippingRuleMaxAmount").val());
+    dataToSend += "&price=" + isNaN($("#shippingRulePrice").val()) ? encodeURIComponent($("#shippingRulePrice").val()) : encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";
     $.ajax({
         url : shippingRulesSaveUrl,
@@ -493,9 +495,9 @@ function companyShippingRulesAddNew(){
 function companyShippingRulesUpdate(){
     var dataToSend = "id=" + $("#shippingRuleId").val();
     dataToSend += "&countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + encodeURIComponent($("#shippingRulePrice").val());
-    dataToSend += "&minAmount=" + encodeURIComponent($("#shippingRuleMinAmount").val());
-    dataToSend += "&maxAmount=" + encodeURIComponent($("#shippingRuleMaxAmount").val());
+    dataToSend += "&price=" + isNaN($("#shippingRulePrice").val()) ? encodeURIComponent($("#shippingRulePrice").val()) : encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";
     $.ajax({
         url : shippingRulesSaveUrl,
