@@ -43,7 +43,7 @@
 		<div class="spacer"></div>
         <div class="newline">
             <div class="taxRate-large">
-                <label for="localTaxRateRate"><g:message locale="${lang}" code="company.tax.taxRate.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                <label for="localTaxRateRate"><g:message locale="${lang}" code="company.tax.taxRate.label"></g:message>&nbsp;(<span id="localTaxRateRateCurrency"></span>)&nbsp;<sup>*</sup></label><br />
             </div>
         </div>
         <div class="spacer-small"></div>

@@ -1,12 +1,13 @@
 var countries = [];
 var companies = [];
 var translateLanguage = [];
+var defaultCurrency = null;
 
 var CivilityType = {
 	MR : 'MR',
 	MRS : 'MRS',
 	MISS : 'MISS'
-}
+};
 
 var civilityTypes = [ {
 	label : 'Monsieur',
@@ -17,7 +18,7 @@ var civilityTypes = [ {
 }, {
 	label : 'Mademoiselle',
 	value : CivilityType.MISS
-} ]
+}];
 
 var InputType = {
 	TEXT : 'text',
@@ -27,7 +28,7 @@ var InputType = {
 	SELECT : 'select',
 	MULTIPLE_SELECT : 'multiple',
 	RADIO : 'radio'
-}
+};
 
 jQuery.expr[':'].Contains = function(a, i, m) {
     return (a.textContent || a.innerText || "").toUpperCase().indexOf(
@@ -77,7 +78,7 @@ function companiesLoad() {
 }
 
 /**
- * load companies
+ * load languages
  *
  * @return the languages list from db
  */
@@ -92,6 +93,26 @@ function loadTranslateLanguages(){
         async : true,
         success : function(data, status) {
             translateLanguage = data;
+        }
+    });
+}
+
+/**
+ * load companies
+ *
+ * @return the default currency
+ */
+
+function loadDefaultCurrency(){
+    $.ajax({
+        url : currencyUrl,
+        type : "GET",
+        data : "format=json",
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            defaultCurrency = response;
         }
     });
 }
@@ -201,7 +222,7 @@ $(document).ready(function() {
 	$.ajaxPrefilter(function(options) {
 		if(options.hideNotice)
 			return;
-		var type = options.noticeType
+		var type = options.noticeType;
 		if (type == 'PUT') {
 			jQuery.noticeAdd({
 				stayTime : 1000,
@@ -229,7 +250,7 @@ $(document).ready(function() {
 	$( document ).ajaxSuccess( function(event, xhr, settings) {
 		if (settings.hideNotice)
 			return;
-		var type = settings.noticeType
+		var type = settings.noticeType;
 		if (type == 'PUT') {
 			jQuery.noticeAdd({
 				stayTime: 1000,

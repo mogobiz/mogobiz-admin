@@ -1,19 +1,4 @@
 var tourismPricingGridObject = null;
-var tourismPricingDefaultCurrency = null;
-
-function tourismPricingLoadDefaultCurrency(){
-    $.ajax({
-        url : currencyUrl,
-        type : "GET",
-        data : "format=json",
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            tourismPricingDefaultCurrency = response;
-        }
-    });
-}
 
 function tourismPricingLoadPricings(productId) {
     var dataToSend = 'product.id=' + productId;
@@ -92,7 +77,7 @@ function tourismPricingLoadPricings(productId) {
                     'variation1' : (response[i].variation1) ? response[i].variation1.id : null,
                     'variation2' : (response[i].variation2) ? response[i].variation2.id : null,
                     'variation3' : (response[i].variation3) ? response[i].variation3.id : null,
-                    'cost' : (response[i].price / Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)).toFixed(tourismPricingDefaultCurrency.fractionDigits),
+                    'cost' : (response[i].price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                     'stock' : (!response[i].stock || response[i].stock.stockUnlimited) ? defaultUnlimitedLabel : response[i].stock.stock,
                     'stockUnlimited' : (!response[i].stock) ? true : response[i].stock.stockUnlimited,
                     'stockOutSelling' : (!response[i].stock) ? false : response[i].stock.stockOutSelling,
@@ -163,7 +148,7 @@ function tourismPricingTicketCellFormatter(row, cell, value, columnDef, dataCont
 }
 
 function tourismPricingCostCellFormatter(row, cell, value, columnDef, dataContext) {
-    return tourismPricingDefaultCurrency.currencyCode + " " + value;
+    return defaultCurrency.currencyCode + " " + value;
 }
 
 function tourismPricingStockCellFormatter(row, cell, value, columnDef, dataContext) {
@@ -402,8 +387,8 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
     $("#tourismPricingStockOutSelling").prop("checked", false);
     $('#tourismPricingStartDate').datepicker("option", "maxDate", "");
     $('#tourismPricingEndDate').datepicker("option", "minDate", new Date());
-    $("#tourismPricingCurrencyCode").html(tourismPricingDefaultCurrency.currencyCode);
-    $("#tourismPricingTicketPrice").attr("pattern", "\\d+\\.?\\d{0," + tourismPricingDefaultCurrency.fractionDigits + "}");
+    $("#tourismPricingCurrencyCode").html(defaultCurrency.currencyCode);
+    $("#tourismPricingTicketPrice").attr("pattern", "\\d+\\.?\\d{0," + defaultCurrency.fractionDigits + "}");
     if ($('#productType').val() != 'SERVICE') {
         for ( var i = 0; i < ticketTypes.length; i++) {
             $('#tourismPricingVariation' + ticketTypes[i].position + 'Label').html(ticketTypes[i].name + "&nbsp;<sup>*</sup>");
@@ -622,7 +607,7 @@ function tourismPricingCreateTicketCombinaison(productId) {
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) * Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)))
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;
@@ -677,7 +662,7 @@ function tourismPricingUpdateTicketCombinaison(productId, ticketId) {
     dataToSend += '&variation1.id=' + variation1;
     dataToSend += '&variation2.id=' + variation2;
     dataToSend += '&variation3.id=' + variation3;
-    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) *  Math.pow(10, tourismPricingDefaultCurrency.fractionDigits)));
+    dataToSend += '&ticketType.price=' + encodeURIComponent(parseInt(parseFloat($("#tourismPricingTicketPrice").val()) *  Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += '&ticketType.stock=' + stock;
     dataToSend += '&ticketType.minOrder=' + $('#tourismPricingMinOrder').val();
     dataToSend += '&ticketType.maxOrder=' + maxOrder;

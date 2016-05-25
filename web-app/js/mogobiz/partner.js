@@ -75,6 +75,7 @@ function partnerGetProfilePage() {
 }
 
 function partnerGetAdminPage() {
+    loadDefaultCurrency();
     $("#editCompanyTabs, #editUserProfile").remove();
     companyHashTable = [];
     companyTagsPageOffset = 0;

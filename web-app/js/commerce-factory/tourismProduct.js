@@ -56,6 +56,7 @@ function productDoUpdateField(productId, objId, objProperty, blankOK, checkValid
 }
 
 function productAttachEditForm(productId, fromPage) {
+    loadDefaultCurrency();
     var dataToSend = "id=" + productId + "&format=json";
     $.ajax({
         url : showProductUrl + "?" + dataToSend,
@@ -284,7 +285,6 @@ function productAttachEditForm(productId, fromPage) {
                 selectedList : 1
             });
             tourismProductLoadTaxList(product);
-            tourismPricingLoadDefaultCurrency();
             if (product.stockDisplay) {
                 $('#globalstockDisplay').prop("checked", true);
             }
@@ -406,13 +406,15 @@ function productAttachEditForm(productId, fromPage) {
             });
 
 // Fill Shipping Tab Fields
+            $("#tourismShippingAmount").attr("pattern", "\\d+\\.?\\d{0," + defaultCurrency.fractionDigits + "}");
+            $("#tourismShippingCurrencyCode").html(defaultCurrency.currencyCode);
             var shipping = product.shipping;
             if(shipping){
                 var weight = (shipping.weight && shipping.weight != "0") ? shipping.weight : "";
                 var width = (shipping.width && shipping.width != "0") ? shipping.width : "";
                 var height = (shipping.height && shipping.height != "0") ? shipping.height : "";
                 var depth = (shipping.depth && shipping.depth != "0") ? shipping.depth : "";
-                var amount = (shipping.amount && shipping.amount != "0") ? shipping.amount : "";
+                var amount = (shipping.amount && shipping.amount != "0") ? (shipping.amount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits) : "";
 
                 $("#tourismShippingWeight").val(weight);
                 $("#tourismShippingWidth").val(width);
@@ -1103,7 +1105,7 @@ function tourismProductUpdateShipping(productId, param, value){
     var width = ($("#tourismShippingWidth").val() != "") ? $("#tourismShippingWidth").val() : 0;
     var height = ($("#tourismShippingHeight").val() != "") ? $("#tourismShippingHeight").val() : 0;
     var depth = ($("#tourismShippingDepth").val() != "") ? $("#tourismShippingDepth").val() : 0;
-    var amount = ($("#tourismShippingAmount").val() != "") ? $("#tourismShippingAmount").val() : 0;
+    var amount = ($("#tourismShippingAmount").val() != "") ? encodeURIComponent(parseInt(parseFloat($("#tourismShippingAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits))) : 0;
 
     var dataToSend = "product.id=" + productId;
     dataToSend += "&product.shipping.weight=" + weight;
