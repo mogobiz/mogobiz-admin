@@ -129,6 +129,7 @@
         <r:script>
             // Security
             var securityGetAllUsersUrl = "${createLink(controller: 'seller', action: 'show')}";
+            var multiSessionRedirectUrl = "${createLink(controller: 'auth', action: 'errorLogin')}";
             var securityGetUserGrantedPermissionUrl = "${createLink(controller: 'profile', action: 'showUsersGrantedPermission')}";
             var securityAddUserPermissionUrl = "${createLink(controller: 'profile', action: 'addUserPermission')}";
             var securityRemoveUserPermissionUrl = "${createLink(controller: 'profile', action: 'removeUserPermission')}";
