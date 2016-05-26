@@ -207,7 +207,6 @@ function getStoreAddress(compId) {
 
 // Shipping Rules Functions
 var companyShippingRulesGrid = null;
-var companyShippingRulesPageOffset = 0;
 
 function companyShippingRulesDrawAll(companyId){
     companyShippingRulesGrid = null;
@@ -487,14 +486,29 @@ function companyShippingRulesAddNew(){
     $.ajax({
         url : shippingRulesSaveUrl,
         type : "POST",
-        noticeType : "POST",
         data : dataToSend,
         dataType : "json",
         cache : false,
         async : true,
         success : function(response, status) {
-            companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
-            $("#shippingRuleDialog").dialog("close");
+            if (response.success) {
+                jQuery.noticeAdd({
+                    stayTime: 1000,
+                    text: 'Creating asset on the server',
+                    stay: false,
+                    type: 'success'
+                });
+                companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
+                $("#shippingRuleDialog").dialog("close");
+            }
+            else{
+                jQuery.noticeAdd({
+                    stayTime: 1000,
+                    text: response.errors.minAmount,
+                    stay: false,
+                    type: 'error'
+                });
+            }
         },
         error: function(response, status){}
     });
@@ -514,14 +528,29 @@ function companyShippingRulesUpdate(){
     $.ajax({
         url : shippingRulesSaveUrl,
         type : "POST",
-        noticeType : "PUT",
         data : dataToSend,
         dataType : "json",
         cache : false,
         async : true,
         success : function(response, status) {
-            companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
-            $("#shippingRuleDialog").dialog("close");
+            if (response.success) {
+                jQuery.noticeAdd({
+                    stayTime: 1000,
+                    text: 'Updating asset on the server',
+                    stay: false,
+                    type: 'success'
+                });
+                companyShippingRulesDrawAll($("#shippingRuleCompanyId").val());
+                $("#shippingRuleDialog").dialog("close");
+            }
+            else{
+                jQuery.noticeAdd({
+                    stayTime: 1000,
+                    text: response.errors.minAmount,
+                    stay: false,
+                    type: 'error'
+                });
+            }
         },
         error: function(response, status){}
     });
