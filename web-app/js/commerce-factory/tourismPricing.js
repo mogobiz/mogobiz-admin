@@ -344,7 +344,11 @@ function tourismPricingInitControls(create) {
         $('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">' + cancelLabel + '</span>');
         $('.ui-dialog-buttonpane').find('button:contains("createLabel")').html('<span class="ui-button-text">' + createLabel + '</span>');
     } else {
+        if ($('#productType').val() == 'PRODUCT')
+            $("#tourismPricingDownloadTab").addClass("disabled");
         $("#tourismPricingTabs .tabs a").click(function() {
+            if($(this).hasClass("disabled"))
+                return;
             $("#tourismPricingTabs .tabs .selected").removeClass("selected");
             $(this).addClass("selected");
             switch($(this).attr("id")){
