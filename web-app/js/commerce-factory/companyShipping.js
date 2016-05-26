@@ -227,15 +227,15 @@ function companyShippingRulesDrawAll(companyId){
                 formatter : companyShippingRulesCountryCodeFormatter,
                 cssClass : "cell-title"
             },{
-                id : "maxAmount",
-                name : companyShippingRulesMaxAmountLabel,
-                field : "maxAmount",
-                width : 25,
-                cssClass : "cell-title"
-            },{
                 id : "minAmount",
                 name : companyShippingRulesMinAmountLabel,
                 field : "minAmount",
+                width : 25,
+                cssClass : "cell-title"
+            },{
+                id : "maxAmount",
+                name : companyShippingRulesMaxAmountLabel,
+                field : "maxAmount",
                 width : 25,
                 cssClass : "cell-title"
             },{
