@@ -30,6 +30,7 @@ function companyCouponsDrawAll(){
                 name : companyCouponsPastilleLabel,
                 field : "pastille",
                 width : 15,
+                formatter : companyCouponsGridPastilleFormatter,
                 cssClass : ""
             },{
                 id : "numberOfUses",
@@ -110,6 +111,20 @@ function companyCouponsDrawAll(){
 
 function companyCouponsGridNameFormatter (row, cell, value, columnDef, dataContext){
     return "<a href='javascript:companyCouponsGetAllCatalogs(" + dataContext.couponId + ", " + false + ")'>" + value + "</a>";
+}
+
+function companyCouponsGridPastilleFormatter (row, cell, value, columnDef, dataContext){
+    var pastille = value;
+    if(!isNaN(pastille) && pastille != ""){
+        var sign = "";
+        if(isNaN(pastille.substring(0, 1))){
+            sign = pastille.substring(0, 1);
+            pastille = pastille.substring(1);
+        }
+        pastille = (pastille / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+        pastille = sign + pastille;
+    }
+    return pastille;
 }
 
 function companyCouponsGridActiveFormatter(row, cell, value, columnDef, dataContext){
@@ -578,8 +593,17 @@ function companyCouponsCreateCoupon(){
         if(rules[i].yOffered != null)
             rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
-
-    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + $("#companyCouponsPastille").val();
+    var pastille = $("#companyCouponsPastille").val();
+    if(!isNaN(pastille)){
+        var sign = "";
+        if(isNaN(pastille.substring(0, 1))){
+            sign = pastille.substring(0, 1);
+            pastille = pastille.substring(1);
+        }
+        pastille = parseInt(parseFloat(pastille) *  Math.pow(10, defaultCurrency.fractionDigits));
+        pastille = sign + pastille;
+    }
+    var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent(pastille);
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;
@@ -645,9 +669,18 @@ function companyCouponsUpdateCoupon(){
         if(rules[i].yOffered != null)
             rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
-
+    var pastille = $("#companyCouponsPastille").val();
+    if(!isNaN(pastille)){
+        var sign = "";
+        if(isNaN(pastille.substring(0, 1))){
+            sign = pastille.substring(0, 1);
+            pastille = pastille.substring(1);
+        }
+        pastille = parseInt(parseFloat(pastille) *  Math.pow(10, defaultCurrency.fractionDigits));
+        pastille = sign + pastille;
+    }
     var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + encodeURIComponent($("#companyCouponsName").val());
-    dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + $("#companyCouponsPastille").val();
+    dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent(pastille);
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
     dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;

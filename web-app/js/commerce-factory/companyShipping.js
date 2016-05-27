@@ -242,6 +242,7 @@ function companyShippingRulesDrawAll(companyId){
                 name : companyShippingRulesPriceLabel,
                 field : "price",
                 width : 25,
+                formatter : companyShippingRulesPriceFormatter,
                 cssClass : "cell-title"
             }];
 
@@ -259,15 +260,11 @@ function companyShippingRulesDrawAll(companyId){
             var rules = response.list;
             if(rules){
                 for ( var i = 0; i < rules.length; i++) {
-                    var isPriceNum = /^\d+(\.\d+)?$/.test(rules[i].price);
-                    var price = rules[i].price;
-                    if(isPriceNum)
-                        price = (rules[i].price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
                     gridData[gridData.length] = {
                         "id" : i,
                         "companyId": companyId,
                         "ruleId": rules[i].id,
-                        "price": price,
+                        "price": rules[i].price,
                         "maxAmount": (rules[i].maxAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "minAmount": (rules[i].minAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "countryCode": rules[i].countryCode
@@ -288,6 +285,20 @@ function companyShippingRulesCountryCodeFormatter(row, cell, value, columnDef, d
             return '<a href="javascript:void(0);" onclick="companyShippingRulesGetEditPage(\'' + dataContext.companyId + '\',\'' + dataContext.ruleId + '\')">' + countries[i].name + '</a>';
         }
     }
+}
+
+function companyShippingRulesPriceFormatter (row, cell, value, columnDef, dataContext){
+    var price = value;
+    if(!isNaN(price) && price != ""){
+        var sign = "";
+        if(isNaN(price.substring(0, 1))){
+            sign = price.substring(0, 1);
+            price = price.substring(1);
+        }
+        price = (price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+        price = sign + price;
+    }
+    return price;
 }
 
 function companyShippingRulesGetEditPage(companyId, ruleId){
@@ -474,12 +485,19 @@ function companyShippingRulesValidateForm(isCreate){
 }
 
 function companyShippingRulesAddNew(){
-    var isPriceNum = /^\d+(\.\d+)?$/.test($("#shippingRulePrice").val());
     var price = $("#shippingRulePrice").val();
-    if(isPriceNum)
-        price = encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    if(!isNaN(price)){
+        var sign = "";
+        if(isNaN(price.substring(0, 1))){
+            sign = price.substring(0, 1);
+            price = price.substring(1);
+        }
+        price = parseInt(parseFloat(price) *  Math.pow(10, defaultCurrency.fractionDigits));
+        price = sign + price;
+    }
+
     var dataToSend = "countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + price;
+    dataToSend += "&price=" + encodeURIComponent(price);
     dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";
@@ -515,13 +533,20 @@ function companyShippingRulesAddNew(){
 }
 
 function companyShippingRulesUpdate(){
-    var isPriceNum = /^\d+(\.\d+)?$/.test($("#shippingRulePrice").val());
     var price = $("#shippingRulePrice").val();
-    if(isPriceNum)
-        price = encodeURIComponent(parseInt(parseFloat($("#shippingRulePrice").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
+    if(!isNaN(price)){
+        var sign = "";
+        if(isNaN(price.substring(0, 1))){
+            sign = price.substring(0, 1);
+            price = price.substring(1);
+        }
+        price = parseInt(parseFloat(price) *  Math.pow(10, defaultCurrency.fractionDigits));
+        price = sign + price;
+    }
+
     var dataToSend = "id=" + $("#shippingRuleId").val();
     dataToSend += "&countryCode=" + $("#shippingRuleCountry").val();
-    dataToSend += "&price=" + price;
+    dataToSend += "&price=" + encodeURIComponent(price);
     dataToSend += "&minAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMinAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&maxAmount=" + encodeURIComponent(parseInt(parseFloat($("#shippingRuleMaxAmount").val()) * Math.pow(10, defaultCurrency.fractionDigits)));
     dataToSend += "&format=json";
