@@ -80,12 +80,22 @@ function companyCouponsDrawAll(){
             var coupons = response.list;
             if(coupons){
                 for ( var i = 0; i < coupons.length; i++) {
+                    var pastille = coupons[i].pastille != null ? coupons[i].pastille : "";
+                    if(!isNaN(pastille) && pastille != ""){
+                        var sign = "";
+                        if(isNaN(pastille.substring(0, 1))){
+                            sign = pastille.substring(0, 1);
+                            pastille = pastille.substring(1);
+                        }
+                        pastille = (pastille / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+                        pastille = sign + pastille;
+                    }
                     gridData[gridData.length] = {
                         "id" : i,
                         "couponId": coupons[i].id,
                         "name": coupons[i].name,
                         "code": coupons[i].code,
-                        "pastille": coupons[i].pastille,
+                        "pastille": pastille,
                         "startDate": coupons[i].startDate,
                         "endDate": coupons[i].endDate,
                         "numberOfUses": coupons[i].numberOfUses,

@@ -242,7 +242,6 @@ function companyShippingRulesDrawAll(companyId){
                 name : companyShippingRulesPriceLabel,
                 field : "price",
                 width : 25,
-                formatter : companyShippingRulesPriceFormatter,
                 cssClass : "cell-title"
             }];
 
@@ -259,12 +258,22 @@ function companyShippingRulesDrawAll(companyId){
             var gridData = [];
             var rules = response.list;
             if(rules){
+                var price = rules[i].price != null ? rules[i].price : "";
+                if(!isNaN(price) && price != ""){
+                    var sign = "";
+                    if(isNaN(price.substring(0, 1))){
+                        sign = price.substring(0, 1);
+                        price = price.substring(1);
+                    }
+                    price = (price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+                    price = sign + price;
+                }
                 for ( var i = 0; i < rules.length; i++) {
                     gridData[gridData.length] = {
                         "id" : i,
                         "companyId": companyId,
                         "ruleId": rules[i].id,
-                        "price": rules[i].price,
+                        "price": price,
                         "maxAmount": (rules[i].maxAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "minAmount": (rules[i].minAmount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits),
                         "countryCode": rules[i].countryCode
@@ -285,20 +294,6 @@ function companyShippingRulesCountryCodeFormatter(row, cell, value, columnDef, d
             return '<a href="javascript:void(0);" onclick="companyShippingRulesGetEditPage(\'' + dataContext.companyId + '\',\'' + dataContext.ruleId + '\')">' + countries[i].name + '</a>';
         }
     }
-}
-
-function companyShippingRulesPriceFormatter (row, cell, value, columnDef, dataContext){
-    var price = value;
-    if(!isNaN(price) && price != ""){
-        var sign = "";
-        if(isNaN(price.substring(0, 1))){
-            sign = price.substring(0, 1);
-            price = price.substring(1);
-        }
-        price = (price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
-        price = sign + price;
-    }
-    return price;
 }
 
 function companyShippingRulesGetEditPage(companyId, ruleId){
