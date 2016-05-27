@@ -481,7 +481,7 @@ function companyShippingRulesValidateForm(isCreate){
 
 function companyShippingRulesAddNew(){
     var price = $("#shippingRulePrice").val();
-    if(!isNaN(price)){
+    if(!isNaN(price) && price != ""){
         var sign = "";
         if(isNaN(price.substring(0, 1))){
             sign = price.substring(0, 1);
@@ -529,7 +529,7 @@ function companyShippingRulesAddNew(){
 
 function companyShippingRulesUpdate(){
     var price = $("#shippingRulePrice").val();
-    if(!isNaN(price)){
+    if(!isNaN(price) && price != ""){
         var sign = "";
         if(isNaN(price.substring(0, 1))){
             sign = price.substring(0, 1);

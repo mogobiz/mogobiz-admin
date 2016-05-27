@@ -604,7 +604,7 @@ function companyCouponsCreateCoupon(){
             rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
     var pastille = $("#companyCouponsPastille").val();
-    if(!isNaN(pastille)){
+    if(!isNaN(pastille) && pastille != ""){
         var sign = "";
         if(isNaN(pastille.substring(0, 1))){
             sign = pastille.substring(0, 1);
@@ -680,7 +680,7 @@ function companyCouponsUpdateCoupon(){
             rulesToSend += encodeURIComponent(rules[i].yOffered);
     }
     var pastille = $("#companyCouponsPastille").val();
-    if(!isNaN(pastille)){
+    if(!isNaN(pastille) && pastille != ""){
         var sign = "";
         if(isNaN(pastille.substring(0, 1))){
             sign = pastille.substring(0, 1);
@@ -867,6 +867,7 @@ function companyCouponsRulesDrawGrid(rules){
         name : companyCouponsRulesDiscountLabel,
         field : "discount",
         width : 20,
+        formatter : companyCouponsRulesGridDiscountFormatter,
         cssClass : ""
     },{
         id : "xPurchased",
@@ -915,6 +916,20 @@ function companyCouponsRulesDrawGrid(rules){
 
 function companyCouponsRulesGridTypeFormatter (row, cell, value, columnDef, dataContext){
     return "<a href='javascript:void(0)' onclick='companyCouponsRulesGetDetails(" + dataContext.id + ", " + false + ")'>" + companyCouponsRulesXTypes[value] + "</a>";
+}
+
+function companyCouponsRulesGridDiscountFormatter (row, cell, value, columnDef, dataContext){
+    var discount = value != null ? value : "";
+    if(!isNaN(discount) && discount != ""){
+        var sign = "";
+        if(isNaN(discount.substring(0, 1))){
+            sign = discount.substring(0, 1);
+            discount = discount.substring(1);
+        }
+        discount = (discount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+        discount = sign + discount;
+    }
+    return discount;
 }
 
 function companyCouponsRulesGetDetails(id, isCreate){
@@ -1028,7 +1043,17 @@ function companyCouponsRulesPageInitFields(id, isCreate){
                     this.click();
                 }
             });
-            $("#companyCouponsRulesDiscount").val(rule.discount);
+            var discount = rule.discount != null ? rule.discount : "";
+            if(!isNaN(discount) && discount != ""){
+                var sign = "";
+                if(isNaN(discount.substring(0, 1))){
+                    sign = discount.substring(0, 1);
+                    discount = discount.substring(1);
+                }
+                discount = (discount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+                discount = sign + discount;
+            }
+            $("#companyCouponsRulesDiscount").val(discount);
             $("#companyCouponsRulesPurchased").val(rule.xPurchased);
             $("#companyCouponsRulesOffered").val(rule.yOffered);
         }
@@ -1062,13 +1087,23 @@ function companyCouponsRulesValidateForm(){
 function companyCouponsRulesCreateRule(){
     var data = companyCouponsRulesGrid.getData();
     var len = data.length;
+    var discount = $("#companyCouponsRulesDiscount").val();
+    if(!isNaN(discount) && discount != ""){
+        var sign = "";
+        if(isNaN(discount.substring(0, 1))){
+            sign = discount.substring(0, 1);
+            discount = discount.substring(1);
+        }
+        discount = parseInt(parseFloat(discount) *  Math.pow(10, defaultCurrency.fractionDigits));
+        discount = sign + discount;
+    }
     data[len] = {
         id: len,
         "xtype": $("#companyCouponsRulesType").val(),
-        "discount": $("#companyCouponsRulesDiscount").val(),
+        "discount": discount,
         "xPurchased": $("#companyCouponsRulesPurchased").val(),
         "yOffered":  $("#companyCouponsRulesOffered").val()
-    }
+    };
     companyCouponsRulesGrid.setData(data);
     companyCouponsRulesGrid.invalidate();
     $("#companyCouponsRulesDialog").dialog("close");
@@ -1078,8 +1113,18 @@ function companyCouponsRulesUpdateRule(){
     var data = companyCouponsRulesGrid.getData();
     for(var i = 0; i < data.length; i++){
         if(data[i].id == $("#companyCouponsRulesId").val()){
+            var discount = $("#companyCouponsRulesDiscount").val();
+            if(!isNaN(discount) && discount != ""){
+                var sign = "";
+                if(isNaN(discount.substring(0, 1))){
+                    sign = discount.substring(0, 1);
+                    discount = discount.substring(1);
+                }
+                discount = parseInt(parseFloat(discount) *  Math.pow(10, defaultCurrency.fractionDigits));
+                discount = sign + discount;
+            }
             data[i].xtype =  $("#companyCouponsRulesType").val();
-            data[i].discount = $("#companyCouponsRulesDiscount").val();
+            data[i].discount = discount;
             data[i].xPurchased = $("#companyCouponsRulesPurchased").val();
             data[i].yOffered =  $("#companyCouponsRulesOffered").val();
             break;
