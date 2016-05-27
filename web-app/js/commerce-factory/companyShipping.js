@@ -258,17 +258,17 @@ function companyShippingRulesDrawAll(companyId){
             var gridData = [];
             var rules = response.list;
             if(rules){
-                var price = rules[i].price != null ? rules[i].price : "";
-                if(!isNaN(price) && price != ""){
-                    var sign = "";
-                    if(isNaN(price.substring(0, 1))){
-                        sign = price.substring(0, 1);
-                        price = price.substring(1);
-                    }
-                    price = (price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
-                    price = sign + price;
-                }
                 for ( var i = 0; i < rules.length; i++) {
+                    var price = rules[i].price != null ? rules[i].price : "";
+                    if(!isNaN(price) && price != ""){
+                        var sign = "";
+                        if(isNaN(price.substring(0, 1))){
+                            sign = price.substring(0, 1);
+                            price = price.substring(1);
+                        }
+                        price = (price / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+                        price = sign + price;
+                    }
                     gridData[gridData.length] = {
                         "id" : i,
                         "companyId": companyId,
