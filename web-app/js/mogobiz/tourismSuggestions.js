@@ -187,11 +187,21 @@ function tourismSuggestionsDrawForm(productId, suggestions) {
 	
 	tourismSuggestionsProducts = [];
 	for(var i = 0; i < suggestions.length; i++) {
-		tourismSuggestionsProducts[tourismSuggestionsProducts.length] = {
+		var discount = suggestions[i].discount;
+        if(!isNaN(discount) && discount != ""){
+            var sign = "";
+            if(isNaN(discount.substring(0, 1))){
+                sign = discount.substring(0, 1);
+                discount = discount.substring(1);
+            }
+            discount = (discount / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
+            discount = sign + discount;
+        }
+        tourismSuggestionsProducts[tourismSuggestionsProducts.length] = {
 			'id':suggestions[i].product.id,
 			'productId':productId,
 			'name':suggestions[i].product.name,
-			'discount': suggestions[i].discount,
+			'discount': discount,
 			'required': suggestions[i].required,
 			'position': ((i + 1) * 10)
 		};
@@ -251,7 +261,6 @@ function showCreateTourismSuggestionsDialog(productId) {
 				modal : true,
 				open: function(event) {
 					$('#tourismSuggestionsDiscount').val('0');
-
 					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
 					$('.ui-dialog-buttonpane').find('button:contains("createLabel")').addClass("ui-create-button");
 					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
@@ -448,9 +457,19 @@ function tourismSuggestionsBindProducts(productId){
     var dataToSend = 'product.id='+productId;
     var suggestions = tourismSuggestionsGridObject.getData();
     for(var i=0; i < suggestions.length; i++){
-        dataToSend +='&suggestion.required='+suggestions[i].required;
-        dataToSend +='&suggestion.discount='+suggestions[i].discount;
-        dataToSend +='&suggestion.product.id='+suggestions[i].id;
+        var discount = suggestions[i].discount;
+        if(!isNaN(discount) && discount != ""){
+            var sign = "";
+            if(isNaN(discount.substring(0, 1))){
+                sign = discount.substring(0, 1);
+                discount = discount.substring(1);
+            }
+            discount = parseInt(parseFloat(discount) *  Math.pow(10, defaultCurrency.fractionDigits));
+            discount = sign + discount;
+        }
+        dataToSend +='&suggestion.required=' + suggestions[i].required;
+        dataToSend +='&suggestion.discount=' + discount;
+        dataToSend +='&suggestion.product.id=' + suggestions[i].id;
     }
     dataToSend +='&format=json';
     dataToSend = encodeURI(dataToSend);

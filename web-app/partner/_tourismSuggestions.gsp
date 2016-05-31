@@ -27,7 +27,7 @@
 	<div class="spacer-small"></div>
 	<div class="newline">
 		<div>
-			<input type="text" id="tourismSuggestionsDiscount" value="0" pattern="((\-|\+)[1-9](\d+)?)|(([1-9]\d?(\.(\d+)?[1-9])?|0\.(\d+)?[1-9]|100)%)" required />
+			<input type="text" id="tourismSuggestionsDiscount" value="0" pattern="((\-|\+)?[0-9](\d+)?(\.\d+)?)|(([1-9]\d?(\.(\d+)?[1-9])?|0\.(\d+)?[1-9]|100)%)" required />
 		</div>
 	</div>
 </div>

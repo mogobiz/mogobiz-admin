@@ -30,7 +30,6 @@ function companyCouponsDrawAll(){
                 name : companyCouponsPastilleLabel,
                 field : "pastille",
                 width : 15,
-                formatter : companyCouponsGridPastilleFormatter,
                 cssClass : ""
             },{
                 id : "numberOfUses",
@@ -121,20 +120,6 @@ function companyCouponsDrawAll(){
 
 function companyCouponsGridNameFormatter (row, cell, value, columnDef, dataContext){
     return "<a href='javascript:companyCouponsGetAllCatalogs(" + dataContext.couponId + ", " + false + ")'>" + value + "</a>";
-}
-
-function companyCouponsGridPastilleFormatter (row, cell, value, columnDef, dataContext){
-    var pastille = value;
-    if(!isNaN(pastille) && pastille != ""){
-        var sign = "";
-        if(isNaN(pastille.substring(0, 1))){
-            sign = pastille.substring(0, 1);
-            pastille = pastille.substring(1);
-        }
-        pastille = (pastille / Math.pow(10, defaultCurrency.fractionDigits)).toFixed(defaultCurrency.fractionDigits);
-        pastille = sign + pastille;
-    }
-    return pastille;
 }
 
 function companyCouponsGridActiveFormatter(row, cell, value, columnDef, dataContext){
