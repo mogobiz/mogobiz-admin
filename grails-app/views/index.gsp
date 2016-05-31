@@ -101,23 +101,23 @@
         <style>#inner-content{display: none;}</style>
    </head>
     <body>
-<content tag="header">
-<!-- header -->
-<div id="logo" style="float:left;">
-	<img src="${resource(dir:'images',file:'logo.png')}" />
-</div>
-<br/>
-<div align="right">
-	<a href="${createLink(controller: 'admin')}"><g:message code="navigation.companyManagement.label" /></a>
-	&nbsp;|&nbsp;
-	<a href="${createLink(controller: 'partner')}"><g:message code="navigation.myShop.label" /></a>
-</div>
-<br/>
-</content>
-<!-- inner-content -->
-<content tag="footer">
-<!-- footer -->
-<g:render template="/layouts/footer" />
-</content>
+        <content tag="header">
+            <!-- header -->
+            <div id="logo" style="float:left;">
+                <img src="${resource(dir:'images',file:'logo.png')}" />
+            </div>
+            <br/>
+            <div align="right">
+                <a href="${createLink(controller: 'admin')}"><g:message locale="${params.lang}" code="navigation.companyManagement.label" /></a>
+                &nbsp;|&nbsp;
+                <a href="${createLink(controller: 'partner')}"><g:message locale="${params.lang}" code="navigation.myShop.label" /></a>
+            </div>
+            <br/>
+        </content>
+        <!-- inner-content -->
+        <content tag="footer">
+        <!-- footer -->
+            <g:render template="/layouts/footer" />
+        </content>
     </body>
 </html>
