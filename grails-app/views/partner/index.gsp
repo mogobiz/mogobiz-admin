@@ -536,6 +536,7 @@
             var companyCouponsRulesOfferedLabel = "${message(code: 'company.coupons.rules.offered.label')}";
             var companyCouponsRulesDiscountValueLabel = "${message(code: 'company.coupons.rules.discountValue.label')}";
             var companyCouponsRulesPurchasedOfferedValueLabel = "${message(code: 'company.coupons.rules.purchasedOfferedValue.label')}";
+            var companyCouponsRulesCustomValueLabel = "${message(code: 'company.coupons.rules.custom.label')}";
 
             //Publishing
             var companyShowPublishingUrl = '${createLink(controller: 'esEnv', action: 'show')}';
