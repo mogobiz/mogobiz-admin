@@ -57,7 +57,7 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyCouponsDialog-large">
-                    <label for="companyCouponsRulesCustomDiscount"><g:message locale="${lang}" code="company.coupons.rules.discount.label" />&nbsp;<sup>*</sup></label>
+                    <label for="companyCouponsRulesCustomDiscount"><g:message locale="${lang}" code="company.coupons.rules.customdata.label" />&nbsp;<sup>*</sup></label>
                 </div>
             </div>
             <div class="spacer-small"></div>
