@@ -117,6 +117,12 @@ grails {
     }
 }
 
+searchguard {
+    active = false
+    username = 'anonymous'
+    password = ''
+}
+
 password {
 //    policy = "(?=.{8,})"   +     // "" followed by 8+ symbols
 //            "(?=.*[a-z])" +     // --- ' ' --- at least 1 lower
