@@ -95,6 +95,7 @@ dataSource {
 importCountries {
     codes = 'DE,ES,FR,GB,US'
     dir = "/data/mogopay/import/countries"
+    purge = false
 }
 
 importCatalog {
