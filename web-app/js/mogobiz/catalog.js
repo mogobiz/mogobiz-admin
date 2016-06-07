@@ -419,6 +419,34 @@ function catalogUpdate() {
     });
 }
 
+function catalogDeleteConfirmation() {
+    if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
+        $("#catalogCreateDialog").empty();
+        $("#catalogCreateDialog").html(catalogConfirmDeleteMessage);
+        $("#catalogCreateDialog").dialog({
+            title: catalogTitleLabel,
+            modal: true,
+            resizable: false,
+            width: "530",
+            height: "auto",
+            open:function(){
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            },
+            buttons: {
+                cancelLabel: function () {
+                    $("#catalogCreateDialog").dialog("close");
+                },
+                deleteLabel: function () {
+                    catalogDelete();
+                }
+            }
+        });
+    }
+}
+
 function catalogDelete() {
     var dataToSend = "catalog.id=" + catalogSelectedId;
     dataToSend += "&format=json";

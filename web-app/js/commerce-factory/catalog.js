@@ -419,6 +419,28 @@ function catalogUpdate() {
     });
 }
 
+function catalogDeleteConfirmation() {
+    if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
+        $("#catalogCreateDialog").empty();
+        $("#catalogCreateDialog").html(catalogConfirmDeleteMessage);
+        $("#catalogCreateDialog").dialog({
+            title: catalogTitleLabel,
+            modal: true,
+            resizable: false,
+            width: "530",
+            height: "auto",
+            buttons: {
+                cancelLabel: function () {
+                    $("#catalogCreateDialog").dialog("close");
+                },
+                deleteLabel: function () {
+                    catalogDelete();
+                }
+            }
+        });
+    }
+}
+
 function catalogDelete() {
     var dataToSend = "catalog.id=" + catalogSelectedId;
     dataToSend += "&format=json";
