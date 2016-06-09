@@ -197,7 +197,7 @@ function tourismPropertiesValidateForm() {
 }
 
 function tourismPropertiesCreateProperty(productId) {
-    var dataToSend = "product_id=" + productId + "&name=" + $("#tourismPropertyName").val() + "&value=" + encodeURIComponent($("#tourismPropertyValue").val()) + "&format=json";
+    var dataToSend = "product_id=" + productId + "&name=" + encodeURIComponent($("#tourismPropertyName").val()) + "&value=" + encodeURIComponent($("#tourismPropertyValue").val()) + "&format=json";
     $.ajax({
         url : savePropertyUrl,
         type : "POST",
@@ -215,7 +215,7 @@ function tourismPropertiesCreateProperty(productId) {
 }
 
 function tourismPropertiesUpdateProperty(productId) {
-    var dataToSend = "product_id=" + productId + "&name=" + $("#tourismPropertyName").val() + "&value=" + encodeURIComponent($("#tourismPropertyValue").val()) + "&format=json";
+    var dataToSend = "product_id=" + productId + "&name=" + encodeURIComponent($("#tourismPropertyName").val()) + "&value=" + encodeURIComponent($("#tourismPropertyValue").val()) + "&format=json";
     $.ajax({
         url : savePropertyUrl,
         type : "POST",

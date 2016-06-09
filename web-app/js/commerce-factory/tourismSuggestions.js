@@ -5,43 +5,43 @@ var tourismSuggestionsSelectedIndex = null;
 var tourismSuggestionsLoadProduct = true;
 
 function tourismSuggestionsInit(productId) {
-    // DrawSelectComboBox
-    tourismSuggestionsDrawSelectComboBox(productId);
-    // Load Companies
-    tourismSuggestionsLoadCompanies(productId);
+	// DrawSelectComboBox
+	tourismSuggestionsDrawSelectComboBox(productId);
+	// Load Companies
+	tourismSuggestionsLoadCompanies(productId);
 }
 
 /**
  * DrawSelectComboBox
  */
 function tourismSuggestionsDrawSelectComboBox(productId) {
-    $('#tourismSuggestionsCompanySelect').multiselect({
-        header: false,
-        multiple: false,
-        noneSelectedText: multiselectNoneSelectedTextLabel,
-        minWidth: 100,
-        selectedList: 1
-    });
-
-    var tourismSuggestionsProductSelect = $('#tourismSuggestionsProductSelect').multiselect({
-        header: "",
-        multiple: false,
-        noneSelectedText: multiselectNoneSelectedTextLabel,
-        minWidth: 100,
-        selectedList: 1
-    });
-
-    tourismSuggestionsProductSelect.multiselectfilter({
-        ajaxHandler: tourismSuggestionsLoadProducts,
-        param: productId
-    });
-    $('#multiselectfilter_searchInput').bind('click', function(e) {
-        if ($(this).val() == ''){
-            $('#tourismSuggestionsProductSelect').empty();
-            $('#tourismSuggestionsProductSelect').multiselect('enable');
-            $('#tourismSuggestionsProductSelect').multiselect('refresh');
-        }
-    });
+	$('#tourismSuggestionsCompanySelect').multiselect({
+		header: false,
+		multiple: false,
+		noneSelectedText: multiselectNoneSelectedTextLabel,
+		minWidth: 100,
+		selectedList: 1
+	});
+	
+	var tourismSuggestionsProductSelect = $('#tourismSuggestionsProductSelect').multiselect({
+		header: "",
+		multiple: false,
+		noneSelectedText: multiselectNoneSelectedTextLabel,
+		minWidth: 100,
+		selectedList: 1
+	});
+	
+	tourismSuggestionsProductSelect.multiselectfilter({
+		ajaxHandler: tourismSuggestionsLoadProducts,
+		param: productId
+	});
+	$('#multiselectfilter_searchInput').bind('click', function(e) {
+		if ($(this).val() == ''){
+			$('#tourismSuggestionsProductSelect').empty();
+			$('#tourismSuggestionsProductSelect').multiselect('enable');
+			$('#tourismSuggestionsProductSelect').multiselect('refresh');
+		}
+	});
 }
 
 /**
@@ -49,32 +49,32 @@ function tourismSuggestionsDrawSelectComboBox(productId) {
  * @param productId
  */
 function tourismSuggestionsLoadCompanies(productId) {
-    $.ajax({
-        url : tourismSuggestionsListCompanies + "?format=json",
-        type : "GET",
-        data : "",
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            var options = '';
-            $.each(response, function(i, data) {
-                var selected = (i == 0);
-                options += '<option ' + (selected ? 'selected ' : '') + 'value="' + data.id + '">' + data.name + '</option>';
-            });
-            $('#tourismSuggestionsCompanySelect').empty().html(options);
-            $('#tourismSuggestionsCompanySelect').multiselect('refresh');
-
-            $("#tourismSuggestionsCompanySelect").bind("multiselectclick", function(event, ui) {
-                $('#tourismSuggestionsProductSelect').multiselect('disable');
-                tourismSuggestionsLoadProducts(productId);
-            });
-            // Load Products
-            tourismSuggestionsLoadProducts(productId);
-            // Load Suggestions
-            tourismSuggestionsLoadSuggestions(productId);
-        }
-    });
+	$.ajax({
+		url : tourismSuggestionsListCompanies + "?format=json",
+		type : "GET",
+		data : "",
+		dataType : "json",
+		cache : false,
+		async : true,
+		success : function(response, status) {
+			var options = '';
+			$.each(response, function(i, data) {
+				var selected = (i == 0);
+				options += '<option ' + (selected ? 'selected ' : '') + 'value="' + data.id + '">' + data.name + '</option>';
+			});
+			$('#tourismSuggestionsCompanySelect').empty().html(options);
+			$('#tourismSuggestionsCompanySelect').multiselect('refresh');
+			
+			$("#tourismSuggestionsCompanySelect").bind("multiselectclick", function(event, ui) {
+				$('#tourismSuggestionsProductSelect').multiselect('disable');
+				tourismSuggestionsLoadProducts(productId);
+			});
+			// Load Products
+			tourismSuggestionsLoadProducts(productId);
+			// Load Suggestions
+			tourismSuggestionsLoadSuggestions(productId);
+		}
+	});
 }
 
 /**
@@ -82,50 +82,50 @@ function tourismSuggestionsLoadCompanies(productId) {
  * @param productId
  */
 function tourismSuggestionsLoadProducts(productId) {
-    tourismSuggestionsLoadProduct = true;
-    if ($('#multiselectfilter_searchInput').val().length < 3) {
-        tourismSuggestionsLoadProduct = false;
-        $('#tourismSuggestionsProductSelect').empty();
-        $('#tourismSuggestionsProductSelect').multiselect('enable');
-        $('#tourismSuggestionsProductSelect').multiselect('refresh');
-        return;
-    }
+	tourismSuggestionsLoadProduct = true;
+	if ($('#multiselectfilter_searchInput').val().length < 3) {
+		tourismSuggestionsLoadProduct = false;
+		$('#tourismSuggestionsProductSelect').empty();
+		$('#tourismSuggestionsProductSelect').multiselect('enable');
+		$('#tourismSuggestionsProductSelect').multiselect('refresh');
+		return;
+	}
+	
+	var dataToSend = 'company.id=' + $('#tourismSuggestionsCompanySelect').val();
+	dataToSend += '&fullSearch=' + encodeURIComponent($('#multiselectfilter_searchInput').val());
+	dataToSend += '&catalog.id='+catalogSelectedId;
+	dataToSend += '&format=json';
 
-    var dataToSend = 'company.id=' + $('#tourismSuggestionsCompanySelect').val();
-    dataToSend += '&fullSearch=' + $('#multiselectfilter_searchInput').val();
-    dataToSend += '&catalog.id='+catalogSelectedId;
-    dataToSend += '&format=json';
-
-    $.ajax({
-        url : tourismSuggestionsListProducts + "?" + dataToSend,
-        type : "GET",
-        data : "",
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            if(!tourismSuggestionsLoadProduct){
-                $('#tourismSuggestionsProductSelect').empty();
-                $('#tourismSuggestionsProductSelect').multiselect('enable');
-                $('#tourismSuggestionsProductSelect').multiselect('refresh');
-                return;
-            }
-            var options = '';
-
-            var products = tourismSuggestionsSynchroniseProducts(productId, response);
-            $.each(products, function(i, data) {
-                options += '<option value="' + data.id + '">' + data.name + '</option>';
-            });
-
-            $('#tourismSuggestionsProductSelect').empty().html(options);
-            $('#tourismSuggestionsProductSelect').multiselect('enable');
-            $('#tourismSuggestionsProductSelect').multiselect('refresh');
-
-            $("#tourismSuggestionsProductSelect").bind("multiselectclick", function(event, ui) {
-                showCreateTourismSuggestionsDialog(productId)
-            });
-        }
-    });
+	$.ajax({
+		url : tourismSuggestionsListProducts + "?" + dataToSend,
+		type : "GET",
+		data : "",
+		dataType : "json",
+		cache : false,
+		async : true,
+		success : function(response, status) {
+			if(!tourismSuggestionsLoadProduct){
+				$('#tourismSuggestionsProductSelect').empty();
+				$('#tourismSuggestionsProductSelect').multiselect('enable');
+				$('#tourismSuggestionsProductSelect').multiselect('refresh');
+				return;
+			}
+			var options = '';
+			
+			var products = tourismSuggestionsSynchroniseProducts(productId, response);	
+			$.each(products, function(i, data) {
+				options += '<option value="' + data.id + '">' + data.name + '</option>';
+			});
+			
+			$('#tourismSuggestionsProductSelect').empty().html(options);
+			$('#tourismSuggestionsProductSelect').multiselect('enable');
+			$('#tourismSuggestionsProductSelect').multiselect('refresh');
+			
+			$("#tourismSuggestionsProductSelect").bind("multiselectclick", function(event, ui) {
+				showCreateTourismSuggestionsDialog(productId)
+			});
+		}
+	});
 }
 
 function tourismSuggestionsSynchroniseProducts(productId, products){
@@ -152,42 +152,42 @@ function tourismSuggestionsExistProductInSuggestions(id){
  * @param productId
  */
 function tourismSuggestionsLoadSuggestions(productId){
-    var dataToSend = 'product.id='+productId;
-    dataToSend += '&format=json';
-    $.ajax({
-        url : tourismSuggestionsListSuggestions + "?" + dataToSend,
-        type : "GET",
-        data : "",
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            tourismSuggestionsDrawForm(productId, response);
-        }
-    });
+	var dataToSend = 'product.id='+productId;
+	dataToSend += '&format=json';
+	$.ajax({
+		url : tourismSuggestionsListSuggestions + "?" + dataToSend,
+		type : "GET",
+		data : "",
+		dataType : "json",
+		cache : false,
+		async : true,
+		success : function(response, status) {
+			tourismSuggestionsDrawForm(productId, response);
+		}
+	});
 }
 
 function tourismSuggestionsDrawForm(productId, suggestions) {
-    // grid setup
-    var columns = [
-        {id: "#", name: "", width: 5, behavior: "selectAndMove", selectable: false, cssClass: "cell-reorder"},
-        {id: "name", name: tourismSuggestionsProductNameLabel, field: "name", width: 60, formatter: tourismSuggestionsTitleFormatter},
-        {id : "discount", name : tourismSuggestionsDiscountLabel, field : "discount", width : 40}
-    ];
-
-    var options = {
-        editable : false,
-        enableAddRow : false,
-        asyncEditorLoading : false,
-        forceFitColumns : true,
-        enableCellNavigation: false,
-        enableColumnReorder:false,
-        rowHeight : 25
-    };
-
-    tourismSuggestionsProducts = [];
-    for(var i = 0; i < suggestions.length; i++) {
-        var discount = suggestions[i].discount;
+	// grid setup
+	var columns = [
+           {id: "#", name: "", width: 5, behavior: "selectAndMove", selectable: false, cssClass: "cell-reorder"},
+           {id: "name", name: tourismSuggestionsProductNameLabel, field: "name", width: 60, formatter: tourismSuggestionsTitleFormatter},
+           {id : "discount", name : tourismSuggestionsDiscountLabel, field : "discount", width : 40}
+	];
+	
+	var options = {
+		editable : false,
+		enableAddRow : false,
+		asyncEditorLoading : false,
+		forceFitColumns : true,
+		enableCellNavigation: false,
+		enableColumnReorder:false,
+		rowHeight : 25
+	};
+	
+	tourismSuggestionsProducts = [];
+	for(var i = 0; i < suggestions.length; i++) {
+		var discount = suggestions[i].discount;
         if(!isNaN(discount) && discount != ""){
             var sign = "";
             if(isNaN(discount.substring(0, 1))){
@@ -198,16 +198,16 @@ function tourismSuggestionsDrawForm(productId, suggestions) {
             discount = sign + discount;
         }
         tourismSuggestionsProducts[tourismSuggestionsProducts.length] = {
-            'id':suggestions[i].product.id,
-            'productId':productId,
-            'name':suggestions[i].product.name,
-            'discount': discount,
-            'required': suggestions[i].required,
-            'position': ((i + 1) * 10)
-        };
-    }
-
-    tourismSuggestionsGridObject= new Slick.Grid($("#tourismSuggestionsGrid"), tourismSuggestionsProducts, columns, options);
+			'id':suggestions[i].product.id,
+			'productId':productId,
+			'name':suggestions[i].product.name,
+			'discount': discount,
+			'required': suggestions[i].required,
+			'position': ((i + 1) * 10)
+		};
+	}
+	
+	tourismSuggestionsGridObject= new Slick.Grid($("#tourismSuggestionsGrid"), tourismSuggestionsProducts, columns, options);
     tourismSuggestionsGridObject.setSelectionModel(new Slick.RowSelectionModel());
     tourismSuggestionsGridObject.invalidate();
 
@@ -241,42 +241,42 @@ function tourismSuggestionsDrawForm(productId, suggestions) {
 }
 
 function tourismSuggestionsTitleFormatter(row, cell, value, columnDef, dataContext) {
-    return '<a href="javascript:void(0)" onclick="tourismSuggestionsEditSuggestedProduct(' + dataContext.productId + ',' + dataContext.id + ')">' + value + "</a>";
+	return '<a href="javascript:void(0)" onclick="tourismSuggestionsEditSuggestedProduct(' + dataContext.productId + ',' + dataContext.id + ')">' + value + "</a>";
 }
 
 function showCreateTourismSuggestionsDialog(productId) {
-    $('#tourismSuggestionsCompanySelect').multiselect('close');
-    $('#tourismSuggestionsProductSelect').multiselect('close');
-    $.get(tourismSuggestionsPageUrl, function(responseText) {
-        if ($('#tourismSuggestionsDialog').dialog( "isOpen" ) !== true) {
-            htmlresponse = jQuery.trim(responseText);
-            $('#tourismSuggestionsDialog').empty();
-            $('#tourismSuggestionsDialog').html(htmlresponse);
-
-            $('#tourismSuggestionsDialog').dialog({
-                width : 'auto',
-                height : 'auto',
-                title : "Create Suggestion",
-                resizable: false,
-                modal : true,
-                open: function(event) {
-                    $('#tourismSuggestionsDiscount').val('0');
-                    $('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
-                    $('.ui-dialog-buttonpane').find('button:contains("createLabel")').addClass("ui-create-button");
-                    $('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
-                    $('.ui-dialog-buttonpane').find('button:contains("createLabel")').html('<span class="ui-button-text">'+tourismSuggestionsAddButtonLabel+'</span>');
-                },
-                buttons : {
-                    cancelLabel : function() {
-                        closeTourismSuggestionsDialog();
-                    },
-                    createLabel : function() {
-                        tourismSuggestionsAddRecord(productId);
-                    }
-                }
-            });
-        }
-    }, "html");
+	$('#tourismSuggestionsCompanySelect').multiselect('close');
+	$('#tourismSuggestionsProductSelect').multiselect('close');
+	$.get(tourismSuggestionsPageUrl, function(responseText) {
+		if ($('#tourismSuggestionsDialog').dialog( "isOpen" ) !== true) {
+			htmlresponse = jQuery.trim(responseText);
+			$('#tourismSuggestionsDialog').empty();
+			$('#tourismSuggestionsDialog').html(htmlresponse);
+			
+			$('#tourismSuggestionsDialog').dialog({
+				width : 'auto',
+				height : 'auto',
+				title : "Create Suggestion",
+				resizable: false,
+				modal : true,
+				open: function(event) {
+					$('#tourismSuggestionsDiscount').val('0');
+					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
+					$('.ui-dialog-buttonpane').find('button:contains("createLabel")').addClass("ui-create-button");
+					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
+					$('.ui-dialog-buttonpane').find('button:contains("createLabel")').html('<span class="ui-button-text">'+tourismSuggestionsAddButtonLabel+'</span>');
+				},
+				buttons : {
+					cancelLabel : function() {
+						closeTourismSuggestionsDialog();
+					},
+					createLabel : function() {
+						tourismSuggestionsAddRecord(productId);
+					}
+				}
+			});
+		}
+	}, "html");
 }
 
 function tourismSuggestionsEditSuggestedProduct(productId, id){
@@ -284,44 +284,44 @@ function tourismSuggestionsEditSuggestedProduct(productId, id){
 }
 
 function showEditTourismSuggestionsDialog(productId, id) {
-    $('#tourismSuggestionsCompanySelect').multiselect('close');
-    $('#tourismSuggestionsProductSelect').multiselect('close');
-    $.get(tourismSuggestionsPageUrl, function(responseText) {
-        if ($('#tourismSuggestionsDialog').dialog( "isOpen" ) !== true) {
-            htmlresponse = jQuery.trim(responseText);
-            $('#tourismSuggestionsDialog').empty();
-            $('#tourismSuggestionsDialog').html(htmlresponse);
-
-            $('#tourismSuggestionsDialog').dialog({
-                width : 'auto',
-                height : 'auto',
-                title : "Edit Suggestion",
-                resizable: false,
-                modal : true,
-                open: function(event) {
-                    var data = tourismSuggestionsGetDataRowByProductId(id);
-                    $('#tourismSuggestionsDiscount').val(data.discount);
-                    $('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').addClass("ui-delete-button");
-                    $('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
-                    $('.ui-dialog-buttonpane').find('button:contains("updateLabel")').addClass("ui-update-button");
-                    $('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').html('<span class="ui-button-text">'+deleteLabel+'</span>');
-                    $('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
-                    $('.ui-dialog-buttonpane').find('button:contains("updateLabel")').html('<span class="ui-button-text">'+updateLabel+'</span>');
-                },
-                buttons : {
-                    deleteLabel : function() {
-                        tourismSuggestionsDeleteRecord(productId);
-                    },
-                    cancelLabel : function() {
-                        closeTourismSuggestionsDialog();
-                    },
-                    updateLabel : function() {
-                        tourismSuggestionsEditRecord(productId);
-                    }
-                }
-            });
-        }
-    }, "html");
+	$('#tourismSuggestionsCompanySelect').multiselect('close');
+	$('#tourismSuggestionsProductSelect').multiselect('close');
+	$.get(tourismSuggestionsPageUrl, function(responseText) {
+		if ($('#tourismSuggestionsDialog').dialog( "isOpen" ) !== true) {
+			htmlresponse = jQuery.trim(responseText);
+			$('#tourismSuggestionsDialog').empty();
+			$('#tourismSuggestionsDialog').html(htmlresponse);
+			
+			$('#tourismSuggestionsDialog').dialog({
+				width : 'auto',
+				height : 'auto',
+				title : "Edit Suggestion",
+				resizable: false,
+				modal : true,
+				open: function(event) {
+					var data = tourismSuggestionsGetDataRowByProductId(id);
+					$('#tourismSuggestionsDiscount').val(data.discount);
+					$('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').addClass("ui-delete-button");
+					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').addClass("ui-cancel-button");
+					$('.ui-dialog-buttonpane').find('button:contains("updateLabel")').addClass("ui-update-button");
+					$('.ui-dialog-buttonpane').find('button:contains("deleteLabel")').html('<span class="ui-button-text">'+deleteLabel+'</span>');
+					$('.ui-dialog-buttonpane').find('button:contains("cancelLabel")').html('<span class="ui-button-text">'+cancelLabel+'</span>');
+					$('.ui-dialog-buttonpane').find('button:contains("updateLabel")').html('<span class="ui-button-text">'+updateLabel+'</span>');
+				},
+				buttons : {
+					deleteLabel : function() {
+						tourismSuggestionsDeleteRecord(productId);
+					},
+					cancelLabel : function() {
+						closeTourismSuggestionsDialog();
+					},
+					updateLabel : function() {
+						tourismSuggestionsEditRecord(productId);
+					}
+				}
+			});
+		}
+	}, "html");
 }
 
 function tourismSuggestionsGetDataRowByProductId(id) {
@@ -335,8 +335,8 @@ function tourismSuggestionsGetDataRowByProductId(id) {
 }
 
 function closeTourismSuggestionsDialog() {
-    $('#tourismSuggestionsDialog').empty();
-    $('#tourismSuggestionsDialog').dialog('close');
+	$('#tourismSuggestionsDialog').empty();
+	$('#tourismSuggestionsDialog').dialog('close');
 }
 
 function tourismSuggestionsAddRecord(productId) {

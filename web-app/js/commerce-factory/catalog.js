@@ -149,8 +149,8 @@ function catalogAddNew() {
 //            channelsStr += ",";
 //        channelsStr += channels[i].value;
 //    }
-    var dataToSend = "catalog.name=" + $("#catalogCreateName").val() + "&catalog.externalCode=" + $("#catalogCreateExternalCode").val();
-    dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + $("#catalogCreateDescription").val();
+    var dataToSend = "catalog.name=" + encodeURIComponent($("#catalogCreateName").val()) + "&catalog.externalCode=" + encodeURIComponent($("#catalogCreateExternalCode").val());
+    dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + encodeURIComponent($("#catalogCreateDescription").val());
 //    dataToSend += "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogCreateSocial").is(":checked");
     dataToSend += "&format=json";
     $.ajax({
@@ -390,9 +390,9 @@ function catalogUpdate() {
 //        channelsStr += channels[i].value;
 //    }
     var date = $("#catalogActivationDate").val();
-    var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + $("#catalogName").val() + "&catalog.externalCode=" + $("#catalogExternalCode").val();
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&catalog.name=" + encodeURIComponent($("#catalogName").val()) + "&catalog.externalCode=" + encodeURIComponent($("#catalogExternalCode").val());
     dataToSend += "&catalog.activationDate_year=" + date.substring(0, 4) + "&catalog.activationDate_month=" + date.substring(5, 7) + "&catalog.activationDate_day=" + date.substring(8, 10);
-    dataToSend += "&catalog.description=" + $("#catalogDescription").val()/*  + "&catalog.channels=" + channelsStr+ "&catalog.social=" + $("#catalogSocial").is(":checked")*/;
+    dataToSend += "&catalog.description=" + encodeURIComponent($("#catalogDescription").val())/*  + "&catalog.channels=" + channelsStr+ "&catalog.social=" + $("#catalogSocial").is(":checked")*/;
     dataToSend += "&format=json";
     $.ajax({
         url: updateCatalogUrl,
@@ -429,6 +429,12 @@ function catalogDeleteConfirmation() {
             resizable: false,
             width: "530",
             height: "auto",
+            open:function(){
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            },
             buttons: {
                 cancelLabel: function () {
                     $("#catalogCreateDialog").dialog("close");
