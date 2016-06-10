@@ -206,7 +206,7 @@ function translationCreateTranslation(type, target, fields, data){
     for(var i = 0; i < fields.length; i++){
         valueObj[fields[i]] = data[fields[i]];
     }
-	var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + target + "&language=" + $("#translationLanguageSelect").val() + "&type=" + typeTranslation + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
+	var dataToSend = "catalog.id=" + catalogSelectedId + "&target=" + target + "&language=" + $("#translationLanguageSelect").val() + "&type=" + typeTranslation + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
 
 	$.ajax({
 		url : updateTranslationUrl,
@@ -231,7 +231,7 @@ function translationUpdateTranslation(targetId, fields, data){
     for(var i = 0; i < fields.length; i++){
         valueObj[fields[i]] = data[fields[i]];
     }
-    var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + targetId + "&language=" + data.lang + "&type=" + data.type + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&target=" + targetId + "&language=" + data.lang + "&type=" + data.type + "&value=" + encodeURIComponent(JSON.stringify(valueObj));
 
 	$.ajax({
 		url : updateTranslationUrl,
@@ -355,13 +355,14 @@ function translationGetRealType(type){
             typeTranslation = "CATEGORY";
             break;
         case "productProperties":
-            typeTranslation = "FEATURE";
+            typeTranslation = "PRODUCT_PROPERTY";
             break;
         case "productFeatures":
             typeTranslation = "FEATURE";
             break;
         case "categoryFeatures":
             typeTranslation = "FEATURE";
+            break;
         case "catalog":
             typeTranslation = "CATALOG";
             break;
