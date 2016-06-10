@@ -46,7 +46,7 @@ function catalogProductsInitSearchPage(htmlresponse){
 
 function catalogProductsSearchProducts(){
     catalogProductsSearchTimeout = null;
-    var dataToSend = "idCatalog=" + catalogSelectedId + "&query=" + $("#catalogProductsSearchInput").val() + "&activeOnly=" + $("#catalogProductsActiveOnly").is(":checked") + "&format=html";
+    var dataToSend = "idCatalog=" + catalogSelectedId + "&query=" + encodeURIComponent($("#catalogProductsSearchInput").val()) + "&activeOnly=" + $("#catalogProductsActiveOnly").is(":checked") + "&format=html";
     $.ajax({
         url : catalogProductsSearchUrl,
         type : "GET",

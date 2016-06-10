@@ -134,7 +134,7 @@ function userProfileChangePasswordValidateForm(){
 }
 
 function userProfileChangePassword(sellerId){
-    var dataToSend = "id=" + sellerId + "&olPassword=" + $("#profileCurrentPassword").val() + "&newPassword=" + $("#profileNewPassword").val();
+    var dataToSend = "id=" + sellerId + "&olPassword=" + encodeURIComponent($("#profileCurrentPassword").val()) + "&newPassword=" + encodeURIComponent($("#profileNewPassword").val());
     $.ajax({
         url : profileChangePasswordUrl,
         type : "GET",

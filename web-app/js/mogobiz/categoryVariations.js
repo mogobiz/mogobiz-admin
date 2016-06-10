@@ -276,8 +276,8 @@ function categoryVariationsValidateForm(){
 }
 
 function categoryVariationsCreateVariation(){
-    var dataToSend = "category.id=" + categorySelectedId + "&variation.name=" + $("#categoryVariationName").val();
-    dataToSend += "&variation.externalCode=" + $("#categoryVariationExternalCode").val() + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.name=" + encodeURIComponent( $("#categoryVariationName").val());
+    dataToSend += "&variation.externalCode=" + encodeURIComponent($("#categoryVariationExternalCode").val()) + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
     $.ajax({
         url : createVariationsUrl,
         type : "POST",
@@ -327,8 +327,8 @@ function categoryVariationsCreateVariation(){
 }
 
 function categoryVariationsUpdateVariation(variationId){
-    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId + "&variation.name=" + $("#categoryVariationName").val();
-    dataToSend += "&variation.externalCode=" + $("#categoryVariationExternalCode").val() + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
+    var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId + "&variation.name=" + encodeURIComponent($("#categoryVariationName").val());
+    dataToSend += "&variation.externalCode=" + encodeURIComponent($("#categoryVariationExternalCode").val()) + "&variation.hide=" + $("#categoryVariationHide").is(':checked') + "&format=json";
     $.ajax({
         url : updateVariationsUrl,
         type : "POST",
@@ -453,7 +453,7 @@ function categoryVariationsAddVariationValues(variationId, values){
     }
 
     var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
-    dataToSend += "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&variationValue.position=" + values[categoryVariationsValuesIndex].position + "&format=json";
+    dataToSend += "&variationValue.value=" + encodeURIComponent(values[categoryVariationsValuesIndex].value) + "&variationValue.position=" + values[categoryVariationsValuesIndex].position + "&format=json";
     $.ajax({
         url : createVariationValueUrl,
         type : "POST",
@@ -484,7 +484,7 @@ function categoryVariationsUpdateVariationValues(variationId, values, addedValue
         return;
     }
     var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
-    dataToSend += "&variationValue.id=" + values[categoryVariationsValuesIndex].id + "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&format=json";
+    dataToSend += "&variationValue.id=" + encodeURIComponent(values[categoryVariationsValuesIndex].id) + "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&format=json";
     $.ajax({
         url : updateVariationValueUrl,
         type : "POST",
@@ -509,7 +509,7 @@ function categoryVariationsDeleteVariationValues(variationId, values){
     }
 
     var dataToSend = "category.id=" + categorySelectedId + "&variation.id=" + variationId;
-    dataToSend += "&variationValue.value=" + values[categoryVariationsValuesIndex].value + "&format=json";
+    dataToSend += "&variationValue.value=" + encodeURIComponent(values[categoryVariationsValuesIndex].value) + "&format=json";
     $.ajax({
         url : deleteVariationValueUrl,
         type : "POST",
@@ -644,7 +644,7 @@ function categoryVariationUpdateTranslationValues(values){
     });
 
     for(var i = 0; i < values.length; i++){
-        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + values[i] + "\"}";
+        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + encodeURIComponent(values[i]) + "\"}";
 
         $.ajax({
             url : updateTranslationUrl,
@@ -677,7 +677,7 @@ function categoryVariationCreateTranslationValues(language, variationId){
         return a.position > b.position;
     });
     for(var i = 0; i < tab.length; i++){
-        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + tab[i].value + "\"}";
+        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + encodeURIComponent(tab[i].value) + "\"}";
 
         $.ajax({
             url : updateTranslationUrl,

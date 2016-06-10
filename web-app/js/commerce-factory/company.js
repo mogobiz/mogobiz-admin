@@ -167,7 +167,7 @@ function checkUniqueCompanyName(){
 	$.ajax({
 		url : existCompanyNameUrl,
 		type : "GET",
-		data : "name=" + $('#createCompanyName').val(),
+		data : "name=" + encodeURIComponent($('#createCompanyName').val()),
 		dataType : "json",
 		cache : false,
 		async : true,
@@ -198,7 +198,7 @@ function checkUniqueCompanyCode(){
 	$.ajax({
 		url : existCompanyCodeUrl,
 		type : "GET",
-		data : "code=" + $('#createCompanyCode').val(),
+		data : "code=" + encodeURIComponent($('#createCompanyCode').val()),
 		dataType : "json",
 		cache : false,
 		async : true,
@@ -229,7 +229,7 @@ function checkUniqueSellerMail(){
 	$.ajax({
 		url : existSellerEmailUrl,
 		type : "GET",
-		data : "email=" + $('#createCompanyEmail').val(),
+		data : "email=" + encodeURIComponent($('#createCompanyEmail').val()),
 		dataType : "json",
 		cache : false,
 		async : true,
@@ -257,7 +257,8 @@ function checkUniqueSellerMail(){
 }
 
 function createCompany(){
-	var dataToSend = $('#companyAddForm').serialize();
+	var dataToSend = "company.name=" + encodeURIComponent($("#createCompanyName").val()) + "&company.code=" + encodeURIComponent($("#createCompanyCode").val());
+    dataToSend += "&company.email=" + encodeURIComponent($("#createCompanyEmail").val()) + "&company.location.countryCode=" + $("#createCompanyCountry").val();
 	dataToSend += "&format=json";
 	$.ajax({
 		url : createCompanyUrl,
