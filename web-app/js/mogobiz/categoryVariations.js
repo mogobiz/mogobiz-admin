@@ -644,7 +644,7 @@ function categoryVariationUpdateTranslationValues(values){
     });
 
     for(var i = 0; i < values.length; i++){
-        var dataToSend = "target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + values[i] + "\"}";
+        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + values[i] + "\"}";
 
         $.ajax({
             url : updateTranslationUrl,
@@ -677,7 +677,7 @@ function categoryVariationCreateTranslationValues(language, variationId){
         return a.position > b.position;
     });
     for(var i = 0; i < tab.length; i++){
-        var dataToSend = "target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + tab[i].value + "\"}";
+        var dataToSend = "catalog.id="+ catalogSelectedId+"&target=" + tab[i].id + "&language=" + language + "&type=VARIATION_VALUE&value={\"value\":\"" + tab[i].value + "\"}";
 
         $.ajax({
             url : updateTranslationUrl,
