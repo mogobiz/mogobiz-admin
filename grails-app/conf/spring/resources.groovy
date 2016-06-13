@@ -506,7 +506,9 @@ beans = {
     }
     embeddedElasticSearchService(bootstrap.EmbeddedElasticSearchService)
     googleService(GoogleService)
-    miraklService(com.mogobiz.service.MiraklService)
+    miraklService(com.mogobiz.service.MiraklService){
+        sanitizeUrlService = ref('sanitizeUrlService')
+    }
 
     featureValueRender(com.mogobiz.store.domain.FeatureValueRender)
     featureValueValidation(com.mogobiz.store.domain.FeatureValueValidation)

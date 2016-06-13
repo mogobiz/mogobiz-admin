@@ -28,16 +28,24 @@ class MiraklController {
         Long envId = params.long('esenv.id')
         MiraklEnv env = envId ? MiraklEnv.get(envId) : null
 
-        if(!env && grailsApplication.config.mirakl){
-            def mirakl = grailsApplication.config.mirakl["${company.code}"] as Map
-            if(mirakl){
-                env = new MiraklEnv(mirakl)
-                env.company = company
-                env.running = false
-                env.validate()
-                if(!env.hasErrors()){
-                    env.save(flush: true)
+        if(!envId){
+            env = MiraklEnv.findByCompany(company)
+            if(!env && grailsApplication.config.mirakl){
+                def mirakl = grailsApplication.config.mirakl["${company.code}"] as Map
+                if(mirakl){
+                    env = new MiraklEnv(mirakl)
+                    env.company = company
+                    env.running = false
+                    env.validate()
+                    if(!env.hasErrors()){
+                        env.save(flush: true)
+                    }
+                    else{
+                        env = null
+                    }
                 }
+            }
+            if(env){
                 profileService.saveUserPermission(
                         seller,
                         true,
