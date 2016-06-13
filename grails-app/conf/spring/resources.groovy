@@ -444,6 +444,18 @@ beans = {
     wishlistCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Wishlist) {
         excludes = ['class']
     }
+    miraklEnvRenderer(JsonRenderer, com.mogobiz.store.domain.MiraklEnv){
+        excludes = ['class']
+    }
+    miraklEnvCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.MiraklEnv){
+        excludes = ['class']
+    }
+    miraklSyncRenderer(JsonRenderer, com.mogobiz.store.domain.MiraklSync){
+        excludes = ['class']
+    }
+    miraklSyncCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.MiraklSync){
+        excludes = ['class']
+    }
 
     loadBeans("classpath:*defaultResources.groovy")
 /*
@@ -494,6 +506,7 @@ beans = {
     }
     embeddedElasticSearchService(bootstrap.EmbeddedElasticSearchService)
     googleService(GoogleService)
+    miraklService(com.mogobiz.service.MiraklService)
 
     featureValueRender(com.mogobiz.store.domain.FeatureValueRender)
     featureValueValidation(com.mogobiz.store.domain.FeatureValueValidation)
@@ -648,4 +661,9 @@ beans = {
     wishlistRender(com.mogobiz.store.domain.WishlistRender)
 
     permissionTypeConverter(com.mogobiz.utils.PermissionTypeConverter)
+    miraklEnvValidation (com.mogobiz.store.domain.MiraklEnvValidation)
+    miraklEnvRender (com.mogobiz.store.domain.MiraklEnvRender)
+    miraklSyncValidation (com.mogobiz.store.domain.MiraklSyncValidation)
+    miraklSyncRender (com.mogobiz.store.domain.MiraklSyncRender)
+
 }
