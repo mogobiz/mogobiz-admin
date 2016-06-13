@@ -90,7 +90,7 @@ class ElasticsearchController {
             return
         }
         def company = seller.company
-        long envId = params.long('esenv.id')
+        Long envId = params.long('esenv.id')
         EsEnv env = envId ? EsEnv.get(envId) : null
         if(company != env?.company){
             response.sendError 401
@@ -101,7 +101,7 @@ class ElasticsearchController {
             response.sendError 401
             return
         }
-        long catalogId = params.long('catalog.id')
+        Long catalogId = params.long('catalog.id')
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
         if (catalog?.name == "impex") {
             render status:403, text: "Impex Catalog cannot be published"
