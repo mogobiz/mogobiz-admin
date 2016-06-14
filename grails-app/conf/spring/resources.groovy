@@ -457,6 +457,19 @@ beans = {
         excludes = ['class']
     }
 
+    bOWishlistRenderer(JsonRenderer, com.mogobiz.store.domain.BOWishlist){
+        excludes = ['class']
+    }
+    bOWishlistCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOWishlist){
+        excludes = ['class']
+    }
+    bOCommentRenderer(JsonRenderer, com.mogobiz.store.domain.BOComment){
+        excludes = ['class']
+    }
+    bOCommentCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOComment){
+        excludes = ['class']
+    }
+
     loadBeans("classpath:*defaultResources.groovy")
 /*
 	messageSource(com.mogobiz.i18n.SiteMessageSource)
@@ -664,5 +677,10 @@ beans = {
     miraklEnvRender (com.mogobiz.store.domain.MiraklEnvRender)
     miraklSyncValidation (com.mogobiz.store.domain.MiraklSyncValidation)
     miraklSyncRender (com.mogobiz.store.domain.MiraklSyncRender)
+
+    BOWishlistValidation (com.mogobiz.store.domain.BOWishlistValidation)
+    BOWishlistRender (com.mogobiz.store.domain.BOWishlistRender)
+    BOCommentValidation (com.mogobiz.store.domain.BOCommentValidation)
+    BOCommentRender (com.mogobiz.store.domain.BOCommentRender)
 
 }
