@@ -174,6 +174,9 @@ function categoryTreeUpdateParentNode(nodeId, parentId, pos){
             setTimeout(function () { $("#categoryTreeList").jstree("set_focus"); }, 1);
             setTimeout(function () { $.jstree._reference("#categoryTreeNode-" + parentId).open_node("#categoryTreeNode-" + parentId); }, 1);
             $("#categoriesMain").hideLoading();
+            if(nodeId == categorySelectedId){
+                categoryGetTabPage();
+            }
         }
     });
 }
