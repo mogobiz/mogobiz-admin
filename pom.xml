@@ -7,7 +7,7 @@
     <groupId>com.mogobiz</groupId>
     <artifactId>mogobiz</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-RC1</version>
 
     <name>mogobiz admin grails application</name>
     <description>mogobiz-admin</description>
