@@ -146,11 +146,12 @@ grails.project.dependency.resolution = {
 
         compile 'org.scala-lang:scala-library:2.11.2'
 
-        compile 'com.typesafe.akka:akka-actor_2.11:2.3.9'
+        compile 'com.typesafe.akka:akka-actor_2.11:2.3.12'
         compile 'com.typesafe.akka:akka-stream-experimental_2.11:1.0-M3'
 
-        compile (group:"io.reactivex", name:"rxjava-reactive-streams", version: "0.3.0") {excludes ([ group: 'io.reactivex', name: 'rxjava'])}
-        compile ('com.netflix.rxjava:rxjava-groovy:0.20.7') {excludes "groovy-all"}
+        compile (group:"io.reactivex", name:"rxjava-reactive-streams", version: "1.0.1") {excludes ([ group: 'io.reactivex', name: 'rxjava'])}
+        compile ('io.reactivex:rxgroovy:1.0.3') {excludes "groovy-all"}
+        compile ('io.reactivex:rxjava:1.0.15')
 
         runtime 'org.json4s:json4s-native_2.11:3.2.9'
         runtime 'org.json4s:json4s-jackson_2.11:3.2.9'
@@ -171,6 +172,7 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.1.0-SNAPSHOT")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.1.0-SNAPSHOT")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl", version:"1.1.0-SNAPSHOT")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl-flow", version:"1.1.0-SNAPSHOT")  {excludes "groovy-all"}
 
         compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.1.0-SNAPSHOT", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
