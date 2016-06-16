@@ -166,12 +166,12 @@ grails.project.dependency.resolution = {
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
 
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0.0")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0.0-RC1")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0.0-RC1")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0.0-RC1")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0.0-RC1")  {excludes "groovy-all"}
 
-        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0-RC1", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 
