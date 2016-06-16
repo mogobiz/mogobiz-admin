@@ -521,7 +521,7 @@
             var companyCouponsCodeLabel = "${message(code: 'company.coupons.code.label')}";
             var companyCouponsPastilleLabel= "${message(code: 'company.coupons.pastille.label')}";
             var companyCouponsActiveLabel = "${message(code: 'company.coupons.active.label')}";
-            var companyCouponsCatalogWiseLabel = "${message(code: 'company.coupons.catalogWise.label')}";
+            var companyCouponsCatalogWideLabel = "${message(code: 'company.coupons.catalogWide.label')}";
             var companyCouponsNumberOfUseLabel = "${message(code: 'company.coupons.numberOfUse.label')}";
             var companyCouponsStartDateLabel = "${message(code: 'company.coupons.startDate.label')}";
             var companyCouponsEndDateLabel = "${message(code: 'company.coupons.endDate.label')}";
