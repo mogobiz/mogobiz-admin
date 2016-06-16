@@ -103,8 +103,8 @@
                 <label for="companyCouponsActive"><g:message locale="${lang}" code="company.coupons.active.label" /></label>&nbsp;&nbsp;
                 <input type="checkbox" id="companyCouponsAnonymous" value="false"/>&nbsp;
                 <label for="companyCouponsAnonymous"><g:message locale="${lang}" code="company.coupons.anonymous.label" /></label>&nbsp;&nbsp;
-                <input type="checkbox" id="companyCouponsCatalogWise" value="false"/>&nbsp;
-                <label for="companyCouponsCatalogWise"><g:message locale="${lang}" code="company.coupons.catalogWise.label" /></label>&nbsp;&nbsp;
+                <input type="checkbox" id="companyCouponsCatalogWide" value="false"/>&nbsp;
+                <label for="companyCouponsCatalogWide"><g:message locale="${lang}" code="company.coupons.catalogWide.label" /></label>&nbsp;&nbsp;
                 <select id="companyCouponsGeneralCatalog" multiple="multiple"></select>
             </div>
             <div class="spacer"></div>

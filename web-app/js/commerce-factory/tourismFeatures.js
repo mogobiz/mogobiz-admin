@@ -300,8 +300,8 @@ function tourismFeaturesValidateForm() {
 }
 
 function tourismFeaturesCreateFeature(productId) {
-	var dataToSend = "product.id=" + productId + "&feature.name=" + $("#tourismFeatureName").val();
-	dataToSend += "&feature.value=" + $("#tourismFeatureValue").val() + "&feature.hide=" + $("#tourismFeatureHide").is(':checked') + "&format=json";
+	var dataToSend = "product.id=" + productId + "&feature.name=" + encodeURIComponent($("#tourismFeatureName").val());
+	dataToSend += "&feature.value=" + encodeURIComponent($("#tourismFeatureValue").val()) + "&feature.hide=" + $("#tourismFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
 		url : createFeaturesUrl,
 		type : "POST",
@@ -328,7 +328,7 @@ function tourismFeaturesCreateFeature(productId) {
 
 function tourismFeaturesUpdateFeature(productId, featureId) {
 	var dataToSend = "product.id=" + productId + "&feature.id=" + featureId
-	dataToSend += "&feature.name=" + $("#tourismFeatureName").val() + "&feature.value=" + $("#tourismFeatureValue").val();
+	dataToSend += "&feature.name=" + encodeURIComponent($("#tourismFeatureName").val()) + "&feature.value=" + encodeURIComponent($("#tourismFeatureValue").val());
 	dataToSend += "&feature.externalCode=" + $("#tourismFeatureExternalCode").val() + "&feature.hide=" + $("#tourismFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
 		url : updateFeaturesUrl,

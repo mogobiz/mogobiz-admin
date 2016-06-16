@@ -2,10 +2,6 @@
  * Copyright (C) 2015 Mogobiz SARL. All rights reserved.
  */
 
-import bootstrap.CommerceService
-import bootstrap.CommonService
-import bootstrap.EmbeddedElasticSearchService
-import bootstrap.PerfCommerceService
 
 class BootStrap {
     // Nombre de catégories principales
@@ -19,13 +15,15 @@ class BootStrap {
     // le nombre total de produit est le produit des trois valeurs ci-dessus (soit dans ce cas 5 * 10 * 100 = 5000)
 
     def grailsApplication
-    CommonService commonService
-    CommerceService commerceService
-    PerfCommerceService perfCommerceService
-    EmbeddedElasticSearchService embeddedElasticSearchService
+    def commonService
+    def commerceService
+    def perfCommerceService
+    def embeddedElasticSearchService
+    def translationService
 
     def init = { servletContext ->
         commonService.init()
+        translationService.updateTranslationCatalog()
         if (grailsApplication.config.elasticsearch.embedded.active)
             embeddedElasticSearchService.init()
         if (grailsApplication.config.demo) {

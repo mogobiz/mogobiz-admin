@@ -62,7 +62,7 @@ function showMap() {
  * Get all POIs
  */
 function getAllPois(productId) {
-	var dataToSend = "format=json";
+	var dataToSend = "format=json&product.id=" + productId;
 	currentProductId = productId;
 	
 	$('#mapDiv').showLoading();

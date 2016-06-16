@@ -14,7 +14,7 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
         success : function(pageContent, status) {
             $("#categoryTree").empty();
             $("#catalogMenu ul.subnav li a.disabled").removeClass("disabled");
-            $("#deleteCatalogLink").click(function(){catalogDelete();});
+            $("#deleteCatalogLink").click(function(){catalogDeleteConfirmation();});
             $("#exportCatalogLink").click(function(){catalogExport();});
             $("#searchProductCatalogLink").click(function(){catalogProductsGetSearchPage();});
             var html = "<div id='categoryTreeList' value='-1'><ul><li id='categoryTreeNode-0' value='0' class='loaded'>";
@@ -174,6 +174,9 @@ function categoryTreeUpdateParentNode(nodeId, parentId, pos){
             setTimeout(function () { $("#categoryTreeList").jstree("set_focus"); }, 1);
             setTimeout(function () { $.jstree._reference("#categoryTreeNode-" + parentId).open_node("#categoryTreeNode-" + parentId); }, 1);
             $("#categoriesMain").hideLoading();
+            if(nodeId == categorySelectedId){
+                categoryGetTabPage();
+            }
         }
     });
 }
