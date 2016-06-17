@@ -99,7 +99,7 @@ function companyCouponsDrawAll(){
                         "endDate": coupons[i].endDate,
                         "numberOfUses": coupons[i].numberOfUses,
                         "active": coupons[i].active,
-                        "catalogWide": coupons[i].catalogWide,
+                        "catalogWide": coupons[i].catalogWise,
                         "catalogs": coupons[i].catalogs,
                         "description": coupons[i].description,
                         "categories": coupons[i].categories,
