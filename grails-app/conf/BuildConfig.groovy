@@ -1,8 +1,8 @@
 grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
-grails.project.class.dir = "target/classes"
-grails.project.test.class.dir = "target/test-classes"
-grails.project.test.reports.dir = "target/test-reports"
-grails.project.work.dir = "target/work"
+//grails.project.class.dir = "target/classes"
+//grails.project.test.class.dir = "target/test-classes"
+//grails.project.test.reports.dir = "target/test-reports"
+grails.project.work.dir = "target"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
@@ -16,17 +16,17 @@ grails.project.fork = [
         // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
         //compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
         // configure settings for the test-app JVM, uses the daemon by default
-        test: [maxMemory: 1500, minMemory: 64, debug: false, maxPerm: 1024, daemon:true],
+        test: [maxMemory: 1500, minMemory: 64, debug: false, maxPerm: 1024, daemon: true],
         // configure settings for the run-app JVM
-        run: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
+        run: [maxMemory: 7192, minMemory: 7192, debug: false, maxPerm: 1024, forkReserve: false],
         // configure settings for the run-war JVM
-        war: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve:false],
+        war: [maxMemory: 2048, minMemory: 2048, debug: false, maxPerm: 1024, forkReserve: false],
         // configure settings for the Console UI JVM
         console: [maxMemory: 2048, minMemory: 2048, debug: true, maxPerm: 1024]
 ]
 
-grails{
-    tomcat{
+grails {
+    tomcat {
         jvmArgs = [
                 "-server",
                 "-XX:MaxPermSize=512m",
@@ -47,7 +47,7 @@ grails{
 }
 grails.project.dependency.resolver = "maven" // or ivy
 
-grails.war.resources = {stagingDir ->
+grails.war.resources = { stagingDir ->
 
     def jarsPluginsToRemove = [
             "$stagingDir/WEB-INF/lib/activation.jar",
@@ -58,11 +58,11 @@ grails.war.resources = {stagingDir ->
             "$stagingDir/WEB-INF/lib/XmlSchema-1.1.jar",
             "$stagingDir/WEB-INF/lib/xmlsec-1.3.0.jar"
     ];
-    jarsPluginsToRemove.each { delete (file: it) }
+    jarsPluginsToRemove.each { delete(file: it) }
 
     delete(file: "${stagingDir}/WEB-INF/lib/quartz-1.6.1.jar")
-    delete (file : "$stagingDir/WEB-INF/lib/slf4j-api-1.6.jar")
-    delete (file : "$stagingDir/WEB-INF/lib/slf4j-api-1.5.8.jar")
+    delete(file: "$stagingDir/WEB-INF/lib/slf4j-api-1.6.jar")
+    delete(file: "$stagingDir/WEB-INF/lib/slf4j-api-1.5.8.jar")
 }
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -81,6 +81,13 @@ grails.project.dependency.resolution = {
         grailsHome()
         mavenLocal()
         grailsCentral()
+//        mavenRepo(id:'art', "http://art.ebiznext.com") { // http://art.ebiznext.com/artifactory/libs-snapshot-local
+//            //Add authentication details to repository connection
+//            auth([
+//                    username: 'hayssam.saleh',
+//                    password: 'Azizam1980'
+//            ])
+//        }
 
         // uncomment the below to enable remote dependency resolution
         // from public Mavn repositories
@@ -89,9 +96,8 @@ grails.project.dependency.resolution = {
 
     plugins {
         // plugins for the build system only
-        build ':tomcat:7.0.50'
-        runtime ':console:1.5.6'
-
+        build ':tomcat:7.0.55.3'
+        runtime ':console:1.5.7'
 
 // plugins needed at runtime but not for compilation
         // runtime ':hibernate4:4.3.5.2' // or
@@ -103,12 +109,12 @@ grails.project.dependency.resolution = {
         compile ':platform-core:1.0.0'
         compile ":google-data:0.1.3"
         runtime ":resources:1.2.8"
-        compile (":email-confirmation:2.0.8") {
+        compile(":email-confirmation:2.0.8") {
             excludes 'quartz'
         }
         compile ":jquery:1.9.1"
         compile ":jquery-ui:1.8.24"
-        compile (":shiro:1.2.1") {
+        compile(":shiro:1.2.1") {
             excludes 'shiro-quartz'
         }
         compile ":mail:1.0.5"
@@ -123,24 +129,24 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
         compile ":standalone:1.3"
 
-        compile "com.mogobiz:mogobiz-core:1.0.0"
+        compile "com.mogobiz:mogobiz-core:1.0.0-RC2"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // compile "org.springframework:spring-orm:$springVersion"
-        compile ('org.codehaus.groovy.modules.http-builder:http-builder:0.5.2') { excludes "groovy" }
+        compile('org.codehaus.groovy.modules.http-builder:http-builder:0.5.2') { excludes "groovy" }
         compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
         compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
-        compile group:"org.twitter4j", name:"twitter4j-async", version:"2.2.5"
-        compile group:"org.twitter4j", name:"twitter4j-core", version:"2.2.5"
-        compile group:"org.twitter4j", name:"twitter4j-media-support", version:"2.2.5"
-        compile group:"org.twitter4j", name:"twitter4j-stream", version:"2.2.5"
+        compile group: "org.twitter4j", name: "twitter4j-async", version: "2.2.5"
+        compile group: "org.twitter4j", name: "twitter4j-core", version: "2.2.5"
+        compile group: "org.twitter4j", name: "twitter4j-media-support", version: "2.2.5"
+        compile group: "org.twitter4j", name: "twitter4j-stream", version: "2.2.5"
 //        runtime 'mysql:mysql-connector-java:5.1.30'
         runtime "postgresql:postgresql:9.1-901.jdbc4"
 //        runtime "com.oracle:ojdbc6:11.2.0.1.0"
 
         compile 'org.elasticsearch:elasticsearch:1.2.1'
-        compile ('org.elasticsearch:elasticsearch-analysis-icu:2.2.0') {
+        compile('org.elasticsearch:elasticsearch-analysis-icu:2.2.0') {
             excludes 'org.elasticsearch:elasticsearch'
         }
 
@@ -149,8 +155,10 @@ grails.project.dependency.resolution = {
         compile 'com.typesafe.akka:akka-actor_2.11:2.3.9'
         compile 'com.typesafe.akka:akka-stream-experimental_2.11:1.0-M3'
 
-        compile (group:"io.reactivex", name:"rxjava-reactive-streams", version: "0.3.0") {excludes ([ group: 'io.reactivex', name: 'rxjava'])}
-        compile ('com.netflix.rxjava:rxjava-groovy:0.20.7') {excludes "groovy-all"}
+        compile(group: "io.reactivex", name: "rxjava-reactive-streams", version: "0.3.0") {
+            excludes([group: 'io.reactivex', name: 'rxjava'])
+        }
+        compile('com.netflix.rxjava:rxjava-groovy:0.20.7') { excludes "groovy-all" }
 
         runtime 'org.json4s:json4s-native_2.11:3.2.9'
         runtime 'org.json4s:json4s-jackson_2.11:3.2.9'
@@ -166,12 +174,12 @@ grails.project.dependency.resolution = {
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
 
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0.0")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0.0")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"1.0.0-RC2")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0.0-RC2")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0.0-RC2")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0.0-RC2")  {excludes "groovy-all"}
 
-        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0-RC2", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 
@@ -179,7 +187,8 @@ grails.project.dependency.resolution = {
 }
 
 grails.project.repos.default = "mogoRepo"
-grails.project.repos.mogoRepo.url = "http://art.ebiznext.com/artifactory/libs-release-local"
+grails.project.repos.mogoRepo.url = "http://art.ebiznext.com/artifactory/libs-snapshot-local"
 grails.project.repos.mogoRepo.type = "maven"
-grails.project.repos.myRepo.portal = "grailsCentral"
+grails.project.repos.mogoRepo.username = "hayssam.saleh@ebiznext.com"
+grails.project.repos.mogoRepo.password = "Azizam1980"
 
