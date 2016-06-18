@@ -521,6 +521,7 @@ beans = {
     googleService(GoogleService)
     miraklService(com.mogobiz.service.MiraklService){
         sanitizeUrlService = ref('sanitizeUrlService')
+        grailsApplication = ref('grailsApplication')
     }
 
     featureValueRender(com.mogobiz.store.domain.FeatureValueRender)
