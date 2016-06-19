@@ -8,8 +8,8 @@ grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 grails.project.plugin.includeSource = false
 
-// grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-// grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
 
 
 grails.project.fork = [
@@ -129,7 +129,7 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
         compile ":standalone:1.3"
 
-        compile "com.mogobiz:mogobiz-core:1.0.0-RC2"
+//        compile "com.mogobiz:mogobiz-core:1.0.0-RC2"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -152,13 +152,12 @@ grails.project.dependency.resolution = {
 
         compile 'org.scala-lang:scala-library:2.11.2'
 
-        compile 'com.typesafe.akka:akka-actor_2.11:2.3.9'
+        compile 'com.typesafe.akka:akka-actor_2.11:2.3.12'
         compile 'com.typesafe.akka:akka-stream-experimental_2.11:1.0-M3'
 
-        compile(group: "io.reactivex", name: "rxjava-reactive-streams", version: "0.3.0") {
-            excludes([group: 'io.reactivex', name: 'rxjava'])
-        }
-        compile('com.netflix.rxjava:rxjava-groovy:0.20.7') { excludes "groovy-all" }
+        compile (group:"io.reactivex", name:"rxjava-reactive-streams", version: "1.0.1") {excludes ([ group: 'io.reactivex', name: 'rxjava'])}
+        compile ('io.reactivex:rxgroovy:1.0.3') {excludes "groovy-all"}
+        compile ('io.reactivex:rxjava:1.0.15')
 
         runtime 'org.json4s:json4s-native_2.11:3.2.9'
         runtime 'org.json4s:json4s-jackson_2.11:3.2.9'
@@ -178,8 +177,10 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"1.0.0-RC2")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"1.0.0-RC2")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"1.0.0-RC2")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl", version:"1.1.0-RC2")  {excludes "groovy-all"}
+        compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl-flow", version:"1.1.0-RC2")  {excludes "groovy-all"}
 
-        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0-RC2", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+//        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"1.0.0-RC2", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 
