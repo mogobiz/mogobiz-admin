@@ -1,4 +1,4 @@
-mogobiz.version="1.0.0-RC2"
+mogobiz.version="${appVersion}"
 grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
 grails.project.work.dir = "target"
 grails.project.target.level = 1.6
