@@ -6,8 +6,8 @@ grails.project.source.level = 1.6
 grails.project.war.file = "target/${appName}.war"
 grails.project.plugin.includeSource = false
 
-grails.plugin.location."mogobiz-core" = "../mogobiz-core"
-grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
+//grails.plugin.location."mogobiz-core" = "../mogobiz-core"
+//grails.plugin.location."mogobiz-extensions" = "../mogobiz-extensions"
 
 
 grails.project.fork = [
@@ -133,8 +133,8 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // compile "org.springframework:spring-orm:$springVersion"
         compile('org.codehaus.groovy.modules.http-builder:http-builder:0.5.2') { excludes "groovy" }
-        compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'
-        compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
+        compile 'com.fasterxml.jackson.core:jackson-core:2.7.0'
+        compile 'com.fasterxml.jackson.core:jackson-databind:2.7.0'
         compile group: "org.twitter4j", name: "twitter4j-async", version: "2.2.5"
         compile group: "org.twitter4j", name: "twitter4j-core", version: "2.2.5"
         compile group: "org.twitter4j", name: "twitter4j-media-support", version: "2.2.5"
@@ -143,8 +143,8 @@ grails.project.dependency.resolution = {
         runtime "postgresql:postgresql:9.1-901.jdbc4"
 //        runtime "com.oracle:ojdbc6:11.2.0.1.0"
 
-        compile 'org.elasticsearch:elasticsearch:1.2.1'
-        compile('org.elasticsearch:elasticsearch-analysis-icu:2.2.0') {
+        compile 'org.elasticsearch:elasticsearch:1.7.3'
+        compile('org.elasticsearch:elasticsearch-analysis-icu:2.7.0') {
             excludes 'org.elasticsearch:elasticsearch'
         }
 
