@@ -259,8 +259,8 @@ function categoryFeaturesValidateForm(){
 }
 
 function categoryFeaturesCreateFeature(){
-	var dataToSend = "category.id=" + categorySelectedId + "&feature.name=" + $("#categoryFeatureName").val();
-	dataToSend += "&feature.value=" + $("#categoryFeatureValue").val() + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
+	var dataToSend = "category.id=" + categorySelectedId + "&feature.name=" + encodeURIComponent($("#categoryFeatureName").val());
+	dataToSend += "&feature.value=" + encodeURIComponent($("#categoryFeatureValue").val()) + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
 		url : createFeaturesUrl,
 		type : "POST",
@@ -288,8 +288,8 @@ function categoryFeaturesCreateFeature(){
 
 function categoryFeaturesUpdateFeature(featureId){
 	var dataToSend = "category.id=" + categorySelectedId+ "&feature.id=" + featureId;
-	dataToSend += "&feature.name=" + $("#categoryFeatureName").val() + "&feature.value=" + $("#categoryFeatureValue").val();
-	dataToSend += "&feature.externalCode=" + $("#categoryFeatureExternalCode").val() + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
+	dataToSend += "&feature.name=" + encodeURIComponent($("#categoryFeatureName").val()) + "&feature.value=" + encodeURIComponent($("#categoryFeatureValue").val());
+	dataToSend += "&feature.externalCode=" + encodeURIComponent($("#categoryFeatureExternalCode").val()) + "&feature.hide=" + $("#categoryFeatureHide").is(':checked') + "&format=json";
 	$.ajax({
 		url : updateFeaturesUrl,
 		type : "POST",

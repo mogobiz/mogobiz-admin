@@ -318,7 +318,7 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 			});
 		}
 		else{
-			companySellersUpdateSeller(compId, sellerId, "seller.firstName", $("#sellerFirstName").val())
+			companySellersUpdateSeller(compId, sellerId, "seller.firstName", encodeURIComponent($("#sellerFirstName").val()))
 		}
 	});
 
@@ -333,7 +333,7 @@ function companySellersInitAutoUpdateEvents(compId, sellerId){
 			});
 		}
 		else{
-			companySellersUpdateSeller(compId, sellerId, "seller.lastName", $("#sellerLastName").val())
+			companySellersUpdateSeller(compId, sellerId, "seller.lastName", encodeURIComponent($("#sellerLastName").val()))
 		}
 	});
 
@@ -434,9 +434,9 @@ function companySellersValidateForm(isCreate) {
 
 function companySellersCreateSeller(compId) {
 	var dataToSend = "";
-	dataToSend += "seller.firstName=" + $("#sellerFirstName").val();
-	dataToSend += "&seller.lastName=" + $("#sellerLastName").val();
-	dataToSend += "&seller.email=" + $("#sellerEmail").val();
+	dataToSend += "seller.firstName=" + encodeURIComponent($("#sellerFirstName").val());
+	dataToSend += "&seller.lastName=" + encodeURIComponent($("#sellerLastName").val());
+	dataToSend += "&seller.email=" + encodeURIComponent($("#sellerEmail").val());
 	dataToSend += "&seller.active=" + $("#sellerActive").is(":checked");
 	dataToSend += "&seller.company.id=" + compId;
 	dataToSend += "&format=json";

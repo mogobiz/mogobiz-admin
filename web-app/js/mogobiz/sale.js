@@ -1,7 +1,7 @@
 var salesGridObject;
 var salesDetailsGridObject;
 var productsGridObject;
-var sales = []
+var sales = [];
 
 
 function callServer(url, dataToSend, success, error) {
@@ -152,8 +152,8 @@ function validateSearchByProduct() {
 }
 
 function searchByBuyer(){
-	var dataToSend = "buyerLogin=" + $('#buyerLogin').val();
-	dataToSend += "&saleCode=" + $('#saleCode').val() + "&saleDate=" + $('#saleDate').val() + "&pageOffset=0";
+	var dataToSend = "buyerLogin=" + encodeURIComponent($('#buyerLogin').val());
+	dataToSend += "&saleCode=" + encodeURIComponent($('#saleCode').val()) + "&saleDate=" + $('#saleDate').val() + "&pageOffset=0";
 	callServer(salesSearchByBuyerUrl, dataToSend, drawSalesGrid, errorCallingServer);
 }
 
@@ -275,7 +275,7 @@ function salesDetailsGridSetup() {
 }
 
 function searchByProduct(){
-	var dataToSend ="productCode="+$('#productCode').val()+"&productName="+$('#productName').val();
+	var dataToSend ="productCode=" + encodeURIComponent($('#productCode').val()) + "&productName=" + encodeURIComponent($('#productName').val());
 	callServer(salesProductsSearchByCodeAndNameUrl, dataToSend, drawProductsGrid, errorCallingServer);
 }
 

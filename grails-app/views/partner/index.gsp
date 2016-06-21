@@ -228,6 +228,7 @@
             var catalogPublicationSuccessLabel = "${message(code: 'catalog.publicationSuccess.label')}";
             var catalogPublicationFailureLabel = "${message(code: 'catalog.publicationFailure.label')}";
             var catalogImportFailureLabel = "${message(code: 'catalog.importFailure.label')}";
+            var catalogConfirmDeleteMessage = "${message(code: 'catalog.delete.confirm.message')}";
 
             //-----CATALOG PRODUCTS----//
             var catalogProductsSearchPageUrl = "${resource(dir: 'partner', file: '_catalogProducts.gsp')}";
@@ -520,7 +521,7 @@
             var companyCouponsCodeLabel = "${message(code: 'company.coupons.code.label')}";
             var companyCouponsPastilleLabel= "${message(code: 'company.coupons.pastille.label')}";
             var companyCouponsActiveLabel = "${message(code: 'company.coupons.active.label')}";
-            var companyCouponsCatalogWiseLabel = "${message(code: 'company.coupons.catalogWise.label')}";
+            var companyCouponsCatalogWideLabel = "${message(code: 'company.coupons.catalogWide.label')}";
             var companyCouponsNumberOfUseLabel = "${message(code: 'company.coupons.numberOfUse.label')}";
             var companyCouponsStartDateLabel = "${message(code: 'company.coupons.startDate.label')}";
             var companyCouponsEndDateLabel = "${message(code: 'company.coupons.endDate.label')}";

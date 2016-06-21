@@ -182,7 +182,7 @@ function companyTaxValidateForm(){
 }
 
 function companyTaxAddNew(){
-    var dataToSend = "companyId=" + $("#taxRateCompanyId").val() + "&name=" + $("#taxRateName").val() + "&format=json";
+    var dataToSend = "companyId=" + $("#taxRateCompanyId").val() + "&name=" + encodeURIComponent($("#taxRateName").val()) + "&format=json";
     $.ajax({
         url : taxRateCreateUrl,
         type : "POST",
@@ -200,7 +200,7 @@ function companyTaxAddNew(){
 }
 
 function companyTaxUpdate(){
-    var dataToSend = "companyId=" + $("#taxRateCompanyId").val() + "&taxRateId=" + $("#taxRateId").val() + "&name=" + $("#taxRateName").val() + "&format=json";
+    var dataToSend = "companyId=" + $("#taxRateCompanyId").val() + "&taxRateId=" + $("#taxRateId").val() + "&name=" + encodeURIComponent($("#taxRateName").val()) + "&format=json";
     $.ajax({
         url : taxRateUpdateUrl,
         type : "POST",

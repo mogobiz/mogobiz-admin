@@ -253,7 +253,7 @@ function companyIBeaconValidateForm(){
 function companyIBeaconCreateItem(){
     var startDate = ($("#companyIBeaconStartDate").val() != "") ? $("#companyIBeaconStartDate").val() : "01/01/1970";
     var endDate = ($("#companyIBeaconEndDate").val() != "") ? $("#companyIBeaconEndDate").val() : "31/12/2049";
-    var dataToSend = "uuid=" + $("#companyIBeaconUUID").val() + "&name=" + $("#companyIBeaconName").val() + "&minor=" + $("#companyIBeaconMinor").val() + "&major=" + $("#companyIBeaconMajor").val();
+    var dataToSend = "uuid=" + $("#companyIBeaconUUID").val() + "&name=" + encodeURIComponent($("#companyIBeaconName").val()) + "&minor=" + encodeURIComponent($("#companyIBeaconMinor").val()) + "&major=" + encodeURIComponent($("#companyIBeaconMajor").val());
     dataToSend += "&startDate=" + startDate + "&endDate=" + endDate+ "&active=" + $("#companyIBeaconActive").is(":checked") + "&format=json";
     $.ajax({
         url : companySaveIBeaconUrl,
@@ -293,8 +293,8 @@ function companyIBeaconCreateItem(){
 function companyIBeaconUpdateItem(){
     var startDate = ($("#companyIBeaconStartDate").val() != "") ? $("#companyIBeaconStartDate").val() : "01/01/1970";
     var endDate = ($("#companyIBeaconEndDate").val() != "") ? $("#companyIBeaconEndDate").val() : "31/12/2049";
-    var dataToSend = "id=" + $("#companyIBeaconId").val() + "&uuid=" + $("#companyIBeaconUUID").val() + "&name=" + $("#companyIBeaconName").val();
-    dataToSend += "&minor=" + $("#companyIBeaconMinor").val() + "&major=" + $("#companyIBeaconMajor").val();
+    var dataToSend = "id=" + $("#companyIBeaconId").val() + "&uuid=" + $("#companyIBeaconUUID").val() + "&name=" + encodeURIComponent($("#companyIBeaconName").val());
+    dataToSend += "&minor=" + encodeURIComponent($("#companyIBeaconMinor").val()) + "&major=" + encodeURIComponent($("#companyIBeaconMajor").val());
     dataToSend += "&startDate=" + startDate + "&endDate=" + endDate + "&active=" + $("#companyIBeaconActive").is(":checked") + "&format=json";
     $.ajax({
         url : companySaveIBeaconUrl,

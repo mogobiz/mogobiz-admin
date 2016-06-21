@@ -279,7 +279,7 @@ function categoryProductsValidateCreation(){
 	var prdName = $("#createProductNameField").val();
 	var prdCode = $("#createProductCodeField").val();
 	if(prdName != "" && prdCode != "") {
-		var dataToSend = "product.code=" + prdCode + "&format=json";
+		var dataToSend = "product.code=" + encodeURIComponent(prdCode) + "&format=json";
 		$.ajax({
 			url : existProductCodeUrl,
 			type : "GET",
@@ -291,8 +291,8 @@ function categoryProductsValidateCreation(){
 				var existCode  = response.result;
 				if (!existCode){
                     var dataToSend = "product.montant=0&product.state.name=ACTIVE&product.calendarType=NO_DATE";
-                    dataToSend += "&product.name=" + $("#createProductNameField").val();
-                    dataToSend += "&product.code=" + $("#createProductCodeField").val();
+                    dataToSend += "&product.name=" + encodeURIComponent($("#createProductNameField").val());
+                    dataToSend += "&product.code=" + encodeURIComponent($("#createProductCodeField").val());
                     dataToSend += "&product.xtype=" + $("#createProductTypeField").val();
                     dataToSend += "&product.category.id=" + categorySelectedId;
                     if($("#createProductTypeField").val() == "PRODUCT"){

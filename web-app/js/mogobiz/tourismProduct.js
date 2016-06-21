@@ -961,7 +961,7 @@ function tourismProductGetAllTagsByCompany(){
 }
 
 function tourismProductAddTag(value, productId){
-    var dataToSend= "format=json&product.id=" + productId + "&tag.name=" + value;
+    var dataToSend= "format=json&product.id=" + productId + "&tag.name=" + encodeURIComponent(value);
     $.ajax({
         url : addProductTagUrl + "?" + dataToSend,
         type : "POST",
@@ -977,7 +977,7 @@ function tourismProductAddTag(value, productId){
 }
 
 function tourismProductRemoveTag(value, productId){
-    var dataToSend= "format=json&product.id=" + productId + "&tag.name=" + value;
+    var dataToSend= "format=json&product.id=" + productId + "&tag.name=" + encodeURIComponent(value);
     $.ajax({
         url : removeProductTagUrl + "?" + dataToSend,
         type : "GET",

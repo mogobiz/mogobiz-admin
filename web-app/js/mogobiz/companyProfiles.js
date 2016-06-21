@@ -330,11 +330,11 @@ function companyProfilesAddProfile(companyId){
     var action = "";
     if($("#companyProfilesCopyCheck").is(":checked")){
         action = companyCopyProfileUrl;
-        dataToSend = "idProfile=" + $("#companyProfilesAddCopy").val() + "&idStore=" + companyId + "&name=" + $("#companyProfilesName").val();
+        dataToSend = "idProfile=" + $("#companyProfilesAddCopy").val() + "&idStore=" + companyId + "&name=" + encodeURIComponent($("#companyProfilesName").val());
     }
     else{
         action = companySaveProfileUrl;
-        dataToSend = "idCompany=" + companyId + "&name=" + $("#companyProfilesName").val();
+        dataToSend = "idCompany=" + companyId + "&name=" + encodeURIComponent($("#companyProfilesName").val());
         $("#companyProfilesPermissions_to option").each(function(index, value){
             dataToSend += "&permissions=" + value.value;
         });
@@ -366,7 +366,7 @@ function companyProfilesAddProfile(companyId){
 }
 
 function companyProfilesUpdateProfile(companyId){
-    var dataToSend = "idProfile=" + $("#companyProfilesId").val() + "&idCompany=" + companyId + "&name=" + $("#companyProfilesName").val();
+    var dataToSend = "idProfile=" + $("#companyProfilesId").val() + "&idCompany=" + companyId + "&name=" + encodeURIComponent($("#companyProfilesName").val());
     $("#companyProfilesPermissions_to option").each(function(index, value){
         dataToSend += "&permissions=" + value.value;
     });
@@ -525,7 +525,7 @@ function companyProfilesSystemValidateForm(){
 }
 
 function companyProfilesSystemApplyProfile(companyId){
-    var dataToSend = "idProfile=" + $("#companyProfilesApplySystemProfile").val() + "&idStore=" + companyId + "&name=" + $("#companyProfilesApplyName").val() + "&format=json";
+    var dataToSend = "idProfile=" + $("#companyProfilesApplySystemProfile").val() + "&idStore=" + companyId + "&name=" + encodeURIComponent($("#companyProfilesApplyName").val()) + "&format=json";
     $.ajax({
         url : companyApplyProfileUrl,
         type : "POST",

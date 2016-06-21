@@ -57,11 +57,11 @@ function companyCouponsDrawAll(){
                 formatter : companyCouponsGridActiveFormatter,
                 cssClass : "cell-centered"
             },{
-                id : "catalogWise",
-                name : companyCouponsCatalogWiseLabel,
-                field : "catalogWise",
+                id : "catalogWide",
+                name : companyCouponsCatalogWideLabel,
+                field : "catalogWide",
                 width : 7,
-                formatter : companyCouponsGridCatalogWiseFormatter,
+                formatter : companyCouponsGridCatalogWideFormatter,
                 cssClass : "cell-centered"
             }];
 
@@ -99,7 +99,7 @@ function companyCouponsDrawAll(){
                         "endDate": coupons[i].endDate,
                         "numberOfUses": coupons[i].numberOfUses,
                         "active": coupons[i].active,
-                        "catalogWise": coupons[i].catalogWise,
+                        "catalogWide": coupons[i].catalogWise,
                         "catalogs": coupons[i].catalogs,
                         "description": coupons[i].description,
                         "categories": coupons[i].categories,
@@ -128,7 +128,7 @@ function companyCouponsGridActiveFormatter(row, cell, value, columnDef, dataCont
     return checkBox;
 }
 
-function companyCouponsGridCatalogWiseFormatter(row, cell, value, columnDef, dataContext){
+function companyCouponsGridCatalogWideFormatter(row, cell, value, columnDef, dataContext){
     var checkBox = "<input type='checkbox' disabled='disabled' style='margin-top:4px;'";
     checkBox += (value) ? "checked='checked'/>" : "/>";
     return checkBox;
@@ -197,8 +197,8 @@ function companyCouponsPageSetup(htmlresponse, couponId, isCreate){
 }
 
 function companyCouponsPageInitControls(isCreate) {
-    $("#companyCouponsCatalogWise").unbind().bind("change", function(){
-        if($("#companyCouponsCatalogWise").is(":checked")){
+    $("#companyCouponsCatalogWide").unbind().bind("change", function(){
+        if($("#companyCouponsCatalogWide").is(":checked")){
             $("#companyCouponsCategoriesTab").addClass("disabled");
             $("#companyCouponsProductTab").addClass("disabled");
             $("#companyCouponsSkuTab").addClass("disabled");
@@ -221,7 +221,7 @@ function companyCouponsPageInitControls(isCreate) {
     $("#companyCouponsTabs .tabs a").click(function() {
         if(isCreate && $(this).attr("id") == "companyCouponsTranslationTab")
             return;
-        if($("#companyCouponsCatalogWise").is(":checked") &&
+        if($("#companyCouponsCatalogWide").is(":checked") &&
             ($(this).attr("id") == "companyCouponsProductTab" ||$(this).attr("id") == "companyCouponsCategoriesTab" ||$(this).attr("id") == "companyCouponsSkuTab"))
             return;
         $("#companyCouponsTabs .tabs .selected").removeClass("selected");
@@ -468,8 +468,8 @@ function companyCouponsPageInitFields(couponId, isCreate){
                 $("#companyCouponsActive").prop("checked", true);
             if(coupon.anonymous)
                 $("#companyCouponsAnonymous").prop("checked", true);
-            if(coupon.catalogWise){
-                $("#companyCouponsCatalogWise").prop("checked", true);
+            if(coupon.catalogWide){
+                $("#companyCouponsCatalogWide").prop("checked", true);
                 $("#companyCouponsCategoriesTab").addClass("disabled");
                 $("#companyCouponsProductTab").addClass("disabled");
                 $("#companyCouponsSkuTab").addClass("disabled");
@@ -540,7 +540,7 @@ function companyCouponsValidateForm(){
         });
         return false;
     }
-    if($("#companyCouponsCatalogWise").is(":checked") && $("#companyCouponsGeneralCatalog").multiselect("getChecked").length == 0){
+    if($("#companyCouponsCatalogWide").is(":checked") && $("#companyCouponsGeneralCatalog").multiselect("getChecked").length == 0){
         $("#companyCouponsGeneralCatalog").multiselect("open");
         jQuery.noticeAdd({
             stayTime : 2000,
@@ -555,7 +555,7 @@ function companyCouponsValidateForm(){
 
 function companyCouponsCreateCoupon(){
     var categories = "", products = "", skus = "", catalogs = "";
-    if(!$("#companyCouponsCatalogWise").is(":checked")){
+    if(!$("#companyCouponsCatalogWide").is(":checked")){
         $("#companyCouponsCategories_to option").each(function(index, value){
             categories += "&categories[" + index + "].id=" + value.value;
         });
@@ -600,7 +600,7 @@ function companyCouponsCreateCoupon(){
     }
     var dataToSend = "name=" + encodeURIComponent($("#companyCouponsName").val()) + "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent(pastille);
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
-    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
+    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWide").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;
     dataToSend += "&description=" + $("#companyCouponsDescription").val();
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
@@ -631,7 +631,7 @@ function companyCouponsCreateCoupon(){
 
 function companyCouponsUpdateCoupon(){
     var categories = "", products = "", skus = "", catalogs = "";
-    if(!$("#companyCouponsCatalogWise").is(":checked")){
+    if(!$("#companyCouponsCatalogWide").is(":checked")){
         $("#companyCouponsCategories_to option").each(function(index, value){
             categories += "&categories[" + index + "].id=" + value.value;
         });
@@ -677,7 +677,7 @@ function companyCouponsUpdateCoupon(){
     var dataToSend = "id=" + $("#companyCouponsId").val() + "&name=" + encodeURIComponent($("#companyCouponsName").val());
     dataToSend += "&code=" + encodeURIComponent($("#companyCouponsCode").val()) + "&pastille=" + encodeURIComponent(pastille);
     dataToSend += "&startDate=" + encodeURIComponent($("#companyCouponsStartDate").val()) + "&endDate=" + encodeURIComponent($("#companyCouponsEndDate").val()) + "&numberOfUses=" + encodeURIComponent($("#companyCouponsNumberOfUse").val());
-    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWise").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
+    dataToSend += "&active=" + $("#companyCouponsActive").is(":checked") + "&catalogWise=" + $("#companyCouponsCatalogWide").is(":checked") + "&anonymous=" + $("#companyCouponsAnonymous").is(":checked");
     dataToSend += catalogs;
     dataToSend += "&description=" + $("#companyCouponsDescription").val();
     dataToSend += rulesToSend + categories + products + skus + "&format=json";
