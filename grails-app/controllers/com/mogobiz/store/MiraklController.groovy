@@ -79,4 +79,29 @@ class MiraklController {
             }
         }
     }
+
+    def synchronize = {
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        Long catalogId = params.long('catalog.id')
+        Catalog catalog = catalogId ? Catalog.get(catalogId) : null
+        if(!catalog || company != catalog.company){
+            response.sendError 401
+        }
+        else if (catalog.name == "impex") {
+            render status:400, text: "Impex Catalog cannot be synchronized"
+        }
+        else{
+            miraklService.synchronize(catalog)
+            withFormat {
+                xml { render [:] as XML }
+                json { render [:] as JSON }
+            }
+        }
+    }
+
 }
