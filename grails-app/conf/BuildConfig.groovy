@@ -127,7 +127,7 @@ grails.project.dependency.resolution = {
         test ':spock:0.7'
         compile ":standalone:1.3"
 
-//        compile "com.mogobiz:mogobiz-core:${mogobiz.version}"
+        compile "com.mogobiz:mogobiz-core:${mogobiz.version}"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -176,9 +176,8 @@ grails.project.dependency.resolution = {
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"${mogobiz.version}")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-elasticsearch", version:"${mogobiz.version}")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl", version:"${mogobiz.version}")  {excludes "groovy-all"}
-        compile (group:"com.mogobiz.rivers", name:"mogobiz-mirakl-flow", version:"${mogobiz.version}")  {excludes "groovy-all"}
 
-//        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"${application.version}", classifier:"grails-plugin")  {excludes "mogobiz-core"}
+        compile (group:"com.mogobiz", name:"mogobiz-extensions", version:"${mogobiz.version}", classifier:"grails-plugin")  {excludes "mogobiz-core"}
 
         compile 'org.jsoup:jsoup:1.8.1'
 
