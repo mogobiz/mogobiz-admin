@@ -61,6 +61,7 @@ function companyPublishingDrawAll(compId){
                         "url": publishing[i].url,
                         "active": publishing[i].active,
                         "cronExpr" : publishing[i].cronExpr,
+                        "cacheUrls" : publishing[i].cacheUrls,
                         "companyId": compId
                     }
                 }
@@ -136,16 +137,20 @@ function companyPublishingPageSetup(htmlresponse, companyId, publishingId, isCre
 }
 
 function companyPublishingPageInitControls(isCreate) {
+    $("#companyPublishingTabs .tabs a").unbind();
+    $("#companyPublishingCacheUrlDiv, #companyPublishingCacheURLJahiaUrl, #companyPublishingCacheURLJahiaBtn").hide();
+    $("#companyPublishingGeneralTab").addClass("selected");
     companyPublishingShowSecurity = ($("#companyPublishingSecurityTab").length > 0);
     if(companyPublishingShowSecurity){
-        $("#companyPublishingTabs .tabs a").unbind();
         $("#companyPublishingSecurityTab").removeClass("disabled");
         $("#companyPublishingSecurityDiv").hide();
-        $("#companyPublishingGeneralTab").addClass("selected");
     }
     else{
-        $("#companyPublishingSecurityDiv, #companyPublishingTabs #ulTabs").hide().remove();
+        $("#companyPublishingSecurityDiv, #companyPublishingTabs #ulTabs #companyPublishingSecurityLi").hide().remove();
     }
+    $("#addNewCacheURL").unbind().click(function() {
+        companyPublishingCacheUrlGetDetails(null, true);
+    });
     if (isCreate) {
         $("#companyPublishingSecurityTab").addClass("disabled");
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
@@ -154,26 +159,48 @@ function companyPublishingPageInitControls(isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+        $("#companyPublishingTabs .tabs a").unbind().click(function () {
+            if($(this).attr("id") == "companyPublishingSecurityTab") return;
+            $("#companyPublishingTabs .tabs .selected").removeClass("selected");
+            $(this).addClass("selected");
+            switch ($(this).attr("id")) {
+                case "companyPublishingGeneralTab":
+                    $("#companyPublishingCacheUrlDiv").hide();
+                    $("#companyPublishingCreateDiv").show();
+                    break;
+                case "companyPublishingCacheUrlTab":
+                    $("#companyPublishingCreateDiv").hide();
+                    $("#companyPublishingCacheUrlDiv").show();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
     else {
-        if(companyPublishingShowSecurity) {
-            $("#companyPublishingTabs .tabs a").unbind().click(function () {
-                $("#companyPublishingTabs .tabs .selected").removeClass("selected");
-                $(this).addClass("selected");
-                switch ($(this).attr("id")) {
-                    case "companyPublishingGeneralTab":
-                        $("#companyPublishingSecurityDiv").hide();
-                        $("#companyPublishingCreateDiv").show();
-                        break;
-                    case "companyPublishingSecurityTab":
-                        $("#companyPublishingCreateDiv").hide();
-                        $("#companyPublishingSecurityDiv").show();
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
+        $("#companyPublishingTabs .tabs a").unbind().click(function () {
+            $("#companyPublishingTabs .tabs .selected").removeClass("selected");
+            $(this).addClass("selected");
+            switch ($(this).attr("id")) {
+                case "companyPublishingGeneralTab":
+                    $("#companyPublishingCacheUrlDiv").hide();
+                    $("#companyPublishingSecurityDiv").hide();
+                    $("#companyPublishingCreateDiv").show();
+                    break;
+                case "companyPublishingCacheUrlTab":
+                    $("#companyPublishingCreateDiv").hide();
+                    $("#companyPublishingSecurityDiv").hide();
+                    $("#companyPublishingCacheUrlDiv").show();
+                    break;
+                case "companyPublishingSecurityTab":
+                    $("#companyPublishingCreateDiv").hide();
+                    $("#companyPublishingCacheUrlDiv").hide();
+                    $("#companyPublishingSecurityDiv").show();
+                    break;
+                default:
+                    break;
+            }
+        });
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
@@ -194,6 +221,7 @@ function companyPublishingPageInitFields(publishingId, isCreate){
 
     if (!isCreate){
         var publishing = null;
+        var cacheUrls = "";
         var data = companyPublishingGrid.getData();
         for (var i = 0; i < data.length; i++) {
             if (data[i].publishingId == publishingId){
@@ -202,11 +230,15 @@ function companyPublishingPageInitFields(publishingId, isCreate){
             }
         }
         if(publishing){
+            cacheUrls = publishing.cacheUrls ? publishing.cacheUrls : "";
             $("#companyPublishingName").val(publishing.name);
             $("#companyPublishingUrl").val(publishing.url);
             if(publishing.active)
                 $("#companyPublishingActive").prop("checked", true);
             if(publishing.cronExpr == "\"\""){
+                $("#companyPublishingCronDailyTab").addClass("selected");
+                $("#companyPublishingCronDailyDiv").show();
+                companyPublishingCronType = "daily";
                 $("#companyPublishingManual").prop("checked", true);
                 $("#companyPublishingCron").hide();
             }
@@ -218,6 +250,7 @@ function companyPublishingPageInitFields(publishingId, isCreate){
                 securityGetAllUsers(publishing.companyId, "companyPublishingSecurityUsers", "publishCatalogs", [publishing.companyId, data[i].publishingId]);
         }
     }
+    companyPublishingPageInitCacheUrlGrid(cacheUrls);
 }
 
 function companyPublishingValidateForm(){
@@ -348,6 +381,11 @@ function companyPublishingCreatePublishing(companyId){
         dataToSend += "&esenv.cronExpr=\"\"";
     else
         dataToSend += "&esenv.cronExpr=" + companyPublishingGetCronExpr();
+    dataToSend += "&esenv.cacheUrls=";
+    var cacheUrls = companyPublishingCacheUrlGrid.getData();
+    for(var i = 0 ; i < cacheUrls.length; i++){
+        dataToSend += (i == 0) ? encodeURIComponent(cacheUrls[i].url) : "," + encodeURIComponent(cacheUrls[i].url);
+    }
     dataToSend += "&esenv.active=" + $("#companyPublishingActive").is(":checked") + "&esenv.running=false&format=json";
     $.ajax({
         url : companyCreatePublishingUrl,
@@ -380,8 +418,12 @@ function companyPublishingUpdatePublishing(companyId){
         dataToSend += "&esenv.cronExpr=\"\"";
     else
         dataToSend += "&esenv.cronExpr=" + companyPublishingGetCronExpr();
+    dataToSend += "&esenv.cacheUrls=";
+    var cacheUrls = companyPublishingCacheUrlGrid.getData();
+    for(var i = 0 ; i < cacheUrls.length; i++){
+        dataToSend += (i == 0) ? encodeURIComponent(cacheUrls[i].url) : "," + encodeURIComponent(cacheUrls[i].url);
+    }
     dataToSend += "&esenv.active=" + $("#companyPublishingActive").is(":checked") + "&esenv.running=false&format=json";
-
     $.ajax({
         url : companyUpdatePublishingUrl,
         type : "POST",
@@ -639,4 +681,231 @@ function companyPublishingResolveCron(expr){
         $("#companyPublishingCronMinutesDiv").show();
         $("#companyPublishingCronMinutesVal").val(exprTab[1].split("/")[1]);
     }
+}
+
+// Cache Url functions
+var companyPublishingCacheUrlGrid;
+
+function companyPublishingPageInitCacheUrlGrid(cacheUrls){
+    companyPublishingCacheUrlGrid = null;
+    var gridColumns = [{
+        id : "url",
+        name : companyPublishingUrlLabel,
+        field : "url",
+        width : 100,
+        formatter : companyPublishingCacheUrlGridFormatter,
+        cssClass : "cell-title"
+    }];
+
+    var gridOptions = {
+        editable : false,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : false,
+        enableColumnReorder : false,
+        rowHeight : 25
+    };
+
+    var gridData = [];
+    var cacheUrlsData = [];
+    if(cacheUrls != ""){
+        cacheUrlsData = cacheUrls.indexOf(",") > 0 ? cacheUrls.split(",") : [cacheUrls];
+    }
+    if(cacheUrlsData){
+        for ( var i = 0; i < cacheUrlsData.length; i++) {
+            gridData[gridData.length] = {
+                "urlId" : i,
+                "url": cacheUrlsData[i]
+            }
+        }
+    }
+    $("#companyPublishingCacheUrlDiv").show();
+    companyPublishingCacheUrlGrid = new Slick.Grid($("#companyPublishingCacheURLGrid"), gridData, gridColumns, gridOptions);
+
+    companyPublishingCacheUrlGrid.setSelectionModel(new Slick.RowSelectionModel());
+    companyPublishingCacheUrlGrid.invalidate();
+    $("#companyPublishingCacheUrlDiv, #companyPublishingCacheURLJahiaUrl, #companyPublishingCacheURLJahiaBtn").hide();
+    $("#companyPublishingCacheURLJahiaBtn").unbind().click(function(){
+        companyPublishingCacheUrlAddJahiaUrls();
+    });
+    $("#companyPublishingCacheURLJahia").unbind().bind("click", function() {
+        if ($(this).is(":checked")){
+            $("#companyPublishingCacheURLJahiaUrl").show();
+            $("#companyPublishingCacheURLJahiaBtn").show();
+        }
+        else{
+            $("#companyPublishingCacheURLJahiaUrl").hide();
+            $("#companyPublishingCacheURLJahiaBtn").hide();
+        }
+    });
+}
+
+function companyPublishingCacheUrlAddJahiaUrls(){
+    if (!$("#companyPublishingCacheURLJahiaUrl")[0].checkValidity()) {
+        $("#companyPublishingCacheUrlDiv #companyPublishingCacheURLJahiaUrl").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyPublishingUrlErrorLabel,
+            stay : false,
+            type : 'error'
+        });
+        return;
+    }
+    var data = companyPublishingCacheUrlGrid.getData();
+    var id = data.length > 0 ? (data[data.length - 1].urlId + 1) : 0;
+    data[data.length] = {
+        "urlId" : id,
+        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${category.path}.html"
+    };
+    data[data.length] = {
+        "urlId" : id + 1,
+        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${brand.name}.html"
+    };
+    data[data.length] = {
+        "urlId" : id + 2,
+        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${product.id}.html"
+    };
+    companyPublishingCacheUrlGrid.setData(data);
+    companyPublishingCacheUrlGrid.invalidate();
+}
+
+function companyPublishingCacheUrlGridFormatter (row, cell, value, columnDef, dataContext){
+    return "<a href='javascript:void(0);' onclick='companyPublishingCacheUrlGetDetails(" + dataContext.urlId + ", " + false + ")'>" + value + "</a>";
+}
+
+function companyPublishingCacheUrlGetDetails(urlId, isCreate){
+    $.get(
+        companyPublishingCacheUrlPageUrl,
+        {},
+        function(htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            companyPublishingCacheUrlPageSetup(htmlresponse, urlId, isCreate);
+        },
+        "html"
+    );
+}
+
+function companyPublishingCacheUrlPageSetup(htmlresponse, urlId, isCreate){
+    if ($("#companyPublishingCacheUrlDialog").dialog("isOpen") !== true) {
+        $("#companyPublishingCacheUrlDialog").empty();
+        $("#companyPublishingCacheUrlDialog").html(htmlresponse);
+        $("#companyPublishingCacheUrlDialog").dialog({
+            title : companyPublishingTitleLabel,
+            modal : true,
+            resizable : false,
+            width : "auto",
+            height : "auto",
+            open : function(event) {
+                companyPublishingCacheUrlPageInitControls(isCreate);
+                companyPublishingCacheUrlPageInitFields(urlId, isCreate);
+            },
+            buttons : {
+                deleteLabel : function() {
+                    companyPublishingCacheUrlDeleteURL();
+                },
+                cancelLabel : function() {
+                    $("#companyPublishingCacheUrlDialog").dialog("close");
+                },
+                updateLabel : function() {
+                    if (companyPublishingCacheUrlValidateForm())
+                        companyPublishingCacheUrlUpdateURL();
+                },
+                createLabel : function() {
+                    if (companyPublishingCacheUrlValidateForm())
+                        companyPublishingCacheUrlCreateURL();
+                }
+            }
+        });
+    }
+}
+
+function companyPublishingCacheUrlPageInitControls(isCreate) {
+    if (isCreate) {
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+    }
+    else {
+        $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
+        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+    }
+}
+
+function companyPublishingCacheUrlPageInitFields(urlId, isCreate){
+    $("#companyPublishingCacheUrl").val("");
+    if (!isCreate){
+        var cacheUrl = null;
+        var data = companyPublishingCacheUrlGrid.getData();
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].urlId == urlId){
+                cacheUrl = data[i];
+                break;
+            }
+        }
+        if(cacheUrl){
+            $("#companyPublishingCacheUrlId").val(cacheUrl.urlId);
+            $("#companyPublishingCacheUrl").val(cacheUrl.url);
+        }
+    }
+}
+
+function companyPublishingCacheUrlValidateForm(){
+    if (!$("#companyPublishingCacheUrl")[0].checkValidity()) {
+        $("#companyPublishingCacheUrlForm #companyPublishingCacheUrl").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyPublishingUrlErrorLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    return true;
+}
+
+function companyPublishingCacheUrlCreateURL(){
+    var data = companyPublishingCacheUrlGrid.getData();
+    var id = data.length > 0 ? (data[data.length - 1].urlId + 1) : 0;
+    data[data.length] = {
+        "urlId" : id,
+        "url" : $("#companyPublishingCacheUrl").val()
+    };
+    companyPublishingCacheUrlGrid.setData(data);
+    companyPublishingCacheUrlGrid.invalidate();
+    $("#companyPublishingCacheUrlDialog").dialog("close");
+}
+
+function companyPublishingCacheUrlUpdateURL(){
+    var data = companyPublishingCacheUrlGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].urlId == $("#companyPublishingCacheUrlId").val()){
+            data[i].url = $("#companyPublishingCacheUrl").val();
+            break;
+        }
+    }
+    companyPublishingCacheUrlGrid.setData(data);
+    companyPublishingCacheUrlGrid.invalidate();
+    $("#companyPublishingCacheUrlDialog").dialog("close");
+}
+
+function companyPublishingCacheUrlDeleteURL(){
+    var cacheUrls = [];
+    var data = companyPublishingCacheUrlGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].urlId != $("#companyPublishingCacheUrlId").val()){
+            cacheUrls[cacheUrls.length] = data[i];
+        }
+    }
+    companyPublishingCacheUrlGrid.setData(cacheUrls);
+    companyPublishingCacheUrlGrid.invalidate();
+    $("#companyPublishingCacheUrlDialog").dialog("close");
 }

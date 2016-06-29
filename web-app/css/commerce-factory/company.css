@@ -386,7 +386,7 @@ div.createCompany select {
 }
 
 /* Company Publishing Tab */
-#companyPublishingDialog{
+#companyPublishingDialog, #companyPublishingCacheUrlDialog{
     display: none;
     color: #888;
     text-align: left;
@@ -398,16 +398,20 @@ div.createCompany select {
     overflow: visible;
 }
 
-#publishingGridDiv{
-    border: 1px solid #A6C9E2;
+#publishingGridDiv, #companyPublishingCacheURLGridDiv{
+    border: 1px solid #CCCCCC;
     border-top: 0px;
 }
 
 #publishingGrid{
-     height: 396px;
- }
+    height: 396px;
+}
 
-#companyPublishingCreateDiv, #companyPublishingSecurityDiv{
+#companyPublishingCacheURLGrid{
+    height: 275px;
+}
+
+#companyPublishingCreateDiv, #companyPublishingSecurityDiv, #companyPublishingCacheURLGridDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
     font-size: 11px;
     color: #888;
@@ -493,7 +497,7 @@ div.createCompany select {
 }
 
 /* Company - Brands And Coupons Tab */
-#brandsGridDiv, #couponsGridDiv, #publishingGridDiv, #iBeaconGridDiv, #tagsGridDiv{
+#brandsGridDiv, #couponsGridDiv, #iBeaconGridDiv, #tagsGridDiv{
     border: 1px solid #CCCCCC;
     border-top: 0px;
 }

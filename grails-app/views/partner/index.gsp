@@ -549,6 +549,7 @@
             var companyUpdatePublishingIndicesUrl = "${createLink(controller: 'elasticsearch', action: 'activateIndex')}";
 
             var companyPublishingPageUrl = "${resource(dir: 'admin', file: '_createCompanyPublishing.gsp')}";
+            var companyPublishingCacheUrlPageUrl = "${resource(dir: 'admin', file: '_createCompanyPublishingCacheUrl.gsp')}";
 
             var companyPublishingTitleLabel = "${message(code: 'company.publishing.title.label')}";
             var companyPublishingNameLabel = "${message(code: 'company.publishing.name.label')}";
@@ -753,6 +754,8 @@
 <div id="companyCouponsRulesDialog"></div>
 
 <div id="companyPublishingDialog"></div>
+
+<div id="companyPublishingCacheUrlDialog"></div>
 
 <div id="companyIBeaconDialog"></div>
 

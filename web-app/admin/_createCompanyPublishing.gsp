@@ -8,8 +8,13 @@
                     <g:message locale="${lang}" code="tabs.general.label" />
                 </a>
             </li>
-<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
             <li>
+                <a id="companyPublishingCacheUrlTab">
+                    <g:message locale="${lang}" code="tabs.cacheUrl.label" />
+                </a>
+            </li>
+<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
+            <li id="companyPublishingSecurityLi">
                 <a id="companyPublishingSecurityTab">
                     <g:message locale="${lang}" code="tabs.security.label" />
                 </a>
@@ -294,6 +299,17 @@
             </div>
             <div class="spacer"></div>
         </form>
+    </div>
+    <div id="companyPublishingCacheUrlDiv" style="padding-top: 7px;">
+        <p style="font-weight: bold;"><g:message code="company.publishing.cache.header.label" /> <a href="javascript:void(0)" id="addNewCacheURL"><g:message code="company.publishing.cache.add.label" /></a></p>
+        <div id="companyPublishingCacheURLGridDiv">
+            <div id="companyPublishingCacheURLGrid"></div>
+        </div>
+        <br/>
+        <input type="checkbox" id="companyPublishingCacheURLJahia"/>&nbsp;
+        <label for="companyPublishingCacheURLJahia"><g:message locale="${lang}" code="company.publishing.cache.jahia.label" /></label>&nbsp;&nbsp;
+        <input type="text" id="companyPublishingCacheURLJahiaUrl" pattern="https?://.+" style="width: 250px;"/>&nbsp;&nbsp;
+        <button id="companyPublishingCacheURLJahiaBtn" class="fk_ok_btn"><g:message code="default.button.validate.label" /></button>
     </div>
     <div id="companyPublishingSecurityDiv" style="padding-top: 7px;">
         <div>
