@@ -218,10 +218,10 @@ function companyPublishingPageInitFields(publishingId, isCreate){
     $("#companyPublishingActive").prop("checked", false);
     $("#companyPublishingManual").prop("checked", false);
     companyPublishingPageInitCronFields();
+    var cacheUrls = "";
 
     if (!isCreate){
         var publishing = null;
-        var cacheUrls = "";
         var data = companyPublishingGrid.getData();
         for (var i = 0; i < data.length; i++) {
             if (data[i].publishingId == publishingId){
@@ -752,21 +752,23 @@ function companyPublishingCacheUrlAddJahiaUrls(){
         });
         return;
     }
-    var data = companyPublishingCacheUrlGrid.getData();
-    var id = data.length > 0 ? (data[data.length - 1].urlId + 1) : 0;
-    data[data.length] = {
-        "urlId" : id,
-        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${category.path}.html"
-    };
-    data[data.length] = {
-        "urlId" : id + 1,
-        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${brand.name}.html"
-    };
-    data[data.length] = {
-        "urlId" : id + 2,
-        "url" : $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${product.id}.html"
-    };
-    companyPublishingCacheUrlGrid.setData(data);
+    var cacheUrls = companyPublishingCacheUrlGrid.getData();
+    var id = cacheUrls.length > 0 ? (cacheUrls[cacheUrls.length - 1].urlId + 1) : 0;
+    var jahiaUrls = [
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${category.path}.html",
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${brand.name}.html",
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${product.id}.html"
+    ];
+    for(var i = 0; i < jahiaUrls.length; i++) {
+        if (!companyPublishingCacheUrlExistInGrid(jahiaUrls[i])) {
+            cacheUrls[cacheUrls.length] = {
+                "urlId": id,
+                "url": jahiaUrls[i]
+            };
+            id++;
+        }
+    }
+    companyPublishingCacheUrlGrid.setData(cacheUrls);
     companyPublishingCacheUrlGrid.invalidate();
 }
 
@@ -869,6 +871,16 @@ function companyPublishingCacheUrlValidateForm(){
         });
         return false;
     }
+    if(companyPublishingCacheUrlExistInGrid($("#companyPublishingCacheUrl").val())){
+        $("#companyPublishingCacheUrlForm #companyPublishingCacheUrl").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyPublishingUniqueCacheErrorLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
     return true;
 }
 
@@ -908,4 +920,14 @@ function companyPublishingCacheUrlDeleteURL(){
     companyPublishingCacheUrlGrid.setData(cacheUrls);
     companyPublishingCacheUrlGrid.invalidate();
     $("#companyPublishingCacheUrlDialog").dialog("close");
+}
+
+function companyPublishingCacheUrlExistInGrid(url){
+    var data = companyPublishingCacheUrlGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].url == url){
+            return true;
+        }
+    }
+    return false;
 }

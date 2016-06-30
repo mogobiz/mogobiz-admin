@@ -559,6 +559,7 @@
             var companyPublishingUniqueErrorLabel = "${message(code: 'company.publishing.unique.label')}";
             var companyPublishingUrlErrorLabel = "${message(code: 'company.publishing.invalidUrl.label')}";
             var companyPublishingCronErrorLabel = "${message(code: 'company.publishing.invalidCron.label')}";
+            var companyPublishingUniqueCacheErrorLabel = "${message(code: 'company.publishing.cache.unique.label')}";
 
             //IBeacon
             var companyShowIBeaconUrl = '${createLink(controller: 'ibeacon', action: 'list')}';
