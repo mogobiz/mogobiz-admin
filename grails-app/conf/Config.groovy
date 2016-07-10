@@ -124,6 +124,12 @@ searchguard {
     password = ''
 }
 
+cache {
+    home = "/usr/local/mogobiz/cache"
+    version = "0.1-SNAPSHOT"
+    run = "http://localhost:8081/api/store"
+}
+
 password {
 //    policy = "(?=.{8,})"   +     // "" followed by 8+ symbols
 //            "(?=.*[a-z])" +     // --- ' ' --- at least 1 lower
