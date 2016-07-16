@@ -25,7 +25,7 @@ class MiraklController {
             return
         }
         def company = seller.company
-        Long envId = params.long('esenv.id')
+        Long envId = params.long('miraklenv.id')
         MiraklEnv env = envId ? MiraklEnv.get(envId) : null
 
         if(!envId){
