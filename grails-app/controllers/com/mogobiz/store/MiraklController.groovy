@@ -1,7 +1,10 @@
 package com.mogobiz.store
 
+import com.mogobiz.service.PagedList
+import com.mogobiz.store.cmd.PagedListCommand
 import com.mogobiz.store.domain.Catalog
 import com.mogobiz.store.domain.MiraklEnv
+import com.mogobiz.store.domain.MiraklSync
 import com.mogobiz.utils.PermissionType
 import grails.converters.JSON
 import grails.converters.XML
@@ -17,6 +20,8 @@ class MiraklController {
     def miraklService
 
     def profileService
+
+    def ajaxResponseService
 
     def publish = {
         def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
@@ -100,6 +105,33 @@ class MiraklController {
             withFormat {
                 xml { render [:] as XML }
                 json { render [:] as JSON }
+            }
+        }
+    }
+
+    def refreshSynchronization(PagedListCommand cmd) {
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        Long catalogId = params.long('catalog.id')
+        Catalog catalog = catalogId ? Catalog.get(catalogId) : null
+        if(!catalog || company != catalog.company){
+            response.sendError 401
+        }
+        else if (catalog.name == "impex") {
+            render status:400, text: "Impex Catalog cannot be refreshed"
+        }
+        else{
+            PagedList<MiraklSync> pagedList = miraklService.refreshSynchronization(catalog, cmd)
+            final page = ajaxResponseService.preparePage(pagedList.list, pagedList.totalCount, cmd) { MiraklSync sync ->
+                sync.asMapForJSON(["type", "status", "timestamp", "errorReport"])
+            }
+            withFormat {
+                xml { render page as XML }
+                json { render page as JSON }
             }
         }
     }
