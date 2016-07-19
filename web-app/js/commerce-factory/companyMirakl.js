@@ -230,14 +230,12 @@ function companyMiraklPageInitFields(miraklId, isCreate){
 }
 
 function companyMiraklValidateForm(isCreate){
-    if ($("#companyMiraklName").val() == "" || $("#companyMiraklUrl").val() == "" |
-        $("#companyMiraklFrontKey").val() == "" || $("#companyMiraklApiKey").val() == "" || $("#companyMiraklShopId").val() == "") {
+    if ($("#companyMiraklName").val() == "" || $("#companyMiraklUrl").val() == "" ||
+        $("#companyMiraklApiKey").val() == "" || $("#companyMiraklShopId").val() == "") {
         if($("#companyMiraklName").val() == "")
             $("#companyMiraklForm #companyMiraklName").focus();
         else if($("#companyMiraklUrl").val() == "")
             $("#companyMiraklForm #companyMiraklUrl").focus();
-        else if($("#companyMiraklFrontKey").val() == "")
-            $("#companyMiraklForm #companyMiraklFrontKey").focus();
         else if($("#companyMiraklApiKey").val() == "")
             $("#companyMiraklForm #companyMiraklApiKey").focus();
         else if($("#companyMiraklShopId").val() == "")

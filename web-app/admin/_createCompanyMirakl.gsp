@@ -41,7 +41,7 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.frontApi.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.frontKey.label"></g:message></label><br />
                 </div>
                 <div class="companyMiraklDialog-large">
                     <label for="companyMiraklApiKey"><g:message locale="${lang}" code="company.mirakl.apiKey.label"></g:message>&nbsp;<sup>*</sup></label><br />
