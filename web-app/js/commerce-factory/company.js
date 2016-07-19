@@ -346,6 +346,8 @@ function compObjGetEditCompanyPage(compId, companyCode, partnerId) {
                 $("#coupons").hide().remove();
                 $("#publishingLi").hide().remove();
                 $("#publishing").hide().remove();
+                $("#miraklLi").hide().remove();
+                $("#mirakl").hide().remove();
                 $("#apiKeysLi").hide().remove();
                 $("#apiKeys").hide().remove();
                 $("#iBeaconLi").hide().remove();
@@ -434,6 +436,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -478,6 +481,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -502,6 +506,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -533,6 +538,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -586,6 +592,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -616,6 +623,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#sellers').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -639,6 +647,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#sellers').hide();
                     $('#brands').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -662,6 +671,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#sellers').hide();
                     $('#brands').hide();
                     $('#coupons').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
@@ -673,6 +683,30 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                         companyPublishingGetDetails(compId, null, true);
                     });
                     companyPublishingDrawAll(compId);
+                }
+                else if (selectedTabId == 'miraklTab'){
+                    $('#generalInfo').hide();
+                    $('#profiles').hide();
+                    $('#description').hide();
+                    $('#design').hide();
+                    $('#shipping').hide();
+                    $('#payment').hide();
+                    $('#tax').hide();
+                    $('#sellers').hide();
+                    $('#brands').hide();
+                    $('#coupons').hide();
+                    $('#publishing').hide();
+                    $('#apiKeys').hide();
+                    $('#iBeacon').hide();
+                    $('#tags').hide();
+                    $('#mirakl').show();
+                    $('#miraklForm .errors').hide();
+
+                    $('#addNewMirakl').unbind();
+                    $('#addNewMirakl').click(function() {
+                        companyMiraklGetDetails(compId, null, true);
+                    });
+                    companyMiraklDrawAll(compId);
                 }
                 else if (selectedTabId == 'apiKeysTab'){
                     $('#generalInfo').hide();
@@ -686,6 +720,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#iBeacon').hide();
                     $('#tags').hide();
                     $('#apiKeys').show();
@@ -737,6 +772,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#tags').hide();
                     $('#iBeacon').show();
@@ -760,6 +796,7 @@ function compObjAttachEditForm(compId, companyCode, partnerId) {
                     $('#brands').hide();
                     $('#coupons').hide();
                     $('#publishing').hide();
+                    $('#mirakl').hide();
                     $('#apiKeys').hide();
                     $('#iBeacon').hide();
                     $('#tags').show();

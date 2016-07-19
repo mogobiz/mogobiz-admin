@@ -345,8 +345,8 @@ div.createCompany select {
     background-position: -15px 0px;
 }
 
-/* Company Publishing Tab */
-#companyPublishingDialog, #companyPublishingCacheUrlDialog{
+/* Company Publishing And Mirakl */
+#companyPublishingDialog, #companyPublishingCacheUrlDialog, #companyMiraklDialog{
     display: none;
     color: #888;
     text-align: left;
@@ -358,12 +358,12 @@ div.createCompany select {
     overflow: visible;
 }
 
-#publishingGridDiv, #companyPublishingCacheURLGridDiv{
+#publishingGridDiv, #companyPublishingCacheURLGridDiv, #miraklGridDiv{
     border: 1px solid #A6C9E2;
     border-top: 0px;
 }
 
-#publishingGrid{
+#publishingGrid, #miraklGrid{
     height: 396px;
 }
 
@@ -371,7 +371,7 @@ div.createCompany select {
     height: 275px;
 }
 
-#companyPublishingCreateDiv, #companyPublishingSecurityDiv, #companyPublishingCacheURLGridDiv{
+#companyPublishingCreateDiv, #companyPublishingSecurityDiv, #companyPublishingCacheURLGridDiv, #companyMiraklCreateDiv{
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
     font-size: 11px;
     color: #888;
@@ -380,49 +380,50 @@ div.createCompany select {
     width: 500px;
 }
 
-.companyPublishingDialog-full{
+.companyPublishingDialog-full, .companyMiraklDialog-full{
     float: left;
     width: 490px;
 }
 
-.companyPublishingDialog-full input[type="text"]{
+.companyPublishingDialog-full input[type="text"], .companyMiraklDialog-full input[type="text"]{
     width: 480px;
 }
 
-.companyPublishingDialog-large{
+.companyPublishingDialog-large, .companyMiraklDialog-large{
     float: left;
     width: 245px;
 }
 
-.companyPublishingDialog-large input[type="text"]{
+.companyPublishingDialog-large input[type="text"], .companyMiraklDialog-large input[type="text"]{
     width: 235px;
 }
 
-#companyPublishingTabs ul.tabs{
+#companyPublishingTabs ul.tabs, #companyMiraklTabs ul.tabs{
     padding-top: 5px;
     padding-left: 0px;
 }
 
-#companyPublishingCron{
+#companyPublishingCron, #companyMiraklCron{
     height: 120px;
     background: #FFFFFF;
 }
 
-#companyPublishingCron ul.cronTabs{
+#companyPublishingCron ul.cronTabs, #companyMiraklCron ul.cronTabs{
     height: 20px;
     margin: 0;
     padding-left: 10px;
     background: #F2F2F2 url("../../images/cron_tab_bottom.png") repeat-x bottom;
 }
 
-#companyPublishingCron ul.cronTabs li{
+#companyPublishingCron ul.cronTabs li, #companyMiraklCron ul.cronTabs li{
     margin: 0;
     padding: 0;
     display: inline;
     list-style-type: none;
 }
 
-#companyPublishingCron ul.cronTabs li a, #companyPublishingCron ul.cronTabs li a:visited {
+#companyPublishingCron ul.cronTabs li a, #companyPublishingCron ul.cronTabs li a:visited,
+#companyMiraklCron ul.cronTabs li a, #companyMiraklCron ul.cronTabs li a:visited {
     float: left;
     background: #F3F3F3;
     font-size: 12px;
@@ -435,33 +436,33 @@ div.createCompany select {
     color: #666666;
 }
 
-#companyPublishingCron ul.cronTabs li a.selected {
+#companyPublishingCron ul.cronTabs li a.selected, #companyMiraklCron ul.cronTabs li a.selected {
     border-bottom: 1px solid #FFFFFF;
     background: #FFFFFF;
     color: #000000;
 }
 
-#companyPublishingCron div.cronForm {
+#companyPublishingCron div.cronForm, #companyMiraklCron div.cronForm {
     padding: 5px;
     color: #000000;
     display: none;
 }
 
-#companyPublishingCron div.cronForm table{
+#companyPublishingCron div.cronForm table, #companyMiraklCron div.cronForm table{
     border-collapse: separate;
     border-spacing: 2px;
 }
 
-#companyPublishingCron div.cronForm table td{
+#companyPublishingCron div.cronForm table td, #companyMiraklCron div.cronForm table td{
     vertical-align: middle;
     padding: 1px 0px;
 }
 
-#companyPublishingCron div.cronForm input[type="radio"]{
+#companyPublishingCron div.cronForm input[type="radio"], #companyMiraklCron div.cronForm input[type="radio"]{
     margin: 3px 0px 0px 0px;
 }
 
-#companyPublishingCron div.cronForm input[type="text"]{
+#companyPublishingCron div.cronForm input[type="text"], #companyMiraklCron div.cronForm input[type="text"]{
     width: 60px;
 }
 

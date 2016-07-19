@@ -144,6 +144,7 @@
     <g:javascript src="${env}/companyBrands.js"/>
     <g:javascript src="${env}/companyCoupons.js"/>
     <g:javascript src="${env}/companyPublishing.js"/>
+    <g:javascript src="${env}/companyMirakl.js"/>
     <g:javascript src="${env}/companyApiKeys.js"/>
     <g:javascript src="${env}/companyIBeacon.js"/>
     <g:javascript src="${env}/companyTags.js"/>
@@ -561,6 +562,23 @@
             var companyPublishingCronErrorLabel = "${message(code: 'company.publishing.invalidCron.label')}";
             var companyPublishingUniqueCacheErrorLabel = "${message(code: 'company.publishing.cache.unique.label')}";
 
+            //Mirakl
+            var companyShowMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'show')}';
+            var companyCreateMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'save')}';
+            var companyUpdateMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'update')}';
+            var companyDeleteMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'delete')}';
+
+            var companyMiraklPageUrl = "${resource(dir: 'admin', file: '_createCompanyMirakl.gsp')}";
+
+            var companyMiraklTitleLabel = "${message(code: 'company.mirakl.title.label')}";
+            var companyMiraklNameLabel = "${message(code: 'company.mirakl.name.label')}";
+            var companyMiraklUrlLabel = "${message(code: 'company.mirakl.url.label')}";
+            var companyMiraklActiveLabel = "${message(code: 'company.mirakl.active.label')}";
+            var companyMiraklManualLabel = "${message(code: 'company.mirakl.manual.label')}";
+            var companyMiraklUniqueErrorLabel = "${message(code: 'company.mirakl.unique.label')}";
+            var companyMiraklUrlErrorLabel = "${message(code: 'company.mirakl.invalidUrl.label')}";
+            var companyMiraklCronErrorLabel = "${message(code: 'company.mirakl.invalidCron.label')}";
+
             //IBeacon
             var companyShowIBeaconUrl = '${createLink(controller: 'ibeacon', action: 'list')}';
             var companySaveIBeaconUrl = '${createLink(controller: 'ibeacon', action: 'save')}';
@@ -757,6 +775,8 @@
 <div id="companyPublishingDialog"></div>
 
 <div id="companyPublishingCacheUrlDialog"></div>
+
+<div id="companyMiraklDialog"></div>
 
 <div id="companyIBeaconDialog"></div>
 

@@ -124,11 +124,11 @@ function companyPublishingPageSetup(htmlresponse, companyId, publishingId, isCre
                     $("#companyPublishingDialog").dialog("close");
                 },
                 updateLabel : function() {
-                    if (companyPublishingValidateForm())
+                    if (companyPublishingValidateForm(false))
                         companyPublishingUpdatePublishing(companyId);
                 },
                 createLabel : function() {
-                    if (companyPublishingValidateForm())
+                    if (companyPublishingValidateForm(true))
                         companyPublishingCreatePublishing(companyId);
                 }
             }
@@ -253,7 +253,7 @@ function companyPublishingPageInitFields(publishingId, isCreate){
     companyPublishingPageInitCacheUrlGrid(cacheUrls);
 }
 
-function companyPublishingValidateForm(){
+function companyPublishingValidateForm(isCreate){
     if ($("#companyPublishingName").val() == "" || $("#companyPublishingUrl").val() == "") {
         if($("#companyPublishingName").val() == "")
             $("#companyPublishingForm #companyPublishingName").focus();
@@ -266,6 +266,20 @@ function companyPublishingValidateForm(){
             type : "error"
         });
         return false;
+    }
+    var data = companyPublishingGrid.getData();
+    for (var i = 0; i < data.length; i++) {
+        if ((isCreate && data[i].name == $("#companyPublishingName").val().trim())
+            || (!isCreate  && data[i].name == $("#companyPublishingName").val().trim() && data[i].publishingId != $("#companyPublishingId").val())){
+            $("#companyPublishingForm #companyPublishingName").focus();
+            jQuery.noticeAdd({
+                stayTime : 2000,
+                text : companyPublishingUniqueErrorLabel,
+                stay : false,
+                type : "error"
+            });
+            return false;
+        }
     }
     if (!$("#companyPublishingUrl")[0].checkValidity()) {
         $("#companyPublishingForm #companyPublishingUrl").focus();
@@ -448,6 +462,24 @@ function companyPublishingUpdatePublishing(companyId){
     });
 }
 
+function companyPublishingDeletePublishing(companyId){
+    var dataToSend = "esenv.id=" + $("#companyPublishingId").val();
+    $.ajax({
+        url : companyDeletePublishingUrl,
+        type : "POST",
+        noticeType : "DELETE",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            $("#companyPublishingDialog").dialog("close");
+            companyPublishingDrawAll(companyId);
+        },
+        error : function(response, status) {}
+    });
+}
+
 //Cron Functions
 var companyPublishingCronType;
 
@@ -496,24 +528,6 @@ function companyPublishingPageInitCronControls(isCreate){
         $("#companyPublishingCronDailyDiv").show();
         companyPublishingCronType = "daily";
     }
-}
-
-function companyPublishingDeletePublishing(companyId){
-    var dataToSend = "esenv.id=" + $("#companyPublishingId").val();
-    $.ajax({
-        url : companyDeletePublishingUrl,
-        type : "POST",
-        noticeType : "DELETE",
-        data : dataToSend,
-        dataType : "json",
-        cache : false,
-        async : true,
-        success : function(response, status) {
-            $("#companyPublishingDialog").dialog("close");
-            companyPublishingDrawAll(companyId);
-        },
-        error : function(response, status) {}
-    });
 }
 
 function companyPublishingPageInitCronFields(){
@@ -755,9 +769,9 @@ function companyPublishingCacheUrlAddJahiaUrls(){
     var cacheUrls = companyPublishingCacheUrlGrid.getData();
     var id = cacheUrls.length > 0 ? (cacheUrls[cacheUrls.length - 1].urlId + 1) : 0;
     var jahiaUrls = [
-            $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${category.path}.html",
-            $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${brand.name}.html",
-            $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${product.id}.html"
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${category.path}.html",
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${brand.name}.html",
+        $("#companyPublishingCacheURLJahiaUrl").val() + "/categories/${product.id}.html"
     ];
     for(var i = 0; i < jahiaUrls.length; i++) {
         if (!companyPublishingCacheUrlExistInGrid(jahiaUrls[i])) {

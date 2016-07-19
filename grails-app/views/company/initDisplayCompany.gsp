@@ -55,13 +55,20 @@
                     </a>
                 </li>
 </store:hasPermission>
-<store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
-                <li id ="publishingLi">
-                    <a href="javascript:void(0)" id="publishingTab">
-                        <span><g:message code="tabs.publishing.label" /></span>
-                    </a>
-                </li>
-</store:hasPermission>
+                <store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
+                    <li id ="publishingLi">
+                        <a href="javascript:void(0)" id="publishingTab">
+                            <span><g:message code="tabs.publishing.label" /></span>
+                        </a>
+                    </li>
+                </store:hasPermission>
+                <store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}" id="${params.long("companyId")}">
+                    <li id ="miraklLi">
+                        <a href="javascript:void(0)" id="miraklTab">
+                            <span><g:message code="tabs.mirakl.label" /></span>
+                        </a>
+                    </li>
+                </store:hasPermission>
 <store:hasPermission permission="${PermissionType.ADMIN_STORE_KEYS.key}" id="${params.long("companyId")}">
                 <li id ="apiKeysLi">
                     <a href="javascript:void(0)" id="apiKeysTab">
@@ -379,20 +386,35 @@
             </form>
         </div>
 
-        <!-- publishing Tab -->
-        <div id="publishing" class="fk_content_area">
-            <form id="formPublishing" name="form_publish_comp" onsubmit="return false;">
-                <div id="publishingForm">
-                    <div class="errors"></div>
-                    <div id="publishingContent">
-                        <p style="font-weight: bold;"><g:message code="company.publishing.header.label" /> <a href="javascript:void(0)" id="addNewPublishing"><g:message code="company.publishing.add.label" /></a></p>
-                        <div id="publishingGridDiv">
-                            <div id="publishingGrid"></div>
-                        </div>
+    <!-- publishing Tab -->
+    <div id="publishing" class="fk_content_area">
+        <form id="formPublishing" name="form_publish_comp" onsubmit="return false;">
+            <div id="publishingForm">
+                <div class="errors"></div>
+                <div id="publishingContent">
+                    <p style="font-weight: bold;"><g:message code="company.publishing.header.label" /> <a href="javascript:void(0)" id="addNewPublishing"><g:message code="company.publishing.add.label" /></a></p>
+                    <div id="publishingGridDiv">
+                        <div id="publishingGrid"></div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- mirakl Tab -->
+    <div id="mirakl" class="fk_content_area">
+        <form id="formMirakl" name="form_publish_comp" onsubmit="return false;">
+            <div id="miraklForm">
+                <div class="errors"></div>
+                <div id="miraklContent">
+                    <p style="font-weight: bold;"><g:message code="company.mirakl.header.label" /> <a href="javascript:void(0)" id="addNewMirakl"><g:message code="company.mirakl.add.label" /></a></p>
+                    <div id="miraklGridDiv">
+                        <div id="miraklGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
         <!-- Api Keys Tab -->
         <div id="apiKeys" class="fk_content_area">
