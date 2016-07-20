@@ -519,12 +519,13 @@ beans = {
     }
     embeddedElasticSearchService(bootstrap.EmbeddedElasticSearchService)
     googleService(GoogleService)
+    catalogService(com.mogobiz.service.CatalogService){
+        sanitizeUrlService = ref('sanitizeUrlService')
+    }
     miraklService(com.mogobiz.service.MiraklService){
         sanitizeUrlService = ref('sanitizeUrlService')
         grailsApplication = ref('grailsApplication')
-    }
-    catalogService(com.mogobiz.service.CatalogService){
-        sanitizeUrlService = ref('sanitizeUrlService')
+        catalogService = ref('catalogService')
     }
 
     featureValueRender(com.mogobiz.store.domain.FeatureValueRender)
