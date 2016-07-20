@@ -521,6 +521,8 @@ beans = {
     googleService(GoogleService)
     catalogService(com.mogobiz.service.CatalogService){
         sanitizeUrlService = ref('sanitizeUrlService')
+        authenticationService = ref('authenticationService')
+        profileService = ref('profileService')
     }
     miraklService(com.mogobiz.service.MiraklService){
         sanitizeUrlService = ref('sanitizeUrlService')
