@@ -523,6 +523,9 @@ beans = {
         sanitizeUrlService = ref('sanitizeUrlService')
         grailsApplication = ref('grailsApplication')
     }
+    catalogService(com.mogobiz.service.CatalogService){
+        sanitizeUrlService = ref('sanitizeUrlService')
+    }
 
     featureValueRender(com.mogobiz.store.domain.FeatureValueRender)
     featureValueValidation(com.mogobiz.store.domain.FeatureValueValidation)

@@ -125,9 +125,9 @@ searchguard {
 }
 
 cache {
-    home = "/usr/local/mogobiz/cache"
-    version = "0.1-SNAPSHOT"
-    run = "http://localhost:8081/api/store"
+//    home = "/usr/local/mogobiz/cache"
+//    version = "0.1-SNAPSHOT"
+//    run = "http://localhost:8081/api/store"
 }
 
 password {

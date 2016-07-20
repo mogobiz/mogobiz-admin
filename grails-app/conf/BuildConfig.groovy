@@ -171,6 +171,8 @@ grails.project.dependency.resolution = {
         compile 'com.restfb:restfb:1.6.7'
         compile 'com.google.zxing:core:1.7'
 
+        compile (group:"com.mogobiz", name:"mogobiz-tools", version:"${mogobiz.version}")  {excludes "groovy-all"}
+
         compile (group:"com.mogobiz.rivers", name:"mogobiz-common", version:"${mogobiz.version}")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-http-client", version:"${mogobiz.version}")  {excludes "groovy-all"}
         compile (group:"com.mogobiz.rivers", name:"mogobiz-cfp", version:"${mogobiz.version}")  {excludes "groovy-all"}
