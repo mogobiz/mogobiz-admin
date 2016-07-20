@@ -491,3 +491,8 @@ hr.spacer {
 #userProfileForm .userProfile-large input, #profileChangePassword .userProfile-large input{
     width: 95%;
 }
+
+a.miraklCategory{
+    padding-left: 20px !important;
+    background: url(../../images/mirakl-icon.png) center left no-repeat;
+}

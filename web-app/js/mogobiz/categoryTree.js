@@ -1,6 +1,6 @@
 var categorySelectedId = null;
 var categoryShowSecurity;
-function categoryTreeDrawByCatalog(catalogId, catalogName) {
+function categoryTreeDrawByCatalog(catalogId, catalogName, catalogReadonly) {
     categorySelectedId = null;
     var dataToSend = "catalog.id=" + catalogId + "&allCategories=false&format=html";
     $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
@@ -18,9 +18,12 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
             $("#exportCatalogLink").click(function(){catalogExport();});
             $("#searchProductCatalogLink").click(function(){catalogProductsGetSearchPage();});
             var html = "<div id='categoryTreeList' value='-1'><ul><li id='categoryTreeNode-0' value='0' class='loaded'>";
-            html += "<a href='javascript:void(0)'>" + catalogName + "</a>";
+            html += "<a href='javascript:void(0)'>" + catalogName + (catalogReadonly ? " (" + catalogSelectedMiraklEnv.name + ")" : "") + "</a>";
             html += "<ul id='categoryTreeNode-0-Childs'>" + pageContent + "</ul></li></div>";
             $("#categoryTree").append(html);
+            if(catalogReadonly){
+                $("#categoryTreeNode-0-Childs a").removeClass("miraklCategory").addClass("miraklCategory");
+            }
             $("#categoryTreeList").jstree({
                 "themes" : {
                     theme : "default",
@@ -42,6 +45,8 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                 },
                 "contextmenu" : {
                     "items": function ($node) {
+                        if(catalogReadonly)
+                            return;
                         if($node[0].id == "categoryTreeNode-0"){
                             return {
                                 "Create": {
@@ -70,49 +75,49 @@ function categoryTreeDrawByCatalog(catalogId, catalogName) {
                 },
                 "plugins" : [ "themes", "html_data", "ui", "dnd", "crrm", "unique", "contextmenu" ]
             })
-                .bind("open_node.jstree", function (event, data) {
-                    if(! $("#" + data.rslt.obj[0].id).hasClass("loaded")){
-                        categoryTreeDrawChilds(data.rslt.obj[0].value, true);
-                        setTimeout(function () { $.jstree._reference("#" + data.rslt.obj[0].id).close_node("#" + data.rslt.obj[0].id); }, 1);
-                    }
+            .bind("open_node.jstree", function (event, data) {
+                if(! $("#" + data.rslt.obj[0].id).hasClass("loaded")){
+                    categoryTreeDrawChilds(data.rslt.obj[0].value, true);
+                    setTimeout(function () { $.jstree._reference("#" + data.rslt.obj[0].id).close_node("#" + data.rslt.obj[0].id); }, 1);
+                }
+            })
+            .bind("select_node.jstree", function (event, data) {
+                if(data.rslt.obj[0].value == 0){
+                    categorySelectedId = null;
+                    catalogGetTabPage();
+                    return;
+                }
+                categorySelectedId = data.rslt.obj[0].value;
+                categoryGetTabPage();
+            })
+            .bind("move_node.jstree", function (e, data) {
+                var pos = "0";
+                switch(data.rslt.p){
+                    case "before":
+                        pos = parseInt(parseFloat($("#" + data.rslt.r[0].id).attr("pos"))) - 5;
+                        break;
+                    case "after":
+                        pos = parseInt(parseFloat($("#" + data.rslt.r[0].id).attr("pos"))) + 5;
+                        break;
+                    default:
+                        pos = "0";
+                }
+                var newParentChilds = $.jstree._reference("#categoryTreeList")._get_children(data.rslt.np[0]);
+                for(var i = 0; i < newParentChilds.length; i++)
+                    $("#" + newParentChilds[i].id).attr("pos", (i + 1) * 10);
+                if(data.rslt.op[0].value != data.rslt.np[0].value){
+                    var oldParentChilds = $.jstree._reference("#categoryTreeList")._get_children(data.rslt.op[0]);
+                    for(var i = 0; i < oldParentChilds.length; i++)
+                        $("#" + oldParentChilds[i].id).attr("pos", (i + 1) * 10);
+                }
+                categoryTreeUpdateParentNode(data.rslt.o[0].value, data.rslt.np[0].value, pos);
+            }).
+            bind("before.jstree", function (e, data) {
+                $("#categoryTreeList ul > li > a > ins").remove();
+                $("#categoryTreeList ul > li[hasAccess='false'] > a").each(function () {
+                    $(this).contents().unwrap();
                 })
-                .bind("select_node.jstree", function (event, data) {
-                    if(data.rslt.obj[0].value == 0){
-                        categorySelectedId = null;
-                        catalogGetTabPage();
-                        return;
-                    }
-                    categorySelectedId = data.rslt.obj[0].value;
-                    categoryGetTabPage();
-                })
-                .bind("move_node.jstree", function (e, data) {
-                    var pos = "0";
-                    switch(data.rslt.p){
-                        case "before":
-                            pos = parseInt(parseFloat($("#" + data.rslt.r[0].id).attr("pos"))) - 5;
-                            break;
-                        case "after":
-                            pos = parseInt(parseFloat($("#" + data.rslt.r[0].id).attr("pos"))) + 5;
-                            break;
-                        default:
-                            pos = "0";
-                    }
-                    var newParentChilds = $.jstree._reference("#categoryTreeList")._get_children(data.rslt.np[0]);
-                    for(var i = 0; i < newParentChilds.length; i++)
-                        $("#" + newParentChilds[i].id).attr("pos", (i + 1) * 10);
-                    if(data.rslt.op[0].value != data.rslt.np[0].value){
-                        var oldParentChilds = $.jstree._reference("#categoryTreeList")._get_children(data.rslt.op[0]);
-                        for(var i = 0; i < oldParentChilds.length; i++)
-                            $("#" + oldParentChilds[i].id).attr("pos", (i + 1) * 10);
-                    }
-                    categoryTreeUpdateParentNode(data.rslt.o[0].value, data.rslt.np[0].value, pos);
-                }).
-                bind("before.jstree", function (e, data) {
-                    $("#categoryTreeList ul > li > a > ins").remove();
-                    $("#categoryTreeList ul > li[hasAccess='false'] > a").each(function () {
-                        $(this).contents().unwrap();
-                    })
-                });
+            });
             $("#categoriesMain").hideLoading();
             setTimeout(function () {
                 $.jstree._reference("#categoryTreeList").open_node("#categoryTreeNode-0");
@@ -147,6 +152,9 @@ function categoryTreeDrawChilds(id, showLoading){
             setTimeout(function () { $("#categoryTreeList").jstree("set_focus"); }, 1);
             setTimeout(function () { $.jstree._reference("#categoryTreeNode-" + id).open_node("#categoryTreeNode-" + id); }, 1);
 
+            if(catalogSelectedReadOnly){
+                $("#categoryTreeNode-0-Childs a").removeClass("miraklCategory").addClass("miraklCategory");
+            }
             $("#categoriesMain").hideLoading();
         }
     });

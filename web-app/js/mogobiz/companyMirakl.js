@@ -11,6 +11,7 @@ function companyMiraklDrawAll(compId){
         cache : false,
         async : true,
         success : function(response, status) {
+            partnerCompanyMiraklEnv = response;
             var gridColumns = [{
                 id : "name",
                 name : companyMiraklNameLabel,

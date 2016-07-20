@@ -1,5 +1,6 @@
 var menu;
 var partnerActiveCompanyChanged = false;
+var partnerCompanyMiraklEnv = null;
 
 $(document).ready(function() {
     $("#user_name_div").click(function() {
@@ -48,6 +49,7 @@ $(document).ready(function() {
     });
 
     partnerGetAllUserCompanies();
+    partnerGetAllCompanyMiraklEnv();
     catalogueLoadList();
     loadTranslateLanguages();
     countriesLoad();
@@ -159,4 +161,18 @@ function addCatalogMenuList(){
         },
         "html"
     );
+}
+
+function partnerGetAllCompanyMiraklEnv(){
+    $.ajax({
+        url: companyShowMiraklUrl,
+        type: "GET",
+        data : "format=json",
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            partnerCompanyMiraklEnv = response;
+        }
+    });
 }

@@ -40,6 +40,9 @@
 		<div class="catalog-large">
 			<label for="catalogCreateActivationDate"><g:message locale="${lang}" code="catalog.activationDate.label"/>&nbsp;<sup>*</sup></label>
 		</div>
+		<div class="catalog-large">
+			<label for="catalogCreateMiraklEnv"><g:message locale="${lang}" code="catalog.miraklEnv.label"/></label>
+		</div>
 		%{--<div class="catalog-large">--}%
 			%{--<label for="catalogCreateChannels"><g:message locale="${lang}" code="catalog.channels.label"/></label>--}%
 		%{--</div>--}%
@@ -49,6 +52,9 @@
 		<div class="catalog-large">
 			<input id="catalogCreateActivationDate" type="text" required name="catalog.activationDate"/>
 		</div>
+        <div class="catalog-large">
+            <select id="catalogCreateMiraklEnv"  multiple="multiple" name="catalog.mirakelEnv"></select>
+        </div>
 		%{--<div class="catalog-large">--}%
 			%{--<select id="catalogCreateChannels"  multiple="multiple" name="catalog.channels">--}%
 				%{--<option value="web">Web</option>--}%

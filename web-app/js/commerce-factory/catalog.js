@@ -1,5 +1,7 @@
 var catalogSelectedId = null;
 var catalogSelectedName = null;
+var catalogSelectedReadOnly = false;
+var catalogSelectedMiraklEnv = false;
 var catalogImported = false;
 var catalogRunningInterval = null;
 var catalogRunningIntervalTime = 10000;
@@ -36,7 +38,16 @@ function catalogueLoadList() {
                     $("#categoryDetails").empty();
                     catalogSelectedId = ui.value;
                     catalogSelectedName = ui.text;
-                    categoryTreeDrawByCatalog(catalogSelectedId, catalogSelectedName);
+                    catalogSelectedReadOnly = $("#catalogDropDownList option[value='" + catalogSelectedId + "']").attr("fromMirakl") == "true";
+                    catalogSelectedMiraklEnv = null;
+                    if(catalogSelectedReadOnly){
+                        for(var i = 0; i < partnerCompanyMiraklEnv.length; i++){
+                            if(partnerCompanyMiraklEnv[i].id == $("#catalogDropDownList option[value='" + catalogSelectedId + "']").attr("catalogMiraklEnvId")){
+                                catalogSelectedMiraklEnv = partnerCompanyMiraklEnv[i];
+                            }
+                        }
+                    }
+                    categoryTreeDrawByCatalog(catalogSelectedId, catalogSelectedName, catalogSelectedReadOnly);
                 }, 10);
             });
             if (catalogSelectedId != null) {
@@ -88,7 +99,6 @@ function catalogCreatePageSetup(htmlresponse) {
             height: "auto",
             open: function (event) {
                 catalogCreatePageInitControls();
-                catalogGeneralInitControls(true);
             },
             buttons: {
                 cancelLabel: function () {
@@ -122,10 +132,25 @@ function catalogCreatePageInitControls() {
 //        height: 100,
 //        minWidth: 242
 //    });
+    var options = "<option value='-1'>None</option>";
+    for(var i = 0; i < partnerCompanyMiraklEnv.length; i++){
+        options += "<option value='" + partnerCompanyMiraklEnv[i].id + "'>" + partnerCompanyMiraklEnv[i].name + "</option>";
+    }
+    $("#catalogCreateMiraklEnv").html(options);
+    $("#catalogCreateMiraklEnv").multiselect("destroy");
+    $("#catalogCreateMiraklEnv").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        selectedList: 1,
+        height: 100,
+        minWidth: 242
+    });
     $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
     $(".ui-dialog-buttonpane").find("button:contains('createLabel')").addClass("ui-create-button");
     $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
     $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
+    $("#categoriesMain").hideLoading();
 }
 
 function catalogValidateCreateForm() {
@@ -142,6 +167,7 @@ function catalogValidateCreateForm() {
 }
 
 function catalogAddNew() {
+    $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
 //    var channels = $("#catalogCreateChannels").multiselect("getChecked");
 //    var channelsStr = "";
 //    for (var i = 0; i < channels.length; i++) {
@@ -149,10 +175,11 @@ function catalogAddNew() {
 //            channelsStr += ",";
 //        channelsStr += channels[i].value;
 //    }
+    var miraklEnvId = $("#catalogCreateMiraklEnv").val() != null && $("#catalogCreateMiraklEnv").val() != -1 ? $("#catalogCreateMiraklEnv").val() : "";
     var dataToSend = "catalog.name=" + encodeURIComponent($("#catalogCreateName").val()) + "&catalog.externalCode=" + encodeURIComponent($("#catalogCreateExternalCode").val());
     dataToSend += "&catalog.activationDate=" + $("#catalogCreateActivationDate").val() + "&catalog.description=" + encodeURIComponent($("#catalogCreateDescription").val());
 //    dataToSend += "&catalog.channels=" + channelsStr + "&catalog.social=" + $("#catalogCreateSocial").is(":checked");
-    dataToSend += "&format=json";
+    dataToSend += "&miraklenv.id=" + miraklEnvId + "&format=json";
     $.ajax({
         url: createCatalogUrl,
         type: "POST",
@@ -164,8 +191,10 @@ function catalogAddNew() {
         success: function (response, status) {
             catalogueLoadList();
             $("#catalogCreateDialog").dialog("close");
+            $("#categoriesMain").hideLoading();
         },
         error: function (response, status) {
+            $("#categoriesMain").hideLoading();
             jQuery.noticeAdd({
                 stayTime: 2000,
                 text: catalogUniqueNameLabel,
@@ -239,7 +268,7 @@ function catalogGeneralGetInfo() {
         cache: false,
         async: true,
         success: function (response, status) {
-            catalogGeneralInitControls(false);
+            catalogGeneralInitControls();
             catalogGeneralInitFields(response);
             catalogGetEsEnvList();
         },
@@ -275,13 +304,11 @@ function catalogGetEsEnvList(){
     });
 }
 
-function catalogGeneralInitControls(isCreate) {
+function catalogGeneralInitControls() {
     $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, /*#catalogSocial, #catalogChannels, */#catalogPublishBtn").unbind();
     $("#catalogActivationDate").datepicker("destroy");
     $("#catalogActivationDate").datepicker({
         onSelect: function (date) {
-            if (isCreate)
-                return;
             catalogUpdate();
         },
         dateFormat: "yy-mm-dd",
