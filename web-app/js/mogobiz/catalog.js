@@ -1112,7 +1112,6 @@ function catalogMarketplaceGetAllReports(offset){
         cache: false,
         async: true,
         success: function (response, status) {
-            response = reportsResponse;
             var reportsStatus = {
                 "PRODUCTS_SYNCHRO": catalogMiraklReportStatusProductsSyncLabel,
                 "PRODUCTS": catalogMiraklReportStatusProductsLabel,
