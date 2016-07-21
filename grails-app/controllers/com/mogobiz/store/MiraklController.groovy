@@ -127,7 +127,7 @@ class MiraklController {
         else{
             PagedList<MiraklSync> pagedList = miraklService.refreshSynchronization(catalog, cmd)
             final page = ajaxResponseService.preparePage(pagedList.list, pagedList.totalCount, cmd) { MiraklSync sync ->
-                sync.asMapForJSON(["type", "status", "timestamp", "errorReport"])
+                sync.asMapForJSON(["trackingId", "type", "status", "timestamp", "linesRead", "linesInError", "linesInSuccess", "errorReport", "miraklEnv", "miraklEnv.shopId"])
             }
             withFormat {
                 xml { render page as XML }
