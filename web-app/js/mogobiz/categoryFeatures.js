@@ -1,9 +1,14 @@
 var categoryFeaturesGrid = null;
 var categoryFeatureListLoaded = false;
 function categoryFeaturesDrawAll(){
-    $("#categoryAddNewFeature").unbind().click(function() {
-        categoryFeaturesGetDetails(null, true);
-    });
+    if(catalogSelectedReadOnly){
+        $("#categoryAddNewFeature, #categoryFeaturesOrHeaderLabel").remove();
+    }
+    else {
+        $("#categoryAddNewFeature").unbind().click(function () {
+            categoryFeaturesGetDetails(null, true);
+        });
+    }
 	categoryFeatureListLoaded = false;
 	categoryFeaturesGrid = null;
 	var dataToSend = "category.id=" + categorySelectedId + "&format=json";
@@ -49,6 +54,8 @@ function categoryFeaturesDrawAll(){
 				formatter : categoryFeaturesGridHideFormatter,
 				cssClass : "cell-centered"
 			}];
+            if(catalogSelectedReadOnly)
+                gridColumns = gridColumns.slice(1);
 
 			var gridOptions = {
 				editable : false,
@@ -89,31 +96,33 @@ function categoryFeaturesDrawAll(){
 
 			categoryFeaturesGrid.setSelectionModel(new Slick.RowSelectionModel());
 			categoryFeaturesGrid.invalidate();
-			var moveRowsPlugin = new Slick.RowMoveManager();
-			moveRowsPlugin.onBeforeMoveRows.subscribe(function(e, data) {
-						for ( var i = 0; i < data.rows.length; i++) {
-							if (data.rows[i] == data.insertBefore
-									|| data.rows[i] == data.insertBefore - 1) {
-								e.stopPropagation();
-								return false;
-							}
-						}
-						return true;
-					});
+            if(!catalogSelectedReadOnly) {
+                var moveRowsPlugin = new Slick.RowMoveManager();
+                moveRowsPlugin.onBeforeMoveRows.subscribe(function (e, data) {
+                    for (var i = 0; i < data.rows.length; i++) {
+                        if (data.rows[i] == data.insertBefore
+                            || data.rows[i] == data.insertBefore - 1) {
+                            e.stopPropagation();
+                            return false;
+                        }
+                    }
+                    return true;
+                });
 
-			moveRowsPlugin.onMoveRows.subscribe(function(e, args) {
-				var index = args.rows[0];
-				var insertBefore = args.insertBefore;
-				var data = categoryFeaturesGrid.getData();
-				data[index].position = (insertBefore * 10) + 5;
-				data.sort(function (a, b) {
-					var posA =parseInt( a.position );
-					var posB =parseInt( b.position );
-					return (posA < posB) ? -1 : (posA > posB) ? 1 : 0;
-				});
-				categoryFeaturesUpdatePosition(data);
-			});
-			categoryFeaturesGrid.registerPlugin(moveRowsPlugin);
+                moveRowsPlugin.onMoveRows.subscribe(function (e, args) {
+                    var index = args.rows[0];
+                    var insertBefore = args.insertBefore;
+                    var data = categoryFeaturesGrid.getData();
+                    data[index].position = (insertBefore * 10) + 5;
+                    data.sort(function (a, b) {
+                        var posA = parseInt(a.position);
+                        var posB = parseInt(b.position);
+                        return (posA < posB) ? -1 : (posA > posB) ? 1 : 0;
+                    });
+                    categoryFeaturesUpdatePosition(data);
+                });
+                categoryFeaturesGrid.registerPlugin(moveRowsPlugin);
+            }
 
 			categoryFeatureListLoaded = true;
 			if(categoryGeneralInfoLoaded && categoryVariationsListLoaded && categoryProductListLoaded && categoryTranslationListLoaded){
@@ -212,12 +221,19 @@ function categoryFeaturesPageInitControls(isCreate) {
 			}
 		});
 		$(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
-		$(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
-		$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
-		$(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
-		$(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
-		$(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-		$(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+        if(catalogSelectedReadOnly){
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide().remove();
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide().remove();
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+        }
+        else {
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+        }
 	}
 }
 

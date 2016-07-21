@@ -147,6 +147,8 @@ function tourismFeaturesGridNameFormatter(row, cell, value, columnDef, dataConte
 	    	val += " <sup style='color: #075899;'>^</sup>";
         else
     		val += " <sup style='color: #075899;'>*</sup>";
+        if(catalogSelectedReadOnly)
+            return val;
 	}
 	return "<a href='javascript:void(0);' onclick='tourismFeaturesLoadFeature("+ dataContext.productId + "," + dataContext.featureId + ")'>" + val + "</a>";
 }

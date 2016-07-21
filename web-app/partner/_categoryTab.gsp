@@ -99,13 +99,13 @@
 			</form>
 		</div>
 		<div id="categoryVariationsTabInfo">
-            <p style="font-weight: bold; padding: 5px;"><g:message locale="${lang}" code="category.variations.header.label" /> <a href="javascript:void(0)" id="categoryAddNewVariation"><g:message locale="${lang}" code="category.variations.add.label" /></a></p>
+            <p style="font-weight: bold; padding: 5px;"><g:message locale="${lang}" code="category.variations.header.label" /> <span id="categoryVariationsOrHeaderLabel"><g:message locale="${lang}" code="category.variations.header.or.label" /></span> <a href="javascript:void(0)" id="categoryAddNewVariation"><g:message locale="${lang}" code="category.variations.add.label" /></a></p>
 			<div id="categoryVariationsGridDiv">
 				<div id="categoryVariationsGrid" style="height: 335px;"></div>
 			</div>
 		</div>
 		<div id="categoryFeaturesTabInfo">
-            <p style="font-weight: bold; padding: 5px;"><g:message locale="${lang}" code="category.features.header.label" /> <a href="javascript:void(0)" id="categoryAddNewFeature"><g:message locale="${lang}" code="category.features.add.label" /></a></p>
+            <p style="font-weight: bold; padding: 5px;"><g:message locale="${lang}" code="category.features.header.label" /> <span id="categoryFeaturesOrHeaderLabel"><g:message locale="${lang}" code="category.features.header.or.label" /></span> <a href="javascript:void(0)" id="categoryAddNewFeature"><g:message locale="${lang}" code="category.features.add.label" /></a></p>
 			<div id="categoryFeaturesGridDiv">
 				<div id="categoryFeaturesGrid" style="height: 335px;"></div>
 			</div>

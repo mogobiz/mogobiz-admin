@@ -3,9 +3,14 @@ var categoryVariationsListLoaded = false;
 var categoryVariationsValues = [];
 var categoryVariationsValuesIndex = 0;
 function categoryVariationsDrawAll(){
-    $("#categoryAddNewVariation").unbind().click(function() {
-        categoryVariationsGetDetails(null, true);
-    });
+    if(catalogSelectedReadOnly){
+        $("#categoryAddNewVariation, #categoryVariationsOrHeaderLabel").remove();
+    }
+    else {
+        $("#categoryAddNewVariation").unbind().click(function () {
+            categoryVariationsGetDetails(null, true);
+        });
+    }
     categoryVariationsListLoaded = false;
     var dataToSend = "category.id=" + categorySelectedId + "&format=json";
     $.ajax({
@@ -44,6 +49,8 @@ function categoryVariationsDrawAll(){
                 width : 25,
                 cssClass : ""
             }];
+            if(catalogSelectedReadOnly)
+                gridColumns = gridColumns.slice(1);
 
             var gridOptions = {
                 editable : false,
@@ -81,32 +88,34 @@ function categoryVariationsDrawAll(){
 
             categoryVariationsGrid.setSelectionModel(new Slick.RowSelectionModel());
             categoryVariationsGrid.invalidate();
-            var moveRowsPlugin = new Slick.RowMoveManager();
-            moveRowsPlugin.onBeforeMoveRows.subscribe(function(e, data) {
-                for ( var i = 0; i < data.rows.length; i++) {
-                    if (data.rows[i] == data.insertBefore
-                        || data.rows[i] == data.insertBefore - 1) {
-                        e.stopPropagation();
-                        return false;
+            if(!catalogSelectedReadOnly) {
+                var moveRowsPlugin = new Slick.RowMoveManager();
+                moveRowsPlugin.onBeforeMoveRows.subscribe(function (e, data) {
+                    for (var i = 0; i < data.rows.length; i++) {
+                        if (data.rows[i] == data.insertBefore
+                            || data.rows[i] == data.insertBefore - 1) {
+                            e.stopPropagation();
+                            return false;
+                        }
                     }
-                }
-                return true;
-            });
-
-            moveRowsPlugin.onMoveRows.subscribe(function(e, args) {
-                var extractedRows = [], left, right;
-                var index = args.rows[0];
-                var insertBefore = args.insertBefore;
-                var data = categoryVariationsGrid.getData();
-                data[index].position = (insertBefore * 10) + 5;
-                data.sort(function (a, b) {
-                    var posA =parseInt( a.position );
-                    var posB =parseInt( b.position );
-                    return (posA < posB) ? -1 : (posA > posB) ? 1 : 0;
+                    return true;
                 });
-                categoryVariationsUpdatePosition(data);
-            });
-            categoryVariationsGrid.registerPlugin(moveRowsPlugin);
+
+                moveRowsPlugin.onMoveRows.subscribe(function(e, args) {
+                    var extractedRows = [], left, right;
+                    var index = args.rows[0];
+                    var insertBefore = args.insertBefore;
+                    var data = categoryVariationsGrid.getData();
+                    data[index].position = (insertBefore * 10) + 5;
+                    data.sort(function (a, b) {
+                        var posA =parseInt( a.position );
+                        var posB =parseInt( b.position );
+                        return (posA < posB) ? -1 : (posA > posB) ? 1 : 0;
+                    });
+                    categoryVariationsUpdatePosition(data);
+                });
+                categoryVariationsGrid.registerPlugin(moveRowsPlugin);
+            }
 
             categoryVariationsListLoaded = true;
             if(categoryGeneralInfoLoaded && categoryFeatureListLoaded && categoryProductListLoaded && categoryTranslationListLoaded){
@@ -198,13 +207,21 @@ function categoryVariationsPageInitControls(isCreate) {
                     break;
             }
         });
+
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
-        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
-        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
-        $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
-        $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
-        $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+        if(catalogSelectedReadOnly){
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide().remove();
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide().remove();
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+        }
+        else {
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").addClass("ui-update-button");
+            $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").html("<span class='ui-button-text'>" + deleteLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+            $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").html("<span class='ui-button-text'>" + updateLabel + "</span>");
+        }
     }
 }
 
