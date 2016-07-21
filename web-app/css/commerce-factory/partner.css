@@ -273,17 +273,22 @@ div.catalog-large {
     width: 50%;
 }
 
-div.catalog-large input[type=text] {
-    width: 96%;
-}
-
-div.catalog-medium button {
+div.catalog-xlarge {
     float: left;
+    width: 67%;
 }
 
 div.catalog-full {
     float: left;
     width: 100%;
+}
+
+div.catalog-large input[type=text] {
+    width: 96%;
+}
+
+div.catalog-medium button, div.catalog-xlarge button{
+    float: left;
 }
 
 div.catalog-full input {
@@ -295,6 +300,39 @@ div.catalog-full textarea {
     height: 60px;
     resize: none;
 }
+
+span.catalog-reports-title{
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+a.catalog-refresh-catalog{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("../../images/refresh-icon.png") center center no-repeat;
+}
+
+a.catalog-refresh-catalog.disabled{
+    background: url("../../images/refresh-icon-gray.png") center center no-repeat;
+}
+
+#catalogMarketplaceReportsGrid {
+    border: 1px solid #A6C9E2;
+    border-top: 0px;
+}
+
+#catalogMarketplaceErrorReportDialog {
+    display: none;
+    color: #888;
+    text-align: left;
+    direction: ltr;
+    background:#F2F2F2;
+    border:1px solid #CCCCCC;
+    padding: 10px;
+    margin: 5px 0px 0px 0px;
+}
+
 /*--------------------------------------------------*/
 
 div.suggestions-large {
@@ -493,7 +531,7 @@ hr.spacer {
     width: 95%;
 }
 
-a.miraklCategory{
-    padding-left: 20px !important;;
+a.miraklCategory, span.miraklCategory{
+    padding-left: 20px !important;
     background: url(../../images/mirakl-icon.png) center left no-repeat;
 }

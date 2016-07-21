@@ -110,11 +110,11 @@
 				<div id="categoryFeaturesGrid" style="height: 335px;"></div>
 			</div>
 		</div>
-		<div id="categoryProductsTabInfo"">
+		<div id="categoryProductsTabInfo">
 			<div id="categoryProductSearchForm"></div>
 			<div id="categoryProductsList"></div>
 		</div>
-		<div id="categoryTranslationTabInfo"">
+		<div id="categoryTranslationTabInfo">
 			<div style="padding: 10px;">
 				<a id="categoryTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
 			</div>

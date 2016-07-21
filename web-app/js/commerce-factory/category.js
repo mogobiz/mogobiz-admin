@@ -117,9 +117,6 @@ function categoriesResolveTree(productId){
     })
     .bind("before.jstree", function (e, data) {
         $("#productCategoriesTreeList ul > li > a > ins").remove();
-        $("#productCategoriesTreeList ul > li[hasAccess='false'] > a").each(function () {
-            $(this).contents().unwrap();
-        })
     });
     setTimeout(function () {
         categoriesClickFromCategoriesLoad = true;

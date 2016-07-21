@@ -74,6 +74,7 @@ class MiraklController {
         Long catalogId = params.long('catalog.id')
         Catalog catalog = catalogId ? Catalog.get(catalogId) : null
         if (catalog?.name == "impex") {
+            response.status = 403
             render status:403, text: "Impex Catalog cannot be published"
         }
         else {
@@ -98,6 +99,7 @@ class MiraklController {
             response.sendError 401
         }
         else if (catalog.name == "impex") {
+            response.status = 400
             render status:400, text: "Impex Catalog cannot be synchronized"
         }
         else{
@@ -122,6 +124,7 @@ class MiraklController {
             response.sendError 401
         }
         else if (catalog.name == "impex") {
+            response.status = 400
             render status:400, text: "Impex Catalog cannot be refreshed"
         }
         else{

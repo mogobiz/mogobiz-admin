@@ -22,7 +22,7 @@ function categoryTreeDrawByCatalog(catalogId, catalogName, catalogReadonly) {
             html += "<ul id='categoryTreeNode-0-Childs'>" + pageContent + "</ul></li></div>";
             $("#categoryTree").append(html);
             if(catalogReadonly){
-                $("#categoryTreeNode-0-Childs a").removeClass("miraklCategory").addClass("miraklCategory");
+                $("#categoryTreeNode-0-Childs a, #categoryTreeNode-0-Childs span").removeClass("miraklCategory").addClass("miraklCategory");
             }
             $("#categoryTreeList").jstree({
                 "themes" : {
@@ -114,9 +114,6 @@ function categoryTreeDrawByCatalog(catalogId, catalogName, catalogReadonly) {
             }).
             bind("before.jstree", function (e, data) {
                 $("#categoryTreeList ul > li > a > ins").remove();
-                $("#categoryTreeList ul > li[hasAccess='false'] > a").each(function () {
-                    $(this).contents().unwrap();
-                })
             });
             $("#categoriesMain").hideLoading();
             setTimeout(function () {
@@ -153,7 +150,7 @@ function categoryTreeDrawChilds(id, showLoading){
             setTimeout(function () { $.jstree._reference("#categoryTreeNode-" + id).open_node("#categoryTreeNode-" + id); }, 1);
 
             if(catalogSelectedReadOnly){
-                $("#categoryTreeNode-0-Childs a").removeClass("miraklCategory").addClass("miraklCategory");
+                $("#categoryTreeNode-0-Childs a, #categoryTreeNode-0-Childs span").removeClass("miraklCategory").addClass("miraklCategory");
             }
             $("#categoriesMain").hideLoading();
         }

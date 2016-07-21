@@ -4,7 +4,10 @@ var catalogSelectedReadOnly = false;
 var catalogSelectedMiraklEnv = false;
 var catalogImported = false;
 var catalogRunningInterval = null;
-var catalogRunningIntervalTime = 10000;
+var catalogRunningIntervalTime = 3000;
+var catalogMarketplaceRunningInterval = null;
+var catalogMarketplaceRunningIntervalTime = 3000;
+var catalogMarketplaceReposrtsPageSize = 100;
 var catalogShowSecurity;
 var catalogActiveEsEnv;
 var catalogActiveIndex;
@@ -224,6 +227,7 @@ function catalogGetTabPage() {
 }
 
 function catalogInitAllTabs() {
+    $("#catalogMarketplaceDiv").hide();
     $("#catalogTranslationDiv").hide();
     $("#catalogSecurityDiv").hide();
     catalogShowSecurity = ($("#catalogSecurityTab").length > 0);
@@ -235,18 +239,28 @@ function catalogInitAllTabs() {
         $(this).addClass("selected");
         switch ($(this).attr("id")) {
             case "catalogGeneralTab":
+                $("#catalogMarketplaceDiv").hide();
                 $("#catalogTranslationDiv").hide();
                 $("#catalogSecurityDiv").hide();
                 $("#catalogGeneralDiv").show();
                 catalogResetRunningInterval();
                 break;
+            case "catalogMarketplaceTab":
+                $("#catalogGeneralDiv").hide();
+                $("#catalogTranslationDiv").hide();
+                $("#catalogSecurityDiv").hide();
+                $("#catalogMarketplaceDiv").show();
+                catalogMarketplaceResetRunningInterval();
+                break;
             case "catalogTranslationTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogMarketplaceDiv").hide();
                 $("#catalogSecurityDiv").hide();
                 $("#catalogTranslationDiv").show();
                 break;
             case "catalogSecurityTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogMarketplaceDiv").hide();
                 $("#catalogTranslationDiv").hide();
                 $("#catalogSecurityDiv").show();
                 break;
@@ -255,6 +269,8 @@ function catalogInitAllTabs() {
         }
     });
     $("#catalogGeneralTab").addClass("selected");
+    catalogInitMarketplaceFields();
+    catalogInitMarketplaceControls();
 }
 
 function catalogGeneralGetInfo() {
@@ -525,6 +541,7 @@ function catalogPublish() {
     $("#catalogLastPublicationStatus").show().html("");
     $("#catalogPublicationError").hide();
     $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+    $("#catalogListPublication").multiselect("disable");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
     $.ajax({
@@ -540,6 +557,7 @@ function catalogPublish() {
             }, 2000);
         },
         error: function (response, status) {
+            catalogResetRunningInterval();
             if(response.status == "403"){
                 $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
                 $("#catalogLastPublicationStatus").hide();
@@ -749,10 +767,12 @@ function catalogCheckEsEnvRunning() {
             var html = "";
             if (response.running) {
                 $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogListPublication").multiselect("disable");
                 html = catalogPublicationRunningLabel;
             }
             else {
                 $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogListPublication").multiselect("enable");
                 html = catalogLastPublicationLabel + " : ";
                 if (response.success)
                     html += catalogPublicationSuccessLabel;
@@ -888,4 +908,309 @@ function catalogTranslationDrawAll() {
         $("#categoriesMain").hideLoading();
     };
     translationGetAllData("catalog", catalogSelectedId, successCallback);
+}
+
+//Marketplace functions
+var catalogMarketplaceReportsGrid = null;
+
+function catalogInitMarketplaceFields(){
+    var options = "<option value=''>None</option>";
+    for(var i = 0; i < partnerCompanyMiraklEnv.length; i++){
+        options += "<option value='" + partnerCompanyMiraklEnv[i].id + "'>" + partnerCompanyMiraklEnv[i].name + "</option>";
+    }
+    $("#catalogListMiraklEnv").empty().html(options).multiselect("destroy").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        selectedList: 1,
+        height: 100,
+        minWidth: 170
+    }).unbind();
+    if(catalogSelectedReadOnly) {
+        $("#catalogListMiraklEnv").val(catalogSelectedMiraklEnv.id).multiselect("refresh").multiselect("disable");
+    }
+
+    var gridColumns = [{
+        id : "trackingId",
+        name : catalogMiraklReportTrackingLabel,
+        field : "trackingId",
+        width : 15,
+        cssClass : "cell-title"
+    },{
+        id : "timeStamp",
+        name : catalogMiraklReportTimeLabel,
+        field : "timeStamp",
+        width : 25,
+        cssClass : ""
+    },{
+        id : "type",
+        name : catalogMiraklReportTypeLabel,
+        field : "type",
+        width : 25,
+        cssClass : ""
+    },{
+        id : "status",
+        name : catalogMiraklReportStatusLabel,
+        field : "status",
+        width : 13,
+        cssClass : ""
+    },{
+        id : "linesInSuccess",
+        name : catalogMiraklReportSuccessLabel,
+        field : "linesInSuccess",
+        width : 12,
+        cssClass : "cell-centered"
+    },{
+        id : "linesInError",
+        name : catalogMiraklReportErrorLabel,
+        field : "linesInError",
+        width : 10,
+        formatter : catalogMarketplaceGridErrorFormatter,
+        cssClass : "cell-centered"
+    }];
+
+    var gridOptions = {
+        editable : false,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : false,
+        enableColumnReorder : false,
+        rowHeight : 25
+    };
+
+    var tabVisible = $("#catalogMarketplaceDiv").is(":visible");
+    if(! tabVisible)
+        $("#catalogMarketplaceDiv").show();
+    catalogMarketplaceReportsGrid = new Slick.Grid($("#catalogMarketplaceReportsGrid"), [], gridColumns, gridOptions);
+    if(! tabVisible)
+        $("#catalogMarketplaceDiv").hide();
+}
+
+function catalogInitMarketplaceControls(){
+    if(!catalogSelectedReadOnly) {
+        $("#catalogListMiraklEnv").bind("multiselectclick", function (event, ui) {
+            setTimeout(function(){
+                catalogMarketplaceResetRunningInterval();
+            }, 100);
+        });
+    }
+    $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {catalogMarketplacePublish();});
+    $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {catalogMarketplaceRefresh();});
+    $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {catalogMarketplaceGetAllReports(0);});
+    catalogMarketplaceGetAllReports(0);
+}
+
+function catalogMarketplaceResetRunningInterval() {
+    catalogCheckMarketplaceEnvRunning();
+    if (catalogMarketplaceRunningInterval)
+        clearInterval(catalogMarketplaceRunningInterval);
+    catalogMarketplaceRunningInterval = setInterval(function () {
+        if ($("#catalogMarketplaceDiv").is(":visible")) {
+            catalogCheckMarketplaceEnvRunning();
+        }
+        else {
+            clearInterval(catalogMarketplaceRunningInterval);
+            catalogMarketplaceRunningInterval = null;
+        }
+    }, catalogMarketplaceRunningIntervalTime);
+}
+
+function catalogCheckMarketplaceEnvRunning() {
+    if($("#catalogListMiraklEnv").val() == null || $("#catalogListMiraklEnv").val() == "")
+        return;
+    var dataToSend = "miraklenv.id=" + $("#catalogListMiraklEnv").val() + "&format=json";
+    $.ajax({
+        url: companyShowMiraklUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            if (response.running) {
+                $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+                $("#catalogListMiraklEnv").multiselect("disable");
+            }
+            else {
+                $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {catalogMarketplacePublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {catalogMarketplaceRefresh();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {catalogMarketplaceGetAllReports(0);}).removeClass("disabled");
+                if(!catalogSelectedReadOnly)
+                    $("#catalogListMiraklEnv").multiselect("enable");
+            }
+        },
+        error: function (response, status) {}
+    });
+}
+
+function catalogMarketplacePublish(){
+    $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+    $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+    $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+    $("#catalogListMiraklEnv").multiselect("disable");
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&miraklenv.id=" + $("#catalogListMiraklEnv").val();
+    dataToSend += "&format=json";
+    $.ajax({
+        url: catalogMarketplacePublishUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            catalogMarketplaceGetAllReports(0);
+        },
+        error: function (response, status) {
+            catalogMarketplaceResetRunningInterval();
+            var message = response.responseText;
+            if(response.statusCode == 401){
+                message = catalogMiraklUnauthorizedMessage;
+            }
+            jQuery.noticeAdd({
+                stayTime: 2000,
+                text: message,
+                stay: false,
+                type: "error"
+            });
+        }
+    });
+}
+
+function catalogMarketplaceRefresh(){
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&format=json";
+    $.ajax({
+        url: catalogMarketplaceRefreshUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {},
+        error: function (response, status) {
+            if(response.statusCode == 400){
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: response.responseText,
+                    stay: false,
+                    type: "error"
+                });
+            }
+        }
+    });
+}
+
+function catalogMarketplaceGetAllReports(offset){
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&pageOffset=" + offset + "&pageSize=" + catalogMarketplaceReposrtsPageSize + "&format=json";
+    $.ajax({
+        url: catalogMarketplaceReportsUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            response = reportsResponse;
+            var reportsStatus = {
+                "PRODUCTS_SYNCHRO": catalogMiraklReportStatusProductsSyncLabel,
+                "PRODUCTS": catalogMiraklReportStatusProductsLabel,
+                "OFFERS": catalogMiraklReportStatusOffersLabel
+            };
+            var gridData = [];
+            if(response.list){
+                for ( var i = 0; i < response.list.length; i++) {
+                    gridData[gridData.length] = {
+                        "id" : i,
+                        "trackingId": response.list[i].trackingId,
+                        "shopId": response.list[i].miraklEnv.shopId,
+                        "timeStamp": response.list[i].timestamp,
+                        "status": response.list[i].status.name,
+                        "type": reportsStatus[response.list[i].type.name],
+                        "linesInSuccess": response.list[i].linesInSuccess,
+                        "linesInError": response.list[i].linesInError,
+                        "errorReport": response.list[i].errorReport
+                    }
+                }
+            }
+            catalogMarketplaceReportsGrid.setData(gridData);
+            catalogMarketplaceReportsGrid.invalidate();
+
+            if(response.totalCount > 0) {
+                var tabVisible = $("#catalogMarketplaceDiv").is(":visible");
+                if(! tabVisible)
+                    $("#catalogMarketplaceDiv").show();
+                $("#catalogMarketplaceReportsPagination").paginate({
+                    count: response.pageCount,
+                    start: response.pageOffset + 1,
+                    display: 27,
+                    border: true,
+                    border_color: "#A6C9E2",
+                    text_color: "#075899",
+                    background_color: "#FFFFFF",
+                    border_hover_color: "#A6C9E2",
+                    text_hover_color: "#FFFFFF",
+                    background_hover_color: "#6D84B4",
+                    rotate: true,
+                    images: true,
+                    mouse: "press",
+                    onChange: function (page) {
+                        catalogMarketplaceGetAllReports(page - 1)
+                    }
+                });
+                var margin = $("#catalogMarketplaceReportsPagination").parent().parent().width() - $("#catalogMarketplaceReportsPagination .jPag-control-back").width() - $("#catalogMarketplaceReportsPagination .jPag-control-center").width() - $("#catalogMarketplaceReportsPagination .jPag-control-front").width() - 7;
+                $("#catalogMarketplaceReportsPagination").css("margin-left", margin);
+                if(! tabVisible)
+                    $("#catalogMarketplaceDiv").hide();
+            }
+        },
+        error: function (response, status) {console.log(response);
+            if(response.status == 400){
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: response.responseText,
+                    stay: false,
+                    type: "error"
+                });
+            }
+        }
+    });
+}
+
+function catalogMarketplaceGridErrorFormatter(row, cell, value, columnDef, dataContext){
+    if(dataContext.errorReport != null && dataContext.errorReport != "")
+        return "<a class='catalog-report-budge' href='javascript:catalogMarketplaceShowErrorReport(" + dataContext.trackingId + ")'>" + value + "</a>";
+    return value;
+}
+
+function catalogMarketplaceShowErrorReport(trackingId){
+    var data = catalogMarketplaceReportsGrid.getData();
+    var error = "";
+    for(var i = 0; i < data.length; i++){
+        if(data[i].trackingId == trackingId){
+            error = data[i].errorReport;
+            break;
+        }
+    }
+    if ($("#catalogMarketplaceErrorReportDialog").dialog("isOpen") !== true && error != "") {
+        $("#catalogMarketplaceErrorReportDialog").empty();
+        $("#catalogMarketplaceErrorReportDialog").html(error);
+        $("#catalogMarketplaceErrorReportDialog").dialog({
+            title: "Error report",
+            modal: true,
+            resizable: false,
+            width: "500",
+            height: "auto",
+            open: function (event) {
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+            },
+            buttons: {
+                closeLabel: function () {
+                    $("#catalogMarketplaceErrorReportDialog").dialog("close");
+                }
+            }
+        });
+    }
 }

@@ -211,6 +211,9 @@
             var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";
             var exportCheckCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'checkExport')}";
             var downloadExportedCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadExportFile')}";
+            var catalogMarketplacePublishUrl = "${createLink(controller: 'mirakl', action: 'publish')}";
+            var catalogMarketplaceRefreshUrl = "${createLink(controller: 'mirakl', action: 'synchronize')}";
+            var catalogMarketplaceReportsUrl = "${createLink(controller: 'mirakl', action: 'refreshSynchronization')}";
 
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
@@ -230,6 +233,16 @@
             var catalogPublicationFailureLabel = "${message(code: 'catalog.publicationFailure.label')}";
             var catalogImportFailureLabel = "${message(code: 'catalog.importFailure.label')}";
             var catalogConfirmDeleteMessage = "${message(code: 'catalog.delete.confirm.message')}";
+            var catalogMiraklUnauthorizedMessage = "${message(code: 'catalog.mirakl.unauthorized.message')}";
+            var catalogMiraklReportTrackingLabel = "${message(code: 'catalog.mirakl.report.tracking.label')}";
+            var catalogMiraklReportTimeLabel = "${message(code: 'catalog.mirakl.report.time.label')}";
+            var catalogMiraklReportStatusLabel = "${message(code: 'catalog.mirakl.report.status.label')}";
+            var catalogMiraklReportTypeLabel = "${message(code: 'catalog.mirakl.report.type.label')}";
+            var catalogMiraklReportSuccessLabel = "${message(code: 'catalog.mirakl.report.success.label')}";
+            var catalogMiraklReportErrorLabel = "${message(code: 'catalog.mirakl.report.error.label')}";
+            var catalogMiraklReportStatusProductsLabel = "${message(code: 'catalog.mirakl.report.status.products.label')}";
+            var catalogMiraklReportStatusProductsSyncLabel = "${message(code: 'catalog.mirakl.report.status.productsSync.label')}";
+            var catalogMiraklReportStatusOffersLabel = "${message(code: 'catalog.mirakl.report.status.offers.label')}";
 
             //-----CATALOG PRODUCTS----//
             var catalogProductsSearchPageUrl = "${resource(dir: 'partner', file: '_catalogProducts.gsp')}";
@@ -717,6 +730,8 @@
 <div id="catalogCreateDialog"></div>
 
 <div id="catalogDownloadDialog"></div>
+
+<div id="catalogMarketplaceErrorReportDialog"></div>
 
 <div id="categoryCreateDialog"></div>
 

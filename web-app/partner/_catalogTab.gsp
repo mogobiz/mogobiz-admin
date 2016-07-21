@@ -8,11 +8,16 @@
 					<g:message locale="${lang}" code="tabs.general.label" />
 				</a>
 			</li>
-			<li>
-				<a id="catalogTranslationTab">
-					<g:message locale="${lang}" code="tabs.translation.label" />
-				</a>
-			</li>
+            <li>
+                <a id="catalogMarketplaceTab">
+                    <g:message locale="${lang}" code="tabs.marketplace.label" />
+                </a>
+            </li>
+            <li>
+                <a id="catalogTranslationTab">
+                    <g:message locale="${lang}" code="tabs.translation.label" />
+                </a>
+            </li>
 <store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
             <li>
                 <a id="catalogSecurityTab">
@@ -109,14 +114,43 @@
         <div id="catalogLastPublicationStatus"></div>
 		<div class="spacer"></div>
 	</div>
-	<div id="catalogTranslationDiv">
-		<div style="padding: 10px;">
-			<a id="catalogTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
-		</div>
-		<div id="catalogTranslationGridDiv">
-			<div id="catalogTranslationGrid" style="height: 174px;"></div>
-		</div>
-	</div>
+    <div id="catalogMarketplaceDiv">
+        <div id="catalogMiraklPublicationDiv">
+            <div class="newline">
+                <div class="catalog-medium">
+                    <label for="catalogListMiraklEnv"><g:message locale="${lang}" code="catalog.mirakl.label"/></label>
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="catalog-medium">
+                    <select id="catalogListMiraklEnv"></select>
+                </div>
+                <div class="catalog-xlarge">
+                    <button type="submit" id="catalogMarketplacePublishBtn" class="fk_ok_btn" style="float: none;"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>
+                    <button type="submit" id="catalogMarketplaceRefreshBtn" class="fk_ok_btn" style="float: none;"><g:message locale="${lang}" code="catalog.refreshBtn.label" /></button>
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div style="padding: 10px;">
+            <span class="catalog-reports-title"><g:message locale="${lang}" code="catalog.report.title.label" /></span><a id="catalogMarketplaceRefreshReports" class="catalog-refresh-catalog"></a>
+        </div>
+        <div id="catalogMarketplaceReportsGridDiv">
+            <div id="catalogMarketplaceReportsGrid" style="height: 174px;"></div>
+        </div>
+        <div id="catalogMarketplaceReportsPaginationDiv">
+            <div id="catalogMarketplaceReportsPagination"></div>
+        </div>
+    </div>
+    <div id="catalogTranslationDiv">
+        <div style="padding: 10px;">
+            <a id="catalogTranslationAddLink"><g:message locale="${lang}" code="translation.add.label" /></a>
+        </div>
+        <div id="catalogTranslationGridDiv">
+            <div id="catalogTranslationGrid" style="height: 174px;"></div>
+        </div>
+    </div>
     <div id="catalogSecurityDiv">
         <div>
             <label for="catalogSecurityUsers"><g:message locale="${lang}" code="security.users.label" /></label>

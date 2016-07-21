@@ -4,7 +4,7 @@
 <g:if test="${categories}">
 	<g:each in="${categories}" var="category">
 <shiro:hasPermission permission="${ProfileUtils.computePermission(PermissionType.UPDATE_STORE_CATEGORY_WITHIN_CATALOG, [category.company.id as String, category.catalog.id as String, category.id as String].toArray(new String[3]))}">
-		<li id="categoryTreeNode-${category.id}" value="${category.id}" pos="${category.position }" hasAccess="true">
+		<li id="categoryTreeNode-${category.id}" value="${category.id}" pos="${category.position }">
 			<a href="javascript:void(0)">${category.name}</a>
 			<ul id="categoryTreeNode-${category.id}-Childs">
 				<li></li>
@@ -12,8 +12,8 @@
 		</li>
 </shiro:hasPermission>
 <shiro:lacksPermission permission="${ProfileUtils.computePermission(PermissionType.UPDATE_STORE_CATEGORY_WITHIN_CATALOG, [category.company.id as String, category.catalog.id as String, category.id as String].toArray(new String[3]))}">
-    <li id="categoryTreeNode-${category.id}" value="${category.id}" pos="${category.position }" hasAccess="false">
-        <a href="javascript:void(0)">${category.name}</a>
+    <li id="categoryTreeNode-${category.id}" value="${category.id}" pos="${category.position }">
+        <span>${category.name}</span>
         <ul id="categoryTreeNode-${category.id}-Childs">
             <li></li>
         </ul>
@@ -24,7 +24,7 @@
 
 <g:if test="${category}">
 <shiro:hasPermission permission="${ProfileUtils.computePermission(PermissionType.UPDATE_STORE_CATEGORY_WITHIN_CATALOG, [category.company.id as String, category.catalog.id as String, category.id as String].toArray(new String[3]))}">
-	<li id="categoryTreeNode-${category.id}" value="${category.id}" hasAccess="true">
+	<li id="categoryTreeNode-${category.id}" value="${category.id}">
 		<a href="javascript:void(0)">${category.name}</a>
 		<ul id="categoryTreeNode-${category.id}-Childs">
 			<li></li>
@@ -32,8 +32,8 @@
 	</li>
 </shiro:hasPermission>
 <shiro:lacksPermission permission="${ProfileUtils.computePermission(PermissionType.UPDATE_STORE_CATEGORY_WITHIN_CATALOG, [category.company.id as String, category.catalog.id as String, category.id as String].toArray(new String[3]))}">
-    <li id="categoryTreeNode-${category.id}" value="${category.id}" hasAccess="false">
-        <a href="javascript:void(0)">${category.name}</a>
+    <li id="categoryTreeNode-${category.id}" value="${category.id}">
+        <span>${category.name}</span>
         <ul id="categoryTreeNode-${category.id}-Childs">
             <li></li>
         </ul>
