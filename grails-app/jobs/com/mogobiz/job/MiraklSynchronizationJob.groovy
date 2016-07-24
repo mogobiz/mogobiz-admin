@@ -12,7 +12,7 @@ class MiraklSynchronizationJob {
     MiraklService miraklService
 
     static triggers = {
-        cron name:'MiraklStatusJobTrigger', startDelay:0, cronExpression: '0 * * * * ?'
+        cron name:'MiraklStatusJobTrigger', startDelay:0, cronExpression: '0 0/5 * * * ?'
     }
 
     def execute(){
