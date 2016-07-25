@@ -992,15 +992,44 @@ function catalogInitMarketplaceFields(){
 function catalogInitMarketplaceControls(){
     if(!catalogSelectedReadOnly) {
         $("#catalogListMiraklEnv").bind("multiselectclick", function (event, ui) {
-            setTimeout(function(){
+            if(ui.value){
+                $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+            }
+            else {
+                $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {
+                    catalogMarketplacePublish();
+                });
+                $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {
+                    catalogMarketplaceRefresh();
+                });
+                $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {
+                    catalogMarketplaceGetAllReports(0);
+                });
+            }
+            setTimeout(function () {
                 catalogMarketplaceResetRunningInterval();
             }, 100);
         });
     }
-    $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {catalogMarketplacePublish();});
-    $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {catalogMarketplaceRefresh();});
-    $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {catalogMarketplaceGetAllReports(0);});
-    catalogMarketplaceGetAllReports(0);
+    if($("#catalogListMiraklEnv").val() == null || $("#catalogListMiraklEnv").val() == ""){
+        $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+        $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+        $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+    }
+    else {
+        $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {
+            catalogMarketplacePublish();
+        });
+        $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {
+            catalogMarketplaceRefresh();
+        });
+        $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {
+            catalogMarketplaceGetAllReports(0);
+        });
+        catalogMarketplaceGetAllReports(0);
+    }
 }
 
 function catalogMarketplaceResetRunningInterval() {

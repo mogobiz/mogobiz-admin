@@ -383,8 +383,8 @@ function catalogGeneralInitControls() {
 //        if (catalogValidateForm())catalogUpdate();
 //    });
     /*$("#catalogSocial").click(function () {
-        if (catalogValidateForm())catalogUpdate();
-    });*/
+     if (catalogValidateForm())catalogUpdate();
+     });*/
     $("#catalogPublishBtn").click(function () {
         catalogPublish();
     });
@@ -397,7 +397,7 @@ function catalogGeneralInitFields(catalog) {
     $("#catalogDescription").val(catalog.description);
     $("#catalogActivationDate").val(catalog.activationDate.substring(0, 10));
     /*if (catalog.social)
-        $("#catalogSocial").prop("checked", true);*/
+     $("#catalogSocial").prop("checked", true);*/
 
 //    $("#catalogChannels").multiselect("uncheckAll");
 //    $("#catalogChannels").multiselect("refresh");
@@ -651,7 +651,7 @@ function catalogImport() {
 
 function catalogCheckImport(catalogId){
     $.ajax({
-    url: reportImportCatalogUrl ,
+        url: reportImportCatalogUrl ,
         type: "GET",
         data: "",
         cache: false,
@@ -789,7 +789,7 @@ function catalogCheckEsEnvRunning() {
 
 function catalogGetEsEnvPreviousIndices(){
     $.ajax({
-         url: companyShowPublishingPreviousIndicesUrl,
+        url: companyShowPublishingPreviousIndicesUrl,
         type: "GET",
         data: "envId=" + $("#catalogListPublication").val() + "&format=json",
         cache: false,
@@ -992,15 +992,44 @@ function catalogInitMarketplaceFields(){
 function catalogInitMarketplaceControls(){
     if(!catalogSelectedReadOnly) {
         $("#catalogListMiraklEnv").bind("multiselectclick", function (event, ui) {
-            setTimeout(function(){
+            if(ui.value){
+                $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+            }
+            else {
+                $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {
+                    catalogMarketplacePublish();
+                });
+                $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {
+                    catalogMarketplaceRefresh();
+                });
+                $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {
+                    catalogMarketplaceGetAllReports(0);
+                });
+            }
+            setTimeout(function () {
                 catalogMarketplaceResetRunningInterval();
             }, 100);
         });
     }
-    $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {catalogMarketplacePublish();});
-    $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {catalogMarketplaceRefresh();});
-    $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {catalogMarketplaceGetAllReports(0);});
-    catalogMarketplaceGetAllReports(0);
+    if($("#catalogListMiraklEnv").val() == null || $("#catalogListMiraklEnv").val() == ""){
+        $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+        $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+        $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+    }
+    else {
+        $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {
+            catalogMarketplacePublish();
+        });
+        $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {
+            catalogMarketplaceRefresh();
+        });
+        $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {
+            catalogMarketplaceGetAllReports(0);
+        });
+        catalogMarketplaceGetAllReports(0);
+    }
 }
 
 function catalogMarketplaceResetRunningInterval() {
