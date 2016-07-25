@@ -398,7 +398,7 @@ div.createCompany select {
     overflow: visible;
 }
 
-#publishingGridDiv, #companyPublishingCacheURLGridDiv, #miraklGridDiv{
+#publishingGridDiv, #companyPublishingCacheURLGridDiv, #miraklGridDiv, #companyMiraklShopIdsGridDiv{
     border: 1px solid #CCCCCC;
     border-top: 0px;
 }

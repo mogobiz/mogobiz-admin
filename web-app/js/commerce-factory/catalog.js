@@ -983,6 +983,8 @@ function catalogInitMarketplaceFields(){
     if(! tabVisible)
         $("#catalogMarketplaceDiv").show();
     catalogMarketplaceReportsGrid = new Slick.Grid($("#catalogMarketplaceReportsGrid"), [], gridColumns, gridOptions);
+    catalogMarketplaceReportsGrid.setSelectionModel(new Slick.RowSelectionModel());
+    catalogMarketplaceReportsGrid.invalidate();
     if(! tabVisible)
         $("#catalogMarketplaceDiv").hide();
 }
@@ -1136,10 +1138,10 @@ function catalogMarketplaceGetAllReports(offset){
             catalogMarketplaceReportsGrid.setData(gridData);
             catalogMarketplaceReportsGrid.invalidate();
 
+            var tabVisible = $("#catalogMarketplaceDiv").is(":visible");
+            if(! tabVisible)
+                $("#catalogMarketplaceDiv").show();
             if(response.totalCount > 0) {
-                var tabVisible = $("#catalogMarketplaceDiv").is(":visible");
-                if(! tabVisible)
-                    $("#catalogMarketplaceDiv").show();
                 $("#catalogMarketplaceReportsPagination").paginate({
                     count: response.pageCount,
                     start: response.pageOffset + 1,
@@ -1160,11 +1162,14 @@ function catalogMarketplaceGetAllReports(offset){
                 });
                 var margin = $("#catalogMarketplaceReportsPagination").parent().parent().width() - $("#catalogMarketplaceReportsPagination .jPag-control-back").width() - $("#catalogMarketplaceReportsPagination .jPag-control-center").width() - $("#catalogMarketplaceReportsPagination .jPag-control-front").width() - 7;
                 $("#catalogMarketplaceReportsPagination").css("margin-left", margin);
-                if(! tabVisible)
-                    $("#catalogMarketplaceDiv").hide();
             }
+            else{
+                $("#catalogMarketplaceReportsPagination").empty();
+            }
+            if(! tabVisible)
+                $("#catalogMarketplaceDiv").hide();
         },
-        error: function (response, status) {console.log(response);
+        error: function (response, status) {
             if(response.status == 400){
                 jQuery.noticeAdd({
                     stayTime: 2000,

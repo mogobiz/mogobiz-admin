@@ -323,7 +323,7 @@
                     <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.frontKey.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
                 <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklShopIds"><g:message locale="${lang}" code="company.mirakl.shopIds.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyMiraklLocalPath"><g:message locale="${lang}" code="company.mirakl.localPath.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -332,7 +332,7 @@
                     <input type="text" id="companyMiraklFrontKey" />
                 </div>
                 <div class="companyMiraklDialog-large">
-                    <input type="text" id="companyMiraklShopIds"/>
+                    <input type="text" id="companyMiraklLocalPath"/>
                 </div>
             </div>
             <div class="spacer"></div>
@@ -359,7 +359,7 @@
                     <label for="companyMiraklUsername"><g:message locale="${lang}" code="company.mirakl.username.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
                 <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklLocalPath"><g:message locale="${lang}" code="company.mirakl.localPath.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyMiraklLocalPath"><g:message locale="${lang}" code="company.mirakl.connexionType.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
@@ -368,20 +368,8 @@
                     <input type="text" id="companyMiraklUsername" />
                 </div>
                 <div class="companyMiraklDialog-large">
-                    <input type="text" id="companyMiraklLocalPath" />
-                </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklConnexionType"><g:message locale="${lang}" code="company.mirakl.connexionType.label"></g:message>&nbsp;<sup>*</sup></label><br />
-                </div>
-            </div>
-            <div class="spacer-small"></div>
-            <div class="newline">
-                <div class="companyMiraklDialog-large">
                     <select id="companyMiraklConnexionType" multiple="multiple">
-                        <option value="password"><g:message locale="${lang}" code="company.mirakl.passwordOption.label"></g:message></option>
+                        <option value="password" selected="true"><g:message locale="${lang}" code="company.mirakl.passwordOption.label"></g:message></option>
                         <option value="ssh"><g:message locale="${lang}" code="company.mirakl.sshOption.label"></g:message></option>
                     </select>
                 </div>
@@ -417,6 +405,21 @@
                     <div class="companyMiraklDialog-large">
                         <input type="text" id="companyMiraklPassphrase" />
                     </div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-full">
+                    <label><g:message locale="${lang}" code="company.mirakl.shopIds.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div id="companyMiraklShopIdsGridDiv">
+                    <div id="companyMiraklShopIdsGrid" style="height: 174px;"></div>
+                </div>
+                <div id="companyMiraklShopIdsPaginationDiv">
+                    <div id="companyMiraklShopIdsPagination"></div>
                 </div>
             </div>
             <div class="spacer"></div>

@@ -1,5 +1,8 @@
 var companyMiraklGrid = null;
 var companyMiraklShowSecurity;
+var companyMiraklShopIds;
+var companyMiraklShopIdsGrid;
+var companyMiraklShopIdsPageSize = 20;
 
 function companyMiraklDrawAll(compId){
     companyMiraklGrid = null;
@@ -122,11 +125,11 @@ function companyMiraklPageSetup(htmlresponse, companyId, miraklId, isCreate){
             title : companyMiraklTitleLabel,
             modal : true,
             resizable : false,
-            width : "auto",
+            width : "520",
             height : "auto",
             open : function(event) {
-                companyMiraklPageInitControls(isCreate);
                 companyMiraklPageInitFields(miraklId, isCreate);
+                companyMiraklPageInitControls(isCreate);
             },
             buttons : {
                 deleteLabel : function() {
@@ -198,8 +201,11 @@ function companyMiraklPageInitControls(isCreate) {
         $("#companyMiraklOperatorForm #companyMiraklFrontKey").focus();
 
     });
-    $("#companyMiraklSSHDiv").hide();
-    $("#companyMiraklPasswordDiv").hide();
+    $("#companyMiraklUrl, #companyMiraklFrontKey").unbind().change(function(){
+        if($("#companyMiraklUrl").val() != "" && $("#companyMiraklUrl")[0].checkValidity() && $("#companyMiraklFrontKey").val() != ""){
+            companyMiraklGetAllShopsId(0);
+        }
+    });
     $("#companyMiraklConnexionType").multiselect({
         header: false,
         multiple: false,
@@ -217,6 +223,7 @@ function companyMiraklPageInitControls(isCreate) {
             $("#companyMiraklSSHDiv").show();
         }
     });
+    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
     if (isCreate) {
         $("#companyMiraklOperatorTab, #companyMiraklSecurityTab").addClass("disabled");
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
@@ -245,6 +252,8 @@ function companyMiraklPageInitFields(miraklId, isCreate){
     $("#companyMiraklManual").prop("checked", false);
     $("#companyMiraklOperator").prop("checked", false);
     companyMiraklPageInitCronFields();
+    companyMiraklPageInitShopIdsGrid();
+    companyMiraklShopIds = "";
 
     if (!isCreate){
         var mirakl = null;
@@ -273,32 +282,24 @@ function companyMiraklPageInitFields(miraklId, isCreate){
                 $("#companyMiraklCron").show();
                 companyMiraklResolveCron(mirakl.cronExpr);
             }
-            console.log(mirakl.operator);
             if(mirakl.operator) {
                 $("#companyMiraklOperator").prop("checked", true);
                 $("#companyMiraklFrontKey").val(mirakl.frontKey);
-                $("#companyMiraklshopIds").val(mirakl.shopIds);
                 $("#companyMiraklLocalPath").val(mirakl.localPath);
                 $("#companyMiraklRemoteHost").val(mirakl.remoteHost);
                 $("#companyMiraklRemotePath").val(mirakl.remotePath);
                 $("#companyMiraklUsername").val(mirakl.username);
-                console.log("mirakl.keyPath = " + mirakl.keyPath);
-                console.log("mirakl.password = " + mirakl.password);
                 if(mirakl.keyPath != "" && mirakl.keyPath != null){
                     $("#companyMiraklKeyPath").val(mirakl.keyPath);
                     $("#companyMiraklPassphrase").val(mirakl.passPhrase);
-                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyMiraklConnexionType']").each(function () {
-                        if (this.value == "ssh")
-                            this.click();
-                    });
+                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='ssh']").click();
                 }
                 if(mirakl.password != "" && mirakl.password != null){
                     $("#companyMiraklPassword").val(mirakl.password);
-                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyMiraklConnexionType']").each(function () {
-                        if (this.value == "password")
-                            this.click();
-                    });
+                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
                 }
+                companyMiraklShopIds = mirakl.shopIds;
+                companyMiraklGetAllShopsId(0);
             }
             else
                 $("#companyMiraklOperatorTab").addClass("disabled");
@@ -306,6 +307,81 @@ function companyMiraklPageInitFields(miraklId, isCreate){
                 securityGetAllUsers(mirakl.companyId, "companyMiraklSecurityUsers", "publishCatalogs", [mirakl.companyId, data[i].miraklId]);
         }
     }
+}
+
+function companyMiraklPageInitShopIdsGrid(){
+    var gridColumns = [{
+        id : "id",
+        name : "",
+        field : "id",
+        width : 10,
+        formatter : companyMiraklInitShopIdsCeckboxFormatter,
+        cssClass : "cell-centered"
+    },{
+        id : "shopId",
+        name : catalogMiraklReportTrackingLabel,
+        field : "shopId",
+        width : 30,
+        cssClass : "cell-title"
+    },{
+        id : "name",
+        name : companyMiraklNameLabel,
+        field : "name",
+        width : 30,
+        cssClass : "cell-title"
+    },{
+        id : "state",
+        name : companyMiraklStateLabel,
+        field : "state",
+        width : 30,
+        cssClass : "cell-title"
+    }];
+
+    var gridOptions = {
+        editable : false,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : false,
+        enableColumnReorder : false,
+        rowHeight : 25
+    };
+
+    var tabVisible = $("#companyMiraklOperatorDiv").is(":visible");
+    if(! tabVisible)
+        $("#companyMiraklOperatorDiv").show();
+    companyMiraklShopIdsGrid = new Slick.Grid($("#companyMiraklShopIdsGrid"), [], gridColumns, gridOptions);
+    companyMiraklShopIdsGrid.setSelectionModel(new Slick.RowSelectionModel());
+    companyMiraklShopIdsGrid.invalidate();
+    if(! tabVisible)
+        $("#companyMiraklOperatorDiv").hide();
+}
+
+function companyMiraklInitShopIdsCeckboxFormatter(row, cell, value, columnDef, dataContext){
+    var checked = companyMiraklShopIds.indexOf(dataContext.shopId) >= 0;
+    var checkBox = "<input type='checkbox' style='margin-top:4px;' onclick='companyMiraklAddRemoveShopIds(this, \"" + dataContext.shopId +  "\")'";
+    checkBox += (checked) ? "checked='checked'/>" : "/>";
+    return checkBox;
+}
+
+function companyMiraklAddRemoveShopIds(checkbox, shopId){
+    if(checkbox.checked){
+        companyMiraklShopIds += companyMiraklShopIds != "" ? "," : "";
+        companyMiraklShopIds += shopId;
+    }
+    else{
+        var tab = companyMiraklShopIds.split(",");
+        var tempShopIds = "";
+        for(var i=0; i < tab.length; i++){
+            if(tab[i] != shopId){
+                tempShopIds += tempShopIds != "" ? "," : "";
+                tempShopIds += tab[i];
+            }
+        }
+        companyMiraklShopIds = tempShopIds;
+    }
+    console.log(companyMiraklShopIds);
+    companyMiraklShopIdsGrid.invalidate();
 }
 
 function companyMiraklValidateForm(isCreate){
@@ -329,17 +405,14 @@ function companyMiraklValidateForm(isCreate){
         return false;
     }
     if($("#companyMiraklOperator").prop("checked") &&(
-            $("#companyMiraklFrontKey").val() == "" || $("#companyMiraklShopIds").val() == "" || $("#companyMiraklLocalPath").val() == "" ||
-            $("#companyMiraklRemoteHost").val() == "" ||$("#companyMiraklRemotePath").val() == "" || $("#companyMiraklUsername").val() == "" ||
-            $("#companyMiraklConnexionType").val() == "" || $("#companyMiraklConnexionType").val() == null ||
-            ($("#companyMiraklConnexionType").val() == "password" && $("#companyMiraklPassword").val() == "") ||
-            ($("#companyMiraklConnexionType").val() == "ssh" && $("#companyMiraklKeyPath").val() == "")
+        $("#companyMiraklFrontKey").val() == "" || $("#companyMiraklLocalPath").val() == "" ||
+        $("#companyMiraklRemoteHost").val() == "" ||$("#companyMiraklRemotePath").val() == "" || $("#companyMiraklUsername").val() == "" ||
+        ($("#companyMiraklConnexionType").val() == "password" && $("#companyMiraklPassword").val() == "") ||
+        ($("#companyMiraklConnexionType").val() == "ssh" && $("#companyMiraklKeyPath").val() == "")
         )){
         $("#companyMiraklOperatorTab").trigger("click");
         if($("#companyMiraklFrontKey").val() == "")
             $("#companyMiraklOperatorForm #companyMiraklFrontKey").focus();
-        if($("#companyMiraklShopIds").val() == "")
-            $("#companyMiraklOperatorForm #companyMiraklShopIds").focus();
         else if($("#companyMiraklLocalPath").val() == "")
             $("#companyMiraklOperatorForm #companyMiraklLocalPath").focus();
         else if($("#companyMiraklRemoteHost").val() == "")
@@ -364,6 +437,7 @@ function companyMiraklValidateForm(isCreate){
     for (var i = 0; i < data.length; i++) {
         if ((isCreate && data[i].name == $("#companyMiraklName").val().trim())
             || (!isCreate  && data[i].name == $("#companyMiraklName").val().trim() && data[i].miraklId != $("#companyMiraklId").val())){
+            $("#companyMiraklGeneralTab").trigger("click");
             $("#companyMiraklForm #companyMiraklName").focus();
             jQuery.noticeAdd({
                 stayTime : 2000,
@@ -375,10 +449,21 @@ function companyMiraklValidateForm(isCreate){
         }
     }
     if (!$("#companyMiraklUrl")[0].checkValidity()) {
+        $("#companyMiraklGeneralTab").trigger("click");
         $("#companyMiraklForm #companyMiraklUrl").focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : companyMiraklUrlErrorLabel,
+            stay : false,
+            type : 'error'
+        });
+        return false;
+    }
+    if($("#companyMiraklOperator").prop("checked") && companyMiraklShopIds == ""){
+        $("#companyMiraklOperatorTab").trigger("click");
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : companyMiraklShopIdsErrorLabel,
             stay : false,
             type : 'error'
         });
@@ -492,7 +577,7 @@ function companyMiraklCreateEnv(companyId){
     dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.operator=" + $("#companyMiraklOperator").is(":checked");
     if($("#companyMiraklOperator").is(":checked")){
         dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val());
-        dataToSend += "&miraklenv.shopIds=" + encodeURIComponent($("#companyMiraklShopIds").val());
+        dataToSend += "&miraklenv.shopIds=" + companyMiraklShopIds;
         dataToSend += "&miraklenv.localPath=" + encodeURIComponent($("#companyMiraklLocalPath").val());
         dataToSend += "&miraklenv.remoteHost=" + encodeURIComponent($("#companyMiraklRemoteHost").val());
         dataToSend += "&miraklenv.remotePath=" + encodeURIComponent($("#companyMiraklRemotePath").val());
@@ -543,7 +628,7 @@ function companyMiraklUpdateEnv(companyId){
     dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.operator=" + $("#companyMiraklOperator").is(":checked");
     if($("#companyMiraklOperator").is(":checked")){
         dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val());
-        dataToSend += "&miraklenv.shopIds=" + encodeURIComponent($("#companyMiraklShopIds").val());
+        dataToSend += "&miraklenv.shopIds=" + companyMiraklShopIds;
         dataToSend += "&miraklenv.localPath=" + encodeURIComponent($("#companyMiraklLocalPath").val());
         dataToSend += "&miraklenv.remoteHost=" + encodeURIComponent($("#companyMiraklRemoteHost").val());
         dataToSend += "&miraklenv.remotePath=" + encodeURIComponent($("#companyMiraklRemotePath").val());
@@ -557,6 +642,10 @@ function companyMiraklUpdateEnv(companyId){
             dataToSend += "&miraklenv.keyPath=" + encodeURIComponent($("#companyMiraklKeyPath").val());
             dataToSend += "&miraklenv.passPhrase=" + encodeURIComponent($("#companyMiraklPassphrase").val());
         }
+    }
+    else{
+        dataToSend += "&miraklenv.frontKey=&miraklenv.shopIds=&miraklenv.localPath=&miraklenv.remoteHost=&miraklenv.remotePath=";
+        dataToSend += "&miraklenv.username=&miraklenv.keyPath=" + "&miraklenv.passPhrase=&miraklenv.password=";
     }
     dataToSend += "&miraklenv.running=false&format=json";
     $.ajax({
@@ -598,6 +687,84 @@ function companyMiraklDeleteEnv(companyId){
             companyMiraklDrawAll(companyId);
         },
         error : function(response, status) {}
+    });
+}
+
+function companyMiraklGetAllShopsId(offset){
+    var dataToSend = "url=" + $("#companyMiraklUrl").val() + "&frontKey=" + $("#companyMiraklFrontKey").val();
+    dataToSend += "&pageOffset=" + offset + "&pageSize=" + companyMiraklShopIdsPageSize + "&format=json";
+    $.ajax({
+        url : companyDeleteMiraklUrl,
+        type : "GET",
+        data : dataToSend,
+        dataType : "json",
+        cache : false,
+        async : true,
+        success : function(response, status) {
+            if(!response.list || response.list.length == 0){
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: companyMiraklUrlFrontKeyErrorLabel,
+                    stay: false,
+                    type: "error"
+                });
+                return;
+            }
+            var gridData = [];
+            if(response.list){
+                for ( var i = 0; i < response.list.length; i++) {
+                    gridData[gridData.length] = {
+                        "id" : i,
+                        "shopId": response.list[i].id,
+                        "name": response.list[i].name,
+                        "state": response.list[i].state
+                    }
+                }
+            }
+            companyMiraklShopIdsGrid.setData(gridData);
+            companyMiraklShopIdsGrid.invalidate();
+
+            var tabVisible = $("#companyMiraklOperatorDiv").is(":visible");
+            if(! tabVisible)
+                $("#companyMiraklOperatorDiv").show();
+            if(response.totalCount > 0) {
+                $("#companyMiraklShopIdsPagination").paginate({
+                    count: response.pageCount,
+                    start: response.pageOffset + 1,
+                    display: 27,
+                    border: true,
+                    border_color: "#A6C9E2",
+                    text_color: "#075899",
+                    background_color: "#FFFFFF",
+                    border_hover_color: "#A6C9E2",
+                    text_hover_color: "#FFFFFF",
+                    background_hover_color: "#6D84B4",
+                    rotate: true,
+                    images: true,
+                    mouse: "press",
+                    onChange: function (page) {
+                        companyMiraklGetAllShopsId(page - 1)
+                    }
+                });
+                var margin = $("#companyMiraklShopIdsPagination").parent().parent().width() - $("#companyMiraklShopIdsPagination .jPag-control-back").width() - $("#companyMiraklShopIdsPagination .jPag-control-center").width() - $("#companyMiraklShopIdsPagination .jPag-control-front").width() - 7;
+                $("#companyMiraklShopIdsPagination").css("margin-left", margin);
+            }
+            else{
+                $("#companyMiraklShopIdsPagination").empty();
+            }
+            if(! tabVisible)
+                $("#companyMiraklOperatorDiv").hide();
+        },
+        error: function (response, status) {
+            if(response.status == 400){
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: companyMiraklUrlFrontKeyErrorLabel,
+                    stay: false,
+                    type: "error"
+                });
+            }
+        }
     });
 }
 

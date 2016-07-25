@@ -586,11 +586,15 @@
             var companyMiraklTitleLabel = "${message(code: 'company.mirakl.title.label')}";
             var companyMiraklNameLabel = "${message(code: 'company.mirakl.name.label')}";
             var companyMiraklUrlLabel = "${message(code: 'company.mirakl.url.label')}";
+            var companyMiraklShopIdLabel = "${message(code: 'company.mirakl.shopId.label')}";
+            var companyMiraklStateLabel = "${message(code: 'company.mirakl.state.label')}";
             var companyMiraklActiveLabel = "${message(code: 'company.mirakl.active.label')}";
             var companyMiraklManualLabel = "${message(code: 'company.mirakl.manual.label')}";
             var companyMiraklUniqueErrorLabel = "${message(code: 'company.mirakl.unique.label')}";
             var companyMiraklUrlErrorLabel = "${message(code: 'company.mirakl.invalidUrl.label')}";
             var companyMiraklCronErrorLabel = "${message(code: 'company.mirakl.invalidCron.label')}";
+            var companyMiraklUrlFrontKeyErrorLabel = "${message(code: 'company.mirakl.invalidUrlFrontKey.label')}";
+            var companyMiraklShopIdsErrorLabel = "${message(code: 'company.mirakl.shopIdsError.label')}";
 
             //IBeacon
             var companyShowIBeaconUrl = '${createLink(controller: 'ibeacon', action: 'list')}';
