@@ -8,6 +8,11 @@
                     <g:message locale="${lang}" code="tabs.general.label" />
                 </a>
             </li>
+            <li>
+                <a id="companyMiraklOperatorTab">
+                    <g:message locale="${lang}" code="tabs.operator.label" />
+                </a>
+            </li>
 <store:hasPermission permission="${PermissionType.ADMIN_STORE_USERS.key}">
             <li id="companyMiraklSecurityLi">
                 <a id="companyMiraklSecurityTab">
@@ -41,29 +46,17 @@
             <div class="spacer"></div>
             <div class="newline">
                 <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.frontKey.label"></g:message></label><br />
+                    <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.apiKey.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
                 <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklApiKey"><g:message locale="${lang}" code="company.mirakl.apiKey.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    <label for="companyMiraklApiKey"><g:message locale="${lang}" code="company.mirakl.shopId.label"></g:message>&nbsp;<sup>*</sup></label><br />
                 </div>
             </div>
             <div class="spacer-small"></div>
             <div class="newline">
-                <div class="companyMiraklDialog-large">
-                    <input type="text" id="companyMiraklFrontKey" />
-                </div>
                 <div class="companyMiraklDialog-large">
                     <input type="text" id="companyMiraklApiKey" />
                 </div>
-            </div>
-            <div class="spacer"></div>
-            <div class="newline">
-                <div class="companyMiraklDialog-large">
-                    <label for="companyMiraklShopId"><g:message locale="${lang}" code="company.mirakl.shopId.label"></g:message>&nbsp;<sup>*</sup></label><br />
-                </div>
-            </div>
-            <div class="spacer-small"></div>
-            <div class="newline">
                 <div class="companyMiraklDialog-large">
                     <input type="text" id="companyMiraklShopId" />
                 </div>
@@ -73,7 +66,9 @@
                 <input type="checkbox" id="companyMiraklActive"/>&nbsp;
                 <label for="companyMiraklActive"><g:message locale="${lang}" code="company.mirakl.active.label" /></label>&nbsp;&nbsp;
                 <input type="checkbox" id="companyMiraklManual"/>&nbsp;
-                <label for="companyMiraklManual"><g:message locale="${lang}" code="company.mirakl.manual.label" /></label>
+                <label for="companyMiraklManual"><g:message locale="${lang}" code="company.mirakl.manual.label" /></label>&nbsp;&nbsp;
+                <input type="checkbox" id="companyMiraklOperator"/>&nbsp;
+                <label for="companyMiraklOperator"><g:message locale="${lang}" code="company.mirakl.operator.label" /></label>
             </div>
             <div class="spacer"></div>
             <div class="newline">
@@ -315,6 +310,112 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+        </form>
+    </div>
+    <div id="companyMiraklOperatorDiv" style="padding-top: 7px;">
+        <form id="companyMiraklOperatorForm" onsubmit="return false;">
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklFrontKey"><g:message locale="${lang}" code="company.mirakl.frontKey.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklShopIds"><g:message locale="${lang}" code="company.mirakl.shopIds.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklFrontKey" />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklShopIds"/>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklRemoteHost"><g:message locale="${lang}" code="company.mirakl.remoteHost.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklRemotePath"><g:message locale="${lang}" code="company.mirakl.remotePath.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklRemoteHost" />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklRemotePath" />
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklUsername"><g:message locale="${lang}" code="company.mirakl.username.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklLocalPath"><g:message locale="${lang}" code="company.mirakl.localPath.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklUsername" />
+                </div>
+                <div class="companyMiraklDialog-large">
+                    <input type="text" id="companyMiraklLocalPath" />
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <label for="companyMiraklConnexionType"><g:message locale="${lang}" code="company.mirakl.connexionType.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                </div>
+            </div>
+            <div class="spacer-small"></div>
+            <div class="newline">
+                <div class="companyMiraklDialog-large">
+                    <select id="companyMiraklConnexionType" multiple="multiple">
+                        <option value="password"><g:message locale="${lang}" code="company.mirakl.passwordOption.label"></g:message></option>
+                        <option value="ssh"><g:message locale="${lang}" code="company.mirakl.sshOption.label"></g:message></option>
+                    </select>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div id="companyMiraklPasswordDiv">
+                <div class="newline">
+                    <div class="companyMiraklDialog-large">
+                        <label for="companyMiraklPassword"><g:message locale="${lang}" code="company.mirakl.password.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    </div>
+                </div>
+                <div class="spacer-small"></div>
+                <div class="newline">
+                    <div class="companyMiraklDialog-large">
+                        <input type="text" id="companyMiraklPassword" />
+                    </div>
+                </div>
+            </div>
+            <div id="companyMiraklSSHDiv">
+                <div class="newline">
+                    <div class="companyMiraklDialog-large">
+                        <label for="companyMiraklKeyPath"><g:message locale="${lang}" code="company.mirakl.keyPath.label"></g:message>&nbsp;<sup>*</sup></label><br />
+                    </div>
+                    <div class="companyMiraklDialog-large">
+                        <label for="companyMiraklPassphrase"><g:message locale="${lang}" code="company.mirakl.passphrase.label"></g:message></label><br />
+                    </div>
+                </div>
+                <div class="spacer-small"></div>
+                <div class="newline">
+                    <div class="companyMiraklDialog-large">
+                        <input type="text" id="companyMiraklKeyPath" />
+                    </div>
+                    <div class="companyMiraklDialog-large">
+                        <input type="text" id="companyMiraklPassphrase" />
                     </div>
                 </div>
             </div>

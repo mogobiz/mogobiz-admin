@@ -60,11 +60,20 @@ function companyMiraklDrawAll(compId){
                         "miraklId": miraklData[i].id,
                         "name": miraklData[i].name,
                         "url": miraklData[i].url,
-                        "frontKey": miraklData[i].frontKey,
                         "apiKey": miraklData[i].apiKey,
                         "shopId": miraklData[i].shopId,
                         "active": miraklData[i].active,
                         "cronExpr" : miraklData[i].cronExpr,
+                        "shopIds": miraklData[i].shopIds,
+                        "frontKey": miraklData[i].frontKey,
+                        "keyPath": miraklData[i].keyPath,
+                        "localPath": miraklData[i].localPath,
+                        "operator": miraklData[i].operator,
+                        "passPhrase": miraklData[i].passPhrase,
+                        "password": miraklData[i].password,
+                        "remoteHost": miraklData[i].remoteHost,
+                        "remotePath": miraklData[i].remotePath,
+                        "username": miraklData[i].username,
                         "companyId": compId
                     }
                 }
@@ -141,17 +150,75 @@ function companyMiraklPageSetup(htmlresponse, companyId, miraklId, isCreate){
 
 function companyMiraklPageInitControls(isCreate) {
     companyMiraklShowSecurity = ($("#companyMiraklSecurityTab").length > 0);
+    $("#companyMiraklTabs .tabs a").unbind();
+    $("#companyMiraklOperatorDiv").hide();
+    $("#companyMiraklGeneralTab").addClass("selected");
+    $("#companyMiraklOperatorTab").removeClass("selected");
     if(companyMiraklShowSecurity){
-        $("#companyMiraklTabs .tabs a").unbind();
         $("#companyMiraklSecurityTab").removeClass("disabled");
         $("#companyMiraklSecurityDiv").hide();
-        $("#companyMiraklGeneralTab").addClass("selected");
     }
     else{
-        $("#companyMiraklSecurityDiv, #companyMiraklTabs #ulTabs").hide().remove();
+        $("#companyMiraklSecurityDiv").hide().remove();
     }
+    $("#companyMiraklTabs .tabs a").unbind().click(function () {
+        var id = $(this).attr("id");
+        if(id == "companyMiraklGeneralTab"){
+            $("#companyMiraklTabs .tabs .selected").removeClass("selected");
+            $(this).addClass("selected");
+            $("#companyMiraklOperatorDiv").hide();
+            $("#companyMiraklSecurityDiv").hide();
+            $("#companyMiraklCreateDiv").show()
+        }
+        if(id == "companyMiraklOperatorTab" && $("#companyMiraklOperator").is(":checked")){
+            $("#companyMiraklTabs .tabs .selected").removeClass("selected");
+            $(this).addClass("selected");
+            $("#companyMiraklCreateDiv").hide();
+            $("#companyMiraklSecurityDiv").hide();
+            $("#companyMiraklOperatorDiv").show();
+        }
+        if(id == "companyMiraklSecurityTab" && !isCreate && companyMiraklShowSecurity){
+            $("#companyMiraklTabs .tabs .selected").removeClass("selected");
+            $(this).addClass("selected");
+            $("#companyMiraklCreateDiv").hide();
+            $("#companyMiraklOperatorDiv").hide();
+            $("#companyMiraklSecurityDiv").show();
+        }
+    });
+    $("#companyMiraklOperator").unbind().bind("click", function(){
+        if(!$(this).is(":checked")) {
+            $("#companyMiraklOperatorTab").addClass("disabled");
+            return;
+        }
+        $("#companyMiraklTabs .tabs .selected").removeClass("selected");
+        $("#companyMiraklOperatorTab").removeClass("disabled").addClass("selected");
+        $("#companyMiraklCreateDiv").hide();
+        $("#companyMiraklSecurityDiv").hide();
+        $("#companyMiraklOperatorDiv").show();
+        $("#companyMiraklOperatorForm #companyMiraklFrontKey").focus();
+
+    });
+    $("#companyMiraklSSHDiv").hide();
+    $("#companyMiraklPasswordDiv").hide();
+    $("#companyMiraklConnexionType").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        minWidth: 229,
+        height: 60,
+        selectedList: 1
+    }).bind("multiselectclick", function (event, ui) {
+        if(ui.value == "password"){
+            $("#companyMiraklSSHDiv").hide();
+            $("#companyMiraklPasswordDiv").show();
+        }
+        else{
+            $("#companyMiraklPasswordDiv").hide();
+            $("#companyMiraklSSHDiv").show();
+        }
+    });
     if (isCreate) {
-        $("#companyMiraklSecurityTab").addClass("disabled");
+        $("#companyMiraklOperatorTab, #companyMiraklSecurityTab").addClass("disabled");
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('updateLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
@@ -160,24 +227,6 @@ function companyMiraklPageInitControls(isCreate) {
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").html("<span class='ui-button-text'>" + createLabel + "</span>");
     }
     else {
-        if(companyMiraklShowSecurity) {
-            $("#companyMiraklTabs .tabs a").unbind().click(function () {
-                $("#companyMiraklTabs .tabs .selected").removeClass("selected");
-                $(this).addClass("selected");
-                switch ($(this).attr("id")) {
-                    case "companyMiraklGeneralTab":
-                        $("#companyMiraklSecurityDiv").hide();
-                        $("#companyMiraklCreateDiv").show();
-                        break;
-                    case "companyMiraklSecurityTab":
-                        $("#companyMiraklCreateDiv").hide();
-                        $("#companyMiraklSecurityDiv").show();
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
         $(".ui-dialog-buttonpane").find("button:contains('createLabel')").hide();
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").addClass("ui-delete-button");
         $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
@@ -194,6 +243,7 @@ function companyMiraklPageInitFields(miraklId, isCreate){
     $("#companyMiraklName, #companyMiraklUrl, #companyMiraklFrontKey, #companyMiraklApiKey").val("");
     $("#companyMiraklActive").prop("checked", false);
     $("#companyMiraklManual").prop("checked", false);
+    $("#companyMiraklOperator").prop("checked", false);
     companyMiraklPageInitCronFields();
 
     if (!isCreate){
@@ -208,7 +258,6 @@ function companyMiraklPageInitFields(miraklId, isCreate){
         if(mirakl){
             $("#companyMiraklName").val(mirakl.name);
             $("#companyMiraklUrl").val(mirakl.url);
-            $("#companyMiraklFrontKey").val(mirakl.frontKey);
             $("#companyMiraklApiKey").val(mirakl.apiKey);
             $("#companyMiraklShopId").val(mirakl.shopId);
             if(mirakl.active)
@@ -224,6 +273,35 @@ function companyMiraklPageInitFields(miraklId, isCreate){
                 $("#companyMiraklCron").show();
                 companyMiraklResolveCron(mirakl.cronExpr);
             }
+            console.log(mirakl.operator);
+            if(mirakl.operator) {
+                $("#companyMiraklOperator").prop("checked", true);
+                $("#companyMiraklFrontKey").val(mirakl.frontKey);
+                $("#companyMiraklshopIds").val(mirakl.shopIds);
+                $("#companyMiraklLocalPath").val(mirakl.localPath);
+                $("#companyMiraklRemoteHost").val(mirakl.remoteHost);
+                $("#companyMiraklRemotePath").val(mirakl.remotePath);
+                $("#companyMiraklUsername").val(mirakl.username);
+                console.log("mirakl.keyPath = " + mirakl.keyPath);
+                console.log("mirakl.password = " + mirakl.password);
+                if(mirakl.keyPath != "" && mirakl.keyPath != null){
+                    $("#companyMiraklKeyPath").val(mirakl.keyPath);
+                    $("#companyMiraklPassphrase").val(mirakl.passPhrase);
+                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyMiraklConnexionType']").each(function () {
+                        if (this.value == "ssh")
+                            this.click();
+                    });
+                }
+                if(mirakl.password != "" && mirakl.password != null){
+                    $("#companyMiraklPassword").val(mirakl.password);
+                    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[name='multiselect_companyMiraklConnexionType']").each(function () {
+                        if (this.value == "password")
+                            this.click();
+                    });
+                }
+            }
+            else
+                $("#companyMiraklOperatorTab").addClass("disabled");
             if(companyMiraklShowSecurity)
                 securityGetAllUsers(mirakl.companyId, "companyMiraklSecurityUsers", "publishCatalogs", [mirakl.companyId, data[i].miraklId]);
         }
@@ -233,6 +311,7 @@ function companyMiraklPageInitFields(miraklId, isCreate){
 function companyMiraklValidateForm(isCreate){
     if ($("#companyMiraklName").val() == "" || $("#companyMiraklUrl").val() == "" ||
         $("#companyMiraklApiKey").val() == "" || $("#companyMiraklShopId").val() == "") {
+        $("#companyMiraklGeneralTab").trigger("click");
         if($("#companyMiraklName").val() == "")
             $("#companyMiraklForm #companyMiraklName").focus();
         else if($("#companyMiraklUrl").val() == "")
@@ -241,6 +320,38 @@ function companyMiraklValidateForm(isCreate){
             $("#companyMiraklForm #companyMiraklApiKey").focus();
         else if($("#companyMiraklShopId").val() == "")
             $("#companyMiraklForm #companyMiraklShopId").focus();
+        jQuery.noticeAdd({
+            stayTime : 2000,
+            text : fieldsRequiredMessageLabel,
+            stay : false,
+            type : "error"
+        });
+        return false;
+    }
+    if($("#companyMiraklOperator").prop("checked") &&(
+            $("#companyMiraklFrontKey").val() == "" || $("#companyMiraklShopIds").val() == "" || $("#companyMiraklLocalPath").val() == "" ||
+            $("#companyMiraklRemoteHost").val() == "" ||$("#companyMiraklRemotePath").val() == "" || $("#companyMiraklUsername").val() == "" ||
+            $("#companyMiraklConnexionType").val() == "" || $("#companyMiraklConnexionType").val() == null ||
+            ($("#companyMiraklConnexionType").val() == "password" && $("#companyMiraklPassword").val() == "") ||
+            ($("#companyMiraklConnexionType").val() == "ssh" && $("#companyMiraklKeyPath").val() == "")
+        )){
+        $("#companyMiraklOperatorTab").trigger("click");
+        if($("#companyMiraklFrontKey").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklFrontKey").focus();
+        if($("#companyMiraklShopIds").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklShopIds").focus();
+        else if($("#companyMiraklLocalPath").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklLocalPath").focus();
+        else if($("#companyMiraklRemoteHost").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklRemoteHost").focus();
+        else if($("#companyMiraklRemotePath").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklRemotePath").focus();
+        else if($("#companyMiraklUsername").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklUsername").focus();
+        else if($("#companyMiraklConnexionType").val() == "password" && $("#companyMiraklPassword").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklPassword").focus();
+        else if($("#companyMiraklConnexionType").val() == "ssh" && $("#companyMiraklKeyPath").val() == "")
+            $("#companyMiraklOperatorForm #companyMiraklKeyPath").focus();
         jQuery.noticeAdd({
             stayTime : 2000,
             text : fieldsRequiredMessageLabel,
@@ -373,13 +484,30 @@ function companyMiraklValidateForm(isCreate){
 function companyMiraklCreateEnv(companyId){
     var url = ($("#companyMiraklUrl").val().trim() != "" && $("#companyMiraklUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyMiraklUrl").val().trim() : $("#companyMiraklUrl").val().trim();
     var dataToSend = "miraklenv.name=" + encodeURIComponent($("#companyMiraklName").val()) + "&miraklenv.url=" + encodeURIComponent(url);
-    dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val()) + "&miraklenv.apiKey=" + encodeURIComponent($("#companyMiraklApiKey").val());
-    dataToSend += "&miraklenv.shopId=" + encodeURIComponent($("#companyMiraklShopId").val());
+    dataToSend += "&miraklenv.apiKey=" + encodeURIComponent($("#companyMiraklApiKey").val()) + "&miraklenv.shopId=" + encodeURIComponent($("#companyMiraklShopId").val());
     if($("#companyMiraklManual").is(":checked"))
         dataToSend += "&miraklenv.cronExpr=\"\"";
     else
         dataToSend += "&miraklenv.cronExpr=" + companyMiraklGetCronExpr();
-    dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.running=false&format=json";
+    dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.operator=" + $("#companyMiraklOperator").is(":checked");
+    if($("#companyMiraklOperator").is(":checked")){
+        dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val());
+        dataToSend += "&miraklenv.shopIds=" + encodeURIComponent($("#companyMiraklShopIds").val());
+        dataToSend += "&miraklenv.localPath=" + encodeURIComponent($("#companyMiraklLocalPath").val());
+        dataToSend += "&miraklenv.remoteHost=" + encodeURIComponent($("#companyMiraklRemoteHost").val());
+        dataToSend += "&miraklenv.remotePath=" + encodeURIComponent($("#companyMiraklRemotePath").val());
+        dataToSend += "&miraklenv.username=" + encodeURIComponent($("#companyMiraklUsername").val());
+        if($("#companyMiraklConnexionType").val() == "password") {
+            dataToSend += "&miraklenv.password=" + encodeURIComponent($("#companyMiraklPassword").val());
+            dataToSend += "&miraklenv.keyPath=" + "&miraklenv.passPhrase=";
+        }
+        if($("#companyMiraklConnexionType").val() == "ssh") {
+            dataToSend += "&miraklenv.password=";
+            dataToSend += "&miraklenv.keyPath=" + encodeURIComponent($("#companyMiraklKeyPath").val());
+            dataToSend += "&miraklenv.passPhrase=" + encodeURIComponent($("#companyMiraklPassphrase").val());
+        }
+    }
+    dataToSend += "&miraklenv.running=false&format=json";
     $.ajax({
         url : companyCreateMiraklUrl,
         type : "POST",
@@ -407,13 +535,30 @@ function companyMiraklCreateEnv(companyId){
 function companyMiraklUpdateEnv(companyId){
     var url = ($("#companyMiraklUrl").val().trim() != "" && $("#companyMiraklUrl").val().indexOf("://") < 0 ) ? "http://" + $("#companyMiraklUrl").val().trim() : $("#companyMiraklUrl").val().trim();
     var dataToSend = "miraklenv.id=" + $("#companyMiraklId").val() + "&miraklenv.name=" + encodeURIComponent($("#companyMiraklName").val()) + "&miraklenv.url=" + encodeURIComponent(url);
-    dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val()) + "&miraklenv.apiKey=" + encodeURIComponent($("#companyMiraklApiKey").val());
-    dataToSend += "&miraklenv.shopId=" + encodeURIComponent($("#companyMiraklShopId").val());
+    dataToSend += "&miraklenv.apiKey=" + encodeURIComponent($("#companyMiraklApiKey").val()) + "&miraklenv.shopId=" + encodeURIComponent($("#companyMiraklShopId").val());
     if($("#companyMiraklManual").is(":checked"))
         dataToSend += "&miraklenv.cronExpr=\"\"";
     else
         dataToSend += "&miraklenv.cronExpr=" + companyMiraklGetCronExpr();
-    dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.running=false&format=json";
+    dataToSend += "&miraklenv.active=" + $("#companyMiraklActive").is(":checked") + "&miraklenv.operator=" + $("#companyMiraklOperator").is(":checked");
+    if($("#companyMiraklOperator").is(":checked")){
+        dataToSend += "&miraklenv.frontKey=" + encodeURIComponent($("#companyMiraklFrontKey").val());
+        dataToSend += "&miraklenv.shopIds=" + encodeURIComponent($("#companyMiraklShopIds").val());
+        dataToSend += "&miraklenv.localPath=" + encodeURIComponent($("#companyMiraklLocalPath").val());
+        dataToSend += "&miraklenv.remoteHost=" + encodeURIComponent($("#companyMiraklRemoteHost").val());
+        dataToSend += "&miraklenv.remotePath=" + encodeURIComponent($("#companyMiraklRemotePath").val());
+        dataToSend += "&miraklenv.username=" + encodeURIComponent($("#companyMiraklUsername").val());
+        if($("#companyMiraklConnexionType").val() == "password") {
+            dataToSend += "&miraklenv.password=" + encodeURIComponent($("#companyMiraklPassword").val());
+            dataToSend += "&miraklenv.keyPath=" + "&miraklenv.passPhrase=";
+        }
+        if($("#companyMiraklConnexionType").val() == "ssh") {
+            dataToSend += "&miraklenv.password=";
+            dataToSend += "&miraklenv.keyPath=" + encodeURIComponent($("#companyMiraklKeyPath").val());
+            dataToSend += "&miraklenv.passPhrase=" + encodeURIComponent($("#companyMiraklPassphrase").val());
+        }
+    }
+    dataToSend += "&miraklenv.running=false&format=json";
     $.ajax({
         url : companyUpdateMiraklUrl,
         type : "POST",
