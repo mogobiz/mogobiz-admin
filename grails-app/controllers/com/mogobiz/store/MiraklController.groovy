@@ -1,5 +1,6 @@
 package com.mogobiz.store
 
+import com.mogobiz.mirakl.client.domain.OutputShop
 import com.mogobiz.service.PagedList
 import com.mogobiz.store.cmd.PagedListCommand
 import com.mogobiz.store.domain.Catalog
@@ -151,4 +152,18 @@ class MiraklController {
         }
     }
 
+    def searchShops(String url, String frontKey, PagedListCommand cmd){
+        PagedList<OutputShop> pagedList = miraklService.searchShops(url, frontKey)
+        final page = ajaxResponseService.preparePage(pagedList.list, pagedList.totalCount, cmd) {OutputShop shop ->
+            def map = [:]
+            map << [id: shop.shopId]
+            map << [name: shop.shopName]
+            map << [state: shop.shopState.toString()]
+            map
+        }
+        withFormat {
+            xml { render page as XML }
+            json { render page as JSON }
+        }
+    }
 }
