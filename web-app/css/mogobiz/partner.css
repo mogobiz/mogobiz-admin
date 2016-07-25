@@ -312,6 +312,10 @@ a.catalog-refresh-catalog{
     background: url("../../images/refresh-icon.png") center center no-repeat;
 }
 
+a.catalog-refresh-catalog.disabled{
+    background: url("../../images/refresh-icon-gray.png") center center no-repeat;
+}
+
 a.catalog-report-budge, a.catalog-report-budge:hover{
     display: inline-block;
     width: 16px;
@@ -320,10 +324,6 @@ a.catalog-report-budge, a.catalog-report-budge:hover{
     color: #FFFFFF !important;
     border-radius: 8px;
     text-decoration: none;
-}
-
-a.catalog-refresh-catalog.disabled{
-    background: url("../../images/refresh-icon-gray.png") center center no-repeat;
 }
 
 #catalogMarketplaceReportsGrid {
