@@ -33,34 +33,38 @@ function categoryGeneralGetInfo() {
                 $("#categoryEditHide").prop("checked", true);
             }
             cleditor_description.updateFrame();
-            $("#categoryEditName").change(function(){
-                if(!$(this)[0].checkValidity()){
-                    jQuery.noticeAdd({
-                        stayTime : 2000,
-                        text : $(this)[0].validationMessage,
-                        stay : false,
-                        type : "error"
-                    });
-                    return false;
-                }
-                categoryGeneralUpdateInfo("category.name", $(this), $(this).val(), false);
-            }).keyup(function(){
-                if((/\\/).test($(this).val()))
-                    $(this)[0].setCustomValidity(fieldsInvalidMessageLabel);
-                else
-                    $(this)[0].setCustomValidity("");
-            });
-            $("#categoryEditExternalCode").change(function(){
-                categoryGeneralUpdateInfo("category.externalCode", $(this), $(this).val(), true);
-            });
             cleditor_description.change(function(){
                 cleditor_description.updateTextArea();
                 categoryGeneralUpdateInfo("category.description", $("#categoryEditDescription"), $("#categoryEditDescription").val(), true);
             });
-            $("#categoryEditHide").unbind().click(function(){
-                categoryGeneralUpdateInfo("category.hide", $(this), $(this).is(':checked'), false);
-            });
-
+            if(catalogSelectedReadOnly){
+                $("#categoryEditName, #categoryEditExternalCode, #categoryEditHide").unbind().attr("disabled", "disabled");
+            }
+            else {
+                $("#categoryEditName").removeAttr("disabled").unbind().change(function () {
+                    if (!$(this)[0].checkValidity()) {
+                        jQuery.noticeAdd({
+                            stayTime: 2000,
+                            text: $(this)[0].validationMessage,
+                            stay: false,
+                            type: "error"
+                        });
+                        return false;
+                    }
+                    categoryGeneralUpdateInfo("category.name", $(this), $(this).val(), false);
+                }).keyup(function () {
+                    if ((/\\/).test($(this).val()))
+                        $(this)[0].setCustomValidity(fieldsInvalidMessageLabel);
+                    else
+                        $(this)[0].setCustomValidity("");
+                });
+                $("#categoryEditExternalCode").removeAttr("disabled").unbind().change(function () {
+                    categoryGeneralUpdateInfo("category.externalCode", $(this), $(this).val(), true);
+                });
+                $("#categoryEditHide").removeAttr("disabled").unbind().click(function () {
+                    categoryGeneralUpdateInfo("category.hide", $(this), $(this).is(':checked'), false);
+                });
+            }
             categoryGeneralLoadIBeacons(json.ibeacon);
         }
     });
@@ -96,10 +100,16 @@ function categoryGeneralLoadIBeacons(iBeacon){
                     options += "<option " + ((iBeaconId == iBeacons[i].id) ? "selected " : "") + "value='" + iBeacons[i].id + "' style='" + style + "'>" + iBeacons[i].name + "</option>";
                 }
             }
-            $("#categoryEditIBeacon").empty().html("" + options).unbind().change(function(){
-                $(this).attr("style", $(this).find("option:selected").attr("style"));
-                categoryGeneralUpdateInfo("category.ibeaconId", $(this), $(this).val(), true);
-            });
+            $("#categoryEditIBeacon").empty().html("" + options).unbind();
+            if(catalogSelectedReadOnly){
+                $("#categoryEditIBeacon").attr("disabled", "disabled")
+            }
+            else {
+                $("#categoryEditIBeacon").removeAttr("disabled").change(function () {
+                    $(this).attr("style", $(this).find("option:selected").attr("style"));
+                    categoryGeneralUpdateInfo("category.ibeaconId", $(this), $(this).val(), true);
+                });
+            }
             $("#categoryEditIBeacon").attr("style", $("#categoryEditIBeacon").find("option:selected").attr("style"));
 
             categoryGeneralInfoLoaded = true;
