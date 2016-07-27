@@ -694,7 +694,7 @@ function companyMiraklGetAllShopsId(offset){
     var dataToSend = "url=" + $("#companyMiraklUrl").val() + "&frontKey=" + $("#companyMiraklFrontKey").val();
     dataToSend += "&pageOffset=" + offset + "&pageSize=" + companyMiraklShopIdsPageSize + "&format=json";
     $.ajax({
-        url : companyDeleteMiraklUrl,
+        url : companySearchShopsMiraklUrl,
         type : "GET",
         data : dataToSend,
         dataType : "json",

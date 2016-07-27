@@ -580,6 +580,7 @@
             var companyCreateMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'save')}';
             var companyUpdateMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'update')}';
             var companyDeleteMiraklUrl = '${createLink(controller: 'miraklEnv', action: 'delete')}';
+            var companySearchShopsMiraklUrl = '${createLink(controller: 'mirakl', action: 'searchShops')}';
 
             var companyMiraklPageUrl = "${resource(dir: 'admin', file: '_createCompanyMirakl.gsp')}";
 
