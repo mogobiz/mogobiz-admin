@@ -1,4 +1,5 @@
 var categoryGeneralInfoLoaded = false;
+var categorySelectedPublishable = false;
 function categoryGeneralGetInfo() {
     categoryGeneralInfoLoaded = false;
     var dataToSend = "format=json&category.id=" + categorySelectedId;
@@ -32,6 +33,10 @@ function categoryGeneralGetInfo() {
             if(json["hide"]){
                 $("#categoryEditHide").prop("checked", true);
             }
+            categorySelectedPublishable = json["publishable"] == true;
+            if(categorySelectedPublishable){
+                $("#categoryAddToMarketPlace").prop("checked", true);
+            }
             cleditor_description.updateFrame();
             cleditor_description.change(function(){
                 cleditor_description.updateTextArea();
@@ -39,8 +44,13 @@ function categoryGeneralGetInfo() {
             });
             if(catalogSelectedReadOnly){
                 $("#categoryEditName, #categoryEditExternalCode, #categoryEditHide").unbind().attr("disabled", "disabled");
+                $("#categoryAddToMarketPlace").removeAttr("disabled").unbind().click(function () {
+                    categorySelectedPublishable = $(this).is(':checked');
+                    categoryGeneralUpdateInfo("category.publishable", $(this), $(this).is(':checked'), false);
+                });
             }
             else {
+                $("#categoryAddToMarketPlace").unbind().attr("disabled", "disabled");
                 $("#categoryEditName").removeAttr("disabled").unbind().change(function () {
                     if (!$(this)[0].checkValidity()) {
                         jQuery.noticeAdd({

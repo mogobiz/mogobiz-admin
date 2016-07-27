@@ -16,6 +16,8 @@
 		border:1px solid #CCCCCC;
 		padding: 10px;
 		margin: 5px 0px 0px 0px;
+        overflow: visible;
+        display: none;
 	}
 	#tourismPricingTabs ul.tabs{
 		padding-top: 5px;
@@ -144,19 +146,26 @@
 				</div>
 			</div>
 			<div class="spacer"></div>
+            <div class="newline">
+                <div class="pricing-large">
+                    <label for="tourismPricingOptions"><g:message locale="${lang}" code="tourismPricing.options.label"/></label>
+                </div>
+            </div>
             <div class="spacer-small"></div>
             <div class="newline">
-                <input id="tourismPricingPrivate" type="checkbox" name="ticketType.xprivate" />
-                <label for="tourismPricingPrivate"><g:message locale="${lang}" code="tourismPricing.private.label"/></label>&nbsp;&nbsp;
-                <input id="tourismPricingStockUnlimited" type="checkbox" name="ticketType.stockunlimited">
-                <label for="tourismPricingStockUnlimited"><g:message locale="${lang}" code="pricing.globalstockunlimited.label"/></label>&nbsp;&nbsp;
-                <input id="tourismPricingStockOutSelling" type="checkbox" name="ticketType.stockoutselling">
-                <label for="tourismPricingStockOutSelling"><g:message locale="${lang}" code="pricing.globalstockoutselling.label"/></label>
+                <select id="tourismPricingOptions" multiple="multiple">
+                    <option value="private"><g:message locale="${lang}" code="tourismPricing.private.label"/></option>
+                    <option value="unlimited"><g:message locale="${lang}" code="pricing.globalstockunlimited.label"/></option>
+                    <option value="outselling"><g:message locale="${lang}" code="pricing.globalstockoutselling.label"/></option>
+                </select>&nbsp;&nbsp;
+                <input id="tourismPricingAddToMarketPlace" type="checkbox" name="ticketType.publishable" />
+                <label for="tourismPricingAddToMarketPlace"><g:message locale="${lang}" code="default.addToMarketPlace.label"/></label>&nbsp;&nbsp;
                 <span style="float: right; font-weight: bold;" id="tourismPricingNumberOfSales">
                     <span id="tourismPricingSold"></span>&nbsp;<g:message locale="${lang}" code="pricing.numberOfSales.label"/>,&nbsp;
                     <span id="tourismPricingRemaining"></span>&nbsp;<g:message locale="${lang}" code="pricing.remaining.label"/>
                 </span>
             </div>
+            <div class="spacer"></div>
 		</form>
 	</div>
     <div id="tourismPricingDownloadDiv">
@@ -180,6 +189,7 @@
             <iframe id="tourismPricingDownloadHiddenFrame" name="tourismPricingDownloadHiddenFrame" style="display: none"></iframe>
         </div>
         <div align="center" id="tourismPricingUploading" style="display:none"><g:message locale="${lang}" code="tourismPricing.uploadingResource.label" /></div>
+        <div class="spacer"></div>
     </div>
 	<div id="tourismPricingTranslationDiv" >
 		<div style="padding: 10px;">
@@ -188,5 +198,6 @@
 		<div id="tourismPricingTranslationGridDiv">
 			<div id="tourismPricingTranslationGrid" style="height: 185px;"></div>
 		</div>
+        <div class="spacer"></div>
 	</div>
 </div>

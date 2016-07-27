@@ -383,8 +383,8 @@ function catalogGeneralInitControls() {
 //        if (catalogValidateForm())catalogUpdate();
 //    });
     /*$("#catalogSocial").click(function () {
-     if (catalogValidateForm())catalogUpdate();
-     });*/
+        if (catalogValidateForm())catalogUpdate();
+    });*/
     $("#catalogPublishBtn").click(function () {
         catalogPublish();
     });
@@ -397,7 +397,7 @@ function catalogGeneralInitFields(catalog) {
     $("#catalogDescription").val(catalog.description);
     $("#catalogActivationDate").val(catalog.activationDate.substring(0, 10));
     /*if (catalog.social)
-     $("#catalogSocial").prop("checked", true);*/
+        $("#catalogSocial").prop("checked", true);*/
 
 //    $("#catalogChannels").multiselect("uncheckAll");
 //    $("#catalogChannels").multiselect("refresh");
@@ -651,7 +651,7 @@ function catalogImport() {
 
 function catalogCheckImport(catalogId){
     $.ajax({
-        url: reportImportCatalogUrl ,
+    url: reportImportCatalogUrl ,
         type: "GET",
         data: "",
         cache: false,
@@ -789,7 +789,7 @@ function catalogCheckEsEnvRunning() {
 
 function catalogGetEsEnvPreviousIndices(){
     $.ajax({
-        url: companyShowPublishingPreviousIndicesUrl,
+         url: companyShowPublishingPreviousIndicesUrl,
         type: "GET",
         data: "envId=" + $("#catalogListPublication").val() + "&format=json",
         cache: false,

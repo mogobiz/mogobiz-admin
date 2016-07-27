@@ -93,7 +93,9 @@
 				<div class="spacer"></div>
 				<div class="newline">
 					<input type="checkbox" id="categoryEditHide" />
-					<label for="categoryEditHide"><g:message locale="${lang}" code="category.tabs.general.hide.label"/></label>
+					<label for="categoryEditHide"><g:message locale="${lang}" code="category.tabs.general.hide.label"/></label>&nbsp;&nbsp;
+                    <input type="checkbox" id="categoryAddToMarketPlace" />
+                    <label for="categoryAddToMarketPlace"><g:message locale="${lang}" code="default.addToMarketPlace.label"/></label>
 				</div>
 				<div class="spacer"></div>
 			</form>

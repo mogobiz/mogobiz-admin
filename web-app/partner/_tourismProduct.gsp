@@ -152,7 +152,9 @@ function uploadAnotherFile() {
                     <div class="spacer"></div>
                     <div class="newline">
                         <input type="checkbox" id="tourismCalendarValidityPeriod" />
-                        <label for="tourismCalendarValidityPeriod"><g:message locale="${lang}" code="calendar.publication.active"/></label>
+                        <label for="tourismCalendarValidityPeriod"><g:message locale="${lang}" code="calendar.publication.active"/></label>&nbsp;&nbsp;
+                        <input type="checkbox" id="tourismProductAddToMarketPlace" />
+                        <label for="tourismProductAddToMarketPlace"><g:message locale="${lang}" code="default.addToMarketPlace.label"/></label>
                         <label style="float: right; font-weight: bold;margin-right: 26px;" id="productNbOfSales"><span></span>&nbsp;<g:message locale="${lang}" code="product.sales.label"/></label>
                     </div>
                 </div>
@@ -186,7 +188,7 @@ function uploadAnotherFile() {
 			<div id="tourismPricingLabelGlobalStock">
 				<g:message locale="${lang}" for="productTaxRate" code="pricing.taxRate.label" />:&nbsp;&nbsp;
 				<select id="productTaxRate" multiple="multiple"></select>&nbsp;&nbsp;
-				<input id="globalstockDisplay" type="checkbox" name="pricing.stockdisplay">&nbsp;<g:message locale="${lang}" code="pricing.stockdisplay.label" />
+				<input id="globalstockDisplay" type="checkbox" name="pricing.stockdisplay">&nbsp;<label for="globalstockDisplay"><g:message locale="${lang}" code="pricing.stockdisplay.label" /></label>
 			</div>
 			<div class="spacer"></div>
 			<div id="tourismPricingLabelAddText" style="padding-bottom: 10px;">

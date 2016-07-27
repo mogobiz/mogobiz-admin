@@ -1,6 +1,7 @@
 var companyAvailableTags = [];
 var firstTimeMap = true;
 var selectedProductCategoryId = null;
+var tourismProductPublishable = false;
 
 function productAutoUpdateField(productId, objId, objProperty, blankOK, checkValidity) {
     $(objId).unbind();
@@ -68,6 +69,7 @@ function productAttachEditForm(productId, fromPage) {
         success : function(response, status) {
             var product = response;
             selectedProductCategoryId = product.category.id;
+            tourismProductPublishable = product.publishable == true;
             tourismSuggestionsFirstVisit = true;
             tourismPropertiesFirstVisit = true;
 
@@ -194,6 +196,10 @@ function productAttachEditForm(productId, fromPage) {
             $('#productKeywords').val(product.keywords);
             $("#productAvailabilityDate").val(availabilityDate);
             $('#productDescription').val(product.description);
+            if(product.publishable)
+                $("#tourismProductAddToMarketPlace").prop("checked", true);
+            else
+                $("#tourismProductAddToMarketPlace").prop("checked", false);
 
 
             if(product.state.name == "INACTIVE")
@@ -274,6 +280,29 @@ function productAttachEditForm(productId, fromPage) {
                 var status = (($(this).is(':checked')) ? "ACTIVE" :"INACTIVE");
                 updateEventStatus(productId,status);
             });
+
+
+            $('#tourismProductAddToMarketPlace').unbind();
+            if(categorySelectedPublishable && catalogSelectedReadOnly) {
+                $('#tourismProductAddToMarketPlace').removeAttr("disabled").change(function () {
+                    var dataToSend = "product.id=" + productId + "&product.publishable=" + $(this).is(':checked') + "&format=json";
+                    $.ajax({
+                        url : updateProductUrl,
+                        type : "POST",
+                        noticeType : "PUT",
+                        data : dataToSend,
+                        dataType : "json",
+                        cache : false,
+                        async : true,
+                        success : function(response, status) {
+                            tourismProductPublishable = $('#tourismProductAddToMarketPlace').is(':checked');
+                        }
+                    });
+                });
+            }
+            else{
+                $('#tourismProductAddToMarketPlace').attr("disabled", "disabled");
+            }
 
 // Fill Pricing Tab Fields
             $("#productTaxRate").empty().multiselect("destroy");
