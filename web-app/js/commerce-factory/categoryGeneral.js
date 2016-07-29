@@ -43,14 +43,13 @@ function categoryGeneralGetInfo() {
                 categoryGeneralUpdateInfo("category.description", $("#categoryEditDescription"), $("#categoryEditDescription").val(), true);
             });
             if(catalogSelectedReadOnly){
-                $("#categoryEditName, #categoryEditExternalCode, #categoryEditHide").unbind().attr("disabled", "disabled");
+                $("#categoryEditName, #categoryEditExternalCode, #categoryEditHide, #categoryAddToMarketPlace").unbind().attr("disabled", "disabled");
+            }
+            else {
                 $("#categoryAddToMarketPlace").removeAttr("disabled").unbind().click(function () {
                     categorySelectedPublishable = $(this).is(':checked');
                     categoryGeneralUpdateInfo("category.publishable", $(this), $(this).is(':checked'), false);
                 });
-            }
-            else {
-                $("#categoryAddToMarketPlace").unbind().attr("disabled", "disabled");
                 $("#categoryEditName").removeAttr("disabled").unbind().change(function () {
                     if (!$(this)[0].checkValidity()) {
                         jQuery.noticeAdd({

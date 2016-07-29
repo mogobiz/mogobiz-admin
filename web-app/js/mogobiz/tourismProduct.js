@@ -283,7 +283,7 @@ function productAttachEditForm(productId, fromPage) {
 
 
             $('#tourismProductAddToMarketPlace').unbind();
-            if(categorySelectedPublishable && catalogSelectedReadOnly) {
+            if(categorySelectedPublishable && !catalogSelectedReadOnly) {
                 $('#tourismProductAddToMarketPlace').removeAttr("disabled").change(function () {
                     var dataToSend = "product.id=" + productId + "&product.publishable=" + $(this).is(':checked') + "&format=json";
                     $.ajax({

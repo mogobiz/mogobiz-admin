@@ -206,24 +206,6 @@ function companyMiraklPageInitControls(isCreate) {
             companyMiraklGetAllShopsId(0);
         }
     });
-    $("#companyMiraklConnexionType").multiselect({
-        header: false,
-        multiple: false,
-        noneSelectedText: multiselectNoneSelectedTextLabel,
-        minWidth: 229,
-        height: 60,
-        selectedList: 1
-    }).bind("multiselectclick", function (event, ui) {
-        if(ui.value == "password"){
-            $("#companyMiraklSSHDiv").hide();
-            $("#companyMiraklPasswordDiv").show();
-        }
-        else{
-            $("#companyMiraklPasswordDiv").hide();
-            $("#companyMiraklSSHDiv").show();
-        }
-    });
-    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
     if (isCreate) {
         $("#companyMiraklOperatorTab, #companyMiraklSecurityTab").addClass("disabled");
         $(".ui-dialog-buttonpane").find("button:contains('deleteLabel')").hide();
@@ -255,6 +237,24 @@ function companyMiraklPageInitFields(miraklId, isCreate){
     companyMiraklPageInitShopIdsGrid();
     companyMiraklShopIds = "";
 
+    $("#companyMiraklConnexionType").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        minWidth: 229,
+        height: 60,
+        selectedList: 1
+    }).bind("multiselectclick", function (event, ui) {
+        if(ui.value == "password"){
+            $("#companyMiraklSSHDiv").hide();
+            $("#companyMiraklPasswordDiv").show();
+        }
+        else{
+            $("#companyMiraklPasswordDiv").hide();
+            $("#companyMiraklSSHDiv").show();
+        }
+    });
+    $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
     if (!isCreate){
         var mirakl = null;
         var data = companyMiraklGrid.getData();
@@ -289,12 +289,12 @@ function companyMiraklPageInitFields(miraklId, isCreate){
                 $("#companyMiraklRemoteHost").val(mirakl.remoteHost);
                 $("#companyMiraklRemotePath").val(mirakl.remotePath);
                 $("#companyMiraklUsername").val(mirakl.username);
-                if(mirakl.keyPath != "" && mirakl.keyPath != null){
+                if(mirakl.keyPath != "" && mirakl.keyPath != null){console.log("SSH");
                     $("#companyMiraklKeyPath").val(mirakl.keyPath);
                     $("#companyMiraklPassphrase").val(mirakl.passPhrase);
                     $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='ssh']").click();
                 }
-                if(mirakl.password != "" && mirakl.password != null){
+                if(mirakl.password != "" && mirakl.password != null){console.log("Password");
                     $("#companyMiraklPassword").val(mirakl.password);
                     $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
                 }

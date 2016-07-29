@@ -420,7 +420,7 @@ function tourismPricingInitFields(create, ticketId, ticketTypes, hasResource) {
             $('#tourismPricingVariation' + ticketTypes[i].position).multiselect('refresh');
         }
     }
-    if(tourismProductPublishable && catalogSelectedReadOnly) {
+    if(tourismProductPublishable && !catalogSelectedReadOnly) {
         $('#tourismPricingAddToMarketPlace').removeAttr("disabled")
     }
     if (!create) {
