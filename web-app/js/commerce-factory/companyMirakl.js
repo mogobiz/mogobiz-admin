@@ -289,12 +289,12 @@ function companyMiraklPageInitFields(miraklId, isCreate){
                 $("#companyMiraklRemoteHost").val(mirakl.remoteHost);
                 $("#companyMiraklRemotePath").val(mirakl.remotePath);
                 $("#companyMiraklUsername").val(mirakl.username);
-                if(mirakl.keyPath != "" && mirakl.keyPath != null){console.log("SSH");
+                if(mirakl.keyPath != "" && mirakl.keyPath != null){
                     $("#companyMiraklKeyPath").val(mirakl.keyPath);
                     $("#companyMiraklPassphrase").val(mirakl.passPhrase);
                     $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='ssh']").click();
                 }
-                if(mirakl.password != "" && mirakl.password != null){console.log("Password");
+                if(mirakl.password != "" && mirakl.password != null){
                     $("#companyMiraklPassword").val(mirakl.password);
                     $("#companyMiraklOperatorForm .ui-multiselect-menu .ui-multiselect-checkboxes input[value='password']").click();
                 }
