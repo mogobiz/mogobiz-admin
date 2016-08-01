@@ -86,32 +86,36 @@
 			<label for="catalogSocial"><g:message locale="${lang}" code="catalog.social.label"/></label>
 		</div>--}%
 		<div class="spacer"></div>
-		<div id="catalogPublicationDiv">
-			<div class="newline">
-				<div class="catalog-medium">
-					<label for="catalogListPublication"><g:message locale="${lang}" code="catalog.publish.label"/></label>
-				</div>
-                <div class="catalog-medium">&nbsp;</div>
-                <div class="catalog-medium">
-                    <label for="catalogListIndices"><g:message locale="${lang}" code="catalog.indices.label"/></label>
-                </div>
-			</div>
-			<div class="spacer-small"></div>
-			<div class="newline">
-				<div class="catalog-medium">
-					<select id="catalogListPublication"></select>
-				</div>
-				<div class="catalog-medium">
-					<button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>
-				</div>
-                <div class="catalog-medium">
-                    <select id="catalogListIndices" style="width:170px;"></select>
-                </div>
-			</div>
-		</div>
+        <div class="newline">
+            <div class="catalog-full">
+                <label for="catalogListPublication"><g:message locale="${lang}" code="catalog.publish.label"/></label>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <select id="catalogListPublication"></select>
+            </div>
+            <div class="catalog-large">
+                <button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div id="catalogLastPublicationStatus"></div>
+        <div class="spacer"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <label for="catalogListIndices"><g:message locale="${lang}" code="catalog.indices.label"/></label>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <select id="catalogListIndices"></select>
+            </div>
+        </div>
 		<div class="spacer"></div>
         <div id="catalogPublicationError"></div>
-        <div id="catalogLastPublicationStatus"></div>
 		<div class="spacer"></div>
 	</div>
     <div id="catalogMarketplaceDiv">

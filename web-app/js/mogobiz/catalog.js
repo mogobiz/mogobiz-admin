@@ -350,7 +350,7 @@ function catalogGeneralInitControls() {
         noneSelectedText: multiselectNoneSelectedTextLabel,
         selectedList: 1,
         height: 100,
-        minWidth: 170
+        minWidth: 265
     }).unbind().bind("multiselectclick", function (event, ui) {
         if(catalogActiveEsEnv == ui.value)
             return;
@@ -367,7 +367,7 @@ function catalogGeneralInitControls() {
         noneSelectedText: multiselectNoneSelectedTextLabel,
         selectedList: 1,
         height: 100,
-        minWidth: 170
+        minWidth: 265
     }).unbind().bind("multiselectclick", function (event, ui) {
         if(catalogActiveIndex == ui.value)
             return;
