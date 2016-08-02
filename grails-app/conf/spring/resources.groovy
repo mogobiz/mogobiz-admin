@@ -456,6 +456,12 @@ beans = {
     miraklSyncCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.MiraklSync){
         excludes = ['class']
     }
+    esSyncRenderer(JsonRenderer, com.mogobiz.store.domain.EsSync){
+        excludes = ['class']
+    }
+    esSyncCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.EsSync){
+        excludes = ['class']
+    }
 
     bOWishlistRenderer(JsonRenderer, com.mogobiz.store.domain.BOWishlist){
         excludes = ['class']
@@ -688,6 +694,8 @@ beans = {
     miraklEnvRender (com.mogobiz.store.domain.MiraklEnvRender)
     miraklSyncValidation (com.mogobiz.store.domain.MiraklSyncValidation)
     miraklSyncRender (com.mogobiz.store.domain.MiraklSyncRender)
+    esSyncValidation (com.mogobiz.store.domain.EsSyncValidation)
+    esSyncRender (com.mogobiz.store.domain.EsSyncRender)
 
     BOWishlistValidation (com.mogobiz.store.domain.BOWishlistValidation)
     BOWishlistRender (com.mogobiz.store.domain.BOWishlistRender)
