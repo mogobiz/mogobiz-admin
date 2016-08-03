@@ -322,6 +322,7 @@ function catalogGetEsEnvList(){
 
 function catalogGeneralInitControls() {
     $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, /*#catalogSocial, #catalogChannels, */#catalogPublishBtn").unbind();
+    $("#catalogRunDifferences").prop("checked", false);
     $("#catalogActivationDate").datepicker("destroy");
     $("#catalogActivationDate").datepicker({
         onSelect: function (date) {
@@ -544,8 +545,9 @@ function catalogPublish() {
     $("#catalogListPublication").multiselect("disable");
     var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
     dataToSend += "&format=json";
+    var action = $("#catalogRunDifferences").is(":checked") ? synchronizeCatalogUrl : publishCatalogUrl;
     $.ajax({
-        url: publishCatalogUrl,
+        url: action,
         type: "GET",
         data: dataToSend,
         dataType: "json",

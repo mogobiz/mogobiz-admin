@@ -206,6 +206,7 @@
             var deleteCatalogUrl = "${createLink(controller: 'catalog', action: 'delete')}";
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action: 'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'publish')}";
+            var synchronizeCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'synchronize')}";
             var importCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'ximport')}";
             var reportImportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadImportReport')}";
             var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";

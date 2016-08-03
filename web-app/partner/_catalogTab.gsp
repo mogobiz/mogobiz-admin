@@ -97,7 +97,9 @@
                 <select id="catalogListPublication"></select>
             </div>
             <div class="catalog-large">
-                <button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>
+                <button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>&nbsp;&nbsp;
+                <input type="checkbox" id="catalogRunDifferences" />
+                <label for="catalogRunDifferences"><g:message locale="${lang}" code="catalog.runDiff.label"/></label>
             </div>
         </div>
         <div class="spacer-small"></div>
