@@ -4,6 +4,8 @@
 
 package com.mogobiz.store
 
+import com.mogobiz.service.PagedList
+import com.mogobiz.store.cmd.PagedListCommand
 import com.mogobiz.store.domain.Catalog
 import com.mogobiz.store.domain.Company
 import com.mogobiz.store.domain.EsEnv
@@ -24,6 +26,8 @@ class ElasticsearchController {
     def authenticationService
 
     def elasticsearchService
+
+    def ajaxResponseService
 
     // private static final STORE_DATA = 'storeData'
 
@@ -81,6 +85,54 @@ class ElasticsearchController {
         withFormat {
             xml { render ret as XML }
             json { render ret as JSON }
+        }
+    }
+
+    def refreshSynchronization(PagedListCommand cmd) {
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        Long catalogId = params.long('catalog.id')
+        Catalog catalog = catalogId ? Catalog.get(catalogId) : null
+        if(!catalog || company != catalog.company){
+            response.sendError 401
+        }
+        else if (catalog.name == "impex") {
+            response.status = 400
+            render status:400, text: "Impex Catalog cannot be refreshed"
+        }
+        else{
+            PagedList<EsSync> pagedList = elasticsearchService.refreshSynchronization(catalog, cmd)
+            final page = ajaxResponseService.preparePage(pagedList.list, pagedList.totalCount, cmd) { EsSync sync ->
+                sync.asMapForJSON([
+                        'id',
+                        'report',
+                        'success',
+                        'timestamp',
+                        'esEnv',
+                        'esEnv.id',
+                        'esEnv.name',
+                        'target',
+                        'target.id',
+                        'target.name',
+                        'catalogs',
+                        'catalogs.id',
+                        'catalogs.name',
+                        'categories',
+                        'categories.id',
+                        'categories.name',
+                        'products',
+                        'products.id',
+                        'products.name'
+                ])
+            }
+            withFormat {
+                xml { render page as XML }
+                json { render page as JSON }
+            }
         }
     }
 
