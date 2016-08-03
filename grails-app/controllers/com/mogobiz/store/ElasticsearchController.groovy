@@ -7,9 +7,11 @@ package com.mogobiz.store
 import com.mogobiz.service.PagedList
 import com.mogobiz.store.cmd.PagedListCommand
 import com.mogobiz.store.domain.Catalog
+import com.mogobiz.store.domain.Category
 import com.mogobiz.store.domain.Company
 import com.mogobiz.store.domain.EsEnv
 import com.mogobiz.store.domain.EsSync
+import com.mogobiz.store.domain.Product
 import com.mogobiz.utils.PermissionType
 import grails.converters.JSON
 import grails.converters.XML
@@ -136,6 +138,47 @@ class ElasticsearchController {
         }
     }
 
+    def prepareSynchronization = {
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        Long catalogId = params.long('catalog.id')
+        Catalog catalog = catalogId ? Catalog.get(catalogId) : null
+        if(!catalog){
+            render status:400, text: "a catalog is required"
+            return
+        }
+        if (catalog?.name == "impex") {
+            render status:400, text: "Impex Catalog cannot be published"
+            return
+        }
+        Long envId = params.long('esenv.id')
+        EsEnv env = envId ? EsEnv.get(envId) : null
+        if(!env){
+            render status:400, text: "a publication environment is required"
+            return
+        }
+        if(company != catalog.company || company != env?.company){
+            response.sendError 401
+            return
+        }
+        def permission = computePermission(PermissionType.PUBLISH_STORE_CATALOGS_TO_ENV, "${company.id}", "$envId")
+        if(!authenticationService.isPermitted(permission)){
+            response.sendError 401
+            return
+        }
+        else {
+            def map = elasticsearchService.prepareSynchronizationAsMap(env, catalog)
+            withFormat {
+                xml { render map as XML }
+                json { render map as JSON }
+            }
+        }
+    }
+
     def synchronize = {
         def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
         if(!seller){
@@ -184,10 +227,8 @@ class ElasticsearchController {
             return
         }
         def company = seller.company
-        Long syncId = params.long('essync.id')
-        EsSync sync = syncId ? EsSync.get(syncId) : null
         Long envId = params.long('esenv.id')
-        EsEnv env = sync?.esEnv ?: (envId ? EsEnv.get(envId) : null)
+        EsEnv env = envId ? EsEnv.get(envId) : null
         if(company != env?.company){
             response.sendError 401
             return
@@ -203,6 +244,35 @@ class ElasticsearchController {
             render status:403, text: "Impex Catalog cannot be published"
         }
         else {
+            EsSync sync = null
+            def productsId = (params.get("products.id") as String)?.trim()?.split(",")
+            def categoriesId = (params.get("categories.id") as String)?.trim()?.split(",")
+            if(productsId?.size() > 0 || categoriesId?.size() > 0){
+                sync = new EsSync(
+                        company: company,
+                        esEnv: env,
+                        target: catalog
+                )
+                productsId?.each{
+                    def product = Product.load(it)
+                    if(product?.category?.catalog == catalog){
+                        sync.addToProducts(product)
+                    }
+                }
+                categoriesId?.each{
+                    def cat = Category.load(it)
+                    if(cat?.catalog == catalog){
+                        sync.addToCategories(cat)
+                    }
+                }
+                sync.validate()
+                if(!sync.hasErrors()){
+                    sync.save(flush: true)
+                }
+                else{
+                    sync = null
+                }
+            }
             elasticsearchService.publish(company, env, catalog, true, sync)
             withFormat {
                 xml { render [:] as XML }
