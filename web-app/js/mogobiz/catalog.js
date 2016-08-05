@@ -3,14 +3,7 @@ var catalogSelectedName = null;
 var catalogSelectedReadOnly = false;
 var catalogSelectedMiraklEnv = false;
 var catalogImported = false;
-var catalogRunningInterval = null;
-var catalogRunningIntervalTime = 3000;
-var catalogMarketplaceRunningInterval = null;
-var catalogMarketplaceRunningIntervalTime = 3000;
-var catalogMarketplaceReposrtsPageSize = 100;
 var catalogShowSecurity;
-var catalogActiveEsEnv;
-var catalogActiveIndex;
 
 function catalogueLoadList() {
     var dataToSend = "format=html";
@@ -227,9 +220,7 @@ function catalogGetTabPage() {
 }
 
 function catalogInitAllTabs() {
-    $("#catalogMarketplaceDiv").hide();
-    $("#catalogTranslationDiv").hide();
-    $("#catalogSecurityDiv").hide();
+    $("#catalogPublishDiv, #catalogMarketplaceDiv, #catalogTranslationDiv, #catalogSecurityDiv").hide();
     catalogShowSecurity = ($("#catalogSecurityTab").length > 0);
     if(!catalogShowSecurity)
         $("#catalogSecurityDiv").remove();
@@ -239,14 +230,23 @@ function catalogInitAllTabs() {
         $(this).addClass("selected");
         switch ($(this).attr("id")) {
             case "catalogGeneralTab":
+                $("#catalogPublishDiv").hide();
                 $("#catalogMarketplaceDiv").hide();
                 $("#catalogTranslationDiv").hide();
                 $("#catalogSecurityDiv").hide();
                 $("#catalogGeneralDiv").show();
-                catalogResetRunningInterval();
+                break;
+            case "catalogPublishTab":
+                $("#catalogGeneralDiv").hide();
+                $("#catalogMarketplaceDiv").hide();
+                $("#catalogTranslationDiv").hide();
+                $("#catalogSecurityDiv").hide();
+                $("#catalogPublishDiv").show();
+                catalogPublishResetRunningInterval();
                 break;
             case "catalogMarketplaceTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogPublishDiv").hide();
                 $("#catalogTranslationDiv").hide();
                 $("#catalogSecurityDiv").hide();
                 $("#catalogMarketplaceDiv").show();
@@ -254,12 +254,14 @@ function catalogInitAllTabs() {
                 break;
             case "catalogTranslationTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogPublishDiv").hide();
                 $("#catalogMarketplaceDiv").hide();
                 $("#catalogSecurityDiv").hide();
                 $("#catalogTranslationDiv").show();
                 break;
             case "catalogSecurityTab":
                 $("#catalogGeneralDiv").hide();
+                $("#catalogPublishDiv").hide();
                 $("#catalogMarketplaceDiv").hide();
                 $("#catalogTranslationDiv").hide();
                 $("#catalogSecurityDiv").show();
@@ -269,6 +271,8 @@ function catalogInitAllTabs() {
         }
     });
     $("#catalogGeneralTab").addClass("selected");
+    catalogPublishInitFields();
+    catalogPublishInitControls();
     catalogInitMarketplaceFields();
     catalogInitMarketplaceControls();
 }
@@ -286,43 +290,13 @@ function catalogGeneralGetInfo() {
         success: function (response, status) {
             catalogGeneralInitControls();
             catalogGeneralInitFields(response);
-            catalogGetEsEnvList();
-        },
-        error: function (response, status) {}
-    });
-}
-
-function catalogGetEsEnvList(){
-    $.ajax({
-        url: companyShowPublishingUrl,
-        type: "GET",
-        data: "format=html",
-        cache: false,
-        async: true,
-        success: function (response, status) {
-            $("#catalogListPublication").html(response);
-            $("#catalogListPublication").multiselect("refresh");
-            $('#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogListPublication"]').each(function() {
-                if(this.value == $("#catalogListPublication").val()) {
-                    catalogActiveEsEnv = this.value;
-                    this.click();
-                }
-            });
-            if(response.indexOf("<option") >= 0) {
-                catalogResetRunningInterval();
-                catalogGetEsEnvPreviousIndices();
-            }
-            else{
-                $("#categoriesMain").hideLoading();
-            }
         },
         error: function (response, status) {}
     });
 }
 
 function catalogGeneralInitControls() {
-    $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription, /*#catalogSocial, #catalogChannels, */#catalogPublishBtn").unbind();
-    $("#catalogRunDifferences").prop("checked", false);
+    $("#catalogName, #catalogExternalCode, #catalogActivationDate, #catalogDescription/* ,#catalogSocial, #catalogChannels, */").unbind();
     $("#catalogActivationDate").datepicker("destroy");
     $("#catalogActivationDate").datepicker({
         onSelect: function (date) {
@@ -344,39 +318,6 @@ function catalogGeneralInitControls() {
 //        height: 100,
 //        minWidth: 239
 //    });
-    $("#catalogListPublication").multiselect("destroy");
-    $("#catalogListPublication").multiselect({
-        header: false,
-        multiple: false,
-        noneSelectedText: multiselectNoneSelectedTextLabel,
-        selectedList: 1,
-        height: 100,
-        minWidth: 265
-    }).unbind().bind("multiselectclick", function (event, ui) {
-        if(catalogActiveEsEnv == ui.value)
-            return;
-        catalogActiveEsEnv = ui.value;
-        setTimeout(function(){
-            catalogResetRunningInterval();
-            catalogGetEsEnvPreviousIndices();
-        }, 100);
-    });
-    $("#catalogListIndices").multiselect("destroy");
-    $("#catalogListIndices").multiselect({
-        header: false,
-        multiple: false,
-        noneSelectedText: multiselectNoneSelectedTextLabel,
-        selectedList: 1,
-        height: 100,
-        minWidth: 265
-    }).unbind().bind("multiselectclick", function (event, ui) {
-        if(catalogActiveIndex == ui.value)
-            return;
-        catalogActiveIndex = ui.value;
-        setTimeout(function(){
-            catalogChangeActiveIndex();
-        }, 100);
-    });
     $("#catalogName, #catalogExternalCode, #catalogDescription").change(function () {
         if (catalogValidateForm())catalogUpdate();
     });
@@ -386,13 +327,10 @@ function catalogGeneralInitControls() {
     /*$("#catalogSocial").click(function () {
         if (catalogValidateForm())catalogUpdate();
     });*/
-    $("#catalogPublishBtn").click(function () {
-        catalogPublish();
-    });
 }
 
 function catalogGeneralInitFields(catalog) {
-    $("#catalogName, #catalogExternalCode, #catalogDescription, #catalogActivationDate, /*#catalogChannels, */#catalogListPublication, #catalogListIndices").val("");
+    $("#catalogName, #catalogExternalCode, #catalogDescription, #catalogActivationDate, /*#catalogChannels, */#catalogPublishListPublication, #catalogPublishListIndices").val("");
     $("#catalogName").val(catalog.name);
     $("#catalogExternalCode").val(catalog.externalCode);
     $("#catalogDescription").val(catalog.description);
@@ -533,36 +471,6 @@ function catalogDelete() {
                         });
                     }
                 });
-            }
-        }
-    });
-}
-
-function catalogPublish() {
-    $("#catalogLastPublicationStatus").show().html("");
-    $("#catalogPublicationError").hide();
-    $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
-    $("#catalogListPublication").multiselect("disable");
-    var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogListPublication").val();
-    dataToSend += "&format=json";
-    var action = $("#catalogRunDifferences").is(":checked") ? synchronizeCatalogUrl : publishCatalogUrl;
-    $.ajax({
-        url: action,
-        type: "GET",
-        data: dataToSend,
-        dataType: "json",
-        cache: false,
-        async: true,
-        success: function (response, status) {
-            setTimeout(function() {
-                catalogGetEsEnvPreviousIndices();
-            }, 2000);
-        },
-        error: function (response, status) {
-            catalogResetRunningInterval();
-            if(response.status == "403"){
-                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
-                $("#catalogLastPublicationStatus").hide();
             }
         }
     });
@@ -739,138 +647,7 @@ function catalogDownloadExported(fileName) {
     $("#catalogDownloadDialog").dialog("close");
 }
 
-function catalogResetRunningInterval() {
-    catalogCheckEsEnvRunning();
-    if (catalogRunningInterval)
-        clearInterval(catalogRunningInterval);
-    catalogRunningInterval = setInterval(function () {
-        if ($("#catalogGeneralDiv").is(":visible")) {
-            catalogCheckEsEnvRunning();
-        }
-        else {
-            clearInterval(catalogRunningInterval);
-            catalogRunningInterval = null;
-        }
-    }, catalogRunningIntervalTime);
-}
-
-function catalogCheckEsEnvRunning() {
-    if($("#catalogListPublication").val() == null)
-        return;
-    var dataToSend = "esenv.id=" + $("#catalogListPublication").val() + "&format=json";
-    $.ajax({
-        url: companyShowPublishingUrl,
-        type: "GET",
-        data: dataToSend,
-        dataType: "json",
-        cache: false,
-        async: true,
-        success: function (response, status) {
-            var html = "";
-            if (response.running) {
-                $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
-                $("#catalogListPublication").multiselect("disable");
-                html = catalogPublicationRunningLabel;
-            }
-            else {
-                $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublish();}).addClass("fk_ok_btn").removeClass("disabled_btn");
-                $("#catalogListPublication").multiselect("enable");
-                html = catalogLastPublicationLabel + " : ";
-                if (response.success)
-                    html += catalogPublicationSuccessLabel;
-                else
-                    html += catalogPublicationFailureLabel;
-                if (response.extra != null && response.extra != "")
-                    html += " (" + response.extra + ")"
-            }
-            $("#catalogLastPublicationStatus").html(html);
-        },
-        error: function (response, status) {}
-    });
-}
-
-function catalogGetEsEnvPreviousIndices(){
-    $.ajax({
-         url: companyShowPublishingPreviousIndicesUrl,
-        type: "GET",
-        data: "envId=" + $("#catalogListPublication").val() + "&format=json",
-        cache: false,
-        async: true,
-        success: function (response, status) {
-            $.ajax({
-                url: companyShowPublishingUrl,
-                type: "GET",
-                data: "esenv.id=" + $("#catalogListPublication").val() + "&format=json",
-                dataType: "json",
-                cache: false,
-                async: true,
-                success: function (resp, status) {
-                    var founded = false;
-                    var html = "";
-                    var indices = response.previousIndices;
-                    catalogActiveIndex = null;
-                    for(var i = 0; i < indices.length; i++){
-                        if(indices[i] == resp.activeIndex)
-                            founded = true;
-                        html += "<option value='" + indices[i] + "'>" + indices[i] + "</option>";
-                    }
-                    if(resp.activeIndex != null && resp.activeIndex != "") {
-                        catalogActiveIndex = resp.activeIndex;
-                        if(!founded)
-                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
-                    }
-                    else if(resp.idx != null && resp.idx != "") {
-                        catalogActiveIndex = resp.idx;
-                        if(!founded)
-                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
-                    }
-                    else{
-                        html = "<option></option>" + html;
-                    }
-
-                    $("#catalogListIndices").empty().html(html);
-                    $("#catalogListIndices").multiselect("enable").multiselect("refresh");
-                    $('#catalogGeneralDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogListIndices"]').each(function () {
-                        if (this.value == catalogActiveIndex) {
-                            $(this.parentNode).addClass("ui-state-active");
-                            this.click();
-                        }
-                    });
-                    $("#categoriesMain").hideLoading();
-                },
-                error: function (response, status) {}
-            });
-        },
-        error: function (response, status) {
-            jQuery.noticeAdd({
-                stayTime: 2000,
-                text: elasticsearchServerError,
-                stay: false,
-                type: "error"
-            });
-            $("#categoriesMain").hideLoading();
-            $("#catalogListIndices").empty().multiselect("disable");
-        }
-    });
-}
-
-function catalogChangeActiveIndex() {
-    var dataToSend = "envId=" + $("#catalogListPublication").val() + "&index=" + $("#catalogListIndices").val() + "&format=json";
-    $.ajax({
-        url: companyUpdatePublishingIndicesUrl,
-        type: "POST",
-        noticeType: "PUT",
-        data: dataToSend,
-        dataType: "json",
-        cache: false,
-        async: true,
-        success: function (response, status) {},
-        error: function (response, status) {}
-    });
-}
-
 //TRANSLATION
-
 var catalogTranslationGrid = null;
 
 function catalogTranslationDrawAll() {
@@ -912,10 +689,661 @@ function catalogTranslationDrawAll() {
     translationGetAllData("catalog", catalogSelectedId, successCallback);
 }
 
+//publish functions
+var catalogPublishRunningInterval = null;
+var catalogPublishRunningIntervalTime = 3000;
+var catalogPublishActiveEsEnv;
+var catalogPublishActiveIndex;
+var catalogPublishHistoryGrid = null;
+var catalogPublishHistoryPageSize = 100;
+
+function catalogPublishInitFields(){
+    $("#catalogPublishListPublication, #catalogPublishListIndices").val("");
+
+    var gridColumns = [{
+        id : "env",
+        name : catalogPublishHistoryEnvLabel,
+        field : "env",
+        width : 25,
+        formatter: catalogPublishHistoryEnvFormatter,
+        cssClass : "cell-title"
+    },{
+        id : "timestmap",
+        name : catalogPublishHistoryTimeLabel,
+        field : "timestamp",
+        width : 30,
+        cssClass : ""
+    },{
+        id : "success",
+        name : catalogPublishHistoryStatusLabel,
+        field : "success",
+        formatter: catalogPublishHistoryStatusFormatter,
+        width : 15,
+        cssClass : ""
+    },{
+        id : "diff",
+        name : catalogPublishHistoryDifferenceLabel,
+        field : "diff",
+        width : 15,
+        formatter: catalogPublishHistoryDifferenceFormatter,
+        cssClass : ""
+    },{
+        id : "items",
+        name : catalogPublishHistoryItemsLabel,
+        field : "items",
+        width : 15,
+        formatter: catalogPublishHistoryItemsFormatter,
+        cssClass : ""
+    }];
+
+    var gridOptions = {
+        editable : false,
+        enableAddRow : false,
+        asyncEditorLoading : false,
+        forceFitColumns : true,
+        enableCellNavigation : false,
+        enableColumnReorder : false,
+        rowHeight : 25
+    };
+
+    var tabVisible = $("#catalogPublishDiv").is(":visible");
+    if(! tabVisible)
+        $("#catalogPublishDiv").show();
+    catalogPublishHistoryGrid = new Slick.Grid($("#catalogPublishHistoryGrid"), [], gridColumns, gridOptions);
+    catalogPublishHistoryGrid.setSelectionModel(new Slick.RowSelectionModel());
+    catalogPublishHistoryGrid.invalidate();
+    if(! tabVisible)
+        $("#catalogPublishDiv").hide();
+
+    catalogPublishGetEsEnvList();
+}
+
+function catalogPublishHistoryEnvFormatter(row, cell, value, columnDef, dataContext){
+    return dataContext.esEnv.name;
+}
+
+function catalogPublishHistoryStatusFormatter(row, cell, value, columnDef, dataContext){
+    if (value)
+        return catalogPublicationSuccessLabel;
+    return "<a href='javascript:catalogPublishShowErrorReoprt(" + dataContext.historyId + ")'>" + catalogPublicationFailureLabel + "</a>";
+}
+
+function catalogPublishHistoryDifferenceFormatter(row, cell, value, columnDef, dataContext){
+    if (dataContext.catalogs != null && dataContext.catalogs.length == 0)
+        return trueLabel;
+    return falseLabel;
+}
+
+function catalogPublishHistoryItemsFormatter(row, cell, value, columnDef, dataContext){
+    if (dataContext.catalogs.length > 0 || dataContext.categories.length > 0 || dataContext.products.length > 0)
+        return "<a href='javascript:catalogPublishShowDifferences(" + dataContext.historyId + ")'>" + catalogDetailsLabel + "</a>";
+    return "";
+}
+
+function catalogPublishInitControls(){
+    $("#catalogPublishBtn").unbind();
+    $("#catalogPublishRunDifferences").prop("checked", false);
+    $("#catalogPublishListPublication").multiselect("destroy");
+    $("#catalogPublishListPublication").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        selectedList: 1,
+        height: 100,
+        minWidth: 265
+    }).unbind().bind("multiselectclick", function (event, ui) {
+        if(catalogPublishActiveEsEnv == ui.value)
+            return;
+        catalogPublishActiveEsEnv = ui.value;
+        setTimeout(function(){
+            catalogPublishResetRunningInterval();
+            catalogPublishGetEsEnvPreviousIndices();
+        }, 100);
+    });
+    $("#catalogPublishListIndices").multiselect("destroy");
+    $("#catalogPublishListIndices").multiselect({
+        header: false,
+        multiple: false,
+        noneSelectedText: multiselectNoneSelectedTextLabel,
+        selectedList: 1,
+        height: 100,
+        minWidth: 265
+    }).unbind().bind("multiselectclick", function (event, ui) {
+        if(catalogPublishActiveIndex == ui.value)
+            return;
+        catalogPublishActiveIndex = ui.value;
+        setTimeout(function(){
+            catalogPublishChangeActiveIndex();
+        }, 100);
+    });
+    $("#catalogPublishBtn").click(function () {
+        catalogPublishCheckCondition();
+    });
+    $("#catalogPublishRefreshHistory").click(function () {
+        catalogPublishGetHistory(0);
+    });
+    catalogPublishGetHistory(0);
+}
+
+function catalogPublishGetEsEnvList(){
+    $.ajax({
+        url: companyShowPublishingUrl,
+        type: "GET",
+        data: "format=html",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            $("#catalogPublishListPublication").html(response);
+            $("#catalogPublishListPublication").multiselect("refresh");
+            $('#catalogPublishDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogPublishListPublication"]').each(function() {
+                if(this.value == $("#catalogPublishListPublication").val()) {
+                    catalogPublishActiveEsEnv = this.value;
+                    this.click();
+                }
+            });
+            if(response.indexOf("<option") >= 0) {
+                catalogPublishGetEsEnvPreviousIndices();
+            }
+            else{
+                $("#categoriesMain").hideLoading();
+            }
+        },
+        error: function (response, status) {}
+    });
+}
+
+function catalogPublishResetRunningInterval() {
+    catalogPublishCheckEsEnvRunning();
+    if (catalogPublishRunningInterval)
+        clearInterval(catalogPublishRunningInterval);
+    catalogPublishRunningInterval = setInterval(function () {
+        if ($("#catalogPublishDiv").is(":visible")) {
+            catalogPublishCheckEsEnvRunning();
+        }
+        else {
+            clearInterval(catalogPublishRunningInterval);
+            catalogPublishRunningInterval = null;
+        }
+    }, catalogPublishRunningIntervalTime);
+}
+
+function catalogPublishCheckEsEnvRunning() {
+    if($("#catalogPublishListPublication").val() == null)
+        return;
+    var dataToSend = "esenv.id=" + $("#catalogPublishListPublication").val() + "&format=json";
+    $.ajax({
+        url: companyShowPublishingUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            var html = "";
+            if (response.running) {
+                $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+                $("#catalogPublishListPublication").multiselect("disable");
+                $("#catalogPublishRefreshHistory").unbind().addClass("disabled");
+                $("#catalogPublishRunDifferences").attr("disabled", "disabled");
+                html = catalogPublicationRunningLabel;
+            }
+            else {
+                $("#catalogPublishBtn").unbind().bind("click", function () {catalogPublishCheckCondition();}).addClass("fk_ok_btn").removeClass("disabled_btn");
+                $("#catalogPublishRefreshHistory").unbind().bind("click", function () {catalogPublishGetHistory(0);}).removeClass("disabled");
+                $("#catalogPublishRunDifferences").removeAttr("disabled");
+                $("#catalogPublishListPublication").multiselect("enable");
+                html = catalogLastPublicationLabel + " : ";
+                if (response.success)
+                    html += catalogPublicationSuccessLabel;
+                else
+                    html += catalogPublicationFailureLabel;
+                if (response.extra != null && response.extra != "")
+                    html += " (" + response.extra + ")"
+            }
+            $("#catalogPublishLastPublicationStatus").html(html);
+        },
+        error: function (response, status) {}
+    });
+}
+
+function catalogPublishGetEsEnvPreviousIndices(){
+    $.ajax({
+        url: companyShowPublishingPreviousIndicesUrl,
+        type: "GET",
+        data: "envId=" + $("#catalogPublishListPublication").val() + "&format=json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            $.ajax({
+                url: companyShowPublishingUrl,
+                type: "GET",
+                data: "esenv.id=" + $("#catalogPublishListPublication").val() + "&format=json",
+                dataType: "json",
+                cache: false,
+                async: true,
+                success: function (resp, status) {
+                    var founded = false;
+                    var html = "";
+                    var indices = response.previousIndices;
+                    catalogPublishActiveIndex = null;
+                    for(var i = 0; i < indices.length; i++){
+                        if(indices[i] == resp.activeIndex)
+                            founded = true;
+                        html += "<option value='" + indices[i] + "'>" + indices[i] + "</option>";
+                    }
+                    if(resp.activeIndex != null && resp.activeIndex != "") {
+                        catalogPublishActiveIndex = resp.activeIndex;
+                        if(!founded)
+                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
+                    }
+                    else if(resp.idx != null && resp.idx != "") {
+                        catalogPublishActiveIndex = resp.idx;
+                        if(!founded)
+                            html = "<option value='" + resp.activeIndex + "'>" + resp.activeIndex + "</option>" + html;
+                    }
+                    else{
+                        html = "<option></option>" + html;
+                    }
+
+                    $("#catalogPublishListIndices").empty().html(html);
+                    $("#catalogPublishListIndices").multiselect("enable").multiselect("refresh");
+                    $('#catalogPublishDiv .ui-multiselect-menu .ui-multiselect-checkboxes input[name="multiselect_catalogPublishListIndices"]').each(function () {
+                        if (this.value == catalogPublishActiveIndex) {
+                            $(this.parentNode).addClass("ui-state-active");
+                            this.click();
+                        }
+                    });
+                    $("#categoriesMain").hideLoading();
+                },
+                error: function (response, status) {}
+            });
+        },
+        error: function (response, status) {
+            jQuery.noticeAdd({
+                stayTime: 2000,
+                text: elasticsearchServerError,
+                stay: false,
+                type: "error"
+            });
+            $("#categoriesMain").hideLoading();
+            $("#catalogPublishListIndices").empty().multiselect("disable");
+        }
+    });
+}
+
+function catalogPublishChangeActiveIndex() {
+    var dataToSend = "envId=" + $("#catalogPublishListPublication").val() + "&index=" + $("#catalogPublishListIndices").val() + "&format=json";
+    $.ajax({
+        url: companyUpdatePublishingIndicesUrl,
+        type: "POST",
+        noticeType: "PUT",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {},
+        error: function (response, status) {}
+    });
+}
+
+function catalogPublishCheckCondition(){
+    if($("#catalogPublishRunDifferences").is(":checked"))
+        catalogPublishPrepareSynchronization();
+    else
+        catalogPublish();
+}
+
+function catalogPublishPrepareSynchronization(){
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogPublishListPublication").val();
+    dataToSend += "&format=json";
+    $.ajax({
+        url: prepareSynchronizationCatalogUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            response = prepareSyncResponse;
+            if(response.syncRequired) {
+                catalogPublishGetSynchronizationPage(response);
+            }
+            else{
+                if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
+                    $("#catalogPublishDialog").empty();
+                    $("#catalogPublishDialog").html(catalogPublishDiffEmptyMessage);
+                    $("#catalogPublishDialog").dialog({
+                        title: catalogPublishDiffTitleLabel,
+                        modal: true,
+                        resizable: false,
+                        width: "500",
+                        height: "auto",
+                        open: function (event) {
+                            $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+                            $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+                        },
+                        buttons: {
+                            closeLabel: function () {
+                                $("#catalogPublishDialog").dialog("close");
+                            }
+                        }
+                    });
+                }
+            }
+        },
+        error: function (response, status) {
+            if (response.status == 400) {
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: response.responseText,
+                    stay: false,
+                    type: "error"
+                });
+            }
+        }
+    });
+}
+
+function catalogPublishGetSynchronizationPage(object){
+    $.get(
+        catalogSynchronizationPageUrl,
+        {},
+        function (htmlResponse) {
+            htmlresponse = jQuery.trim(htmlResponse);
+            catalogPublishSynchronizationPageSetup(htmlresponse, object);
+        },
+        "html"
+    );
+}
+
+function catalogPublishSynchronizationPageSetup(htmlResponse, object){
+    if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
+        $("#catalogPublishDialog").empty();
+        $("#catalogPublishDialog").html(htmlResponse);
+        $("#catalogPublishDialog").dialog({
+            title: catalogPublishDiffTitleLabel,
+            modal: true,
+            resizable: false,
+            width: "520",
+            height: "auto",
+            open: function (event) {
+                catalogPublishSynchronizationInitFields(object);
+            },
+            buttons: {
+                closeLabel: function () {
+                    $("#catalogPublishDialog").dialog("close");
+                },
+                applyLabel: function () {
+                    if(catalogPublishSynchronizationValidatePage()) {
+                        $("#catalogPublishDialog").dialog("close");
+                        catalogPublish();
+                    }
+                }
+            }
+        });
+    }
+}
+
+function catalogPublishSynchronizationInitFields(object){
+    $("#catalogSynchronizationCategories").multiselectSlides({
+        right: "#catalogSynchronizationCategories_to",
+        rightAll: "#catalogSynchronizationCategories_right_All",
+        rightSelected: "#catalogSynchronizationCategories_right_Selected",
+        leftSelected: "#catalogSynchronizationCategories_left_Selected",
+        leftAll: "#catalogSynchronizationCategories_left_All"
+    });
+
+    $("#catalogSynchronizationProducts").multiselectSlides({
+        right: "#catalogSynchronizationProducts_to",
+        rightAll: "#catalogSynchronizationProducts_right_All",
+        rightSelected: "#catalogSynchronizationProducts_right_Selected",
+        leftSelected: "#catalogSynchronizationProducts_left_Selected",
+        leftAll: "#catalogSynchronizationProducts_left_All"
+    });
+    var categories = object.categories;
+    var products = object.products;
+    for(var i = 0; i < categories.length; i++){
+        $("#catalogSynchronizationCategories").append($("<option></option>").attr("value", categories[i].id).text(categories[i].name));
+    }
+    for(var i = 0; i < products.length; i++){
+        $("#catalogSynchronizationProducts").append($("<option></option>").attr("value", products[i].id).text(products[i].name));
+    }
+    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+    $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").addClass("ui-create-button");
+    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+    $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").html("<span class='ui-button-text'>" + applyLabel + "</span>");
+}
+
+function catalogPublishSynchronizationValidatePage(){
+    if($("#catalogSynchronizationProducts_to option").length == 0 && $("#catalogSynchronizationCategories_to option").length == 0) {
+        jQuery.noticeAdd({
+            stayTime: 2000,
+            text: catalogPublishDiffErrorMessage,
+            stay: false,
+            type: "error"
+        });
+        return false;
+    }
+    return true;
+}
+
+function catalogPublish() {
+    $("#catalogPublishLastPublicationStatus").show().html("");
+    $("#catalogPublicationError").hide();
+    $("#catalogPublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+    $("#catalogPublishListPublication").multiselect("disable");
+    var action = publishCatalogUrl;
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&esenv.id=" + $("#catalogPublishListPublication").val();
+    if($("#catalogPublishRunDifferences").is(":checked")){
+        action = synchronizeCatalogUrl;
+        var productIds = "";
+        var categoriesIds = "";
+        $("#catalogSynchronizationProducts_to option").each(function(index, value){
+            productIds += (productIds != "") ? "," + value.value : value.value;
+        });
+        $("#catalogSynchronizationCategories_to option").each(function(index, value){
+            categoriesIds += (categoriesIds != "") ? "," + value.value : value.value;
+        });
+        dataToSend += productIds != "" ? "&products.id=" + productIds : "";
+        dataToSend += categoriesIds != "" ? "&categories.id=" + categoriesIds : "";
+    }
+    dataToSend += "&format=json";
+    $.ajax({
+        url: action,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            setTimeout(function() {
+                catalogPublishGetEsEnvPreviousIndices();
+                catalogPublishGetHistory(0);
+            }, 2000);
+        },
+        error: function (response, status) {
+            catalogPublishResetRunningInterval();
+            if(response.status == "403"){
+                $("#catalogPublicationError").show().html(catalogPublicationFailureLabel + ": " + response.responseText);
+                $("#catalogPublishLastPublicationStatus").hide();
+            }
+        }
+    });
+}
+
+function catalogPublishGetHistory(offset) {
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&pageOffset=" + offset + "&pageSize=" + catalogPublishHistoryPageSize + "&format=json";
+    $.ajax({
+        url: refreshSynchronizationCatalogUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (response, status) {
+            var gridData = [];
+            if (response.list) {
+                for (var i = 0; i < response.list.length; i++) {
+                    gridData[gridData.length] = {
+                        "id": i,
+                        "catalogs": response.list[i].catalogs,
+                        "success": response.list[i].success,
+                        "report": response.list[i].report,
+                        "categories": response.list[i].categories,
+                        "esEnv": response.list[i].esEnv,
+                        "historyId": response.list[i].id,
+                        "products": response.list[i].products,
+                        "timestamp": response.list[i].timestamp,
+                        "target": response.list[i].target
+                    }
+                }
+            }
+            catalogPublishHistoryGrid.setData(gridData);
+            catalogPublishHistoryGrid.invalidate();
+
+            var tabVisible = $("#catalogPublishDiv").is(":visible");
+            if (!tabVisible)
+                $("#catalogPublishDiv").show();
+            if (response.totalCount > 0) {
+                $("#catalogPublishHistoryPagination").paginate({
+                    count: response.pageCount,
+                    start: response.pageOffset + 1,
+                    display: 27,
+                    border: true,
+                    border_color: "#A6C9E2",
+                    text_color: "#075899",
+                    background_color: "#FFFFFF",
+                    border_hover_color: "#A6C9E2",
+                    text_hover_color: "#FFFFFF",
+                    background_hover_color: "#6D84B4",
+                    rotate: true,
+                    images: true,
+                    mouse: "press",
+                    onChange: function (page) {
+                        catalogPublishGetHistory(page - 1)
+                    }
+                });
+                var margin = $("#catalogPublishHistoryPagination").parent().parent().width() - $("#catalogPublishHistoryPagination .jPag-control-back").width() - $("#catalogPublishHistoryPagination .jPag-control-center").width() - $("#catalogPublishHistoryPagination .jPag-control-front").width() - 7;
+                $("#catalogPublishHistoryPagination").css("margin-left", margin);
+            }
+            else {
+                $("#catalogPublishHistoryPagination").empty();
+            }
+            if (!tabVisible)
+                $("#catalogPublishDiv").hide();
+        },
+        error: function (response, status) {
+            if (response.status == 400) {
+                jQuery.noticeAdd({
+                    stayTime: 2000,
+                    text: response.responseText,
+                    stay: false,
+                    type: "error"
+                });
+            }
+        }
+    });
+}
+
+function catalogPublishShowDifferences(historyId){
+    var data = catalogPublishHistoryGrid.getData();
+    var differences = {
+        catalogs : [],
+        categories : [],
+        products : []
+    };
+    for(var i = 0; i < data.length; i++){
+        if(data[i].historyId == historyId){
+            if(data[i].catalogs.length > 0)
+                differences.catalogs = data[i].catalogs;
+            if(data[i].categories.length > 0)
+                differences.categories = data[i].categories;
+            if(data[i].products.length > 0)
+                differences.products = data[i].products;
+            break;
+        }
+    }
+    if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
+        $("#catalogPublishDialog").empty();
+        $("#catalogPublishDialog").dialog({
+            title: catalogPublishHistoryDifferenceLabel,
+            modal: true,
+            resizable: false,
+            width: "500",
+            height: "auto",
+            open: function (event) {
+                var html = "";
+                if(differences.catalogs.length > 0){
+                    html += "<h2>" + catalogCatalogsLabel + "</h2>";
+                    for(var i = 0; i < differences.catalogs.length; i++){
+                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.catalogs[i].name + "</div>";
+                    }
+                }
+                if(differences.categories.length > 0){
+                    html += html != "" ? "<br/>" : "";
+                    html += "<h2>" + catalogCategoriesLabel + "</h2>";
+                    for(var i = 0; i < differences.categories.length; i++){
+                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.categories[i].name + "</div>";
+                    }
+                }
+                if(differences.products.length > 0){
+                    html += html != "" ? "<br/>" : "";
+                    html += "<h2>" + catalogProductsLabel + "</h2>";
+                    for(var i = 0; i < differences.products.length; i++){
+                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.products[i].name + "</div>";
+                    }
+                }
+                $("#catalogPublishDialog").html(html);
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+            },
+            buttons: {
+                closeLabel: function () {
+                    $("#catalogPublishDialog").dialog("close");
+                }
+            }
+        });
+    }
+}
+
+function catalogPublishShowErrorReoprt(historyId){
+    var data = catalogPublishHistoryGrid.getData();
+    var error = "";
+    for(var i = 0; i < data.length; i++){
+        if(data[i].historyId == historyId){
+            error = data[i].report != null ? data[i].report : "Report is null";
+            break;
+        }
+    }
+    if ($("#catalogPublishDialog").dialog("isOpen") !== true && error != "") {
+        $("#catalogPublishDialog").empty();
+        $("#catalogPublishDialog").html(error);
+        $("#catalogPublishDialog").dialog({
+            title: catalogErrorReportTitleLabel,
+            modal: true,
+            resizable: false,
+            width: "500",
+            height: "auto",
+            open: function (event) {
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+            },
+            buttons: {
+                closeLabel: function () {
+                    $("#catalogPublishDialog").dialog("close");
+                }
+            }
+        });
+    }
+}
+
 //Marketplace functions
 var catalogMarketplaceReportsGrid = null;
+var catalogMarketplaceRunningInterval = null;
+var catalogMarketplaceRunningIntervalTime = 3000;
+var catalogMarketplaceReportsPageSize = 100;
 
-function catalogInitMarketplaceFields(){
+function catalogMarketplaceFillMiraklEnv(){
     var options = "<option value=''>None</option>";
     for(var i = 0; i < partnerCompanyMiraklEnv.length; i++){
         options += "<option value='" + partnerCompanyMiraklEnv[i].id + "'>" + partnerCompanyMiraklEnv[i].name + "</option>";
@@ -931,7 +1359,20 @@ function catalogInitMarketplaceFields(){
     if(catalogSelectedReadOnly) {
         $("#catalogListMiraklEnv").val(catalogSelectedMiraklEnv.id).multiselect("refresh").multiselect("disable");
     }
+    else{
+        $("#catalogListMiraklEnv").bind("multiselectclick", function (event, ui) {
+            $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+            $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
+            $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
+            setTimeout(function () {
+                catalogMarketplaceResetRunningInterval();
+            }, 100);
+        });
+    }
+}
 
+function catalogInitMarketplaceFields(){
+    catalogMarketplaceFillMiraklEnv();
     var gridColumns = [{
         id : "trackingId",
         name : catalogMiraklReportTrackingLabel,
@@ -992,29 +1433,6 @@ function catalogInitMarketplaceFields(){
 }
 
 function catalogInitMarketplaceControls(){
-    if(!catalogSelectedReadOnly) {
-        $("#catalogListMiraklEnv").bind("multiselectclick", function (event, ui) {
-            if(ui.value){
-                $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
-                $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
-                $("#catalogMarketplaceRefreshReports").unbind().addClass("disabled");
-            }
-            else {
-                $("#catalogMarketplacePublishBtn").unbind().bind("click", function () {
-                    catalogMarketplacePublish();
-                });
-                $("#catalogMarketplaceRefreshBtn").unbind().bind("click", function () {
-                    catalogMarketplaceRefresh();
-                });
-                $("#catalogMarketplaceRefreshReports").unbind().bind("click", function () {
-                    catalogMarketplaceGetAllReports(0);
-                });
-            }
-            setTimeout(function () {
-                catalogMarketplaceResetRunningInterval();
-            }, 100);
-        });
-    }
     if($("#catalogListMiraklEnv").val() == null || $("#catalogListMiraklEnv").val() == ""){
         $("#catalogMarketplacePublishBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
         $("#catalogMarketplaceRefreshBtn").unbind().addClass("disabled_btn").removeClass("fk_ok_btn");
@@ -1136,7 +1554,7 @@ function catalogMarketplaceRefresh(){
 }
 
 function catalogMarketplaceGetAllReports(offset){
-    var dataToSend = "catalog.id=" + catalogSelectedId + "&pageOffset=" + offset + "&pageSize=" + catalogMarketplaceReposrtsPageSize + "&format=json";
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&pageOffset=" + offset + "&pageSize=" + catalogMarketplaceReportsPageSize + "&format=json";
     $.ajax({
         url: catalogMarketplaceReportsUrl,
         type: "GET",
@@ -1232,7 +1650,7 @@ function catalogMarketplaceShowErrorReport(trackingId){
         $("#catalogMarketplaceErrorReportDialog").empty();
         $("#catalogMarketplaceErrorReportDialog").html(error);
         $("#catalogMarketplaceErrorReportDialog").dialog({
-            title: "Error report",
+            title: catalogErrorReportTitleLabel,
             modal: true,
             resizable: false,
             width: "500",

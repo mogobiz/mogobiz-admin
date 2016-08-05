@@ -207,6 +207,8 @@
             var markDeletedCatalogUrl = "${createLink(controller: 'catalog', action: 'markDeleted')}";
             var publishCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'publish')}";
             var synchronizeCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'synchronize')}";
+            var prepareSynchronizationCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'prepareSynchronization')}";
+            var refreshSynchronizationCatalogUrl = "${createLink(controller: 'elasticsearch', action: 'refreshSynchronization')}";
             var importCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'ximport')}";
             var reportImportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'downloadImportReport')}";
             var exportCatalogUrl = "${createLink(controller: 'impexScheduler', action: 'export')}";
@@ -219,13 +221,18 @@
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
             var catalogImportPageUrl = "${resource(dir: 'partner', file: '_importCatalog.gsp')}";
+            var catalogSynchronizationPageUrl = "${resource(dir: 'partner', file: '_catalogSynchronization.gsp')}";
 
             var catalogTitleLabel = "${message(code: 'catalog.title.label')}";
+            var catalogCatalogsLabel = "${message(code: 'catalog.catalogs.label')}";
+            var catalogCategoriesLabel = "${message(code: 'catalog.categories.label')}";
+            var catalogProductsLabel = "${message(code: 'catalog.products.label')}";
             var catalogUniqueNameLabel = "${message(code: 'catalog.unique.name.label')}";
             var catalogDeleteEmptyLabel = "${message(code: 'catalog.delete.empty.label')}";
             var catalogDeleteLabel = "${message(code: 'catalog.delete.label')}";
             var catalogImportLabel  = "${message(code: 'catalog.import.label')}";
             var catalogExportLabel = "${message(code: 'catalog.export.label')}";
+            var catalogDetailsLabel = "${message(code: 'catalog.details.label')}";
             var catalogExportFinishLabel = "${message(code: 'catalog.export.finish.label')}";
             var catalogExportDownloadLabel = "${message(code: 'catalog.export.download.label')}";
             var catalogPublicationRunningLabel = "${message(code: 'catalog.publicationRunning.label')}";
@@ -234,6 +241,15 @@
             var catalogPublicationFailureLabel = "${message(code: 'catalog.publicationFailure.label')}";
             var catalogImportFailureLabel = "${message(code: 'catalog.importFailure.label')}";
             var catalogConfirmDeleteMessage = "${message(code: 'catalog.delete.confirm.message')}";
+            var catalogPublishHistoryEnvLabel = "${message(code: 'catalog.publishing.history.env.label')}";
+            var catalogPublishHistoryTimeLabel = "${message(code: 'catalog.publishing.history.time.label')}";
+            var catalogPublishHistoryStatusLabel = "${message(code: 'catalog.publishing.history.status.label')}";
+            var catalogPublishHistoryDifferenceLabel = "${message(code: 'catalog.publishing.history.difference.label')}";
+            var catalogPublishHistoryItemsLabel = "${message(code: 'catalog.publishing.history.items.label')}";
+            var catalogErrorReportTitleLabel = "${message(code: 'catalog.errorReportTitle.label')}";
+            var catalogPublishDiffTitleLabel = "${message(code: 'catalog.publishDiff.title.label')}";
+            var catalogPublishDiffErrorMessage = "${message(code: 'catalog.publishDiff.error.message')}";
+            var catalogPublishDiffEmptyMessage = "${message(code: 'catalog.publishDiff.empty.message')}";
             var catalogMiraklUnauthorizedMessage = "${message(code: 'catalog.mirakl.unauthorized.message')}";
             var catalogMiraklReportTrackingLabel = "${message(code: 'catalog.mirakl.report.tracking.label')}";
             var catalogMiraklReportTimeLabel = "${message(code: 'catalog.mirakl.report.time.label')}";
@@ -736,6 +752,8 @@
 <div id="catalogCreateDialog"></div>
 
 <div id="catalogDownloadDialog"></div>
+
+<div id="catalogPublishDialog"></div>
 
 <div id="catalogMarketplaceErrorReportDialog"></div>
 

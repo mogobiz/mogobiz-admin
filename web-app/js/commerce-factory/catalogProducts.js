@@ -18,8 +18,11 @@ function catalogProductsInitSearchPage(htmlresponse){
     $("#catalogProductsCloseBtn").unbind().click(function() {
         $("#items").empty().hide(); // show catalog tree
         $("#categoriesMain").show();
-        if($("#catalogGeneralDiv").is(":visible")){
-            catalogResetRunningInterval();
+        if ($("#catalogPublishDiv").is(":visible")) {
+            catalogPublishResetRunningInterval();
+        }
+        if ($("#catalogMiraklPublicationDiv").is(":visible")) {
+            catalogMarketplaceResetRunningInterval();
         }
     });
     $("#catalogProductsSearchInput").keyup(function(){

@@ -309,7 +309,7 @@ div.createCompany select {
     width: 215px;
 }
 
-#companyProfilesCreateDiv .multiselectSlides .left select, .right select{
+#companyProfilesCreateDiv .multiselectSlides .left select,#companyProfilesCreateDiv .multiselectSlides .right select{
     width: 210px;
 }
 
@@ -601,7 +601,7 @@ div.createCompany select {
     width: 215px;
 }
 
-#companyCouponsTabs .multiselectSlides .left select, .right select{
+#companyCouponsTabs .multiselectSlides .left select,#companyCouponsTabs .multiselectSlides .right select{
     width: 210px;
 }
 

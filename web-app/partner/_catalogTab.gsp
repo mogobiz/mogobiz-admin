@@ -9,6 +9,11 @@
 				</a>
 			</li>
             <li>
+                <a id="catalogPublishTab">
+                    <g:message locale="${lang}" code="tabs.publishing.label" />
+                </a>
+            </li>
+            <li>
                 <a id="catalogMarketplaceTab">
                     <g:message locale="${lang}" code="tabs.marketplace.label" />
                 </a>
@@ -86,40 +91,53 @@
 			<label for="catalogSocial"><g:message locale="${lang}" code="catalog.social.label"/></label>
 		</div>--}%
 		<div class="spacer"></div>
-        <div class="newline">
-            <div class="catalog-full">
-                <label for="catalogListPublication"><g:message locale="${lang}" code="catalog.publish.label"/></label>
-            </div>
-        </div>
-        <div class="spacer-small"></div>
-        <div class="newline">
-            <div class="catalog-large">
-                <select id="catalogListPublication"></select>
-            </div>
-            <div class="catalog-large">
-                <button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>&nbsp;&nbsp;
-                <input type="checkbox" id="catalogRunDifferences" />
-                <label for="catalogRunDifferences"><g:message locale="${lang}" code="catalog.runDiff.label"/></label>
-            </div>
-        </div>
-        <div class="spacer-small"></div>
-        <div id="catalogLastPublicationStatus"></div>
-        <div class="spacer"></div>
-        <div class="newline">
-            <div class="catalog-large">
-                <label for="catalogListIndices"><g:message locale="${lang}" code="catalog.indices.label"/></label>
-            </div>
-        </div>
-        <div class="spacer-small"></div>
-        <div class="newline">
-            <div class="catalog-large">
-                <select id="catalogListIndices"></select>
-            </div>
-        </div>
-		<div class="spacer"></div>
         <div id="catalogPublicationError"></div>
 		<div class="spacer"></div>
 	</div>
+
+    <div id="catalogPublishDiv">
+        <div class="newline">
+            <div class="catalog-full">
+                <label for="catalogPublishListPublication"><g:message locale="${lang}" code="catalog.publish.label"/></label>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <select id="catalogPublishListPublication"></select>
+            </div>
+            <div class="catalog-large">
+                <button type="submit" id="catalogPublishBtn" class="fk_ok_btn"><g:message locale="${lang}" code="catalog.publishBtn.label" /></button>&nbsp;&nbsp;
+                <input type="checkbox" id="catalogPublishRunDifferences" />
+                <label for="catalogPublishRunDifferences"><g:message locale="${lang}" code="catalog.runDiff.label"/></label>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div id="catalogPublishLastPublicationStatus"></div>
+        <div class="spacer"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <label for="catalogPublishListIndices"><g:message locale="${lang}" code="catalog.indices.label"/></label>
+            </div>
+        </div>
+        <div class="spacer-small"></div>
+        <div class="newline">
+            <div class="catalog-large">
+                <select id="catalogPublishListIndices"></select>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div style="padding: 10px;">
+            <span class="catalog-reports-title"><g:message locale="${lang}" code="catalog.history.title.label" /></span><a id="catalogPublishRefreshHistory" class="catalog-refresh-icon"></a>
+        </div>
+        <div id="catalogPublishHistoryGridDiv">
+            <div id="catalogPublishHistoryGrid" style="height: 174px;"></div>
+        </div>
+        <div id="catalogPublishHistoryPaginationDiv">
+            <div id="catalogPublishHistoryPagination"></div>
+        </div>
+        <div class="spacer"></div>
+    </div>
     <div id="catalogMarketplaceDiv">
         <div id="catalogMiraklPublicationDiv">
             <div class="newline">
@@ -140,7 +158,7 @@
         </div>
         <div class="spacer"></div>
         <div style="padding: 10px;">
-            <span class="catalog-reports-title"><g:message locale="${lang}" code="catalog.report.title.label" /></span><a id="catalogMarketplaceRefreshReports" class="catalog-refresh-catalog"></a>
+            <span class="catalog-reports-title"><g:message locale="${lang}" code="catalog.report.title.label" /></span><a id="catalogMarketplaceRefreshReports" class="catalog-refresh-icon"></a>
         </div>
         <div id="catalogMarketplaceReportsGridDiv">
             <div id="catalogMarketplaceReportsGrid" style="height: 174px;"></div>

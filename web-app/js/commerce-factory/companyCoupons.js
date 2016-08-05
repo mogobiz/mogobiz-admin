@@ -724,7 +724,7 @@ function companyCouponsSearchCategories(){
             $("#companyCouponsCategories").empty();
             for(var i = 0; i < response.length; i++){
                 if($("#companyCouponsCategories_to > option[value=" + response[i].id + "]").length == 0) {
-                    var libelle = response[i].name + " / " + response[i].catalog.name
+                    var libelle = response[i].name + " / " + response[i].catalog.name;
                     $("#companyCouponsCategories").append($("<option></option>").attr("value", response[i].id).attr("title", libelle).text(libelle));
                 }
             }

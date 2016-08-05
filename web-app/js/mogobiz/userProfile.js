@@ -39,11 +39,15 @@ function userProfileGetDetails(sellerId){
                 $("#items").empty().hide(); // show catalog tree
                 $("#categoriesMain").show();
 
-                if($("#catalogTabs").is(":visible")){
-                    catalogGetEsEnvList();
+                if ($("#catalogTabs").is(":visible")) {
+                    catalogPublishGetEsEnvList();
+                    catalogMarketplaceFillMiraklEnv();
                 }
-                if($("#catalogGeneralDiv").is(":visible")){
-                    catalogResetRunningInterval();
+                if ($("#catalogPublishDiv").is(":visible")) {
+                    catalogPublishResetRunningInterval();
+                }
+                if ($("#catalogMiraklPublicationDiv").is(":visible")) {
+                    catalogMarketplaceResetRunningInterval();
                 }
             });
             $("#userProfileChangePassBtn").unbind().click(function() {
