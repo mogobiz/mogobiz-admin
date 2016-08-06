@@ -1265,7 +1265,7 @@ function catalogPublishShowDifferences(historyId){
     if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
         $("#catalogPublishDialog").empty();
         $("#catalogPublishDialog").dialog({
-            title: catalogPublishHistoryDifferenceLabel,
+            title: catalogPublishHistoryItemsLabel,
             modal: true,
             resizable: false,
             width: "500",
