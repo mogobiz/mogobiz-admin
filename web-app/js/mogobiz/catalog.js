@@ -1004,7 +1004,6 @@ function catalogPublishPrepareSynchronization(){
         cache: false,
         async: true,
         success: function (response, status) {
-            response = prepareSyncResponse;
             if(response.syncRequired) {
                 catalogPublishGetSynchronizationPage(response);
             }
