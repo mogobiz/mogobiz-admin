@@ -138,6 +138,38 @@ class ElasticsearchController {
         }
     }
 
+    def cache = {
+        def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
+        if(!seller){
+            response.sendError 401
+            return
+        }
+        def company = seller.company
+        Long envId = params.long('esenv.id')
+        EsEnv env = envId ? EsEnv.get(envId) : null
+        if(!env){
+            render status:400, text: "a publication environment is required"
+            return
+        }
+        if(company != env?.company){
+            response.sendError 401
+            return
+        }
+        def permission = computePermission(PermissionType.PUBLISH_STORE_CATALOGS_TO_ENV, "${company.id}", "$envId")
+        if(!authenticationService.isPermitted(permission)){
+            response.sendError 401
+            return
+        }
+        else {
+            int exit = elasticsearchService.cache(env, company.code)
+            def map = [exit: exit]
+            withFormat {
+                xml { render map as XML }
+                json { render map as JSON }
+            }
+        }
+    }
+
     def prepareSynchronization = {
         def seller = request.seller ? request.seller : authenticationService.retrieveAuthenticatedSeller()
         if(!seller){
