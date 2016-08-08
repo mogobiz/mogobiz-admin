@@ -1005,7 +1005,7 @@ function catalogPublishPrepareSynchronization(){
         async: true,
         success: function (response, status) {
             if(response.syncRequired) {
-                catalogPublishGetSynchronizationPage(response);
+                catalogPublishGetSynchronizationPage(response, true);
             }
             else{
                 if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
@@ -1043,30 +1043,30 @@ function catalogPublishPrepareSynchronization(){
     });
 }
 
-function catalogPublishGetSynchronizationPage(object){
+function catalogPublishGetSynchronizationPage(object, isPublish){
     $.get(
         catalogSynchronizationPageUrl,
         {},
         function (htmlResponse) {
             htmlresponse = jQuery.trim(htmlResponse);
-            catalogPublishSynchronizationPageSetup(htmlresponse, object);
+            catalogPublishSynchronizationPageSetup(htmlresponse, object, isPublish);
         },
         "html"
     );
 }
 
-function catalogPublishSynchronizationPageSetup(htmlResponse, object){
+function catalogPublishSynchronizationPageSetup(htmlResponse, object, isPublish){
     if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
         $("#catalogPublishDialog").empty();
         $("#catalogPublishDialog").html(htmlResponse);
         $("#catalogPublishDialog").dialog({
-            title: catalogPublishDiffTitleLabel,
+            title: isPublish ? catalogPublishDiffTitleLabel : catalogPublishHistoryItemsLabel,
             modal: true,
             resizable: false,
             width: "520",
             height: "auto",
             open: function (event) {
-                catalogPublishSynchronizationInitFields(object);
+                catalogPublishSynchronizationInitFields(object, isPublish);
             },
             buttons: {
                 closeLabel: function () {
@@ -1083,7 +1083,22 @@ function catalogPublishSynchronizationPageSetup(htmlResponse, object){
     }
 }
 
-function catalogPublishSynchronizationInitFields(object){
+function catalogPublishSynchronizationInitFields(object, isPublish){
+    if(isPublish){
+        $("#catalogSynchronizationCatalogsDiv").hide().remove();
+        $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").addClass("ui-create-button");
+        $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").html("<span class='ui-button-text'>" + applyLabel + "</span>");
+    }
+    else{
+        $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").hide().remove();
+        $("#catalogSynchronizationCatalogs").multiselectSlides({
+            right: "#catalogSynchronizationCatalogs_to",
+            rightAll: "#catalogSynchronizationCatalogs_right_All",
+            rightSelected: "#catalogSynchronizationCatalogs_right_Selected",
+            leftSelected: "#catalogSynchronizationCatalogs_left_Selected",
+            leftAll: "#catalogSynchronizationCatalogs_left_All"
+        });
+    }
     $("#catalogSynchronizationCategories").multiselectSlides({
         right: "#catalogSynchronizationCategories_to",
         rightAll: "#catalogSynchronizationCategories_right_All",
@@ -1099,18 +1114,37 @@ function catalogPublishSynchronizationInitFields(object){
         leftSelected: "#catalogSynchronizationProducts_left_Selected",
         leftAll: "#catalogSynchronizationProducts_left_All"
     });
-    var categories = object.categories;
-    var products = object.products;
+    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
+    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
+
+    var catalogs = object.catalogs ? object.catalogs : [];
+    var categories = object.categories ? object.categories : [];
+    var products = object.products ? object.products : [];
+
+    var catalogsOptions = "";
+    var categoriesOptions = "";
+    var productsOptions = "";
+
+    for(var i = 0; i < catalogs.length; i++){
+        catalogsOptions += "<option value='" + catalogs[i].id + "'>" + catalogs[i].name + "</option>";
+    }
     for(var i = 0; i < categories.length; i++){
-        $("#catalogSynchronizationCategories").append($("<option></option>").attr("value", categories[i].id).text(categories[i].name));
+        categoriesOptions += "<option value='" + categories[i].id + "'>" + categories[i].name + "</option>";
     }
     for(var i = 0; i < products.length; i++){
-        $("#catalogSynchronizationProducts").append($("<option></option>").attr("value", products[i].id).text(products[i].name));
+        productsOptions += "<option value='" + products[i].id + "'>" + products[i].name + "</option>";
     }
-    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
-    $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").addClass("ui-create-button");
-    $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
-    $(".ui-dialog-buttonpane").find("button:contains('applyLabel')").html("<span class='ui-button-text'>" + applyLabel + "</span>");
+    if(isPublish){
+        $("#catalogSynchronizationCategories").empty().html(categoriesOptions);
+        $("#catalogSynchronizationProducts").empty().html(productsOptions);
+    }
+    else{
+        $("#catalogSynchronizationCatalogs_to").empty().html(catalogsOptions);
+        $("#catalogSynchronizationCategories_to").empty().html(categoriesOptions);
+        $("#catalogSynchronizationProducts_to").empty().html(productsOptions);
+        $("#catalogPublishDialog .multiselectSlides select").unbind();
+        $("#catalogPublishDialog .multiselectSlides button").attr("disabled", "disabled");
+    }
 }
 
 function catalogPublishSynchronizationValidatePage(){
@@ -1244,65 +1278,25 @@ function catalogPublishGetHistory(offset) {
     });
 }
 
-function catalogPublishShowDifferences(historyId){
+function catalogPublishShowDifferences(historyId) {
     var data = catalogPublishHistoryGrid.getData();
     var differences = {
-        catalogs : [],
-        categories : [],
-        products : []
+        catalogs: [],
+        categories: [],
+        products: []
     };
-    for(var i = 0; i < data.length; i++){
-        if(data[i].historyId == historyId){
-            if(data[i].catalogs.length > 0)
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].historyId == historyId) {
+            if (data[i].catalogs.length > 0)
                 differences.catalogs = data[i].catalogs;
-            if(data[i].categories.length > 0)
+            if (data[i].categories.length > 0)
                 differences.categories = data[i].categories;
-            if(data[i].products.length > 0)
+            if (data[i].products.length > 0)
                 differences.products = data[i].products;
             break;
         }
     }
-    if ($("#catalogPublishDialog").dialog("isOpen") !== true) {
-        $("#catalogPublishDialog").empty();
-        $("#catalogPublishDialog").dialog({
-            title: catalogPublishHistoryItemsLabel,
-            modal: true,
-            resizable: false,
-            width: "500",
-            height: "auto",
-            open: function (event) {
-                var html = "";
-                if(differences.catalogs.length > 0){
-                    html += "<h2>" + catalogCatalogsLabel + "</h2>";
-                    for(var i = 0; i < differences.catalogs.length; i++){
-                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.catalogs[i].name + "</div>";
-                    }
-                }
-                if(differences.categories.length > 0){
-                    html += html != "" ? "<br/>" : "";
-                    html += "<h2>" + catalogCategoriesLabel + "</h2>";
-                    for(var i = 0; i < differences.categories.length; i++){
-                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.categories[i].name + "</div>";
-                    }
-                }
-                if(differences.products.length > 0){
-                    html += html != "" ? "<br/>" : "";
-                    html += "<h2>" + catalogProductsLabel + "</h2>";
-                    for(var i = 0; i < differences.products.length; i++){
-                        html += "<div style='padding-left: 10px;'>&bullet;&nbsp;" + differences.products[i].name + "</div>";
-                    }
-                }
-                $("#catalogPublishDialog").html(html);
-                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").html("<span class='ui-button-text'>" + closeLabel + "</span>");
-                $(".ui-dialog-buttonpane").find("button:contains('closeLabel')").addClass("ui-cancel-button");
-            },
-            buttons: {
-                closeLabel: function () {
-                    $("#catalogPublishDialog").dialog("close");
-                }
-            }
-        });
-    }
+    catalogPublishGetSynchronizationPage(differences, false);
 }
 
 function catalogPublishShowErrorReoprt(historyId){
