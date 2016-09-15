@@ -5,7 +5,6 @@ import com.mogobiz.authentication.ProfileService
 import com.mogobiz.job.ImpexJob
 import com.mogobiz.service.CatalogService
 import com.mogobiz.service.ExportService
-import com.mogobiz.service.ImportService
 import com.mogobiz.store.domain.Catalog
 import com.mogobiz.store.domain.Company
 import com.mogobiz.store.domain.Seller
