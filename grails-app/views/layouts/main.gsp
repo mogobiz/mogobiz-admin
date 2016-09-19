@@ -29,6 +29,7 @@ var deleteLabel = "${message(code:'default.button.delete.label')}";
 var cancelLabel = "${message(code:'default.button.cancel.label')}";
 var closeLabel = "${message(code:'default.button.close.label')}";
 var importLabel = "${message(code:'default.button.import.label')}";
+var exportLabel = "${message(code:'default.button.export.label')}";
 var applyLabel = "${message(code:'default.button.apply.label')}";
 var okLabel = "${message(code:'default.button.ok.label')}";
 var validateLabel = "${message(code:'default.button.validate.label')}";

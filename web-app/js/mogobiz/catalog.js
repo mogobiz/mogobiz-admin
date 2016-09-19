@@ -584,8 +584,49 @@ function catalogCheckImport(catalogId){
     });
 }
 
+function catalogShowExportPage() {
+    $.get(
+        catalogExportPageUrl,
+        {},
+        function (htmlresponse) {
+            htmlresponse = jQuery.trim(htmlresponse);
+            catalogExportPageSetup(htmlresponse);
+        },
+        "html"
+    );
+}
+
+function catalogExportPageSetup(htmlresponse) {
+    if ($("#catalogCreateDialog").dialog("isOpen") !== true) {
+        $("#catalogCreateDialog").empty();
+        $("#catalogCreateDialog").html(htmlresponse);
+        $("#catalogCreateDialog").dialog({
+            title: catalogExportLabel,
+            modal: true,
+            resizable: false,
+            width: "400",
+            height: "auto",
+            open: function (event) {
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").addClass("ui-cancel-button");
+                $(".ui-dialog-buttonpane").find("button:contains('exportLabel')").addClass("ui-create-button");
+                $(".ui-dialog-buttonpane").find("button:contains('cancelLabel')").html("<span class='ui-button-text'>" + cancelLabel + "</span>");
+                $(".ui-dialog-buttonpane").find("button:contains('exportLabel')").html("<span class='ui-button-text'>" + exportLabel + "</span>");
+            },
+            buttons: {
+                cancelLabel: function () {
+                    $("#catalogCreateDialog").dialog("close");
+                },
+                exportLabel: function () {
+                    catalogExport();
+                }
+            }
+        });
+    }
+}
+
 function catalogExport() {
-    var dataToSend = "catalog.id=" + catalogSelectedId;
+    var exportType = $("#catalogExportXLS").prop("checked") ? "xls" : "json";
+    var dataToSend = "catalog.id=" + catalogSelectedId + "&exportFormat=" + exportType;
     $("#categoriesMain").showLoading({"addClass": "loading-indicator-FacebookBig"});
     $.ajax({
         url: exportCatalogUrl,
@@ -595,6 +636,7 @@ function catalogExport() {
         async: true,
         success: function (response, status) {
             catalogCheckExport(response);
+            $("#catalogCreateDialog").dialog("close");
         },
         error: function (response, status) {
             if(response.status == "403"){
@@ -603,6 +645,7 @@ function catalogExport() {
             else{
                 $("#categoriesMain").hideLoading();
             }
+            $("#catalogCreateDialog").dialog("close");
         }
     });
 }

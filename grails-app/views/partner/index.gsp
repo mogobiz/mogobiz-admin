@@ -221,6 +221,7 @@
             var catalogCreatePageUrl = "${resource(dir: 'partner', file: '_createCatalog.gsp')}";
             var catalogTabPageUrl = "${resource(dir: 'partner', file: '_catalogTab.gsp')}";
             var catalogImportPageUrl = "${resource(dir: 'partner', file: '_importCatalog.gsp')}";
+            var catalogExportPageUrl = "${resource(dir: 'partner', file: '_exportCatalog.gsp')}";
             var catalogSynchronizationPageUrl = "${resource(dir: 'partner', file: '_catalogSynchronization.gsp')}";
 
             var catalogTitleLabel = "${message(code: 'catalog.title.label')}";
