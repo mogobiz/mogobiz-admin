@@ -5,7 +5,6 @@ import com.mogobiz.authentication.ProfileService
 import com.mogobiz.job.ImpexJob
 import com.mogobiz.service.CatalogService
 import com.mogobiz.service.ExportService
-import com.mogobiz.service.ImportService
 import com.mogobiz.store.domain.Catalog
 import com.mogobiz.store.domain.Company
 import com.mogobiz.store.domain.Seller
@@ -88,6 +87,10 @@ class ImpexSchedulerController {
                     response.sendError 401
                     return
                 }
+                String exportFormat = params["exportFormat"]
+                if (exportFormat == null || exportFormat !="json") {
+                    exportFormat = "xls"
+                }
                 long catalogId = params.long(["catalog.id"])
                 if (Catalog.get(catalogId).company != seller.company) {
                     response.sendError 401
@@ -97,9 +100,10 @@ class ImpexSchedulerController {
                 File outDir = exportService.getExportDir(now)
                 String zipFilename = "mogobiz-${now}.zip"
                 File xlsFile = new File(outDir, "mogobiz.xlsx")
+                File jsonFile = new File(outDir, "mogobiz.json")
                 File zipFile = new File(outDir.getParentFile(), zipFilename)
 
-                ImpexJob.triggerNow(["catalogId": catalogId, "export": true, "xlsFile": xlsFile.getAbsolutePath(), "zipFile": zipFile.getAbsolutePath()])
+                ImpexJob.triggerNow(["exportFormat": exportFormat, "catalogId": catalogId, "export": true, "xlsFile": xlsFile.getAbsolutePath(), "jsonFile": jsonFile.getAbsolutePath(), "zipFile": zipFile.getAbsolutePath()])
                 render zipFilename
             }
             catch (Exception e) {

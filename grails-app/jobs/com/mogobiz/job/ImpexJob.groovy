@@ -34,19 +34,20 @@ class ImpexJob {
             long catalogId = context.mergedJobDataMap.getLong("catalogId")
             File zipFile = new File(context.mergedJobDataMap.getString("zipFile"))
             if (export) {
+                String exportFormat = context.mergedJobDataMap.getString("exportFormat")
                 log.info("EXPORT STARTED")
                 Date start = new Date()
                 File xlsFile = new File(context.mergedJobDataMap.getString("xlsFile"))
+                File jsonFile = new File(context.mergedJobDataMap.getString("jsonFile"))
                 log.info("Catalog Export started ...")
-                exportService.export(catalogId, xlsFile, zipFile)
+                exportService.export(catalogId, exportFormat == "json" ? jsonFile : xlsFile, zipFile, exportFormat)
                 log.info("Catalog Export finished")
                 log.info("EXPORT FINISHED")
                 Date end = new Date()
                 log.info("EXPORT DURATION (in seconds) =" + (end.getTime() - start.getTime()) / 1000)
-                File successFile = new File(zipFile.getAbsolutePath()+".success")
+                File successFile = new File(zipFile.getAbsolutePath() + ".success")
                 successFile.createNewFile()
-            }
-            else {
+            } else {
                 long sellerId = context.mergedJobDataMap.getLong("sellerId")
                 log.info("IMPORT STARTED")
                 Date start = new Date()
