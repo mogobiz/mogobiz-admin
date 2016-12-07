@@ -187,12 +187,6 @@ beans = {
     eventPeriodSaleCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.EventPeriodSale) {
         excludes = ['class']
     }
-    bOTicketTypeRenderer(JsonRenderer, com.mogobiz.store.domain.BOTicketType) {
-        excludes = ['class']
-    }
-    bOTicketTypeCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOTicketType) {
-        excludes = ['class']
-    }
     suggestionRenderer(JsonRenderer, com.mogobiz.store.domain.Suggestion) {
         excludes = ['class']
     }
@@ -223,12 +217,6 @@ beans = {
     product2ResourceCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.Product2Resource) {
         excludes = ['class']
     }
-    bOProductRenderer(JsonRenderer, com.mogobiz.store.domain.BOProduct) {
-        excludes = ['class']
-    }
-    bOProductCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOProduct) {
-        excludes = ['class']
-    }
     companyRenderer(JsonRenderer, com.mogobiz.store.domain.Company) {
         excludes = ['class']
     }
@@ -239,12 +227,6 @@ beans = {
         excludes = ['class']
     }
     datePeriodCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.DatePeriod) {
-        excludes = ['class']
-    }
-    bOCartItemRenderer(JsonRenderer, com.mogobiz.store.domain.BOCartItem) {
-        excludes = ['class']
-    }
-    bOCartItemCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOCartItem) {
         excludes = ['class']
     }
     catalogRenderer(JsonRenderer, com.mogobiz.store.domain.Catalog) {
@@ -373,28 +355,16 @@ beans = {
     shippingRuleCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.ShippingRule) {
         excludes = ['class']
     }
-    bODeliveryRenderer(JsonRenderer, com.mogobiz.store.domain.BODelivery) {
-        excludes = ['class']
-    }
-    bODeliveryCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BODelivery) {
-        excludes = ['class']
-    }
-    bOReturnRenderer(JsonRenderer, com.mogobiz.store.domain.BOReturn) {
-        excludes = ['class']
-    }
-    bOReturnCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOReturn) {
-        excludes = ['class']
-    }
-    bOReturnedItemRenderer(JsonRenderer, com.mogobiz.store.domain.BOReturnedItem) {
-        excludes = ['class']
-    }
-    bOReturnedItemCollectionRenderer(JsonCollectionRenderer, com.mogobiz.store.domain.BOReturnedItem) {
-        excludes = ['class']
-    }
     bOTransactionRenderer(JsonRenderer, com.mogobiz.pay.domain.BOTransaction) {
         excludes = ['class']
     }
     bOTransactionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOTransaction) {
+        excludes = ['class']
+    }
+    bOShopTransactionRenderer(JsonRenderer, com.mogobiz.pay.domain.BOShopTransaction) {
+        excludes = ['class']
+    }
+    bOShopTransactionCollectionRenderer(JsonCollectionRenderer, com.mogobiz.pay.domain.BOShopTransaction) {
         excludes = ['class']
     }
     bOAccountRenderer(JsonRenderer, com.mogobiz.pay.domain.BOAccount) {
@@ -598,8 +568,6 @@ beans = {
     userPermissionRender(com.mogobiz.store.domain.UserPermissionRender)
     eventPeriodSaleValidation(com.mogobiz.store.domain.EventPeriodSaleValidation)
     eventPeriodSaleRender(com.mogobiz.store.domain.EventPeriodSaleRender)
-    BOTicketTypeValidation(com.mogobiz.store.domain.BOTicketTypeValidation)
-    BOTicketTypeRender(com.mogobiz.store.domain.BOTicketTypeRender)
     suggestionValidation(com.mogobiz.store.domain.SuggestionValidation)
     shippingValidation(com.mogobiz.store.domain.ShippingValidation)
     shippingRender(com.mogobiz.store.domain.ShippingRender)
@@ -609,14 +577,10 @@ beans = {
     resourceRender(com.mogobiz.store.domain.ResourceRender)
     product2ResourceValidation(com.mogobiz.store.domain.Product2ResourceValidation)
     product2ResourceRender(com.mogobiz.store.domain.Product2ResourceRender)
-    BOProductValidation(com.mogobiz.store.domain.BOProductValidation)
-    BOProductRender(com.mogobiz.store.domain.BOProductRender)
     companyValidation(com.mogobiz.store.domain.CompanyValidation)
     companyRender(com.mogobiz.store.domain.CompanyRender)
     datePeriodValidation(com.mogobiz.store.domain.DatePeriodValidation)
     datePeriodRender(com.mogobiz.store.domain.DatePeriodRender)
-    BOCartItemValidation(com.mogobiz.store.domain.BOCartItemValidation)
-    BOCartItemRender(com.mogobiz.store.domain.BOCartItemRender)
     catalogValidation(com.mogobiz.store.domain.CatalogValidation)
     catalogRender(com.mogobiz.store.domain.CatalogRender)
     categoryValidation(com.mogobiz.store.domain.CategoryValidation)
@@ -666,19 +630,12 @@ beans = {
     BOTransactionLogRender(com.mogobiz.pay.domain.BOTransactionLogRender)
     BOTransactionLogValidation(com.mogobiz.pay.domain.BOTransactionLogValidation)
 
-    BODeliveryValidation(com.mogobiz.store.domain.BODeliveryValidation)
-    BODeliveryRender(com.mogobiz.store.domain.BODeliveryRender)
-
-    BOReturnValidation(com.mogobiz.store.domain.BOReturnValidation)
-    BOReturnRender(com.mogobiz.store.domain.BOReturnRender)
-
-    BOReturnedItemValidation(com.mogobiz.store.domain.BOReturnedItemValidation)
-    BOReturnedItemRender(com.mogobiz.store.domain.BOReturnedItemRender)
-
     BOAccountValidation(com.mogobiz.pay.domain.BOAccountValidation)
     BOAccountRender(com.mogobiz.pay.domain.BOAccountRender)
     BOTransactionValidation(com.mogobiz.pay.domain.BOTransactionValidation)
     BOTransactionRender(com.mogobiz.pay.domain.BOTransactionRender)
+    BOShopTransactionValidation(com.mogobiz.pay.domain.BOShopTransactionValidation)
+    BOShopTransactionRender(com.mogobiz.pay.domain.BOShopTransactionRender)
 
     commentValidation(com.mogobiz.store.domain.CommentValidation)
     commentRender(com.mogobiz.store.domain.CommentRender)
