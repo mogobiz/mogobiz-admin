@@ -16,7 +16,6 @@
     <description>mogobiz-admin</description>
 
     <properties>
-        <grails.version>2.3.8</grails.version>
         <grails.env>commerce-factory</grails.env>
     </properties>
 
@@ -467,7 +466,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>email-confirmation</artifactId>
             <scope>compile</scope>
             <type>zip</type>
@@ -480,8 +479,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>jquery</artifactId>
+            <version>1.9.1</version>
             <scope>compile</scope>
             <type>zip</type>
         </dependency>
@@ -688,11 +688,6 @@
             <plugin>
                 <groupId>org.grails</groupId>
                 <artifactId>grails-maven-plugin</artifactId>
-                <version>${grails.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <!--<grailsVersion>${grails.version}</grailsVersion>//-->
-                </configuration>
                 <executions>
                     <execution>
                         <id>standalone</id>
@@ -711,7 +706,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <extensions>true</extensions>
             </plugin>
 
             <plugin>
@@ -762,4 +756,24 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>tools</id>
+            <activation>
+                <property>
+                    <name>java.vendor</name>
+                    <value>Sun Microsystems Inc.</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>${java.version}</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
