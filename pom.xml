@@ -481,7 +481,6 @@
         <dependency>
             <groupId>com.mogobiz</groupId>
             <artifactId>jquery</artifactId>
-            <version>1.9.1</version>
             <scope>compile</scope>
             <type>zip</type>
         </dependency>
