@@ -1,8 +1,8 @@
 mogobiz.version="${appVersion}"
 grails.servlet.version = "3.0" // Change depending on target container compliance (2.5 or 3.0)
 grails.project.work.dir = "target"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 grails.project.war.file = "target/${appName}.war"
 grails.project.plugin.includeSource = false
 
@@ -187,7 +187,7 @@ grails.project.dependency.resolution = {
 }
 
 grails.project.repos.default = "mogoRepo"
-grails.project.repos.mogoRepo.url = "http://art.ebiznext.com/artifactory/libs-snapshot-local"
+grails.project.repos.mogoRepo.url = "https://art.ebiznext.com/artifactory/libs-snapshot-local"
 grails.project.repos.mogoRepo.type = "maven"
 grails.project.repos.mogoRepo.username = "hayssam.saleh@ebiznext.com"
 grails.project.repos.mogoRepo.password = "Azizam1980"
