@@ -486,7 +486,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>jquery-ui</artifactId>
             <scope>compile</scope>
             <type>zip</type>
