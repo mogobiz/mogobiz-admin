@@ -5,3 +5,5 @@ plugins
 .idea
 out
 application.properties
+build
+buildPlugins
