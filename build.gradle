@@ -63,6 +63,7 @@ dependencies {
     }
 
     /* grails plugins*/
+    compile "org.grails.plugins:standalone:9.0.0.M4"
     compile "org.grails.plugins:cache:1.1.8"
     compile "org.grails.plugins:facebook-graph:0.14"
     compile "org.grails.plugins:platform-core:1.0.0"
