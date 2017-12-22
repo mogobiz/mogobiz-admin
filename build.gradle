@@ -1,5 +1,3 @@
-version "1.0.1-SNAPSHOT"
-
 ext {
     grailsApp = true
     grailsEnv = 'commerce-factory'
