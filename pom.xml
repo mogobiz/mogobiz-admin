@@ -16,7 +16,6 @@
     <description>mogobiz-admin</description>
 
     <properties>
-        <grails.version>2.3.8</grails.version>
         <grails.env>commerce-factory</grails.env>
     </properties>
 
@@ -294,7 +293,7 @@
 
         <dependency>
             <groupId>com.mogobiz.rivers</groupId>
-            <artifactId>mogobiz-common</artifactId>
+            <artifactId>mogobiz-spi</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
             <exclusions>
@@ -467,7 +466,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>email-confirmation</artifactId>
             <scope>compile</scope>
             <type>zip</type>
@@ -480,14 +479,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>jquery</artifactId>
             <scope>compile</scope>
             <type>zip</type>
         </dependency>
 
         <dependency>
-            <groupId>org.grails.plugins</groupId>
+            <groupId>com.mogobiz</groupId>
             <artifactId>jquery-ui</artifactId>
             <scope>compile</scope>
             <type>zip</type>
@@ -688,11 +687,6 @@
             <plugin>
                 <groupId>org.grails</groupId>
                 <artifactId>grails-maven-plugin</artifactId>
-                <version>${grails.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <!--<grailsVersion>${grails.version}</grailsVersion>//-->
-                </configuration>
                 <executions>
                     <execution>
                         <id>standalone</id>
@@ -711,7 +705,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <extensions>true</extensions>
             </plugin>
 
             <plugin>
@@ -762,4 +755,24 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>tools</id>
+            <activation>
+                <property>
+                    <name>java.vendor</name>
+                    <value>Sun Microsystems Inc.</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>${java.version}</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

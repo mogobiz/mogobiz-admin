@@ -31,9 +31,9 @@ dataSource {
     username = "mogobiz"
     password = "mogobiz"
 
-    dialect = "org.hibernate.dialect.PostgreSQLDialect"
-    driverClassName = "org.postgresql.Driver"
-    url = "jdbc:postgresql://localhost/mogobiz"
+//    dialect = "org.hibernate.dialect.PostgreSQLDialect"
+//    driverClassName = "org.postgresql.Driver"
+//    url = "jdbc:postgresql://localhost/mogobiz"
 
     pooled = true
     dbCreate = "update"
@@ -54,9 +54,9 @@ dataSource {
 //    You are now ready to access the database from grails.
 //    user / password should be empty for a default conf
 
-//    dialect = "org.hibernate.dialect.DerbyDialect"
-//    driverClassName = "org.apache.derby.jdbc.ClientDriver"
-//    url = "jdbc:derby://localhost:1527//data/derby/mogobiz;create=true"
+    dialect = "org.hibernate.dialect.DerbyDialect"
+    driverClassName = "org.apache.derby.jdbc.ClientDriver"
+    url = "jdbc:derby://localhost:12004/mogobiz;user=mogobiz;password=mogobiz"
 
 //    username = "jahiaCommerce"
 //    password = "jahiaCommerce"
@@ -275,7 +275,7 @@ environments {
         dataSource {
             dialect = "org.hibernate.dialect.DerbyDialect"
             driverClassName = "org.apache.derby.jdbc.ClientDriver"
-            url = "jdbc:derby://localhost:1527//data/derby/jahiaCommerce"
+            url = "jdbc:derby://localhost:12004/mogobiz;user=mogobiz;password=mogobiz"
         }
     }
 
