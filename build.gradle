@@ -1,23 +1,64 @@
+plugins {
+    id "io.spring.dependency-management" version "0.5.4.RELEASE"
+}
+
+apply plugin: "spring-boot"
+apply plugin: "war"
+apply plugin: "asset-pipeline"
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.grails-gsp"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url "https://repo.grails.org/grails/core" }
+}
+
 ext {
-    grailsApp = true
+//    grailsApp = true
     grailsEnv = 'commerce-factory'
 }
 
 test.onlyIf { false }
 
+assets {
+    minifyJs = true
+    minifyCss = true
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.grails:grails-bom:$grailsVersion"
+    }
+    applyMavenExclusions false
+}
+
 dependencies {
     /* grails */
-    compile "org.grails:grails-resources:$grailsVersion"
-    compile "org.grails:grails-plugin-async:$grailsVersion"
-    compile "org.grails:grails-plugin-rest:$grailsVersion"
-    compile "org.grails:grails-plugin-services:$grailsVersion"
-    compile "org.grails:grails-plugin-i18n:$grailsVersion"
-    compile "org.grails:grails-plugin-databinding:$grailsVersion"
-    compile "org.grails:grails-plugin-filters:$grailsVersion"
-    compile "org.grails:grails-plugin-gsp:$grailsVersion"
-    compile "org.grails:grails-plugin-url-mappings:$grailsVersion"
-    compile "org.grails:grails-plugin-log4j:$grailsVersion"
-    compile "org.grails:grails-plugin-servlets:$grailsVersion"
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+    compile "org.grails:grails-dependencies"
+    compile "org.grails:grails-web-boot"
+
+    compile "org.grails.plugins:hibernate"
+    compile "org.grails.plugins:cache"
+    compile "org.hibernate:hibernate-ehcache"
+    compile "org.grails.plugins:scaffolding"
+
+    runtime "org.grails.plugins:asset-pipeline"
+
+    testCompile "org.grails:grails-plugin-testing"
+    testCompile "org.grails.plugins:geb"
+
+    // Note: It is recommended to update to a more robust driver (Chrome, Firefox etc.)
+    testRuntime 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0'
+
+    console "org.grails:grails-console"
 
     compile('net.sourceforge.nekohtml:nekohtml:1.9.15'){
         exclude group: 'xerces', module: 'xercesImpl'
@@ -46,6 +87,9 @@ dependencies {
 
     compile 'com.google.zxing:core:1.7'
 
+    /* mogobiz */
+    compile project(":mogobiz-extensions")
+
     /* rxjava */
     compile("io.reactivex:rxjava-reactive-streams:$rxJavaRsVersion"){
         exclude group: "io.reactivex", module: "rxjava"
@@ -53,58 +97,52 @@ dependencies {
     compile "io.reactivex:rxjava:$rxJavaVersion"
     compile("io.reactivex:rxgroovy:$rxGroovyVersion"){
         exclude group: "org.codehaus.groovy", module: "groovy-all"
+        exclude group: "io.reactivex", module: "rxjava"
     }
 
-    /* grails plugins*/
-    compile "org.grails.plugins:standalone:9.0.0.M4"
-    compile "org.grails.plugins:cache:1.1.8"
-    compile "org.grails.plugins:facebook-graph:0.14"
-    compile "org.grails.plugins:platform-core:1.0.0"
-    compile "org.grails.plugins:google-data:0.1.3"
-    compile("org.grails.plugins:shiro:1.2.1"){
-        exclude group: "org.apache.shiro", module: "shiro-quartz"
-    }
-    compile "org.grails.plugins:mail:1.0.7"
-    compile "org.grails.plugins:quartz:1.0.2"
-    compile "org.grails.plugins:recaptcha:1.7.0"
-    compile "org.grails.plugins:cache-headers:1.1.7"
-    compile "org.grails.plugins:cached-resources:1.0"
-    compile "org.grails.plugins:cookie:1.4"
-    compile("org.grails.plugins:rest:0.8"){
-        exclude group: "org.codehaus.groovy.modules.http-builder", module: "http-builder"
-    }
-    compile "org.grails.plugins:joda-time:1.5"
     compile("org.apache.poi:poi-ooxml:3.10.1"){
         exclude group: "xml-apis", module: "xml-apis"
     }
+
     compile "org.jsoup:jsoup:1.8.1"
-    compile "org.grails.plugins:executor:0.3"
+
     compile "log4j:log4j:1.2.17"
+
+//    compile "commons-io:commons-io:2.4"
 
     compile "org.elasticsearch:elasticsearch:1.7.3"
     compile("org.elasticsearch:elasticsearch-analysis-icu:2.7.0"){
         exclude group: "org.elasticsearch", module: "elasticsearch"
     }
-    compile("org.elasticsearch:elasticsearch-mapper-attachments:2.7.1"){
-        exclude group: "org.apache.poi", module: "poi"
-        exclude group: "org.apache.poi", module: "poi-scratchpad"
+
+    /* grails plugins*/
+    compile project(":plugins:grails-resources")
+    compile project(":plugins:grails-cache-headers") // TODO replace with [compile "org.grails.plugins:cache-headers:2.0.2"] for grails 3.2.10 and above
+    compile project(":plugins:grails-cached-resources")
+    compile project(":plugins:grails-executor")
+    compile project(":plugins:grails-email-confirmation")
+    compile project(":plugins:grails-facebook-graph")
+    compile project(":plugins:grails-google-data")
+    compile project(":plugins:grails-platform-core")
+    compile project(":plugins:grails-shiro:shiro3:grails-shiro")
+    compile "org.grails.plugins:cache:3.0.3"
+    compile 'org.grails.plugins:quartz:2.0.12' 
+    compile 'org.grails.plugins:mail:2.0.0' 
+    compile("org.grails.plugins:recaptcha:3.0.1"){ 
+        exclude group: 'org.grails', module: 'grails-datastore-rest-client'
     }
-
-    runtime "org.grails.plugins:hibernate:3.6.10.19"
-    runtime "org.grails.plugins:database-migration:1.4.1"
-    runtime "org.grails.plugins:resources:1.2.14"
-
-    runtime "com.h2database:h2:1.3.170"
-    runtime "mysql:mysql-connector-java:5.1.30"
-    runtime "postgresql:postgresql:9.1-901.jdbc4"
-
-    runtime "cglib:cglib:2.2.2"
+    compile "org.grails:grails-datastore-rest-client:${gormVersion}.RELEASE"
+    compile 'org.grails.plugins:cookie:2.0.5'
+    compile("org.grails.plugins:http-builder-helper:1.1.0"){
+        exclude group: "org.codehaus.groovy.modules.http-builder", module: "http-builder"
+    }
+    compile "org.grails.plugins:joda-time:2.0.0"
+	compile "org.grails.plugins:hibernate:$grailsHibernateVersion"
+    runtime "org.grails.plugins:database-migration:2.0.1" //v 2.x for hibernate4, v 3.x for hibernate5
 
     /* akka */
-    runtime "com.typesafe.akka:akka-actor_2.11:2.3.12"
+    runtime _akka
     runtime "com.typesafe.akka:akka-stream-experimental_2.11:1.0-M3"
-
-    compile "org.reactivestreams:reactive-streams-spi:0.3"
 
     runtime "org.codehaus.jettison:jettison:1.2"
 
@@ -112,23 +150,7 @@ dependencies {
         exclude group: "xml-apis", module: "xml-apis"
     }
 
-    test "org.grails:grails-test:$grailsVersion"
-    test "org.grails:grails-plugin-testing:$grailsVersion"
-    test 'org.spockframework:spock-core:1.1-groovy-2.4'
-    test 'junit:junit:4.12'
-
-    provided 'javax.servlet:javax.servlet-api:3.0.1'
-    provided 'org.grails.plugins:tomcat:7.0.54'
-
-    /* mogobiz FIXME dependency to project mogobiz-extensions */
-    compile project(":mogobiz-core")
-    compile project(":mogobiz-rivers:cfp")
-    compile project(":mogobiz-rivers:google-shopping")
-    compile project(":plugins:grails-email-confirmation")
-    compile project(":plugins:grails-jquery-ui")
-    compile project(":plugins:grails-jquery")
-    compile("com.mogobiz:mogobiz-extensions:$version:grails-plugin"){
-        exclude group: "io.reactivex"
-    }
+    runtime "mysql:mysql-connector-java:5.1.30"
+    runtime "postgresql:postgresql:9.1-901.jdbc4"
 
 }

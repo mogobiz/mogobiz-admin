@@ -14,7 +14,7 @@ import static com.mogobiz.utils.ProfileUtils.computePermission
 
 class MiraklController {
 
-    def grailsApplication
+    grails.core.GrailsApplication grailsApplication
 
     def authenticationService
 

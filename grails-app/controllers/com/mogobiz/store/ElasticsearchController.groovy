@@ -23,7 +23,7 @@ import static com.mogobiz.utils.ProfileUtils.*
 
 class ElasticsearchController {
 
-    def grailsApplication
+    grails.core.GrailsApplication grailsApplication
 
     def authenticationService
 
