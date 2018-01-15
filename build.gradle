@@ -131,6 +131,7 @@ dependencies {
     compile("org.grails.plugins:recaptcha:3.0.1"){ 
         exclude group: 'org.grails', module: 'grails-datastore-rest-client'
     }
+    compile "org.grails:grails-datastore-web:${gormVersion}.RELEASE"
     compile "org.grails:grails-datastore-rest-client:${gormVersion}.RELEASE"
     compile 'org.grails.plugins:cookie:2.0.5'
     compile("org.grails.plugins:http-builder-helper:1.1.0"){
